@@ -1,0 +1,19 @@
+{
+    "@@locale": "en",
+    "welcomeTitle": "Welcome to Wordstock",
+    "@welcomeTitle": {
+        "description": "Text shown in the Welcome Page"
+    },
+    "welcomeDescription": "Wordstock is a tool that helps you learn new words.",
+    "@welcomeDescription": {
+        "description": "Text shown in the Welcome Page"
+    },
+    "infoTitle": "Create a custom word list",
+    "@infoTitle": {
+        "description": "Text shown in the Info Page"
+    },
+    "infoDescription": "Wordstock is a tool that helps you learn new words.",
+    "@infoDescription": {
+        "description": "Text shown in the Info Page"
+    }
+}
