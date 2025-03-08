@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:wordstock/home/cubit/cubit.dart';
 import 'package:wordstock/home/widgets/home_body.dart';
+import 'package:wordstock/repositories/word_repository.dart';
 
 /// {@template home_page}
 /// A description for HomePage
@@ -17,12 +18,12 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => HomeCubit(),
+      create: (context) => HomeCubit(wordRepository: WordRepository()),
       child: const Scaffold(
         body: HomeView(),
       ),
     );
-  }    
+  }
 }
 
 /// {@template home_view}

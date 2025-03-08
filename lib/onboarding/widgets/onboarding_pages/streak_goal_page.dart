@@ -4,7 +4,9 @@ import 'package:wordstock/onboarding/cubit/onboarding_cubit.dart';
 import 'package:wordstock/onboarding/widgets/selector.dart';
 
 class StreakGoalPage extends StatelessWidget {
-  const StreakGoalPage({super.key});
+  const StreakGoalPage({required this.onNext, super.key});
+
+  final VoidCallback onNext;
 
   @override
   Widget build(BuildContext context) {
@@ -54,6 +56,7 @@ class StreakGoalPage extends StatelessWidget {
                 selected: state.streakGoal == 30,
                 onTap: () {
                   cubit.selectStreakGoal(30);
+                  onNext();
                 },
               ),
             ],

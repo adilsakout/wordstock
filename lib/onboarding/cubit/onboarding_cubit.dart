@@ -15,9 +15,8 @@ class OnboardingCubit extends Cubit<OnboardingState> {
   static const int totalPages = 12;
   final PageController pageController = PageController();
 
-  /// A description for yourCustomFunction
-  FutureOr<void> yourCustomFunction() {
-    // TODO(adil): Add Logic
+  void disposePageController() {
+    pageController.dispose();
   }
 
   void updatePage() {

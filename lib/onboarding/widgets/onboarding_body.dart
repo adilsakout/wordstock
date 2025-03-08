@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:wordstock/gen/assets.gen.dart';
 import 'package:wordstock/l10n/l10n.dart';
 import 'package:wordstock/onboarding/cubit/cubit.dart';
@@ -86,7 +87,12 @@ class OnboardingBody extends StatelessWidget {
                     ),
                     const GoalSelectionPage(),
                     const TopicSelectionPage(),
-                    const StreakGoalPage(),
+                    StreakGoalPage(
+                      onNext: () {
+                        context.read<OnboardingCubit>().disposePageController();
+                        context.go('/home');
+                      },
+                    ),
                   ],
                 ),
               ),
@@ -131,7 +137,7 @@ class _OnboardingAppBarState extends State<OnboardingAppBar> {
               height: 50,
               borderRadius: 50,
               text: '',
-              icon: Icons.arrow_back_ios,
+              suffixIcon: Icons.arrow_back_ios,
               onTap: widget.onBack,
             ),
           ),

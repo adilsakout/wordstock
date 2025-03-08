@@ -15,7 +15,10 @@ class PushableButton extends StatefulWidget {
     this.shadowColor = const Color(0xFF49A100),
     this.textColor = Colors.white,
     this.borderRadius = 30.0,
-    this.icon,
+    this.iconSize = 20.0,
+    this.suffixIcon,
+    this.prefixIcon,
+    this.spacing = 0.0,
   });
   final double width;
   final double height;
@@ -25,7 +28,10 @@ class PushableButton extends StatefulWidget {
   final Color shadowColor;
   final Color textColor;
   final double borderRadius;
-  final IconData? icon;
+  final IconData? suffixIcon;
+  final IconData? prefixIcon;
+  final double spacing;
+  final double iconSize;
   @override
   PushableButtonState createState() => PushableButtonState();
 }
@@ -40,7 +46,7 @@ class PushableButtonState extends State<PushableButton>
     super.initState();
     _animationController = AnimationController(
       vsync: this,
-      duration: const Duration(milliseconds: 10),
+      duration: const Duration(milliseconds: 150),
     );
   }
 
@@ -66,7 +72,6 @@ class PushableButtonState extends State<PushableButton>
   }
 
   Future<void> _playSound() async {
-    log('Playing sound ${Assets.sounds.click}', name: 'PushableButton');
     await _audioPlayer.play(AssetSource('sounds/click.mp3'));
   }
 
@@ -111,9 +116,16 @@ class PushableButtonState extends State<PushableButton>
                       borderRadius: BorderRadius.circular(widget.borderRadius),
                     ),
                     child: Row(
+                      spacing: widget.spacing,
                       mainAxisAlignment: MainAxisAlignment.center,
                       mainAxisSize: MainAxisSize.min,
                       children: [
+                        if (widget.prefixIcon != null)
+                          Icon(
+                            widget.prefixIcon,
+                            color: widget.textColor,
+                            size: widget.iconSize,
+                          ),
                         if (widget.text.isNotEmpty)
                           Text(
                             widget.text,
@@ -123,13 +135,12 @@ class PushableButtonState extends State<PushableButton>
                               fontWeight: FontWeight.bold,
                             ),
                           ),
-                        if (widget.icon != null) ...[
+                        if (widget.suffixIcon != null)
                           Icon(
-                            widget.icon,
+                            widget.suffixIcon,
                             color: widget.textColor,
-                            size: 20,
+                            size: widget.iconSize,
                           ),
-                        ],
                       ],
                     ),
                   ),
