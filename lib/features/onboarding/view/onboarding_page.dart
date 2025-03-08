@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:wordstock/onboarding/cubit/cubit.dart';
-import 'package:wordstock/onboarding/widgets/onboarding_body.dart';
+import 'package:wordstock/features/onboarding/cubit/cubit.dart';
+import 'package:wordstock/features/onboarding/widgets/onboarding_body.dart';
 
 /// {@template onboarding_page}
 /// A description for OnboardingPage
@@ -22,7 +22,7 @@ class OnboardingPage extends StatelessWidget {
         body: OnboardingView(),
       ),
     );
-  }    
+  }
 }
 
 /// {@template onboarding_view}

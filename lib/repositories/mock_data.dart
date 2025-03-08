@@ -2,76 +2,66 @@
 
 import 'package:wordstock/model/word.dart';
 
-final List<WordModel> mockWordModules = [
-  const WordModel(
+final List<Word> mockWordModules = [
+  const Word(
+    id: 1,
     word: 'hello',
-    phonetics: '/həˈloʊ/',
-    partOfSpeech: '(exclamation.)',
     definition: 'Used to greet someone or begin a conversation',
     example: 'She said “Hello!” as soon as she arrived.',
   ),
-  const WordModel(
+  const Word(
+    id: 2,
     word: 'demure',
-    phonetics: "di-'mjuər",
-    partOfSpeech: '(adj.)',
     definition: 'Quiet, modest, reserved',
     example: 'No one expected the demure teen to be such an amazing singer.',
   ),
-  const WordModel(
+  const Word(
+    id: 3,
     word: 'aberration',
-    phonetics: '/ˌæbəˈreɪʃən/',
-    partOfSpeech: '(n.)',
     definition: 'A departure from what is normal or expected',
     example:
         'The low test score was an aberration in her otherwise excellent record.',
   ),
-  const WordModel(
+  const Word(
+    id: 4,
     word: 'capricious',
-    phonetics: '/kəˈprɪʃəs/',
-    partOfSpeech: '(adj.)',
     definition: 'Given to sudden and unaccountable changes of mood or behavior',
     example: 'He is quite capricious, changing his plans at the last minute.',
   ),
-  const WordModel(
+  const Word(
+    id: 5,
     word: 'gregarious',
-    phonetics: '/ɡrɪˈɡɛəriəs/',
-    partOfSpeech: '(adj.)',
     definition: 'Fond of company; sociable',
     example: 'She is very gregarious and loves being around people.',
   ),
-  const WordModel(
+  const Word(
+    id: 6,
     word: 'hello',
-    phonetics: '/həˈloʊ/',
-    partOfSpeech: '(exclamation.)',
     definition: 'Used to greet someone or begin a conversation',
     example: 'She said “Hello!” as soon as she arrived.',
   ),
-  const WordModel(
+  const Word(
+    id: 7,
     word: 'demure',
-    phonetics: "di-'mjuər",
-    partOfSpeech: '(adj.)',
     definition: 'Quiet, modest, reserved',
     example: 'No one expected the demure teen to be such an amazing singer.',
   ),
-  const WordModel(
+  const Word(
+    id: 8,
     word: 'aberration',
-    phonetics: '/ˌæbəˈreɪʃən/',
-    partOfSpeech: '(n.)',
     definition: 'A departure from what is normal or expected',
     example:
         'The low test score was an aberration in her otherwise excellent record.',
   ),
-  const WordModel(
+  const Word(
+    id: 9,
     word: 'capricious',
-    phonetics: '/kəˈprɪʃəs/',
-    partOfSpeech: '(adj.)',
     definition: 'Given to sudden and unaccountable changes of mood or behavior',
     example: 'He is quite capricious, changing his plans at the last minute.',
   ),
-  const WordModel(
+  const Word(
+    id: 10,
     word: 'gregarious',
-    phonetics: '/ɡrɪˈɡɛəriəs/',
-    partOfSpeech: '(adj.)',
     definition: 'Fond of company; sociable',
     example: 'She is very gregarious and loves being around people.',
   ),

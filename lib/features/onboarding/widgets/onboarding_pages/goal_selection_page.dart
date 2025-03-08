@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:wordstock/onboarding/cubit/onboarding_cubit.dart';
-import 'package:wordstock/onboarding/widgets/selector.dart';
+import 'package:wordstock/features/onboarding/cubit/onboarding_cubit.dart';
+import 'package:wordstock/features/onboarding/widgets/selector.dart';
 import 'package:wordstock/widgets/button.dart';
 
-class TopicSelectionPage extends StatelessWidget {
-  const TopicSelectionPage({super.key});
+class GoalSelectionPage extends StatelessWidget {
+  const GoalSelectionPage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -17,7 +17,7 @@ class TopicSelectionPage extends StatelessWidget {
           child: Column(
             children: [
               const Text(
-                'Which topics are you interested in?',
+                'What are your learning goals?',
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   fontSize: 24,
@@ -26,7 +26,7 @@ class TopicSelectionPage extends StatelessWidget {
               ),
               const SizedBox(height: 16),
               const Text(
-                'Select the topics that you are most interested in learning about.',
+                'Select the goals that best describe your learning objectives.',
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   fontSize: 16,
@@ -35,42 +35,42 @@ class TopicSelectionPage extends StatelessWidget {
               ),
               const SizedBox(height: 16),
               Selector(
-                text: 'Society',
-                selected: state.selectedTopics.contains(0),
+                text: 'Enhance my lexicon',
+                selected: state.selectedGoals.contains(0),
                 onTap: () {
-                  cubit.toggleTopic(0);
+                  cubit.toggleGoal(0);
                 },
               ),
               const SizedBox(height: 16),
               Selector(
-                text: 'Words in foreign languages',
-                selected: state.selectedTopics.contains(1),
+                text: 'Get ready for a test',
+                selected: state.selectedGoals.contains(1),
                 onTap: () {
-                  cubit.toggleTopic(1);
+                  cubit.toggleGoal(1);
                 },
               ),
               const SizedBox(height: 16),
               Selector(
-                text: 'Human body',
-                selected: state.selectedTopics.contains(2),
+                text: 'Improve my job prospects',
+                selected: state.selectedGoals.contains(2),
                 onTap: () {
-                  cubit.toggleTopic(2);
+                  cubit.toggleGoal(2);
                 },
               ),
               const SizedBox(height: 16),
               Selector(
-                text: 'Emotions',
-                selected: state.selectedTopics.contains(3),
+                text: 'Enjoy learning new words',
+                selected: state.selectedGoals.contains(3),
                 onTap: () {
-                  cubit.toggleTopic(3);
+                  cubit.toggleGoal(3);
                 },
               ),
               const SizedBox(height: 16),
               Selector(
                 text: 'Other',
-                selected: state.selectedTopics.contains(5),
+                selected: state.selectedGoals.contains(4),
                 onTap: () {
-                  cubit.toggleTopic(5);
+                  cubit.toggleGoal(4);
                 },
               ),
               const Spacer(),

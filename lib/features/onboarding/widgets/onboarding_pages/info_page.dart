@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
-import 'package:wordstock/onboarding/cubit/cubit.dart';
+import 'package:wordstock/features/onboarding/cubit/cubit.dart';
 import 'package:wordstock/widgets/button.dart';
 
 class InfoPage extends StatefulWidget {

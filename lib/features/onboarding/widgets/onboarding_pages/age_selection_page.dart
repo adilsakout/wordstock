@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:wordstock/onboarding/cubit/onboarding_cubit.dart';
-import 'package:wordstock/onboarding/widgets/selector.dart';
-import 'package:wordstock/widgets/button.dart';
+import 'package:wordstock/features/onboarding/cubit/cubit.dart';
+import 'package:wordstock/features/onboarding/widgets/selector.dart';
 
-class GoalSelectionPage extends StatelessWidget {
-  const GoalSelectionPage({super.key});
+class AgeSelectionPage extends StatefulWidget {
+  const AgeSelectionPage({super.key});
 
+  @override
+  State<AgeSelectionPage> createState() => _AgeSelectionPageState();
+}
+
+class _AgeSelectionPageState extends State<AgeSelectionPage> {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<OnboardingCubit, OnboardingState>(
@@ -17,8 +20,7 @@ class GoalSelectionPage extends StatelessWidget {
           child: Column(
             children: [
               const Text(
-                'What are your learning goals?',
-                textAlign: TextAlign.center,
+                'How old are you?',
                 style: TextStyle(
                   fontSize: 24,
                   fontWeight: FontWeight.bold,
@@ -26,7 +28,7 @@ class GoalSelectionPage extends StatelessWidget {
               ),
               const SizedBox(height: 16),
               const Text(
-                'Select the goals that best describe your learning objectives.',
+                'Your age will be used to personalize your experience.',
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   fontSize: 16,
@@ -35,52 +37,44 @@ class GoalSelectionPage extends StatelessWidget {
               ),
               const SizedBox(height: 16),
               Selector(
-                text: 'Enhance my lexicon',
-                selected: state.selectedGoals.contains(0),
+                text: '13 to 17',
+                selected: state.selectedAgeRange == 0,
                 onTap: () {
-                  cubit.toggleGoal(0);
+                  cubit.selectAgeRange(0);
                 },
               ),
               const SizedBox(height: 16),
               Selector(
-                text: 'Get ready for a test',
-                selected: state.selectedGoals.contains(1),
+                text: '18 to 24',
+                selected: state.selectedAgeRange == 1,
                 onTap: () {
-                  cubit.toggleGoal(1);
+                  cubit.selectAgeRange(1);
                 },
               ),
               const SizedBox(height: 16),
               Selector(
-                text: 'Improve my job prospects',
-                selected: state.selectedGoals.contains(2),
+                text: '25 to 34',
+                selected: state.selectedAgeRange == 2,
                 onTap: () {
-                  cubit.toggleGoal(2);
+                  cubit.selectAgeRange(2);
                 },
               ),
               const SizedBox(height: 16),
               Selector(
-                text: 'Enjoy learning new words',
-                selected: state.selectedGoals.contains(3),
+                text: '35 to 44',
+                selected: state.selectedAgeRange == 3,
                 onTap: () {
-                  cubit.toggleGoal(3);
+                  cubit.selectAgeRange(3);
                 },
               ),
               const SizedBox(height: 16),
               Selector(
-                text: 'Other',
-                selected: state.selectedGoals.contains(4),
+                text: '45 and above',
+                selected: state.selectedAgeRange == 4,
                 onTap: () {
-                  cubit.toggleGoal(4);
+                  cubit.selectAgeRange(4);
                 },
               ),
-              const Spacer(),
-              PushableButton(
-                width: 200,
-                height: 56,
-                text: 'Continue',
-                onTap: cubit.nextPage,
-              ),
-              const SizedBox(height: 40),
             ],
           ),
         );

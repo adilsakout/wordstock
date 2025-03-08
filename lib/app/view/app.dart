@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:wordstock/home/view/home_page.dart';
+import 'package:wordstock/features/home/view/home_page.dart';
+import 'package:wordstock/features/onboarding/onboarding.dart';
 import 'package:wordstock/l10n/l10n.dart';
-import 'package:wordstock/onboarding/onboarding.dart';
 
 final _router = GoRouter(
   redirect: (context, state) async {

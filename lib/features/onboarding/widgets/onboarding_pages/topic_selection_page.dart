@@ -1,15 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:wordstock/onboarding/cubit/cubit.dart';
-import 'package:wordstock/onboarding/widgets/selector.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:wordstock/features/onboarding/cubit/onboarding_cubit.dart';
+import 'package:wordstock/features/onboarding/widgets/selector.dart';
+import 'package:wordstock/widgets/button.dart';
 
-class AgeSelectionPage extends StatefulWidget {
-  const AgeSelectionPage({super.key});
+class TopicSelectionPage extends StatelessWidget {
+  const TopicSelectionPage({super.key});
 
-  @override
-  State<AgeSelectionPage> createState() => _AgeSelectionPageState();
-}
-
-class _AgeSelectionPageState extends State<AgeSelectionPage> {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<OnboardingCubit, OnboardingState>(
@@ -20,7 +17,8 @@ class _AgeSelectionPageState extends State<AgeSelectionPage> {
           child: Column(
             children: [
               const Text(
-                'How old are you?',
+                'Which topics are you interested in?',
+                textAlign: TextAlign.center,
                 style: TextStyle(
                   fontSize: 24,
                   fontWeight: FontWeight.bold,
@@ -28,7 +26,7 @@ class _AgeSelectionPageState extends State<AgeSelectionPage> {
               ),
               const SizedBox(height: 16),
               const Text(
-                'Your age will be used to personalize your experience.',
+                'Select the topics that you are most interested in learning about.',
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   fontSize: 16,
@@ -37,44 +35,52 @@ class _AgeSelectionPageState extends State<AgeSelectionPage> {
               ),
               const SizedBox(height: 16),
               Selector(
-                text: '13 to 17',
-                selected: state.selectedAgeRange == 0,
+                text: 'Society',
+                selected: state.selectedTopics.contains(0),
                 onTap: () {
-                  cubit.selectAgeRange(0);
+                  cubit.toggleTopic(0);
                 },
               ),
               const SizedBox(height: 16),
               Selector(
-                text: '18 to 24',
-                selected: state.selectedAgeRange == 1,
+                text: 'Words in foreign languages',
+                selected: state.selectedTopics.contains(1),
                 onTap: () {
-                  cubit.selectAgeRange(1);
+                  cubit.toggleTopic(1);
                 },
               ),
               const SizedBox(height: 16),
               Selector(
-                text: '25 to 34',
-                selected: state.selectedAgeRange == 2,
+                text: 'Human body',
+                selected: state.selectedTopics.contains(2),
                 onTap: () {
-                  cubit.selectAgeRange(2);
+                  cubit.toggleTopic(2);
                 },
               ),
               const SizedBox(height: 16),
               Selector(
-                text: '35 to 44',
-                selected: state.selectedAgeRange == 3,
+                text: 'Emotions',
+                selected: state.selectedTopics.contains(3),
                 onTap: () {
-                  cubit.selectAgeRange(3);
+                  cubit.toggleTopic(3);
                 },
               ),
               const SizedBox(height: 16),
               Selector(
-                text: '45 and above',
-                selected: state.selectedAgeRange == 4,
+                text: 'Other',
+                selected: state.selectedTopics.contains(5),
                 onTap: () {
-                  cubit.selectAgeRange(4);
+                  cubit.toggleTopic(5);
                 },
               ),
+              const Spacer(),
+              PushableButton(
+                width: 200,
+                height: 56,
+                text: 'Continue',
+                onTap: cubit.nextPage,
+              ),
+              const SizedBox(height: 40),
             ],
           ),
         );

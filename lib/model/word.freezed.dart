@@ -14,210 +14,235 @@ part of 'word.dart';
 T _$identity<T>(T value) => value;
 
 /// @nodoc
-mixin _$WordModel {
+mixin _$Word {
+  int get id;
   String get word;
-  String get phonetics;
-  String get partOfSpeech;
   String get definition;
-  String get example;
+  String? get example;
+  VocabularyLevel? get level;
+  int? get topicId;
 
-  /// Create a copy of WordModel
+  /// Create a copy of Word
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
-  $WordModelCopyWith<WordModel> get copyWith =>
-      _$WordModelCopyWithImpl<WordModel>(this as WordModel, _$identity);
+  $WordCopyWith<Word> get copyWith =>
+      _$WordCopyWithImpl<Word>(this as Word, _$identity);
+
+  /// Serializes this Word to a JSON map.
+  Map<String, dynamic> toJson();
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is WordModel &&
+            other is Word &&
+            (identical(other.id, id) || other.id == id) &&
             (identical(other.word, word) || other.word == word) &&
-            (identical(other.phonetics, phonetics) ||
-                other.phonetics == phonetics) &&
-            (identical(other.partOfSpeech, partOfSpeech) ||
-                other.partOfSpeech == partOfSpeech) &&
             (identical(other.definition, definition) ||
                 other.definition == definition) &&
-            (identical(other.example, example) || other.example == example));
+            (identical(other.example, example) || other.example == example) &&
+            (identical(other.level, level) || other.level == level) &&
+            (identical(other.topicId, topicId) || other.topicId == topicId));
   }
 
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(
-      runtimeType, word, phonetics, partOfSpeech, definition, example);
+  int get hashCode =>
+      Object.hash(runtimeType, id, word, definition, example, level, topicId);
 
   @override
   String toString() {
-    return 'WordModel(word: $word, phonetics: $phonetics, partOfSpeech: $partOfSpeech, definition: $definition, example: $example)';
+    return 'Word(id: $id, word: $word, definition: $definition, example: $example, level: $level, topicId: $topicId)';
   }
 }
 
 /// @nodoc
-abstract mixin class $WordModelCopyWith<$Res> {
-  factory $WordModelCopyWith(WordModel value, $Res Function(WordModel) _then) =
-      _$WordModelCopyWithImpl;
+abstract mixin class $WordCopyWith<$Res> {
+  factory $WordCopyWith(Word value, $Res Function(Word) _then) =
+      _$WordCopyWithImpl;
   @useResult
   $Res call(
-      {String word,
-      String phonetics,
-      String partOfSpeech,
+      {int id,
+      String word,
       String definition,
-      String example});
+      String? example,
+      VocabularyLevel? level,
+      int? topicId});
 }
 
 /// @nodoc
-class _$WordModelCopyWithImpl<$Res> implements $WordModelCopyWith<$Res> {
-  _$WordModelCopyWithImpl(this._self, this._then);
+class _$WordCopyWithImpl<$Res> implements $WordCopyWith<$Res> {
+  _$WordCopyWithImpl(this._self, this._then);
 
-  final WordModel _self;
-  final $Res Function(WordModel) _then;
+  final Word _self;
+  final $Res Function(Word) _then;
 
-  /// Create a copy of WordModel
+  /// Create a copy of Word
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? id = null,
     Object? word = null,
-    Object? phonetics = null,
-    Object? partOfSpeech = null,
     Object? definition = null,
-    Object? example = null,
+    Object? example = freezed,
+    Object? level = freezed,
+    Object? topicId = freezed,
   }) {
     return _then(_self.copyWith(
+      id: null == id
+          ? _self.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as int,
       word: null == word
           ? _self.word
           : word // ignore: cast_nullable_to_non_nullable
-              as String,
-      phonetics: null == phonetics
-          ? _self.phonetics
-          : phonetics // ignore: cast_nullable_to_non_nullable
-              as String,
-      partOfSpeech: null == partOfSpeech
-          ? _self.partOfSpeech
-          : partOfSpeech // ignore: cast_nullable_to_non_nullable
               as String,
       definition: null == definition
           ? _self.definition
           : definition // ignore: cast_nullable_to_non_nullable
               as String,
-      example: null == example
+      example: freezed == example
           ? _self.example
           : example // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
+      level: freezed == level
+          ? _self.level
+          : level // ignore: cast_nullable_to_non_nullable
+              as VocabularyLevel?,
+      topicId: freezed == topicId
+          ? _self.topicId
+          : topicId // ignore: cast_nullable_to_non_nullable
+              as int?,
     ));
   }
 }
 
 /// @nodoc
-
-class _WordModel implements WordModel {
-  const _WordModel(
-      {required this.word,
-      required this.phonetics,
-      required this.partOfSpeech,
+@JsonSerializable()
+class _Word implements Word {
+  const _Word(
+      {required this.id,
+      required this.word,
       required this.definition,
-      required this.example});
+      this.example,
+      this.level,
+      this.topicId});
+  factory _Word.fromJson(Map<String, dynamic> json) => _$WordFromJson(json);
 
+  @override
+  final int id;
   @override
   final String word;
   @override
-  final String phonetics;
-  @override
-  final String partOfSpeech;
-  @override
   final String definition;
   @override
-  final String example;
+  final String? example;
+  @override
+  final VocabularyLevel? level;
+  @override
+  final int? topicId;
 
-  /// Create a copy of WordModel
+  /// Create a copy of Word
   /// with the given fields replaced by the non-null parameter values.
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)
   @pragma('vm:prefer-inline')
-  _$WordModelCopyWith<_WordModel> get copyWith =>
-      __$WordModelCopyWithImpl<_WordModel>(this, _$identity);
+  _$WordCopyWith<_Word> get copyWith =>
+      __$WordCopyWithImpl<_Word>(this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$WordToJson(
+      this,
+    );
+  }
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _WordModel &&
+            other is _Word &&
+            (identical(other.id, id) || other.id == id) &&
             (identical(other.word, word) || other.word == word) &&
-            (identical(other.phonetics, phonetics) ||
-                other.phonetics == phonetics) &&
-            (identical(other.partOfSpeech, partOfSpeech) ||
-                other.partOfSpeech == partOfSpeech) &&
             (identical(other.definition, definition) ||
                 other.definition == definition) &&
-            (identical(other.example, example) || other.example == example));
+            (identical(other.example, example) || other.example == example) &&
+            (identical(other.level, level) || other.level == level) &&
+            (identical(other.topicId, topicId) || other.topicId == topicId));
   }
 
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(
-      runtimeType, word, phonetics, partOfSpeech, definition, example);
+  int get hashCode =>
+      Object.hash(runtimeType, id, word, definition, example, level, topicId);
 
   @override
   String toString() {
-    return 'WordModel(word: $word, phonetics: $phonetics, partOfSpeech: $partOfSpeech, definition: $definition, example: $example)';
+    return 'Word(id: $id, word: $word, definition: $definition, example: $example, level: $level, topicId: $topicId)';
   }
 }
 
 /// @nodoc
-abstract mixin class _$WordModelCopyWith<$Res>
-    implements $WordModelCopyWith<$Res> {
-  factory _$WordModelCopyWith(
-          _WordModel value, $Res Function(_WordModel) _then) =
-      __$WordModelCopyWithImpl;
+abstract mixin class _$WordCopyWith<$Res> implements $WordCopyWith<$Res> {
+  factory _$WordCopyWith(_Word value, $Res Function(_Word) _then) =
+      __$WordCopyWithImpl;
   @override
   @useResult
   $Res call(
-      {String word,
-      String phonetics,
-      String partOfSpeech,
+      {int id,
+      String word,
       String definition,
-      String example});
+      String? example,
+      VocabularyLevel? level,
+      int? topicId});
 }
 
 /// @nodoc
-class __$WordModelCopyWithImpl<$Res> implements _$WordModelCopyWith<$Res> {
-  __$WordModelCopyWithImpl(this._self, this._then);
+class __$WordCopyWithImpl<$Res> implements _$WordCopyWith<$Res> {
+  __$WordCopyWithImpl(this._self, this._then);
 
-  final _WordModel _self;
-  final $Res Function(_WordModel) _then;
+  final _Word _self;
+  final $Res Function(_Word) _then;
 
-  /// Create a copy of WordModel
+  /// Create a copy of Word
   /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
   $Res call({
+    Object? id = null,
     Object? word = null,
-    Object? phonetics = null,
-    Object? partOfSpeech = null,
     Object? definition = null,
-    Object? example = null,
+    Object? example = freezed,
+    Object? level = freezed,
+    Object? topicId = freezed,
   }) {
-    return _then(_WordModel(
+    return _then(_Word(
+      id: null == id
+          ? _self.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as int,
       word: null == word
           ? _self.word
           : word // ignore: cast_nullable_to_non_nullable
-              as String,
-      phonetics: null == phonetics
-          ? _self.phonetics
-          : phonetics // ignore: cast_nullable_to_non_nullable
-              as String,
-      partOfSpeech: null == partOfSpeech
-          ? _self.partOfSpeech
-          : partOfSpeech // ignore: cast_nullable_to_non_nullable
               as String,
       definition: null == definition
           ? _self.definition
           : definition // ignore: cast_nullable_to_non_nullable
               as String,
-      example: null == example
+      example: freezed == example
           ? _self.example
           : example // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
+      level: freezed == level
+          ? _self.level
+          : level // ignore: cast_nullable_to_non_nullable
+              as VocabularyLevel?,
+      topicId: freezed == topicId
+          ? _self.topicId
+          : topicId // ignore: cast_nullable_to_non_nullable
+              as int?,
     ));
   }
 }

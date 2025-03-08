@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:wordstock/onboarding/cubit/onboarding_cubit.dart';
-import 'package:wordstock/onboarding/widgets/selector.dart';
+import 'package:wordstock/features/onboarding/cubit/onboarding_cubit.dart';
+import 'package:wordstock/features/onboarding/widgets/selector.dart';
 
 class VocabularyLevelPage extends StatelessWidget {
   const VocabularyLevelPage({super.key});

@@ -2,9 +2,9 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:wordstock/features/home/cubit/cubit.dart';
+import 'package:wordstock/features/home/widgets/word_card.dart';
 import 'package:wordstock/gen/assets.gen.dart';
-import 'package:wordstock/home/cubit/cubit.dart';
-import 'package:wordstock/home/widgets/word_card.dart';
 import 'package:wordstock/widgets/button.dart';
 
 /// {@template home_body}

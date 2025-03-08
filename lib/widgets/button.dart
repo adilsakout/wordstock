@@ -1,8 +1,5 @@
-import 'dart:developer';
-
 import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
-import 'package:wordstock/gen/assets.gen.dart';
 
 class PushableButton extends StatefulWidget {
   const PushableButton({
@@ -19,10 +16,12 @@ class PushableButton extends StatefulWidget {
     this.suffixIcon,
     this.prefixIcon,
     this.spacing = 0.0,
+    this.shouldPlaySound = true,
   });
   final double width;
   final double height;
   final String text;
+  final bool shouldPlaySound;
   final VoidCallback onTap;
   final Color buttonColor;
   final Color shadowColor;

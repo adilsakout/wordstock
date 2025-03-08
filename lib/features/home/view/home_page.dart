@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:wordstock/home/cubit/cubit.dart';
-import 'package:wordstock/home/widgets/home_body.dart';
+import 'package:wordstock/features/home/cubit/cubit.dart';
+import 'package:wordstock/features/home/widgets/home_body.dart';
 import 'package:wordstock/repositories/word_repository.dart';
 
 /// {@template home_page}

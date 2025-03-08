@@ -5,9 +5,9 @@ import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:permission_handler/permission_handler.dart';
-import 'package:wordstock/home/cubit/cubit.dart';
-import 'package:wordstock/onboarding/cubit/onboarding_cubit.dart';
-import 'package:wordstock/onboarding/widgets/wordstock_slider.dart';
+import 'package:wordstock/features/home/cubit/cubit.dart';
+import 'package:wordstock/features/onboarding/cubit/onboarding_cubit.dart';
+import 'package:wordstock/features/onboarding/widgets/wordstock_slider.dart';
 import 'package:wordstock/widgets/button.dart';
 
 class NotificationPermissionPage extends StatefulWidget {

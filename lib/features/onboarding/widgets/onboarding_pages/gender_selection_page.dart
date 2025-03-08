@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:wordstock/onboarding/cubit/cubit.dart';
-import 'package:wordstock/onboarding/widgets/selector.dart';
+import 'package:wordstock/features/onboarding/cubit/cubit.dart';
+import 'package:wordstock/features/onboarding/widgets/selector.dart';
 
 class GenderSelectionPage extends StatefulWidget {
   const GenderSelectionPage({super.key});

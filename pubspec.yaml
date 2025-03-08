@@ -14,6 +14,7 @@ dependencies:
     sdk: flutter
   flutter_animate: ^4.5.2
   flutter_bloc: ^8.1.6
+  flutter_dotenv: ^5.2.1
   flutter_local_notifications: ^18.0.1
   flutter_localizations:
     sdk: flutter
@@ -23,9 +24,12 @@ dependencies:
   go_router: ^14.8.1
   haptic_feedback: ^0.5.1+1
   intl: ^0.19.0
+  json_annotation: ^4.9.0
   lottie: ^3.3.1
   permission_handler: ^11.4.0
   shared_preferences: ^2.5.2
+  supabase_flutter: ^2.8.4
+  text_to_speech: ^0.2.3
 
 dev_dependencies:
   bloc_test: ^9.1.7
@@ -33,6 +37,7 @@ dev_dependencies:
   flutter_gen_runner:
   flutter_test:
     sdk: flutter
+  json_serializable: ^6.9.4
   mocktail: ^1.0.4
   very_good_analysis: ^6.0.0
 
@@ -45,3 +50,4 @@ flutter:
     - assets/images/
     - assets/icons/
     - assets/sounds/
+    - .env

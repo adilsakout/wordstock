@@ -1,11 +1,29 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
+import 'package:text_to_speech/text_to_speech.dart';
 import 'package:wordstock/model/word.dart';
 import 'package:wordstock/widgets/button.dart';
 
-class WordCard extends StatelessWidget {
+class WordCard extends StatefulWidget {
   const WordCard({required this.word, super.key});
-  final WordModel word;
+  final Word word;
+
+  @override
+  State<WordCard> createState() => _WordCardState();
+}
+
+class _WordCardState extends State<WordCard> {
+  final TextToSpeech tts = TextToSpeech();
+
+  Future<void> speak() async {
+    await tts.speak(widget.word.word);
+  }
+
+  @override
+  void dispose() {
+    tts.stop();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -19,7 +37,7 @@ class WordCard extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text(
-                  word.word,
+                  widget.word.word,
                   style: Theme.of(context).textTheme.titleLarge?.copyWith(
                         fontSize: 40,
                         fontWeight: FontWeight.w600,
@@ -27,17 +45,9 @@ class WordCard extends StatelessWidget {
                 ).animate(delay: 0.5.seconds).slideY(),
                 const SizedBox(height: 10),
                 Text(
-                  word.partOfSpeech,
-                  style: Theme.of(context).textTheme.bodyMedium,
-                ),
-                const SizedBox(height: 10),
-                Text(
-                  word.definition,
-                  style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                        fontSize: 16,
-                        color: const Color(0xff999999),
-                      ),
+                  widget.word.definition,
                   textAlign: TextAlign.center,
+                  style: Theme.of(context).textTheme.bodyMedium,
                 ),
               ],
             ),
@@ -64,10 +74,11 @@ class WordCard extends StatelessWidget {
                   height: 50,
                   text: '',
                   iconSize: 25,
+                  shouldPlaySound: false,
                   buttonColor: const Color(0xff1CB0F6),
                   shadowColor: const Color(0xff1899D6),
                   suffixIcon: Icons.volume_down_rounded,
-                  onTap: () {},
+                  onTap: speak,
                 ),
                 PushableButton(
                   width: 50,

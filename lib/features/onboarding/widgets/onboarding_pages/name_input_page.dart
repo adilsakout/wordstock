@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:wordstock/onboarding/cubit/cubit.dart';
+import 'package:wordstock/features/onboarding/cubit/cubit.dart';
 import 'package:wordstock/widgets/button.dart';
 
 class NameInputPage extends StatefulWidget {
