@@ -8,7 +8,7 @@ environment:
 
 dependencies:
   animated_flip_counter: ^0.3.4
-  audioplayers: ^6.2.0
+  audioplayers: ^6.3.0
   bloc: ^8.1.4
   equatable: ^2.0.7
   flutter:
