@@ -63,7 +63,9 @@ class PushableButtonState extends State<PushableButton>
   void _handleTapUp(TapUpDetails details) {
     _animationController.reverse();
     widget.onTap();
-    _playSound();
+    if (widget.shouldPlaySound) {
+      _playSound();
+    }
   }
 
   void _handleTapCancel() {

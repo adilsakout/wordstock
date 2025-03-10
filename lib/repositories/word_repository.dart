@@ -2,28 +2,33 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:wordstock/model/models.dart';
 
 class WordRepository {
-  WordRepository() : _supabase = Supabase.instance.client;
+  WordRepository()
+      : _supabase = Supabase.instance.client,
+        _userId = Supabase.instance.client.auth.currentUser!.id;
   final SupabaseClient _supabase;
-
+  final String _userId;
   // ================== Core Word Operations ================== //
 
   /// Get words filtered by level and topics
   Future<List<Word>> getWords({
-    // required VocabularyLevel level,
-    // required List<int> topicIds,
     int page = 0,
     int pageSize = 20,
   }) async {
     try {
-      final response = await _supabase
-          .from('words')
-          .select()
-          // .eq('level', level.name)
-          // .in_('topic_id', topicIds)
-          .range(page * pageSize, (page + 1) * pageSize - 1)
-          .order('id', ascending: true);
+      final response = await _supabase.from('words').select('''
+          id, word, definition, example, level, topic_id, 
+          user_favorites!fk_word(user_id)
+        ''').limit(100);
 
-      return response.map(Word.fromJson).toList();
+      final words = response.map((json) {
+        final isFavorite =
+            (json['user_favorites'] as List<dynamic>?)?.isNotEmpty ?? false;
+
+        return Word.fromJson({...json, 'isFavorite': isFavorite});
+      }).toList()
+        ..shuffle();
+
+      return words;
     } catch (e) {
       throw Exception('Failed to load words: $e');
     }
@@ -53,64 +58,92 @@ class WordRepository {
     }
   }
 
-  // ================== Progress Tracking ================== //
-
-  // Commented out for now
-  /*
-  /// Track word interaction (correct/incorrect answer)
-  Future<void> trackWordProgress({
-    required String userId,
+  Future<void> toggleFavorite({
     required int wordId,
-    required bool isCorrect,
   }) async {
     try {
-      // Get current progress
-      final currentProgress = await _supabase
-          .from('user_progress')
+      final isFavorited = await _supabase
+          .from('user_favorites')
           .select()
-          .eq('user_id', userId)
+          .eq('user_id', _userId)
           .eq('word_id', wordId)
           .maybeSingle();
 
-      // Calculate new values
-      final timesReviewed = (currentProgress?['times_reviewed'] ?? 0) + 1;
-      final nextReviewDate = _calculateNextReviewDate(isCorrect, timesReviewed);
-
-      // Upsert progress
-      await _supabase.from('user_progress').upsert({
-        'user_id': userId,
-        'word_id': wordId,
-        'mastered': isCorrect,
-        'next_review_date': nextReviewDate.toIso8601String(),
-        'times_reviewed': timesReviewed,
-        'last_reviewed': DateTime.now().toIso8601String(),
-      });
+      if (isFavorited != null) {
+        await _supabase
+            .from('user_favorites')
+            .delete()
+            .eq('user_id', _userId)
+            .eq('word_id', wordId);
+      } else {
+        await _supabase.from('user_favorites').insert({
+          'user_id': _userId,
+          'word_id': wordId,
+        });
+      }
     } catch (e) {
-      throw Exception('Failed to track progress: ${e.toString()}');
+      throw Exception('Failed to toggle favorite: ${e.toString()}');
     }
   }
 
-  /// Get user's progress for a specific word
-  Future<UserProgress?> getWordProgress(String userId, int wordId) async {
+  /// Get all favorite words for a user
+  Future<List<Word>> getFavorites() async {
     try {
       final response = await _supabase
-          .from('user_progress')
-          .select()
-          .eq('user_id', userId)
-          .eq('word_id', wordId)
-          .maybeSingle();
-
-      return response != null ? UserProgress.fromJson(response) : null;
+          .from('user_favorites')
+          .select(
+            '*, words!fk_word(*)',
+          ) // Explicitly use 'fk_word' relationship
+          .eq('user_id', _userId);
+      return response
+          .map((json) => Word.fromJson(json['words'] as Map<String, dynamic>))
+          .toList();
     } catch (e) {
-      throw Exception('Failed to load progress: ${e.toString()}');
+      throw Exception('Failed to load favorites: ${e.toString()}');
     }
   }
 
-  // ================== Helper Methods ================== //
+  /// Check if a word is favorited
+  Future<bool> isFavorited(int wordId) async {
+    try {
+      final response = await _supabase
+          .from('user_favorites')
+          .select()
+          .eq('user_id', _userId)
+          .eq('word_id', wordId)
+          .maybeSingle();
 
-  DateTime _calculateNextReviewDate(bool isCorrect, int timesReviewed) {
-    // TODO: Implement actual review scheduling logic
-    return DateTime.now().add(const Duration(days: 1));
+      return response != null;
+    } catch (e) {
+      return false;
+    }
   }
-  */
+
+  /// Mark words as learned
+  Future<void> markWordAsLearned(List<int> wordIds) async {
+    try {
+      if (wordIds.isEmpty) return;
+
+      final now = DateTime.now();
+      final nextReviewDate = now.add(const Duration(days: 1));
+
+      final uniqueWordIds = wordIds.toSet().toList();
+
+      await _supabase.from('user_progress').upsert(
+            uniqueWordIds
+                .map(
+                  (wordId) => {
+                    'user_id': _userId,
+                    'word_id': wordId,
+                    'mastered': true,
+                    'next_review_date': nextReviewDate.toIso8601String(),
+                  },
+                )
+                .toList(),
+            onConflict: 'user_id,word_id',
+          );
+    } catch (e) {
+      throw Exception('Failed to learn word: $e');
+    }
+  }
 }

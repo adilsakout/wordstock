@@ -21,6 +21,7 @@ mixin _$Word {
   String? get example;
   VocabularyLevel? get level;
   int? get topicId;
+  bool? get isFavorite;
 
   /// Create a copy of Word
   /// with the given fields replaced by the non-null parameter values.
@@ -43,17 +44,19 @@ mixin _$Word {
                 other.definition == definition) &&
             (identical(other.example, example) || other.example == example) &&
             (identical(other.level, level) || other.level == level) &&
-            (identical(other.topicId, topicId) || other.topicId == topicId));
+            (identical(other.topicId, topicId) || other.topicId == topicId) &&
+            (identical(other.isFavorite, isFavorite) ||
+                other.isFavorite == isFavorite));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, id, word, definition, example, level, topicId);
+  int get hashCode => Object.hash(
+      runtimeType, id, word, definition, example, level, topicId, isFavorite);
 
   @override
   String toString() {
-    return 'Word(id: $id, word: $word, definition: $definition, example: $example, level: $level, topicId: $topicId)';
+    return 'Word(id: $id, word: $word, definition: $definition, example: $example, level: $level, topicId: $topicId, isFavorite: $isFavorite)';
   }
 }
 
@@ -68,7 +71,8 @@ abstract mixin class $WordCopyWith<$Res> {
       String definition,
       String? example,
       VocabularyLevel? level,
-      int? topicId});
+      int? topicId,
+      bool? isFavorite});
 }
 
 /// @nodoc
@@ -89,6 +93,7 @@ class _$WordCopyWithImpl<$Res> implements $WordCopyWith<$Res> {
     Object? example = freezed,
     Object? level = freezed,
     Object? topicId = freezed,
+    Object? isFavorite = freezed,
   }) {
     return _then(_self.copyWith(
       id: null == id
@@ -115,6 +120,10 @@ class _$WordCopyWithImpl<$Res> implements $WordCopyWith<$Res> {
           ? _self.topicId
           : topicId // ignore: cast_nullable_to_non_nullable
               as int?,
+      isFavorite: freezed == isFavorite
+          ? _self.isFavorite
+          : isFavorite // ignore: cast_nullable_to_non_nullable
+              as bool?,
     ));
   }
 }
@@ -128,7 +137,8 @@ class _Word implements Word {
       required this.definition,
       this.example,
       this.level,
-      this.topicId});
+      this.topicId,
+      this.isFavorite});
   factory _Word.fromJson(Map<String, dynamic> json) => _$WordFromJson(json);
 
   @override
@@ -143,6 +153,8 @@ class _Word implements Word {
   final VocabularyLevel? level;
   @override
   final int? topicId;
+  @override
+  final bool? isFavorite;
 
   /// Create a copy of Word
   /// with the given fields replaced by the non-null parameter values.
@@ -170,17 +182,19 @@ class _Word implements Word {
                 other.definition == definition) &&
             (identical(other.example, example) || other.example == example) &&
             (identical(other.level, level) || other.level == level) &&
-            (identical(other.topicId, topicId) || other.topicId == topicId));
+            (identical(other.topicId, topicId) || other.topicId == topicId) &&
+            (identical(other.isFavorite, isFavorite) ||
+                other.isFavorite == isFavorite));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, id, word, definition, example, level, topicId);
+  int get hashCode => Object.hash(
+      runtimeType, id, word, definition, example, level, topicId, isFavorite);
 
   @override
   String toString() {
-    return 'Word(id: $id, word: $word, definition: $definition, example: $example, level: $level, topicId: $topicId)';
+    return 'Word(id: $id, word: $word, definition: $definition, example: $example, level: $level, topicId: $topicId, isFavorite: $isFavorite)';
   }
 }
 
@@ -196,7 +210,8 @@ abstract mixin class _$WordCopyWith<$Res> implements $WordCopyWith<$Res> {
       String definition,
       String? example,
       VocabularyLevel? level,
-      int? topicId});
+      int? topicId,
+      bool? isFavorite});
 }
 
 /// @nodoc
@@ -217,6 +232,7 @@ class __$WordCopyWithImpl<$Res> implements _$WordCopyWith<$Res> {
     Object? example = freezed,
     Object? level = freezed,
     Object? topicId = freezed,
+    Object? isFavorite = freezed,
   }) {
     return _then(_Word(
       id: null == id
@@ -243,6 +259,10 @@ class __$WordCopyWithImpl<$Res> implements _$WordCopyWith<$Res> {
           ? _self.topicId
           : topicId // ignore: cast_nullable_to_non_nullable
               as int?,
+      isFavorite: freezed == isFavorite
+          ? _self.isFavorite
+          : isFavorite // ignore: cast_nullable_to_non_nullable
+              as bool?,
     ));
   }
 }

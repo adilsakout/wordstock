@@ -1,10 +1,14 @@
 // ignore_for_file: use_build_context_synchronously
 
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
+import 'package:go_router/go_router.dart';
+import 'package:wordstock/features/favorite_words/favorite_words.dart';
 import 'package:wordstock/features/home/cubit/cubit.dart';
 import 'package:wordstock/features/home/widgets/word_card.dart';
-import 'package:wordstock/gen/assets.gen.dart';
+import 'package:wordstock/features/practice/practice.dart';
+import 'package:wordstock/features/user_data/cubit/user_data_cubit.dart';
+import 'package:wordstock/features/user_data/widget/user_point_widget.dart';
+import 'package:wordstock/features/user_data/widget/user_strek_widget.dart';
 import 'package:wordstock/widgets/button.dart';
 
 /// {@template home_body}
@@ -49,81 +53,33 @@ class _HomeBodyState extends State<HomeBody> {
                   itemCount: state.words.length,
                   scrollDirection: Axis.vertical,
                   onPageChanged: (index) {
-                    context.read<HomeCubit>().onWordRead();
+                    context.read<HomeCubit>().markWordAsLearned(
+                          state.words[index].id,
+                        );
+                    context.read<StreakCubit>().updateStreak();
                   },
                   itemBuilder: (context, index) {
                     return WordCard(
                       word: state.words[index],
+                      onToggleFavorite: () {
+                        context
+                            .read<HomeCubit>()
+                            .toggleFavorite(state.words[index].id);
+                      },
                     );
                   },
                 ),
-                Positioned(
+                const Positioned(
                   top: 20,
                   left: 0,
                   right: 0,
                   child: Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 20),
+                    padding: EdgeInsets.symmetric(horizontal: 20),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Container(
-                          padding: const EdgeInsets.all(5),
-                          height: 50,
-                          decoration: BoxDecoration(
-                            color: Theme.of(context).colorScheme.surface,
-                            border: Border.all(
-                              color: const Color(0xffF97316),
-                              width: 2,
-                            ),
-                            borderRadius: BorderRadius.circular(10),
-                          ),
-                          child: Row(
-                            children: [
-                              SvgPicture.asset(Assets.icons.flame),
-                              const SizedBox(width: 5),
-                              Text(
-                                '100',
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .bodyMedium
-                                    ?.copyWith(
-                                      fontSize: 20,
-                                      fontWeight: FontWeight.w600,
-                                      color: const Color(0xffF97316),
-                                    ),
-                              ),
-                            ],
-                          ),
-                        ),
-                        Container(
-                          padding: const EdgeInsets.all(5),
-                          height: 50,
-                          decoration: BoxDecoration(
-                            color: Theme.of(context).colorScheme.surface,
-                            border: Border.all(
-                              color: const Color(0xffFFC20E),
-                              width: 2,
-                            ),
-                            borderRadius: BorderRadius.circular(10),
-                          ),
-                          child: Row(
-                            children: [
-                              SvgPicture.asset(Assets.icons.coin),
-                              const SizedBox(width: 5),
-                              Text(
-                                '192',
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .bodyMedium
-                                    ?.copyWith(
-                                      fontSize: 20,
-                                      fontWeight: FontWeight.w600,
-                                      color: const Color(0xffFFC20E),
-                                    ),
-                              ),
-                            ],
-                          ),
-                        ),
+                        UserStreakWidget(),
+                        UserPointWidget(),
                       ],
                     ),
                   ),
@@ -142,22 +98,24 @@ class _HomeBodyState extends State<HomeBody> {
                           height: 50,
                           text: '',
                           iconSize: 25,
-                          suffixIcon: Icons.category,
-                          buttonColor: const Color(0xffF9C835),
-                          shadowColor: const Color(0xffCDB054),
-                          onTap: () {},
+                          suffixIcon: Icons.favorite,
+                          buttonColor: const Color(0xffE94E77),
+                          shadowColor: const Color(0xffA8002C),
+                          onTap: () {
+                            context.push(FavoriteWordsPage.name);
+                          },
                         ),
-                        const SizedBox(width: 20),
-                        PushableButton(
-                          width: 50,
-                          height: 50,
-                          text: '',
-                          iconSize: 25,
-                          suffixIcon: Icons.person,
-                          buttonColor: const Color(0xffF9C835),
-                          shadowColor: const Color(0xffCDB054),
-                          onTap: () {},
-                        ),
+                        // const SizedBox(width: 20),
+                        // PushableButton(
+                        //   width: 50,
+                        //   height: 50,
+                        //   text: '',
+                        //   iconSize: 25,
+                        //   suffixIcon: Icons.person,
+                        //   buttonColor: const Color(0xffF9C835),
+                        //   shadowColor: const Color(0xffCDB054),
+                        //   onTap: () {},
+                        // ),
                         const Spacer(),
                         PushableButton(
                           width: 140,
@@ -166,7 +124,9 @@ class _HomeBodyState extends State<HomeBody> {
                           spacing: 10,
                           iconSize: 25,
                           prefixIcon: Icons.gamepad_rounded,
-                          onTap: () {},
+                          onTap: () {
+                            context.push(PracticePage.name);
+                          },
                         ),
                       ],
                     ),

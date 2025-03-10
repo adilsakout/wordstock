@@ -13,6 +13,7 @@ sealed class Word with _$Word {
     String? example,
     VocabularyLevel? level,
     int? topicId,
+    bool? isFavorite,
   }) = _Word;
 
   factory Word.fromJson(Map<String, dynamic> json) => _$WordFromJson(json);

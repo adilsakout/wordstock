@@ -6,11 +6,12 @@ part 'user_profile.g.dart';
 @freezed
 sealed class UserProfile with _$UserProfile {
   const factory UserProfile({
-    required String userId,
-    required VocabularyLevel level,
-    required int dailyStreak,
-    required DateTime lastActiveDate,
-    required int totalPoints,
+    @JsonKey(name: 'user_id') required String userId,
+    @JsonKey(name: 'vocabulary_level') required VocabularyLevel level,
+    @JsonKey(name: 'daily_streak') required int dailyStreak,
+    @JsonKey(name: 'last_active_date') required DateTime lastActiveDate,
+    @JsonKey(name: 'longest_streak') required int longestStreak,
+    @JsonKey(name: 'total_points') int? totalPoints,
   }) = _UserProfile;
 
   factory UserProfile.fromJson(Map<String, dynamic> json) =>
