@@ -121,3 +121,6 @@ app.*.map.json
 
 # Environment variables
 .env
+
+# Service account
+assets/secrets/service_account.json
