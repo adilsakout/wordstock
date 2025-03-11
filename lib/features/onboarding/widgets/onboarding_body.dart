@@ -49,13 +49,13 @@ class OnboardingBody extends StatelessWidget {
                       image: Assets.images.onb1.path,
                       title: l10n.welcomeTitle,
                       description: l10n.welcomeDescription,
-                      buttonText: 'Get Started',
+                      buttonText: l10n.getStarted,
                     ),
                     InfoPage(
                       image: Assets.images.onb2.path,
                       title: l10n.infoTitle,
                       description: l10n.infoDescription,
-                      buttonText: 'Continue',
+                      buttonText: l10n.continueText,
                     ),
                     const AgeSelectionPage(),
                     const GenderSelectionPage(),
@@ -63,11 +63,10 @@ class OnboardingBody extends StatelessWidget {
                     InfoPage(
                       image: Assets.images.onb3.path,
                       title: state.userName.isEmpty
-                          ? "Let's make WordStock yours"
-                          : "Let's make WordStock yours, ${state.userName}",
-                      description:
-                          'Some final questions to help us personalize your experience.',
-                      buttonText: 'Continue',
+                          ? l10n.makeYoursTitle
+                          : l10n.makeYoursWithNameTitle(state.userName),
+                      description: l10n.personalizeDescription,
+                      buttonText: l10n.continueText,
                       imageWidth: 300,
                       imageHeight: 300,
                     ),
@@ -77,11 +76,10 @@ class OnboardingBody extends StatelessWidget {
                     InfoPage(
                       image: Assets.images.onb3.path,
                       title: state.userName.isEmpty
-                          ? "Let's make WordStock yours"
-                          : "Let's make WordStock yours, ${state.userName}",
-                      description:
-                          'Some final questions to help us personalize your experience.',
-                      buttonText: 'Continue',
+                          ? l10n.makeYoursTitle
+                          : l10n.makeYoursWithNameTitle(state.userName),
+                      description: l10n.personalizeDescription,
+                      buttonText: l10n.continueText,
                       imageWidth: 300,
                       imageHeight: 300,
                     ),

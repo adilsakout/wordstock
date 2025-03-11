@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:wordstock/features/home/cubit/cubit.dart';
 import 'package:wordstock/features/home/widgets/home_body.dart';
-import 'package:wordstock/repositories/word_repository.dart';
 
 /// {@template home_page}
 /// A description for HomePage
@@ -17,11 +15,8 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => HomeCubit(wordRepository: WordRepository()),
-      child: const Scaffold(
-        body: HomeView(),
-      ),
+    return const Scaffold(
+      body: HomeView(),
     );
   }
 }
@@ -29,10 +24,15 @@ class HomePage extends StatelessWidget {
 /// {@template home_view}
 /// Displays the Body of HomeView
 /// {@endtemplate}
-class HomeView extends StatelessWidget {
+class HomeView extends StatefulWidget {
   /// {@macro home_view}
   const HomeView({super.key});
 
+  @override
+  State<HomeView> createState() => _HomeViewState();
+}
+
+class _HomeViewState extends State<HomeView> {
   @override
   Widget build(BuildContext context) {
     return const HomeBody();

@@ -1,7 +1,10 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:share_plus/share_plus.dart';
-import 'package:text_to_speech/text_to_speech.dart';
+import 'package:wordstock/features/home/cubit/home_cubit.dart';
 import 'package:wordstock/model/word.dart';
 import 'package:wordstock/widgets/button.dart';
 
@@ -19,11 +22,7 @@ class WordCard extends StatefulWidget {
 }
 
 class _WordCardState extends State<WordCard> {
-  final TextToSpeech tts = TextToSpeech();
-
-  Future<void> speak() async {
-    await tts.speak(widget.word.word);
-  }
+  bool _showHeart = false;
 
   Future<void> shareWord() async {
     final text = '''
@@ -35,24 +34,22 @@ ${widget.word.definition}
 
 #Wordstock #Vocabulary
 ''';
-
     await Share.share(text);
   }
 
-  @override
-  void initState() {
-    super.initState();
-    initTTS();
-  }
+  void _handleFavoriteClick() {
+    final isCurrentlyFavorite = widget.word.isFavorite ?? false;
+    widget.onToggleFavorite();
 
-  Future<void> initTTS() async {
-    await tts.setLanguage('en-US');
-  }
-
-  @override
-  void dispose() {
-    tts.stop();
-    super.dispose();
+    if (!isCurrentlyFavorite) {
+      // Show rising heart when adding to favorites
+      setState(() => _showHeart = true);
+      Future.delayed(const Duration(seconds: 2), () {
+        if (mounted) {
+          setState(() => _showHeart = false);
+        }
+      });
+    }
   }
 
   @override
@@ -83,6 +80,29 @@ ${widget.word.definition}
               ],
             ),
           ),
+          if (_showHeart)
+            Positioned(
+              bottom: 150,
+              child: const Icon(
+                Icons.favorite,
+                size: 150,
+                color: Color(0xffE94E77),
+              )
+                  .animate(
+                    onComplete: (controller) => controller.reverse(),
+                  )
+                  .scale(
+                    duration: 400.ms,
+                    curve: Curves.easeOutBack,
+                  )
+                  .fadeIn(duration: 300.ms)
+                  .moveY(
+                    begin: 0,
+                    end: -200,
+                    duration: 600.ms,
+                    curve: Curves.easeOutCubic,
+                  ),
+            ),
           Positioned(
             bottom: 150,
             left: 0,
@@ -105,19 +125,6 @@ ${widget.word.definition}
                   height: 50,
                   text: '',
                   iconSize: 25,
-                  shouldPlaySound: false,
-                  buttonColor: const Color(0xff1CB0F6),
-                  shadowColor: const Color(0xff1899D6),
-                  suffixIcon: Icons.volume_down_rounded,
-                  onTap: () async {
-                    await speak();
-                  },
-                ),
-                PushableButton(
-                  width: 50,
-                  height: 50,
-                  text: '',
-                  iconSize: 25,
                   buttonColor: isFavorite
                       ? const Color(0xffE94E77)
                       : const Color(0xff1CB0F6),
@@ -127,22 +134,20 @@ ${widget.word.definition}
                   suffixIcon: isFavorite
                       ? Icons.favorite
                       : Icons.favorite_border_outlined,
-                  onTap: widget.onToggleFavorite,
-                )
-                    .animate(target: isFavorite ? 1 : 0)
-                    .scaleXY(
-                      begin: 0.9,
-                      end: 1.1,
-                      curve: Curves.easeInOut,
-                      duration: 200.ms,
-                    )
-                    .then()
-                    .scaleXY(
-                      begin: 1.1,
-                      end: 0.9,
-                      curve: Curves.easeInOut,
-                      duration: 200.ms,
-                    ),
+                  onTap: _handleFavoriteClick,
+                ),
+                PushableButton(
+                  width: 50,
+                  height: 50,
+                  text: '',
+                  iconSize: 25,
+                  shouldPlaySound: false,
+                  buttonColor: const Color(0xff1CB0F6),
+                  shadowColor: const Color(0xff1899D6),
+                  suffixIcon: Icons.volume_down_rounded,
+                  onTap: () =>
+                      context.read<HomeCubit>().speakWord(widget.word.word),
+                ),
               ],
             ),
           ),

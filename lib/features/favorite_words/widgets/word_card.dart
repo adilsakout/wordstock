@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:share_plus/share_plus.dart';
-import 'package:text_to_speech/text_to_speech.dart';
+import 'package:wordstock/features/favorite_words/cubit/favorite_words_cubit.dart';
 import 'package:wordstock/model/word.dart';
 import 'package:wordstock/widgets/button.dart';
 
-class WordCard extends StatefulWidget {
-  const WordCard({
+class FavoriteWordCard extends StatefulWidget {
+  const FavoriteWordCard({
     required this.word,
     required this.onToggleFavorite,
     super.key,
@@ -16,16 +17,10 @@ class WordCard extends StatefulWidget {
   final VoidCallback onToggleFavorite;
 
   @override
-  State<WordCard> createState() => _WordCardState();
+  State<FavoriteWordCard> createState() => _FavoriteWordCardState();
 }
 
-class _WordCardState extends State<WordCard> {
-  final TextToSpeech tts = TextToSpeech();
-
-  Future<void> speak() async {
-    await tts.speak(widget.word.word);
-  }
-
+class _FavoriteWordCardState extends State<FavoriteWordCard> {
   Future<void> shareWord() async {
     final text = '''
 📚 Word of the Day:
@@ -37,12 +32,6 @@ ${widget.word.definition}
 #Wordstock #Vocabulary
 ''';
     await Share.share(text);
-  }
-
-  @override
-  void dispose() {
-    tts.stop();
-    super.dispose();
   }
 
   @override
@@ -91,7 +80,9 @@ ${widget.word.definition}
                     buttonColor: const Color(0xff1CB0F6),
                     shadowColor: const Color(0xff1899D6),
                     suffixIcon: Icons.volume_down_rounded,
-                    onTap: speak,
+                    onTap: () => context
+                        .read<FavoriteWordsCubit>()
+                        .speakWord(widget.word.word),
                   ),
                   const SizedBox(width: 8),
                   PushableButton(
@@ -123,7 +114,7 @@ ${widget.word.definition}
           ),
           const SizedBox(height: 8),
           Text(
-            widget.word.definition ?? '',
+            widget.word.definition,
             style: Theme.of(context).textTheme.bodyMedium,
           ),
         ],

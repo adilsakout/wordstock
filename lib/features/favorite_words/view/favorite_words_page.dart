@@ -20,11 +20,8 @@ class FavoriteWordsPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => context.read<FavoriteWordsCubit>(),
-      child: const Scaffold(
-        body: FavoriteWordsView(),
-      ),
+    return const Scaffold(
+      body: FavoriteWordsView(),
     );
   }
 }
@@ -32,9 +29,20 @@ class FavoriteWordsPage extends StatelessWidget {
 /// {@template favorite_words_view}
 /// Displays the Body of FavoriteWordsView
 /// {@endtemplate}
-class FavoriteWordsView extends StatelessWidget {
+class FavoriteWordsView extends StatefulWidget {
   /// {@macro favorite_words_view}
   const FavoriteWordsView({super.key});
+
+  @override
+  State<FavoriteWordsView> createState() => _FavoriteWordsViewState();
+}
+
+class _FavoriteWordsViewState extends State<FavoriteWordsView> {
+  @override
+  void initState() {
+    super.initState();
+    context.read<FavoriteWordsCubit>().loadFavorites();
+  }
 
   @override
   Widget build(BuildContext context) {

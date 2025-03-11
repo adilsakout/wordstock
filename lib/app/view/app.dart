@@ -10,6 +10,7 @@ import 'package:wordstock/features/onboarding/onboarding.dart';
 import 'package:wordstock/features/practice/practice.dart';
 import 'package:wordstock/features/user_data/cubit/user_data_cubit.dart';
 import 'package:wordstock/l10n/l10n.dart';
+import 'package:wordstock/repositories/tts_repository.dart';
 import 'package:wordstock/repositories/user_repository.dart';
 import 'package:wordstock/repositories/word_repository.dart';
 
@@ -70,7 +71,10 @@ class _AppState extends State<App> {
     return MultiBlocProvider(
       providers: [
         BlocProvider<HomeCubit>(
-          create: (context) => HomeCubit(wordRepository: WordRepository()),
+          create: (context) => HomeCubit(
+            wordRepository: WordRepository(),
+            ttsRepository: TTSRepository(),
+          ),
         ),
         BlocProvider<StreakCubit>(
           create: (context) => StreakCubit(userRepository: UserRepository()),
@@ -78,6 +82,7 @@ class _AppState extends State<App> {
         BlocProvider<FavoriteWordsCubit>(
           create: (context) => FavoriteWordsCubit(
             wordRepository: WordRepository(),
+            ttsRepository: TTSRepository(),
           ),
         ),
       ],

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:wordstock/features/onboarding/cubit/onboarding_cubit.dart';
 import 'package:wordstock/features/onboarding/widgets/selector.dart';
+import 'package:wordstock/l10n/l10n.dart';
 import 'package:wordstock/widgets/button.dart';
 
 class TopicSelectionPage extends StatelessWidget {
@@ -9,6 +10,7 @@ class TopicSelectionPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = context.l10n;
     return BlocBuilder<OnboardingCubit, OnboardingState>(
       builder: (context, state) {
         final cubit = context.read<OnboardingCubit>();
@@ -16,26 +18,26 @@ class TopicSelectionPage extends StatelessWidget {
           padding: const EdgeInsets.all(20),
           child: Column(
             children: [
-              const Text(
-                'Which topics are you interested in?',
+              Text(
+                l10n.topicSelectionTitle,
                 textAlign: TextAlign.center,
-                style: TextStyle(
+                style: const TextStyle(
                   fontSize: 24,
                   fontWeight: FontWeight.bold,
                 ),
               ),
               const SizedBox(height: 16),
-              const Text(
-                'Select the topics that you are most interested in learning about.',
+              Text(
+                l10n.topicSelectionDescription,
                 textAlign: TextAlign.center,
-                style: TextStyle(
+                style: const TextStyle(
                   fontSize: 16,
                   fontWeight: FontWeight.normal,
                 ),
               ),
               const SizedBox(height: 16),
               Selector(
-                text: 'Society',
+                text: l10n.topicSociety,
                 selected: state.selectedTopics.contains(0),
                 onTap: () {
                   cubit.toggleTopic(0);
@@ -43,7 +45,7 @@ class TopicSelectionPage extends StatelessWidget {
               ),
               const SizedBox(height: 16),
               Selector(
-                text: 'Words in foreign languages',
+                text: l10n.topicForeignLanguages,
                 selected: state.selectedTopics.contains(1),
                 onTap: () {
                   cubit.toggleTopic(1);
@@ -51,7 +53,7 @@ class TopicSelectionPage extends StatelessWidget {
               ),
               const SizedBox(height: 16),
               Selector(
-                text: 'Human body',
+                text: l10n.topicHumanBody,
                 selected: state.selectedTopics.contains(2),
                 onTap: () {
                   cubit.toggleTopic(2);
@@ -59,7 +61,7 @@ class TopicSelectionPage extends StatelessWidget {
               ),
               const SizedBox(height: 16),
               Selector(
-                text: 'Emotions',
+                text: l10n.topicEmotions,
                 selected: state.selectedTopics.contains(3),
                 onTap: () {
                   cubit.toggleTopic(3);
@@ -67,7 +69,7 @@ class TopicSelectionPage extends StatelessWidget {
               ),
               const SizedBox(height: 16),
               Selector(
-                text: 'Other',
+                text: l10n.topicOther,
                 selected: state.selectedTopics.contains(5),
                 onTap: () {
                   cubit.toggleTopic(5);
@@ -77,7 +79,7 @@ class TopicSelectionPage extends StatelessWidget {
               PushableButton(
                 width: 200,
                 height: 56,
-                text: 'Continue',
+                text: l10n.continueText,
                 onTap: cubit.nextPage,
               ),
               const SizedBox(height: 40),

@@ -4,15 +4,44 @@ import 'dart:developer';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:wordstock/model/word.dart';
+import 'package:wordstock/repositories/tts_repository.dart';
 import 'package:wordstock/repositories/word_repository.dart';
 
 part 'home_state.dart';
 
 class HomeCubit extends Cubit<HomeState> {
-  HomeCubit({required this.wordRepository}) : super(const HomeInitial());
+  HomeCubit({
+    required this.wordRepository,
+    required this.ttsRepository,
+  }) : super(const HomeInitial()) {
+    _initializeTTS();
+  }
 
   final WordRepository wordRepository;
+  final TTSRepository ttsRepository;
   int wordsReadCount = 0;
+
+  Future<void> _initializeTTS() async {
+    try {
+      await ttsRepository.initialize();
+    } catch (e) {
+      emit(HomeError(errorMessage: e.toString()));
+    }
+  }
+
+  Future<void> speakWord(String word) async {
+    try {
+      await ttsRepository.synthesizeAndPlay(word);
+    } catch (e) {
+      emit(HomeError(errorMessage: e.toString()));
+    }
+  }
+
+  @override
+  Future<void> close() {
+    ttsRepository.dispose();
+    return super.close();
+  }
 
   FutureOr<void> fetchWords() async {
     emit(const HomeLoading());

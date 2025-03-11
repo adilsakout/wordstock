@@ -15,5 +15,98 @@
     "infoDescription": "Wordstock is a tool that helps you learn new words.",
     "@infoDescription": {
         "description": "Text shown in the Info Page"
+    },
+    "getStarted": "Get Started",
+    "@getStarted": {
+        "description": "Text for get started button"
+    },
+    "continueText": "Continue",
+    "@continueText": {
+        "description": "Text for continue button"
+    },
+    "makeYoursTitle": "Let's make WordStock yours",
+    "@makeYoursTitle": {
+        "description": "Title for personalization page"
+    },
+    "makeYoursWithNameTitle": "Let's make WordStock yours, {name}",
+    "@makeYoursWithNameTitle": {
+        "description": "Title for personalization page with user's name",
+        "placeholders": {
+            "name": {
+                "type": "String"
+            }
+        }
+    },
+    "personalizeDescription": "Some final questions to help us personalize your experience.",
+    "@personalizeDescription": {
+        "description": "Description for personalization pages"
+    },
+    "favoriteWordsTitle": "Your Favorite Words",
+    "@favoriteWordsTitle": {
+        "description": "Title for favorite words screen"
+    },
+    "tryAgain": "Try Again",
+    "@tryAgain": {
+        "description": "Text for try again button"
+    },
+    "noFavoritesTitle": "No favorite words yet",
+    "@noFavoritesTitle": {
+        "description": "Title shown when no favorite words exist"
+    },
+    "noFavoritesDescription": "Start adding words to your favorites",
+    "@noFavoritesDescription": {
+        "description": "Description shown when no favorite words exist"
+    },
+    "timeCommitmentTitle": "How much time will you devote to learning?",
+    "@timeCommitmentTitle": {
+        "description": "Title shown on the time commitment selection page"
+    },
+    "timeCommitmentDescription": "Choose the amount of time you can commit to learning each day.",
+    "@timeCommitmentDescription": {
+        "description": "Description text for time commitment selection"
+    },
+    "fiveMinutes": "5 minutes a day",
+    "@fiveMinutes": {
+        "description": "5 minutes time commitment option"
+    },
+    "tenMinutes": "10 minutes a day",
+    "@tenMinutes": {
+        "description": "10 minutes time commitment option"
+    },
+    "fifteenMinutes": "15 minutes a day",
+    "@fifteenMinutes": {
+        "description": "15 minutes time commitment option"
+    },
+    "thirtyMinutes": "30 minutes a day",
+    "@thirtyMinutes": {
+        "description": "30 minutes time commitment option"
+    },
+    "topicSelectionTitle": "Which topics are you interested in?",
+    "@topicSelectionTitle": {
+        "description": "Title shown on the topic selection page"
+    },
+    "topicSelectionDescription": "Select the topics that you are most interested in learning about.",
+    "@topicSelectionDescription": {
+        "description": "Description text for topic selection"
+    },
+    "topicSociety": "Society",
+    "@topicSociety": {
+        "description": "Society topic option"
+    },
+    "topicForeignLanguages": "Words in foreign languages",
+    "@topicForeignLanguages": {
+        "description": "Foreign languages topic option"
+    },
+    "topicHumanBody": "Human body",
+    "@topicHumanBody": {
+        "description": "Human body topic option"
+    },
+    "topicEmotions": "Emotions",
+    "@topicEmotions": {
+        "description": "Emotions topic option"
+    },
+    "topicOther": "Other",
+    "@topicOther": {
+        "description": "Other topics option"
     }
 }

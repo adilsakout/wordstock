@@ -3,6 +3,7 @@ import 'package:go_router/go_router.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:wordstock/features/favorite_words/cubit/cubit.dart';
 import 'package:wordstock/features/favorite_words/widgets/word_card.dart';
+import 'package:wordstock/l10n/l10n.dart';
 import 'package:wordstock/widgets/button.dart';
 
 /// {@template favorite_words_body}
@@ -16,6 +17,7 @@ class FavoriteWordsBody extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = context.l10n;
     return BlocBuilder<FavoriteWordsCubit, FavoriteWordsState>(
       builder: (context, state) {
         return Scaffold(
@@ -36,7 +38,7 @@ class FavoriteWordsBody extends StatelessWidget {
                       ),
                       const SizedBox(width: 10),
                       Text(
-                        'Your Favorite Words',
+                        l10n.favoriteWordsTitle,
                         style: Theme.of(context).textTheme.titleLarge?.copyWith(
                               fontWeight: FontWeight.w600,
                               fontFamily: 'Poppins',
@@ -92,7 +94,8 @@ class FavoriteWordsBody extends StatelessWidget {
                                                 (index) => Padding(
                                                   padding:
                                                       const EdgeInsets.only(
-                                                          left: 8),
+                                                    left: 8,
+                                                  ),
                                                   child: Container(
                                                     width: 40,
                                                     height: 40,
@@ -100,7 +103,8 @@ class FavoriteWordsBody extends StatelessWidget {
                                                       color: Colors.white,
                                                       borderRadius:
                                                           BorderRadius.circular(
-                                                              8),
+                                                        8,
+                                                      ),
                                                     ),
                                                   ),
                                                 ),
@@ -151,7 +155,7 @@ class FavoriteWordsBody extends StatelessWidget {
                                         Text(state.message),
                                         const SizedBox(height: 16),
                                         PushableButton(
-                                          text: 'Try Again',
+                                          text: l10n.tryAgain,
                                           onTap: () {
                                             context
                                                 .read<FavoriteWordsCubit>()
@@ -192,14 +196,14 @@ class FavoriteWordsBody extends StatelessWidget {
                                           ),
                                           const SizedBox(height: 16),
                                           Text(
-                                            'No favorite words yet',
+                                            l10n.noFavoritesTitle,
                                             style: Theme.of(context)
                                                 .textTheme
                                                 .titleMedium,
                                           ),
                                           const SizedBox(height: 8),
                                           Text(
-                                            'Start adding words to your favorites',
+                                            l10n.noFavoritesDescription,
                                             style: Theme.of(context)
                                                 .textTheme
                                                 .bodyMedium,
@@ -224,7 +228,7 @@ class FavoriteWordsBody extends StatelessWidget {
                                 return Padding(
                                   padding:
                                       const EdgeInsets.symmetric(vertical: 8),
-                                  child: WordCard(
+                                  child: FavoriteWordCard(
                                     word: word,
                                     onToggleFavorite: () {
                                       context

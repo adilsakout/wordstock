@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:wordstock/features/onboarding/cubit/cubit.dart';
 import 'package:wordstock/features/onboarding/widgets/selector.dart';
+import 'package:wordstock/l10n/l10n.dart';
 
 class TimeCommitmentPage extends StatelessWidget {
   const TimeCommitmentPage({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final l10n = context.l10n;
     return BlocBuilder<OnboardingCubit, OnboardingState>(
       builder: (context, state) {
         final cubit = context.read<OnboardingCubit>();
@@ -14,26 +16,26 @@ class TimeCommitmentPage extends StatelessWidget {
           padding: const EdgeInsets.all(20),
           child: Column(
             children: [
-              const Text(
-                'How much time will you devote to learning?',
+              Text(
+                l10n.timeCommitmentTitle,
                 textAlign: TextAlign.center,
-                style: TextStyle(
+                style: const TextStyle(
                   fontSize: 24,
                   fontWeight: FontWeight.bold,
                 ),
               ),
               const SizedBox(height: 16),
-              const Text(
-                'Choose the amount of time you can commit to learning each day.',
+              Text(
+                l10n.timeCommitmentDescription,
                 textAlign: TextAlign.center,
-                style: TextStyle(
+                style: const TextStyle(
                   fontSize: 16,
                   fontWeight: FontWeight.normal,
                 ),
               ),
               const SizedBox(height: 16),
               Selector(
-                text: '5 minute a day',
+                text: l10n.fiveMinutes,
                 selected: state.selectedTimeCommitment == 0,
                 onTap: () {
                   cubit.selectTimeCommitment(0);
@@ -41,7 +43,7 @@ class TimeCommitmentPage extends StatelessWidget {
               ),
               const SizedBox(height: 16),
               Selector(
-                text: '10 minutes a day',
+                text: l10n.tenMinutes,
                 selected: state.selectedTimeCommitment == 1,
                 onTap: () {
                   cubit.selectTimeCommitment(1);
@@ -49,7 +51,7 @@ class TimeCommitmentPage extends StatelessWidget {
               ),
               const SizedBox(height: 16),
               Selector(
-                text: '15 minutes a day',
+                text: l10n.fifteenMinutes,
                 selected: state.selectedTimeCommitment == 2,
                 onTap: () {
                   cubit.selectTimeCommitment(2);
@@ -57,7 +59,7 @@ class TimeCommitmentPage extends StatelessWidget {
               ),
               const SizedBox(height: 16),
               Selector(
-                text: '30 minutes a day',
+                text: l10n.thirtyMinutes,
                 selected: state.selectedTimeCommitment == 3,
                 onTap: () {
                   cubit.selectTimeCommitment(3);

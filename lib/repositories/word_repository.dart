@@ -82,7 +82,7 @@ class WordRepository {
         });
       }
     } catch (e) {
-      throw Exception('Failed to toggle favorite: ${e.toString()}');
+      throw Exception('Failed to toggle favorite: $e');
     }
   }
 
@@ -99,7 +99,7 @@ class WordRepository {
           .map((json) => Word.fromJson(json['words'] as Map<String, dynamic>))
           .toList();
     } catch (e) {
-      throw Exception('Failed to load favorites: ${e.toString()}');
+      throw Exception('Failed to load favorites: $e');
     }
   }
 

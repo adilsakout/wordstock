@@ -102,7 +102,7 @@ class _HomeBodyState extends State<HomeBody> {
                           buttonColor: const Color(0xffE94E77),
                           shadowColor: const Color(0xffA8002C),
                           onTap: () {
-                            context.push(FavoriteWordsPage.name);
+                            context.go(FavoriteWordsPage.name);
                           },
                         ),
                         // const SizedBox(width: 20),
