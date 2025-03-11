@@ -3,6 +3,7 @@ import 'package:go_router/go_router.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:wordstock/features/favorite_words/cubit/cubit.dart';
 import 'package:wordstock/features/favorite_words/widgets/word_card.dart';
+import 'package:wordstock/features/home/cubit/cubit.dart';
 import 'package:wordstock/l10n/l10n.dart';
 import 'package:wordstock/widgets/button.dart';
 
@@ -136,6 +137,11 @@ class FavoriteWordsBody extends StatelessWidget {
                             onRefresh: () => context
                                 .read<FavoriteWordsCubit>()
                                 .loadFavorites(),
+                            backgroundColor:
+                                Theme.of(context).colorScheme.surface,
+                            color: const Color(0xff1CB0F6),
+                            strokeWidth: 3,
+                            displacement: 20,
                             child: ListView(
                               children: [
                                 SizedBox(
@@ -179,6 +185,11 @@ class FavoriteWordsBody extends StatelessWidget {
                               onRefresh: () => context
                                   .read<FavoriteWordsCubit>()
                                   .loadFavorites(),
+                              backgroundColor:
+                                  Theme.of(context).colorScheme.surface,
+                              color: const Color(0xff1CB0F6),
+                              strokeWidth: 3,
+                              displacement: 20,
                               child: ListView(
                                 children: [
                                   SizedBox(
@@ -221,20 +232,41 @@ class FavoriteWordsBody extends StatelessWidget {
                             onRefresh: () => context
                                 .read<FavoriteWordsCubit>()
                                 .loadFavorites(),
+                            backgroundColor:
+                                Theme.of(context).colorScheme.surface,
+                            color: const Color(0xff1CB0F6),
+                            strokeWidth: 3,
+                            displacement: 20,
                             child: ListView.builder(
                               itemCount: state.words.length,
                               itemBuilder: (context, index) {
                                 final word = state.words[index];
-                                return Padding(
-                                  padding:
-                                      const EdgeInsets.symmetric(vertical: 8),
-                                  child: FavoriteWordCard(
-                                    word: word,
-                                    onToggleFavorite: () {
-                                      context
-                                          .read<FavoriteWordsCubit>()
-                                          .toggleFavorite(word.id);
-                                    },
+                                return AnimatedSlide(
+                                  duration: const Duration(milliseconds: 200),
+                                  offset: Offset.zero,
+                                  child: AnimatedOpacity(
+                                    duration: const Duration(milliseconds: 200),
+                                    opacity: 1,
+                                    child: Padding(
+                                      padding: const EdgeInsets.symmetric(
+                                        vertical: 8,
+                                      ),
+                                      child: FavoriteWordCard(
+                                        key: Key(word.word),
+                                        word: word,
+                                        onToggleFavorite: () async {
+                                          final homeCubit =
+                                              context.read<HomeCubit>();
+                                          final favoritesCubit = context
+                                              .read<FavoriteWordsCubit>();
+
+                                          await homeCubit
+                                              .toggleFavorite(word.id);
+                                          await favoritesCubit
+                                              .toggleFavorite(word.id);
+                                        },
+                                      ),
+                                    ),
                                   ),
                                 );
                               },

@@ -20,7 +20,47 @@ class FavoriteWordCard extends StatefulWidget {
   State<FavoriteWordCard> createState() => _FavoriteWordCardState();
 }
 
-class _FavoriteWordCardState extends State<FavoriteWordCard> {
+class _FavoriteWordCardState extends State<FavoriteWordCard>
+    with SingleTickerProviderStateMixin {
+  late final AnimationController _heartController;
+  late final Animation<double> _scaleAnimation;
+  late final Animation<double> _opacityAnimation;
+
+  @override
+  void initState() {
+    super.initState();
+    _heartController = AnimationController(
+      duration: const Duration(milliseconds: 300),
+      vsync: this,
+    );
+
+    _scaleAnimation = Tween<double>(
+      begin: 1,
+      end: 0,
+    ).animate(
+      CurvedAnimation(
+        parent: _heartController,
+        curve: Curves.easeInOut,
+      ),
+    );
+
+    _opacityAnimation = Tween<double>(
+      begin: 1,
+      end: 0,
+    ).animate(
+      CurvedAnimation(
+        parent: _heartController,
+        curve: Curves.easeInOut,
+      ),
+    );
+  }
+
+  @override
+  void dispose() {
+    _heartController.dispose();
+    super.dispose();
+  }
+
   Future<void> shareWord() async {
     final text = '''
 📚 Word of the Day:
@@ -32,6 +72,11 @@ ${widget.word.definition}
 #Wordstock #Vocabulary
 ''';
     await Share.share(text);
+  }
+
+  Future<void> _handleToggleFavorite() async {
+    await _heartController.forward();
+    widget.onToggleFavorite();
   }
 
   @override
@@ -85,29 +130,35 @@ ${widget.word.definition}
                         .speakWord(widget.word.word),
                   ),
                   const SizedBox(width: 8),
-                  PushableButton(
-                    width: 40,
-                    height: 40,
-                    text: '',
-                    buttonColor: const Color(0xffE94E77),
-                    shadowColor: const Color(0xffA8002C),
-                    suffixIcon: Icons.favorite,
-                    onTap: widget.onToggleFavorite,
-                  )
-                      .animate(target: 1)
-                      .scaleXY(
-                        begin: 0.9,
-                        end: 1.1,
-                        curve: Curves.easeInOut,
-                        duration: 200.ms,
+                  ScaleTransition(
+                    scale: _scaleAnimation,
+                    child: FadeTransition(
+                      opacity: _opacityAnimation,
+                      child: PushableButton(
+                        width: 40,
+                        height: 40,
+                        text: '',
+                        buttonColor: const Color(0xffE94E77),
+                        shadowColor: const Color(0xffA8002C),
+                        suffixIcon: Icons.favorite,
+                        onTap: _handleToggleFavorite,
                       )
-                      .then()
-                      .scaleXY(
-                        begin: 1.1,
-                        end: 0.9,
-                        curve: Curves.easeInOut,
-                        duration: 200.ms,
-                      ),
+                          .animate(target: 1)
+                          .scaleXY(
+                            begin: 0.9,
+                            end: 1.1,
+                            curve: Curves.easeInOut,
+                            duration: 200.ms,
+                          )
+                          .then()
+                          .scaleXY(
+                            begin: 1.1,
+                            end: 0.9,
+                            curve: Curves.easeInOut,
+                            duration: 200.ms,
+                          ),
+                    ),
+                  ),
                 ],
               ),
             ],

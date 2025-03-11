@@ -58,14 +58,6 @@ class FavoriteWordsCubit extends Cubit<FavoriteWordsState> {
     final currentState = state as FavoriteWordsLoaded;
     final currentWords = List<Word>.from(currentState.words);
     final updatedWords = currentWords.where((w) => w.id != wordId).toList();
-
-    try {
-      emit(FavoriteWordsLoaded(words: updatedWords));
-      await wordRepository.toggleFavorite(wordId: wordId);
-      await loadFavorites(); // Refresh the list after successful toggle
-    } catch (e) {
-      emit(FavoriteWordsLoaded(words: currentWords));
-      emit(FavoriteWordsError(message: e.toString()));
-    }
+    emit(FavoriteWordsLoaded(words: updatedWords));
   }
 }
