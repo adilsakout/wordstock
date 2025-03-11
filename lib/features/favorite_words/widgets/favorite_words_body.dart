@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:wordstock/features/favorite_words/cubit/cubit.dart';
-import 'package:wordstock/features/favorite_words/widgets/word_card.dart';
+import 'package:wordstock/features/favorite_words/widgets/favorite_word_card.dart';
 import 'package:wordstock/features/home/cubit/cubit.dart';
 import 'package:wordstock/l10n/l10n.dart';
 import 'package:wordstock/widgets/button.dart';

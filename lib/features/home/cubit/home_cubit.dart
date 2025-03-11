@@ -53,17 +53,21 @@ class HomeCubit extends Cubit<HomeState> {
     }
   }
 
-  FutureOr<void> toggleFavorite(int wordId) async {
-    await wordRepository.toggleFavorite(wordId: wordId);
-    if (state is HomeLoaded) {
-      final words = (state as HomeLoaded).words;
-      final updatedWords = words.map((word) {
-        if (word.id == wordId) {
-          return word.copyWith(isFavorite: !(word.isFavorite ?? false));
-        }
-        return word;
-      }).toList();
-      emit(HomeLoaded(words: updatedWords));
+  Future<void> toggleFavorite(int wordId) async {
+    try {
+      await wordRepository.toggleFavorite(wordId: wordId);
+      if (state is HomeLoaded) {
+        final words = (state as HomeLoaded).words;
+        final updatedWords = words.map((word) {
+          if (word.id == wordId) {
+            return word.copyWith(isFavorite: !(word.isFavorite ?? false));
+          }
+          return word;
+        }).toList();
+        emit(HomeLoaded(words: updatedWords));
+      }
+    } catch (e) {
+      emit(HomeError(errorMessage: e.toString()));
     }
   }
 

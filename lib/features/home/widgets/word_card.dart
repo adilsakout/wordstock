@@ -21,8 +21,57 @@ class WordCard extends StatefulWidget {
   State<WordCard> createState() => _WordCardState();
 }
 
-class _WordCardState extends State<WordCard> {
-  bool _showHeart = false;
+class _WordCardState extends State<WordCard>
+    with SingleTickerProviderStateMixin {
+  late final AnimationController _heartController;
+  late final Animation<double> _scaleAnimation;
+  late final Animation<double> _opacityAnimation;
+  late final Animation<double> _moveAnimation;
+
+  @override
+  void initState() {
+    super.initState();
+    _heartController = AnimationController(
+      duration: const Duration(milliseconds: 600),
+      vsync: this,
+    );
+
+    _scaleAnimation = Tween<double>(
+      begin: 0,
+      end: 1.5,
+    ).animate(
+      CurvedAnimation(
+        parent: _heartController,
+        curve: Curves.easeOutBack,
+      ),
+    );
+
+    _opacityAnimation = Tween<double>(
+      begin: 1,
+      end: 0,
+    ).animate(
+      CurvedAnimation(
+        parent: _heartController,
+        curve: const Interval(0.5, 1, curve: Curves.easeOut),
+      ),
+    );
+
+    _moveAnimation = Tween<double>(
+      begin: 0,
+      end: 200,
+    ).animate(
+      CurvedAnimation(
+        parent: _heartController,
+        curve: Curves.easeOutCubic,
+      ),
+    );
+  }
+
+  @override
+  void dispose() {
+    _heartController.dispose();
+    super.dispose();
+  }
 
   Future<void> shareWord() async {
     final text = '''
@@ -42,12 +91,8 @@ ${widget.word.definition}
     widget.onToggleFavorite();
 
     if (!isCurrentlyFavorite) {
-      // Show rising heart when adding to favorites
-      setState(() => _showHeart = true);
-      Future.delayed(const Duration(seconds: 2), () {
-        if (mounted) {
-          setState(() => _showHeart = false);
-        }
+      _heartController.forward().then((_) {
+        _heartController.reset();
       });
     }
   }
@@ -80,29 +125,25 @@ ${widget.word.definition}
               ],
             ),
           ),
-          if (_showHeart)
-            Positioned(
-              bottom: 150,
-              child: const Icon(
-                Icons.favorite,
-                size: 150,
-                color: Color(0xffE94E77),
-              )
-                  .animate(
-                    onComplete: (controller) => controller.reverse(),
-                  )
-                  .scale(
-                    duration: 400.ms,
-                    curve: Curves.easeOutBack,
-                  )
-                  .fadeIn(duration: 300.ms)
-                  .moveY(
-                    begin: 0,
-                    end: -200,
-                    duration: 600.ms,
-                    curve: Curves.easeOutCubic,
+          AnimatedBuilder(
+            animation: _heartController,
+            builder: (context, child) {
+              return Positioned(
+                bottom: 150 + _moveAnimation.value,
+                child: Opacity(
+                  opacity: _opacityAnimation.value,
+                  child: Transform.scale(
+                    scale: _scaleAnimation.value,
+                    child: const Icon(
+                      Icons.favorite,
+                      size: 150,
+                      color: Color(0xffE94E77),
+                    ),
                   ),
-            ),
+                ),
+              );
+            },
+          ),
           Positioned(
             bottom: 150,
             left: 0,
