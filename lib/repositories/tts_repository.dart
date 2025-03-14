@@ -34,7 +34,8 @@ class TTSRepository {
   }
 
   Future<AuthClient> _getAuthClient() async {
-    final json = await rootBundle.loadString('assets/service_account.json');
+    final json =
+        await rootBundle.loadString('assets/secrets/service_account.json');
     final credentials = ServiceAccountCredentials.fromJson(json);
     return clientViaServiceAccount(
       credentials,

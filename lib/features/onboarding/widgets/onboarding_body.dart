@@ -88,7 +88,7 @@ class OnboardingBody extends StatelessWidget {
                     StreakGoalPage(
                       onNext: () {
                         context.read<OnboardingCubit>().disposePageController();
-                        context.go('/home');
+                        context.replace('/home');
                       },
                     ),
                   ],

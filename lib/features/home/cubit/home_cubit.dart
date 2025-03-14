@@ -53,7 +53,7 @@ class HomeCubit extends Cubit<HomeState> {
     }
   }
 
-  Future<void> toggleFavorite(int wordId) async {
+  Future<void> toggleFavorite(String wordId) async {
     try {
       await wordRepository.toggleFavorite(wordId: wordId);
       if (state is HomeLoaded) {
@@ -75,10 +75,10 @@ class HomeCubit extends Cubit<HomeState> {
     wordsReadCount = 0;
   }
 
-  final List<int> _learnedWordIds = [];
+  final List<String> _learnedWordIds = [];
   Timer? _updateTimer;
 
-  void markWordAsLearned(int wordId) {
+  void markWordAsLearned(String wordId) {
     log('markWordAsLearned: $wordId', name: 'HomeCubit');
     _learnedWordIds.add(wordId);
     _updateTimer?.cancel();

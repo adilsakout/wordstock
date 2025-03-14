@@ -41,6 +41,16 @@ class $AssetsImagesGen {
   List<AssetGenImage> get values => [onb1, onb2, onb3];
 }
 
+class $AssetsSecretsGen {
+  const $AssetsSecretsGen();
+
+  /// File path: assets/secrets/service_account.json
+  String get serviceAccount => 'assets/secrets/service_account.json';
+
+  /// List of all assets
+  List<String> get values => [serviceAccount];
+}
+
 class $AssetsSoundsGen {
   const $AssetsSoundsGen();
 
@@ -63,6 +73,7 @@ class Assets {
   static const String aEnv = '.env';
   static const $AssetsIconsGen icons = $AssetsIconsGen();
   static const $AssetsImagesGen images = $AssetsImagesGen();
+  static const $AssetsSecretsGen secrets = $AssetsSecretsGen();
   static const $AssetsSoundsGen sounds = $AssetsSoundsGen();
 
   /// List of all assets

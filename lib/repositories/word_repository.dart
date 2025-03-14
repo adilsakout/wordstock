@@ -16,10 +16,11 @@ class WordRepository {
   }) async {
     try {
       final response = await _supabase.from('words').select('''
-          id, word, definition, example, level, topic_id, 
-          user_favorites!fk_word(user_id)
-        ''').limit(100);
+    id, word, definition, example, level, topic_id, 
+    user_favorites!user_favorites_word_id_fkey(user_id)
+''').limit(100);
 
+      print(response);
       final words = response.map((json) {
         final isFavorite =
             (json['user_favorites'] as List<dynamic>?)?.isNotEmpty ?? false;
@@ -59,7 +60,7 @@ class WordRepository {
   }
 
   Future<void> toggleFavorite({
-    required int wordId,
+    required String wordId,
   }) async {
     try {
       final isFavorited = await _supabase
@@ -91,10 +92,9 @@ class WordRepository {
     try {
       final response = await _supabase
           .from('user_favorites')
-          .select(
-            '*, words!fk_word(*)',
-          ) // Explicitly use 'fk_word' relationship
+          .select('words(*)') // Fetch related words
           .eq('user_id', _userId);
+
       return response
           .map((json) => Word.fromJson(json['words'] as Map<String, dynamic>))
           .toList();
@@ -120,7 +120,7 @@ class WordRepository {
   }
 
   /// Mark words as learned
-  Future<void> markWordAsLearned(List<int> wordIds) async {
+  Future<void> markWordAsLearned(List<String> wordIds) async {
     try {
       if (wordIds.isEmpty) return;
 

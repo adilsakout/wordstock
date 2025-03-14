@@ -106,23 +106,36 @@ ${widget.word.definition}
         alignment: Alignment.center,
         children: [
           Positioned.fill(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text(
-                  widget.word.word,
-                  style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                        fontSize: 40,
-                        fontWeight: FontWeight.w600,
-                      ),
-                ).animate(delay: 0.5.seconds).slideY(),
-                const SizedBox(height: 10),
-                Text(
-                  widget.word.definition,
-                  textAlign: TextAlign.center,
-                  style: Theme.of(context).textTheme.bodyMedium,
-                ),
-              ],
+            child: SizedBox(
+              width: MediaQuery.of(context).size.width * 0.5,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    widget.word.word,
+                    style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                          fontSize: 40,
+                          fontWeight: FontWeight.w600,
+                        ),
+                  ).animate(delay: 0.5.seconds).slideY(),
+                  const SizedBox(height: 15),
+                  Text(
+                    widget.word.definition,
+                    textAlign: TextAlign.center,
+                    style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                          color: Colors.black54,
+                        ),
+                  ),
+                  const SizedBox(height: 10),
+                  Text(
+                    widget.word.example ?? '',
+                    textAlign: TextAlign.center,
+                    style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                          fontFamily: 'Poppins',
+                        ),
+                  ),
+                ],
+              ),
             ),
           ),
           AnimatedBuilder(

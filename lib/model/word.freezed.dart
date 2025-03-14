@@ -15,12 +15,13 @@ T _$identity<T>(T value) => value;
 
 /// @nodoc
 mixin _$Word {
-  int get id;
+  String get id;
   String get word;
   String get definition;
   String? get example;
   VocabularyLevel? get level;
-  int? get topicId;
+  @JsonKey(name: 'topic_id')
+  String get topicId;
   bool? get isFavorite;
 
   /// Create a copy of Word
@@ -66,12 +67,12 @@ abstract mixin class $WordCopyWith<$Res> {
       _$WordCopyWithImpl;
   @useResult
   $Res call(
-      {int id,
+      {String id,
       String word,
       String definition,
       String? example,
       VocabularyLevel? level,
-      int? topicId,
+      @JsonKey(name: 'topic_id') String topicId,
       bool? isFavorite});
 }
 
@@ -92,14 +93,14 @@ class _$WordCopyWithImpl<$Res> implements $WordCopyWith<$Res> {
     Object? definition = null,
     Object? example = freezed,
     Object? level = freezed,
-    Object? topicId = freezed,
+    Object? topicId = null,
     Object? isFavorite = freezed,
   }) {
     return _then(_self.copyWith(
       id: null == id
           ? _self.id
           : id // ignore: cast_nullable_to_non_nullable
-              as int,
+              as String,
       word: null == word
           ? _self.word
           : word // ignore: cast_nullable_to_non_nullable
@@ -116,10 +117,10 @@ class _$WordCopyWithImpl<$Res> implements $WordCopyWith<$Res> {
           ? _self.level
           : level // ignore: cast_nullable_to_non_nullable
               as VocabularyLevel?,
-      topicId: freezed == topicId
+      topicId: null == topicId
           ? _self.topicId
           : topicId // ignore: cast_nullable_to_non_nullable
-              as int?,
+              as String,
       isFavorite: freezed == isFavorite
           ? _self.isFavorite
           : isFavorite // ignore: cast_nullable_to_non_nullable
@@ -137,12 +138,12 @@ class _Word implements Word {
       required this.definition,
       this.example,
       this.level,
-      this.topicId,
+      @JsonKey(name: 'topic_id') required this.topicId,
       this.isFavorite});
   factory _Word.fromJson(Map<String, dynamic> json) => _$WordFromJson(json);
 
   @override
-  final int id;
+  final String id;
   @override
   final String word;
   @override
@@ -152,7 +153,8 @@ class _Word implements Word {
   @override
   final VocabularyLevel? level;
   @override
-  final int? topicId;
+  @JsonKey(name: 'topic_id')
+  final String topicId;
   @override
   final bool? isFavorite;
 
@@ -205,12 +207,12 @@ abstract mixin class _$WordCopyWith<$Res> implements $WordCopyWith<$Res> {
   @override
   @useResult
   $Res call(
-      {int id,
+      {String id,
       String word,
       String definition,
       String? example,
       VocabularyLevel? level,
-      int? topicId,
+      @JsonKey(name: 'topic_id') String topicId,
       bool? isFavorite});
 }
 
@@ -231,14 +233,14 @@ class __$WordCopyWithImpl<$Res> implements _$WordCopyWith<$Res> {
     Object? definition = null,
     Object? example = freezed,
     Object? level = freezed,
-    Object? topicId = freezed,
+    Object? topicId = null,
     Object? isFavorite = freezed,
   }) {
     return _then(_Word(
       id: null == id
           ? _self.id
           : id // ignore: cast_nullable_to_non_nullable
-              as int,
+              as String,
       word: null == word
           ? _self.word
           : word // ignore: cast_nullable_to_non_nullable
@@ -255,10 +257,10 @@ class __$WordCopyWithImpl<$Res> implements _$WordCopyWith<$Res> {
           ? _self.level
           : level // ignore: cast_nullable_to_non_nullable
               as VocabularyLevel?,
-      topicId: freezed == topicId
+      topicId: null == topicId
           ? _self.topicId
           : topicId // ignore: cast_nullable_to_non_nullable
-              as int?,
+              as String,
       isFavorite: freezed == isFavorite
           ? _self.isFavorite
           : isFavorite // ignore: cast_nullable_to_non_nullable

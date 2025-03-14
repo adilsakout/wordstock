@@ -7,12 +7,12 @@ part 'word.g.dart';
 @freezed
 sealed class Word with _$Word {
   const factory Word({
-    required int id,
+    required String id,
     required String word,
     required String definition,
+    @JsonKey(name: 'topic_id') required String topicId,
     String? example,
     VocabularyLevel? level,
-    int? topicId,
     bool? isFavorite,
   }) = _Word;
 

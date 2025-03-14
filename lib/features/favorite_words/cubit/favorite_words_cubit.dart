@@ -52,7 +52,7 @@ class FavoriteWordsCubit extends Cubit<FavoriteWordsState> {
     }
   }
 
-  Future<void> toggleFavorite(int? wordId) async {
+  Future<void> toggleFavorite(String? wordId) async {
     if (wordId == null || state is! FavoriteWordsLoaded) return;
 
     final currentState = state as FavoriteWordsLoaded;

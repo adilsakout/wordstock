@@ -40,6 +40,7 @@ class StreakGoalPage extends StatelessWidget {
                 selected: state.streakGoal == 7,
                 onTap: () {
                   cubit.selectStreakGoal(7);
+                  onNext();
                 },
               ),
               const SizedBox(height: 16),
@@ -48,6 +49,7 @@ class StreakGoalPage extends StatelessWidget {
                 selected: state.streakGoal == 14,
                 onTap: () {
                   cubit.selectStreakGoal(14);
+                  onNext();
                 },
               ),
               const SizedBox(height: 16),
