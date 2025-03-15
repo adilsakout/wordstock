@@ -4,6 +4,7 @@ import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:wordstock/features/onboarding/cubit/onboarding_cubit.dart';
 import 'package:wordstock/gen/assets.gen.dart';
+import 'package:wordstock/l10n/l10n.dart';
 import 'package:wordstock/widgets/button.dart';
 import 'package:wordstock/widgets/progress_bar.dart';
 
@@ -28,13 +29,7 @@ class _CustomizationLoadingPageState extends State<CustomizationLoadingPage>
   int _currentStep = 0;
   bool _isComplete = false;
 
-  final List<String> _customizationSteps = [
-    'Analyzing your preferences...',
-    'Selecting words based on your level...',
-    'Personalizing your learning path...',
-    'Creating your custom word list...',
-    'Finalizing your experience...',
-  ];
+  late List<String> _customizationSteps;
 
   @override
   void initState() {
@@ -90,20 +85,20 @@ class _CustomizationLoadingPageState extends State<CustomizationLoadingPage>
     super.dispose();
   }
 
-  String _getTitle(bool isComplete, String userName) {
+  String _getTitle(bool isComplete, String userName, AppLocalizations l10n) {
     if (isComplete) {
       // Complete state
       if (userName.isNotEmpty) {
-        return 'All set, $userName! Your Wordstock experience is ready!';
+        return l10n.customizationCompleteTitleWithName(userName);
       } else {
-        return 'All set! Your Wordstock experience is ready!';
+        return l10n.customizationCompleteTitle;
       }
     } else {
       // Loading state
       if (userName.isNotEmpty) {
-        return 'Hang tight, $userName! We are personalizing your Wordstock experience.';
+        return l10n.customizationLoadingTitleWithName(userName);
       } else {
-        return 'Hang tight! We are personalizing your Wordstock experience.';
+        return l10n.customizationLoadingTitle;
       }
     }
   }
@@ -124,8 +119,18 @@ class _CustomizationLoadingPageState extends State<CustomizationLoadingPage>
 
   @override
   Widget build(BuildContext context) {
+    final l10n = context.l10n;
     final state = context.read<OnboardingCubit>().state;
-    final title = _getTitle(_isComplete, state.userName);
+    final title = _getTitle(_isComplete, state.userName, l10n);
+
+    // Initialize the steps with localized strings
+    _customizationSteps = [
+      l10n.analyzingPreferences,
+      l10n.selectingWords,
+      l10n.personalizingPath,
+      l10n.creatingWordList,
+      l10n.finalizingExperience,
+    ];
 
     return Padding(
       padding: const EdgeInsets.all(20),
@@ -198,7 +203,7 @@ class _CustomizationLoadingPageState extends State<CustomizationLoadingPage>
                   duration: const Duration(milliseconds: 500),
                   child: _isComplete
                       ? PushableButton(
-                          text: 'Start Learning',
+                          text: l10n.startLearning,
                           onTap: widget.onComplete,
                           width: 200,
                           height: 50,

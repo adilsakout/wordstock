@@ -108,5 +108,55 @@
     "topicOther": "Other",
     "@topicOther": {
         "description": "Other topics option"
+    },
+    "customizationLoadingTitleWithName": "Hang tight, {name}! We are personalizing your Wordstock experience.",
+    "@customizationLoadingTitleWithName": {
+        "description": "Loading title with user's name on customization loading page",
+        "placeholders": {
+            "name": {
+                "type": "String"
+            }
+        }
+    },
+    "customizationLoadingTitle": "Hang tight! We are personalizing your Wordstock experience.",
+    "@customizationLoadingTitle": {
+        "description": "Loading title on customization loading page"
+    },
+    "customizationCompleteTitleWithName": "All set, {name}! Your Wordstock experience is ready!",
+    "@customizationCompleteTitleWithName": {
+        "description": "Complete title with user's name on customization loading page",
+        "placeholders": {
+            "name": {
+                "type": "String"
+            }
+        }
+    },
+    "customizationCompleteTitle": "All set! Your Wordstock experience is ready!",
+    "@customizationCompleteTitle": {
+        "description": "Complete title on customization loading page"
+    },
+    "startLearning": "Start Learning",
+    "@startLearning": {
+        "description": "Text for start learning button"
+    },
+    "analyzingPreferences": "Analyzing your preferences...",
+    "@analyzingPreferences": {
+        "description": "Text for analyzing preferences step"
+    },
+    "selectingWords": "Selecting words based on your level...",
+    "@selectingWords": {
+        "description": "Text for selecting words step"
+    },
+    "personalizingPath": "Personalizing your learning path...",
+    "@personalizingPath": {
+        "description": "Text for personalizing learning path step"
+    },
+    "creatingWordList": "Creating your custom word list...",
+    "@creatingWordList": {
+        "description": "Text for creating word list step"
+    },
+    "finalizingExperience": "Finalizing your experience...",
+    "@finalizingExperience": {
+        "description": "Text for finalizing experience step"
     }
 }
