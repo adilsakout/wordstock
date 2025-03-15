@@ -20,7 +20,6 @@ class WordRepository {
     user_favorites!user_favorites_word_id_fkey(user_id)
 ''').limit(100);
 
-      print(response);
       final words = response.map((json) {
         final isFavorite =
             (json['user_favorites'] as List<dynamic>?)?.isNotEmpty ?? false;

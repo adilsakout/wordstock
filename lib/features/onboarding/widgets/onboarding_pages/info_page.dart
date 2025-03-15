@@ -9,8 +9,8 @@ class InfoPage extends StatefulWidget {
     required this.title,
     required this.description,
     required this.buttonText,
-    this.imageWidth = 200,
-    this.imageHeight = 200,
+    this.imageWidth = 300,
+    this.imageHeight = 250,
     super.key,
   });
 

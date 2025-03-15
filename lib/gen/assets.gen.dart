@@ -28,17 +28,41 @@ class $AssetsIconsGen {
 class $AssetsImagesGen {
   const $AssetsImagesGen();
 
+  /// File path: assets/images/onb-1.png
+  AssetGenImage get onb1Png => const AssetGenImage('assets/images/onb-1.png');
+
   /// File path: assets/images/onb_1.png
-  AssetGenImage get onb1 => const AssetGenImage('assets/images/onb_1.png');
+  AssetGenImage get onb1Png_ => const AssetGenImage('assets/images/onb_1.png');
+
+  /// File path: assets/images/onb-2.png
+  AssetGenImage get onb2Png => const AssetGenImage('assets/images/onb-2.png');
 
   /// File path: assets/images/onb_2.png
-  AssetGenImage get onb2 => const AssetGenImage('assets/images/onb_2.png');
+  AssetGenImage get onb2Png_ => const AssetGenImage('assets/images/onb_2.png');
+
+  /// File path: assets/images/onb-3.png
+  AssetGenImage get onb3Png => const AssetGenImage('assets/images/onb-3.png');
 
   /// File path: assets/images/onb_3.png
-  AssetGenImage get onb3 => const AssetGenImage('assets/images/onb_3.png');
+  AssetGenImage get onb3Png_ => const AssetGenImage('assets/images/onb_3.png');
+
+  /// File path: assets/images/onb-4.png
+  AssetGenImage get onb4 => const AssetGenImage('assets/images/onb-4.png');
+
+  /// File path: assets/images/onb-5.png
+  AssetGenImage get onb5 => const AssetGenImage('assets/images/onb-5.png');
 
   /// List of all assets
-  List<AssetGenImage> get values => [onb1, onb2, onb3];
+  List<AssetGenImage> get values => [
+    onb1Png,
+    onb1Png_,
+    onb2Png,
+    onb2Png_,
+    onb3Png,
+    onb3Png_,
+    onb4,
+    onb5,
+  ];
 }
 
 class $AssetsSecretsGen {

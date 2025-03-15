@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:wordstock/features/onboarding/cubit/cubit.dart';
 import 'package:wordstock/features/onboarding/widgets/onboarding_pages/age_selection_page.dart';
+import 'package:wordstock/features/onboarding/widgets/onboarding_pages/customization_loading_page.dart';
 import 'package:wordstock/features/onboarding/widgets/onboarding_pages/gender_selection_page.dart';
 import 'package:wordstock/features/onboarding/widgets/onboarding_pages/goal_selection_page.dart';
 import 'package:wordstock/features/onboarding/widgets/onboarding_pages/info_page.dart';
@@ -46,13 +47,13 @@ class OnboardingBody extends StatelessWidget {
                   physics: const NeverScrollableScrollPhysics(),
                   children: [
                     InfoPage(
-                      image: Assets.images.onb1.path,
+                      image: Assets.images.onb1Png.path,
                       title: l10n.welcomeTitle,
                       description: l10n.welcomeDescription,
                       buttonText: l10n.getStarted,
                     ),
                     InfoPage(
-                      image: Assets.images.onb2.path,
+                      image: Assets.images.onb2Png.path,
                       title: l10n.infoTitle,
                       description: l10n.infoDescription,
                       buttonText: l10n.continueText,
@@ -61,32 +62,34 @@ class OnboardingBody extends StatelessWidget {
                     const GenderSelectionPage(),
                     const NameInputPage(),
                     InfoPage(
-                      image: Assets.images.onb3.path,
+                      image: Assets.images.onb3Png.path,
                       title: state.userName.isEmpty
                           ? l10n.makeYoursTitle
                           : l10n.makeYoursWithNameTitle(state.userName),
                       description: l10n.personalizeDescription,
                       buttonText: l10n.continueText,
-                      imageWidth: 300,
                       imageHeight: 300,
                     ),
                     const TimeCommitmentPage(),
                     const NotificationPermissionPage(),
                     const VocabularyLevelPage(),
                     InfoPage(
-                      image: Assets.images.onb3.path,
+                      image: Assets.images.onb4.path,
                       title: state.userName.isEmpty
                           ? l10n.makeYoursTitle
                           : l10n.makeYoursWithNameTitle(state.userName),
                       description: l10n.personalizeDescription,
                       buttonText: l10n.continueText,
-                      imageWidth: 300,
-                      imageHeight: 300,
+                      imageWidth: 400,
+                      imageHeight: 400,
                     ),
                     const GoalSelectionPage(),
                     const TopicSelectionPage(),
                     StreakGoalPage(
-                      onNext: () {
+                      onNext: cubit.nextPage,
+                    ),
+                    CustomizationLoadingPage(
+                      onComplete: () {
                         context.read<OnboardingCubit>().disposePageController();
                         context.replace('/home');
                       },
@@ -123,14 +126,17 @@ class OnboardingAppBar extends StatefulWidget {
 class _OnboardingAppBarState extends State<OnboardingAppBar> {
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(8),
-      child: Row(
-        children: [
-          AnimatedOpacity(
-            opacity: widget.currentPage > 0 ? 1.0 : 0.0,
-            duration: const Duration(milliseconds: 300),
-            child: PushableButton(
+    // Hide app bar for first two screens (0, 1) and last screen (12)
+    final shouldShowAppBar = widget.currentPage > 1 && widget.currentPage < 13;
+
+    return AnimatedOpacity(
+      opacity: shouldShowAppBar ? 1.0 : 0.0,
+      duration: const Duration(milliseconds: 300),
+      child: Padding(
+        padding: const EdgeInsets.all(8),
+        child: Row(
+          children: [
+            PushableButton(
               width: 50,
               height: 50,
               borderRadius: 50,
@@ -138,12 +144,11 @@ class _OnboardingAppBarState extends State<OnboardingAppBar> {
               suffixIcon: Icons.arrow_back_ios,
               onTap: widget.onBack,
             ),
-          ),
-          const SizedBox(width: 10),
-          if (widget.currentPage > 0)
+            const SizedBox(width: 10),
             Expanded(child: ProgressBar(progress: widget.progress)),
-          const SizedBox(width: 60, height: 50),
-        ],
+            const SizedBox(width: 60, height: 50),
+          ],
+        ),
       ),
     );
   }

@@ -20,6 +20,43 @@ class UserRepository {
     }
   }
 
+  /// Save onboarding data to the user profile
+  Future<void> saveOnboardingData({
+    int? ageRange,
+    String? gender,
+    String? userName,
+    int? timeCommitment,
+    int? wordsPerDay,
+    VocabularyLevel? vocabularyLevel,
+    List<String>? selectedGoals,
+    List<String>? selectedTopics,
+    int? streakGoal,
+  }) async {
+    try {
+      final data = <String, dynamic>{
+        'user_id': _userId,
+        'onboarding_completed': true,
+      };
+
+      // Only add fields that are not null
+      if (userName != null) data['name'] = userName;
+      if (ageRange != null) data['age_range'] = ageRange;
+      if (gender != null) data['gender'] = gender;
+      if (timeCommitment != null) data['time_commitment'] = timeCommitment;
+      if (wordsPerDay != null) data['words_per_day'] = wordsPerDay;
+      if (vocabularyLevel != null) {
+        data['vocabulary_level'] = vocabularyLevel.name;
+      }
+      if (selectedGoals != null) data['goals'] = selectedGoals;
+      if (selectedTopics != null) data['topics'] = selectedTopics;
+      if (streakGoal != null) data['streak_goal'] = streakGoal;
+
+      await _supabase.from('user_profiles').upsert(data);
+    } catch (e) {
+      throw Exception('Failed to save onboarding data: $e');
+    }
+  }
+
   /// Get the user's profile
   Future<UserProfile> getProfile() async {
     try {
