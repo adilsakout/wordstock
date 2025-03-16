@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:gaimon/gaimon.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:wordstock/features/home/cubit/home_cubit.dart';
 import 'package:wordstock/model/word.dart';
@@ -91,6 +92,7 @@ ${widget.word.definition}
     widget.onToggleFavorite();
 
     if (!isCurrentlyFavorite) {
+      Gaimon.soft();
       _heartController.forward().then((_) {
         _heartController.reset();
       });

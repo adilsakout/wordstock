@@ -1,5 +1,6 @@
 import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
+import 'package:gaimon/gaimon.dart';
 
 class PushableButton extends StatefulWidget {
   const PushableButton({
@@ -63,6 +64,7 @@ class PushableButtonState extends State<PushableButton>
   void _handleTapUp(TapUpDetails details) {
     _animationController.reverse();
     widget.onTap();
+    Gaimon.selection();
     if (widget.shouldPlaySound) {
       _playSound();
     }

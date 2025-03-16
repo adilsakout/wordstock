@@ -533,6 +533,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.4.1"
+  gaimon:
+    dependency: "direct main"
+    description:
+      name: gaimon
+      sha256: "4194b979dc84b2c5135dba261a0a1f810e4dff25a87bcb53cca53fb585438307"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.4.0"
   glob:
     dependency: transitive
     description:
@@ -597,14 +605,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.1.0"
-  haptic_feedback:
-    dependency: "direct main"
-    description:
-      name: haptic_feedback
-      sha256: d3b5ad41858d18a35d317636c9cdc1cb8aef23c7b861ca5896273acc68e1a98a
-      url: "https://pub.dev"
-    source: hosted
-    version: "0.5.1+1"
   hashcodes:
     dependency: transitive
     description:

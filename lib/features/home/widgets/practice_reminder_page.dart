@@ -86,7 +86,7 @@ class PracticeReminderPage extends StatelessWidget {
             shadowColor: const Color(0xff1899D6),
           ).animate().fadeIn(
                 duration: const Duration(milliseconds: 500),
-                delay: const Duration(milliseconds: 1100),
+                delay: const Duration(milliseconds: 800),
               ),
         ],
       ),

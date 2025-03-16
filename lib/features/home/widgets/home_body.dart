@@ -1,6 +1,7 @@
 // ignore_for_file: use_build_context_synchronously
 
 import 'package:flutter/material.dart';
+import 'package:gaimon/gaimon.dart';
 import 'package:go_router/go_router.dart';
 import 'package:in_app_review/in_app_review.dart';
 import 'package:wordstock/features/favorite_words/favorite_words.dart';
@@ -95,6 +96,7 @@ class _HomeBodyState extends State<HomeBody> {
                         },
                         itemBuilder: (context, index) {
                           if (shouldShowPracticeReminder) {
+                            Gaimon.medium();
                             return PracticeReminderPage(
                               onContinue: _continueLearning,
                             );
@@ -130,7 +132,7 @@ class _HomeBodyState extends State<HomeBody> {
                         right: 0,
                         child: AnimatedOpacity(
                           opacity: shouldShowPracticeReminder ? 0 : 1,
-                          duration: const Duration(milliseconds: 300),
+                          duration: const Duration(milliseconds: 700),
                           child: Padding(
                             padding: const EdgeInsets.symmetric(horizontal: 20),
                             child: Row(
