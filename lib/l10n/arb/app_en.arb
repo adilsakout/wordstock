@@ -158,5 +158,26 @@
     "finalizingExperience": "Finalizing your experience...",
     "@finalizingExperience": {
         "description": "Text for finalizing experience step"
+    },
+    "practiceReminderTitle": "Great progress!",
+    "@practiceReminderTitle": {
+        "description": "Title for practice reminder screen"
+    },
+    "practiceReminderDescription": "You've learned {count} new words! Now is a perfect time to practice and reinforce your learning.",
+    "@practiceReminderDescription": {
+        "description": "Description for practice reminder screen with dynamic word count",
+        "placeholders": {
+            "count": {
+                "type": "int"
+            }
+        }
+    },
+    "startPractice": "Start Practice",
+    "@startPractice": {
+        "description": "Text for start practice button"
+    },
+    "continueLearning": "Continue Learning",
+    "@continueLearning": {
+        "description": "Text for continue learning button"
     }
 }

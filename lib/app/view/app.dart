@@ -6,6 +6,7 @@ import 'package:go_router/go_router.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:wordstock/features/favorite_words/favorite_words.dart';
 import 'package:wordstock/features/home/cubit/home_cubit.dart';
+import 'package:wordstock/features/home/cubit/learning_progress_cubit.dart';
 import 'package:wordstock/features/home/view/home_page.dart';
 import 'package:wordstock/features/onboarding/onboarding.dart';
 import 'package:wordstock/features/practice/practice.dart';
@@ -96,6 +97,9 @@ class _AppState extends State<App> {
             wordRepository: WordRepository(),
             ttsRepository: TTSRepository(),
           ),
+        ),
+        BlocProvider<LearningProgressCubit>(
+          create: (context) => LearningProgressCubit(),
         ),
       ],
       child: MaterialApp.router(
