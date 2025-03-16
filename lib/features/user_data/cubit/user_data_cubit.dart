@@ -74,7 +74,7 @@ class StreakCubit extends Cubit<StreakState> {
   Future<void> _submitProgress() async {
     if (_learnedWordIds.isEmpty) return;
     try {
-      await userRepository.updateTotalPoints(_learnedWordIds.length);
+      await userRepository.updateTotalPoints(_learnedWordIds.length * 2);
       _learnedWordIds.clear();
       final updatedProfile = await userRepository.getProfile();
       emit(

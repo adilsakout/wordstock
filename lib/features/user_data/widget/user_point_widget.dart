@@ -28,7 +28,7 @@ class UserPointWidget extends StatelessWidget {
             child: Row(
               children: [
                 AnimatedFlipCounter(
-                  duration: const Duration(milliseconds: 500),
+                  duration: 1.seconds,
                   value: state.profile!.totalPoints ?? 0,
                   textStyle: Theme.of(context).textTheme.bodyMedium?.copyWith(
                         fontSize: 20,
