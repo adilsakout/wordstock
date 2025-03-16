@@ -5,6 +5,7 @@ import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:wordstock/model/word.dart';
 import 'package:wordstock/repositories/tts_repository.dart';
+import 'package:wordstock/repositories/user_repository.dart';
 import 'package:wordstock/repositories/word_repository.dart';
 
 part 'home_state.dart';
@@ -13,11 +14,13 @@ class HomeCubit extends Cubit<HomeState> {
   HomeCubit({
     required this.wordRepository,
     required this.ttsRepository,
+    required this.userRepository,
   }) : super(const HomeInitial()) {
     _initializeTTS();
   }
 
   final WordRepository wordRepository;
+  final UserRepository userRepository;
   final TTSRepository ttsRepository;
   int wordsReadCount = 0;
 
@@ -90,7 +93,6 @@ class HomeCubit extends Cubit<HomeState> {
     if (_learnedWordIds.isEmpty) return;
 
     await wordRepository.markWordAsLearned(_learnedWordIds);
-
     _learnedWordIds.clear();
   }
 }

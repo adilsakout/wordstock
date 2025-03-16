@@ -79,23 +79,29 @@ class _AppState extends State<App> {
     super.initState();
   }
 
+  // Initialize repositories
+  final userRepository = UserRepository();
+  final wordRepository = WordRepository();
+  final ttsRepository = TTSRepository();
+
   @override
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
         BlocProvider<HomeCubit>(
           create: (context) => HomeCubit(
-            wordRepository: WordRepository(),
-            ttsRepository: TTSRepository(),
+            wordRepository: wordRepository,
+            ttsRepository: ttsRepository,
+            userRepository: userRepository,
           ),
         ),
         BlocProvider<StreakCubit>(
-          create: (context) => StreakCubit(userRepository: UserRepository()),
+          create: (context) => StreakCubit(userRepository: userRepository),
         ),
         BlocProvider<FavoriteWordsCubit>(
           create: (context) => FavoriteWordsCubit(
-            wordRepository: WordRepository(),
-            ttsRepository: TTSRepository(),
+            wordRepository: wordRepository,
+            ttsRepository: ttsRepository,
           ),
         ),
         BlocProvider<LearningProgressCubit>(

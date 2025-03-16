@@ -20,6 +20,18 @@ class UserRepository {
     }
   }
 
+  /// Update the total points for the user
+  Future<void> updateTotalPoints(int points) async {
+    try {
+      await _supabase.rpc<void>(
+        'update_user_total_points',
+        params: {'target_user_id': _userId, 'points': points},
+      );
+    } catch (e) {
+      throw Exception('Failed to update total points: $e');
+    }
+  }
+
   /// Save onboarding data to the user profile
   Future<void> saveOnboardingData({
     int? ageRange,

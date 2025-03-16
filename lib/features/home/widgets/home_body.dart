@@ -49,7 +49,9 @@ class _HomeBodyState extends State<HomeBody> {
 
   void _onWordLearned(String wordId) {
     context.read<HomeCubit>().markWordAsLearned(wordId);
-    context.read<StreakCubit>().updateStreak();
+    context.read<StreakCubit>()
+      ..updateStreak()
+      ..markWordAsLearned(wordId);
 
     // Increment words learned count
     context.read<LearningProgressCubit>().incrementWordsLearned();
