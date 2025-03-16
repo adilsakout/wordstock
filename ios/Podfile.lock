@@ -1,4 +1,6 @@
 PODS:
+  - advanced_in_app_review (0.0.1):
+    - Flutter
   - app_links (0.0.2):
     - Flutter
   - audioplayers_darwin (0.0.1):
@@ -9,6 +11,8 @@ PODS:
   - haptic_feedback (0.5.1):
     - Flutter
   - image_gallery_saver (2.0.2):
+    - Flutter
+  - in_app_review (2.0.0):
     - Flutter
   - path_provider_foundation (0.0.1):
     - Flutter
@@ -24,12 +28,14 @@ PODS:
     - Flutter
 
 DEPENDENCIES:
+  - advanced_in_app_review (from `.symlinks/plugins/advanced_in_app_review/ios`)
   - app_links (from `.symlinks/plugins/app_links/ios`)
   - audioplayers_darwin (from `.symlinks/plugins/audioplayers_darwin/ios`)
   - Flutter (from `Flutter`)
   - flutter_local_notifications (from `.symlinks/plugins/flutter_local_notifications/ios`)
   - haptic_feedback (from `.symlinks/plugins/haptic_feedback/ios`)
   - image_gallery_saver (from `.symlinks/plugins/image_gallery_saver/ios`)
+  - in_app_review (from `.symlinks/plugins/in_app_review/ios`)
   - path_provider_foundation (from `.symlinks/plugins/path_provider_foundation/darwin`)
   - permission_handler_apple (from `.symlinks/plugins/permission_handler_apple/ios`)
   - share_plus (from `.symlinks/plugins/share_plus/ios`)
@@ -37,6 +43,8 @@ DEPENDENCIES:
   - url_launcher_ios (from `.symlinks/plugins/url_launcher_ios/ios`)
 
 EXTERNAL SOURCES:
+  advanced_in_app_review:
+    :path: ".symlinks/plugins/advanced_in_app_review/ios"
   app_links:
     :path: ".symlinks/plugins/app_links/ios"
   audioplayers_darwin:
@@ -49,6 +57,8 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/haptic_feedback/ios"
   image_gallery_saver:
     :path: ".symlinks/plugins/image_gallery_saver/ios"
+  in_app_review:
+    :path: ".symlinks/plugins/in_app_review/ios"
   path_provider_foundation:
     :path: ".symlinks/plugins/path_provider_foundation/darwin"
   permission_handler_apple:
@@ -61,12 +71,14 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/url_launcher_ios/ios"
 
 SPEC CHECKSUMS:
+  advanced_in_app_review: fe8fd50b8670cb3dbe67e4c26ca643f7aea8dbb8
   app_links: f3e17e4ee5e357b39d8b95290a9b2c299fca71c6
   audioplayers_darwin: 877d9a4d06331c5c374595e46e16453ac7eafa40
   Flutter: e0871f40cf51350855a761d2e70bf5af5b9b5de7
   flutter_local_notifications: df98d66e515e1ca797af436137b4459b160ad8c9
   haptic_feedback: 8cb3ee0cb6b797946c2b0df9c99ebc8f7ed79c71
   image_gallery_saver: cb43cc43141711190510e92c460eb1655cd343cb
+  in_app_review: a31b5257259646ea78e0e35fc914979b0031d011
   path_provider_foundation: 2b6b4c569c0fb62ec74538f866245ac84301af46
   permission_handler_apple: 9878588469a2b0d0fc1e048d9f43605f92e6cec2
   share_plus: 8b6f8b3447e494cca5317c8c3073de39b3600d1f

@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:in_app_review/in_app_review.dart';
 import 'package:wordstock/features/favorite_words/favorite_words.dart';
 import 'package:wordstock/features/home/cubit/cubit.dart';
 import 'package:wordstock/features/home/widgets/word_card.dart';
@@ -26,13 +27,21 @@ class HomeBody extends StatefulWidget {
 
 class _HomeBodyState extends State<HomeBody> {
   final PageController pageController = PageController();
+  final InAppReview inAppReview = InAppReview.instance;
 
   @override
   void initState() {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       context.read<HomeCubit>().fetchWords();
+      _requestReview();
     });
     super.initState();
+  }
+
+  Future<void> _requestReview() async {
+    if (await inAppReview.isAvailable()) {
+      await inAppReview.requestReview();
+    }
   }
 
   @override
