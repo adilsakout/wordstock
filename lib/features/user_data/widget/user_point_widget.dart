@@ -13,7 +13,7 @@ class UserPointWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<StreakCubit, StreakState>(
       builder: (context, state) {
-        if (state is StreakLoaded) {
+        if (state.isLoaded && state.profile != null) {
           return Container(
             padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
             height: 50,
@@ -29,7 +29,7 @@ class UserPointWidget extends StatelessWidget {
               children: [
                 AnimatedFlipCounter(
                   duration: const Duration(milliseconds: 500),
-                  value: state.profile.totalPoints ?? 0,
+                  value: state.profile!.totalPoints ?? 0,
                   textStyle: Theme.of(context).textTheme.bodyMedium?.copyWith(
                         fontSize: 20,
                         fontWeight: FontWeight.w600,

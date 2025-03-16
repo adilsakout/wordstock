@@ -209,9 +209,9 @@ class OnboardingCubit extends Cubit<OnboardingState> {
     }
   }
 
-  @override
-  Future<void> close() {
-    pageController.dispose();
-    return super.close();
-  }
+  // @override
+  // Future<void> close() {
+  //   pageController.dispose();
+  //   return super.close();
+  // }
 }

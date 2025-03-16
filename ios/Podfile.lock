@@ -8,7 +8,7 @@ PODS:
   - Flutter (1.0.0)
   - flutter_local_notifications (0.0.1):
     - Flutter
-  - haptic_feedback (0.5.1):
+  - gaimon (0.0.1):
     - Flutter
   - image_gallery_saver (2.0.2):
     - Flutter
@@ -33,7 +33,7 @@ DEPENDENCIES:
   - audioplayers_darwin (from `.symlinks/plugins/audioplayers_darwin/ios`)
   - Flutter (from `Flutter`)
   - flutter_local_notifications (from `.symlinks/plugins/flutter_local_notifications/ios`)
-  - haptic_feedback (from `.symlinks/plugins/haptic_feedback/ios`)
+  - gaimon (from `.symlinks/plugins/gaimon/ios`)
   - image_gallery_saver (from `.symlinks/plugins/image_gallery_saver/ios`)
   - in_app_review (from `.symlinks/plugins/in_app_review/ios`)
   - path_provider_foundation (from `.symlinks/plugins/path_provider_foundation/darwin`)
@@ -53,8 +53,8 @@ EXTERNAL SOURCES:
     :path: Flutter
   flutter_local_notifications:
     :path: ".symlinks/plugins/flutter_local_notifications/ios"
-  haptic_feedback:
-    :path: ".symlinks/plugins/haptic_feedback/ios"
+  gaimon:
+    :path: ".symlinks/plugins/gaimon/ios"
   image_gallery_saver:
     :path: ".symlinks/plugins/image_gallery_saver/ios"
   in_app_review:
@@ -76,7 +76,7 @@ SPEC CHECKSUMS:
   audioplayers_darwin: 877d9a4d06331c5c374595e46e16453ac7eafa40
   Flutter: e0871f40cf51350855a761d2e70bf5af5b9b5de7
   flutter_local_notifications: df98d66e515e1ca797af436137b4459b160ad8c9
-  haptic_feedback: 8cb3ee0cb6b797946c2b0df9c99ebc8f7ed79c71
+  gaimon: 266fec2cd27726df54a6694c14fc9e3f2a415c33
   image_gallery_saver: cb43cc43141711190510e92c460eb1655cd343cb
   in_app_review: a31b5257259646ea78e0e35fc914979b0031d011
   path_provider_foundation: 2b6b4c569c0fb62ec74538f866245ac84301af46

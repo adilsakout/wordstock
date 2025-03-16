@@ -179,5 +179,48 @@
     "continueLearning": "Continue Learning",
     "@continueLearning": {
         "description": "Text for continue learning button"
+    },
+    "streakMilestoneTitle": "Streak Milestone!",
+    "@streakMilestoneTitle": {
+        "description": "Title shown on streak milestone celebration"
+    },
+    "streakDaysCount": "{count} days",
+    "@streakDaysCount": {
+        "description": "Text showing number of streak days",
+        "placeholders": {
+            "count": {
+                "type": "int"
+            }
+        }
+    },
+    "streakCongratulationsMessage": "Congratulations! You've been learning consistently for {count} days. Keep up the great work!",
+    "@streakCongratulationsMessage": {
+        "description": "Congratulatory message for streak milestone",
+        "placeholders": {
+            "count": {
+                "type": "int"
+            }
+        }
+    },
+    "streakCongratulationsMessageSingular": "Congratulations! You've started your learning journey today. Keep it up!",
+    "@streakCongratulationsMessageSingular": {
+        "description": "Congratulatory message for first day streak"
+    },
+    "streakCongratulationsMessagePlural": "Congratulations! You've been learning consistently for {count} days. Keep up the great work!",
+    "@streakCongratulationsMessagePlural": {
+        "description": "Congratulatory message for multiple day streak",
+        "placeholders": {
+            "count": {
+                "type": "int"
+            }
+        }
+    },
+    "keepGoing": "Keep Going!",
+    "@keepGoing": {
+        "description": "Text for button to dismiss streak milestone celebration"
+    },
+    "streakCongratulationsSingular": "Congratulations! You've started your learning journey today. Keep it up!",
+    "@streakCongratulationsSingular": {
+        "description": "Congratulatory message for first day streak"
     }
 }

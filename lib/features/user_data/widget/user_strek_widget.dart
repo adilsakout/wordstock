@@ -4,6 +4,7 @@ import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:wordstock/features/user_data/cubit/user_data_cubit.dart';
+import 'package:wordstock/features/user_data/widget/new_streak_bottom_sheet.dart';
 import 'package:wordstock/gen/assets.gen.dart';
 
 class UserStreakWidget extends StatelessWidget {
@@ -11,9 +12,37 @@ class UserStreakWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<StreakCubit, StreakState>(
+    return BlocConsumer<StreakCubit, StreakState>(
+      listener: (context, state) {
+        if (state.isLoaded && state.profile != null) {
+          final currentStreak = state.profile!.dailyStreak;
+
+          showModalBottomSheet<void>(
+            context: context,
+            isScrollControlled: true,
+            constraints: BoxConstraints(
+              maxHeight: MediaQuery.of(context).size.height * 0.7,
+            ),
+            backgroundColor: Colors.transparent,
+            builder: (BuildContext context) {
+              return NewStreakBottomSheet(currentStreak: currentStreak);
+            },
+          );
+        }
+      },
+      listenWhen: (previous, current) {
+        // Only trigger listener when streak value changes and state is loaded
+        final previousStreak = previous.profile?.dailyStreak;
+        final currentStreak = current.profile?.dailyStreak;
+
+        if (previousStreak == null || currentStreak == null) {
+          return false;
+        }
+
+        return previousStreak != currentStreak;
+      },
       builder: (context, state) {
-        if (state is StreakLoaded) {
+        if (state.isLoaded && state.profile != null) {
           return Container(
             padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
             height: 50,
@@ -37,7 +66,7 @@ class UserStreakWidget extends StatelessWidget {
                 const SizedBox(width: 5),
                 AnimatedFlipCounter(
                   duration: const Duration(milliseconds: 500),
-                  value: state.profile.dailyStreak,
+                  value: state.profile!.dailyStreak,
                   textStyle: Theme.of(context).textTheme.bodyMedium?.copyWith(
                         fontSize: 20,
                         fontWeight: FontWeight.w600,
