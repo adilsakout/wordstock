@@ -85,7 +85,8 @@ class _CustomizationLoadingPageState extends State<CustomizationLoadingPage>
     super.dispose();
   }
 
-  String _getTitle(bool isComplete, String userName, AppLocalizations l10n) {
+  String _getTitle(bool isComplete, String userName) {
+    final l10n = context.l10n;
     if (isComplete) {
       // Complete state
       if (userName.isNotEmpty) {
@@ -121,7 +122,7 @@ class _CustomizationLoadingPageState extends State<CustomizationLoadingPage>
   Widget build(BuildContext context) {
     final l10n = context.l10n;
     final state = context.read<OnboardingCubit>().state;
-    final title = _getTitle(_isComplete, state.userName, l10n);
+    final title = _getTitle(_isComplete, state.userName);
 
     // Initialize the steps with localized strings
     _customizationSteps = [
