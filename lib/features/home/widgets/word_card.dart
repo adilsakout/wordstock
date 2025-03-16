@@ -101,7 +101,11 @@ ${widget.word.definition}
   Widget build(BuildContext context) {
     final isFavorite = widget.word.isFavorite ?? false;
     return GestureDetector(
-      onDoubleTap: _handleFavoriteClick,
+      onDoubleTap: () {
+        if (!isFavorite) {
+          _handleFavoriteClick();
+        }
+      },
       child: Padding(
         padding: const EdgeInsets.all(20),
         child: Stack(

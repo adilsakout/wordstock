@@ -114,17 +114,6 @@ class _HomeBodyState extends State<HomeBody> {
                             context.go(FavoriteWordsPage.name);
                           },
                         ),
-                        // const SizedBox(width: 20),
-                        // PushableButton(
-                        //   width: 50,
-                        //   height: 50,
-                        //   text: '',
-                        //   iconSize: 25,
-                        //   suffixIcon: Icons.person,
-                        //   buttonColor: const Color(0xffF9C835),
-                        //   shadowColor: const Color(0xffCDB054),
-                        //   onTap: () {},
-                        // ),
                         const Spacer(),
                         PushableButton(
                           width: 140,
