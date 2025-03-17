@@ -18,6 +18,7 @@ dependencies:
   flutter_animate: ^4.5.2
   flutter_bloc: ^8.1.6
   flutter_dotenv: ^5.2.1
+  flutter_launcher_icons: ^0.14.3
   flutter_local_notifications: ^18.0.1
   flutter_localizations:
     sdk: flutter
@@ -32,6 +33,7 @@ dependencies:
   in_app_review: ^2.0.10
   intl: ^0.19.0
   json_annotation: ^4.9.0
+  logger: ^2.5.0
   lottie: ^3.3.1
   path_provider: ^2.1.5
   permission_handler: ^11.4.0
