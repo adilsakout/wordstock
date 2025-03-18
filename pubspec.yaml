@@ -45,7 +45,7 @@ dependencies:
 dev_dependencies:
   bloc_test: ^9.1.7
   build_runner:
-  flutter_gen_runner:
+  flutter_gen_runner: 5.10.0
   flutter_test:
     sdk: flutter
   json_serializable: ^6.9.4
