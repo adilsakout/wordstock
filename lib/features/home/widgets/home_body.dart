@@ -166,7 +166,7 @@ class _HomeBodyState extends State<HomeBody> {
                                         .startPractice();
 
                                     if (context.mounted) {
-                                      await context.push(PracticePage.name);
+                                      context.go(PracticePage.name);
                                     }
                                   },
                                 ),

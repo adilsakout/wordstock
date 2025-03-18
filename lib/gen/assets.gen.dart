@@ -12,6 +12,9 @@ import 'package:flutter/widgets.dart';
 class $AssetsIconsGen {
   const $AssetsIconsGen();
 
+  /// File path: assets/icons/ai_icon.svg
+  String get aiIcon => 'assets/icons/ai_icon.svg';
+
   /// File path: assets/icons/check.svg
   String get check => 'assets/icons/check.svg';
 
@@ -21,8 +24,14 @@ class $AssetsIconsGen {
   /// File path: assets/icons/flame.svg
   String get flame => 'assets/icons/flame.svg';
 
+  /// File path: assets/icons/logo.png
+  AssetGenImage get logo => const AssetGenImage('assets/icons/logo.png');
+
+  /// File path: assets/icons/quiz_icon.svg
+  String get quizIcon => 'assets/icons/quiz_icon.svg';
+
   /// List of all assets
-  List<String> get values => [check, coin, flame];
+  List<dynamic> get values => [aiIcon, check, coin, flame, logo, quizIcon];
 }
 
 class $AssetsImagesGen {

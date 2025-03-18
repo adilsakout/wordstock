@@ -13,6 +13,8 @@ class HomePage extends StatelessWidget {
     return MaterialPageRoute<dynamic>(builder: (_) => const HomePage());
   }
 
+  static const name = '/home';
+
   @override
   Widget build(BuildContext context) {
     return const Scaffold(

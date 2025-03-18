@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:wordstock/features/practice/cubit/cubit.dart';
 import 'package:wordstock/features/practice/widgets/practice_body.dart';
 
 /// {@template practice_page}
@@ -14,15 +13,12 @@ class PracticePage extends StatelessWidget {
     return MaterialPageRoute<dynamic>(builder: (_) => const PracticePage());
   }
 
-  static const name = '/home/practice';
+  static const name = '/practice';
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => PracticeCubit(),
-      child: const Scaffold(
-        body: PracticeView(),
-      ),
+    return const Scaffold(
+      body: PracticeView(),
     );
   }
 }

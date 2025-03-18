@@ -222,5 +222,54 @@
     "streakCongratulationsSingular": "Congratulations! You've started your learning journey today. Keep it up!",
     "@streakCongratulationsSingular": {
         "description": "Congratulatory message for first day streak"
+    },
+    "quizResultExcellent": "Excellent!",
+    "@quizResultExcellent": {
+        "description": "Quiz result feedback for high scores (80%+)"
+    },
+    "quizResultGoodJob": "Good job!",
+    "@quizResultGoodJob": {
+        "description": "Quiz result feedback for good scores (60-79%)"
+    },
+    "quizResultNiceTry": "Nice try!",
+    "@quizResultNiceTry": {
+        "description": "Quiz result feedback for moderate scores (40-59%)"
+    },
+    "quizResultKeepPracticing": "Keep practicing!",
+    "@quizResultKeepPracticing": {
+        "description": "Quiz result feedback for lower scores (below 40%)"
+    },
+    "quizCompleteMessage": "You've finished the vocabulary quiz.",
+    "@quizCompleteMessage": {
+        "description": "Message shown when a quiz is completed"
+    },
+    "coinsEarned": "{count} coins earned",
+    "@coinsEarned": {
+        "description": "Message showing how many coins were earned",
+        "placeholders": {
+            "count": {
+                "type": "int"
+            }
+        }
+    },
+    "quizResultSummary": "You answered {correct} out of {total} questions correctly.",
+    "@quizResultSummary": {
+        "description": "Summary of quiz performance",
+        "placeholders": {
+            "correct": {
+                "type": "int"
+            },
+            "total": {
+                "type": "int"
+            }
+        }
+    },
+    "playAgain": "Play Again",
+    "@playAgain": {
+        "description": "Text for play again button"
+    },
+    "home": "Home",
+    "@home": {
+        "description": "Text for home button"
     }
 }

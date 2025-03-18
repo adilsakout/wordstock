@@ -12,6 +12,7 @@ import 'package:wordstock/features/onboarding/onboarding.dart';
 import 'package:wordstock/features/practice/practice.dart';
 import 'package:wordstock/features/user_data/cubit/user_data_cubit.dart';
 import 'package:wordstock/l10n/l10n.dart';
+import 'package:wordstock/repositories/quiz_repository.dart';
 import 'package:wordstock/repositories/tts_repository.dart';
 import 'package:wordstock/repositories/user_repository.dart';
 import 'package:wordstock/repositories/word_repository.dart';
@@ -51,11 +52,11 @@ final _router = GoRouter(
           path: 'favorites',
           builder: (context, state) => const FavoriteWordsPage(),
         ),
-        GoRoute(
-          path: 'practice',
-          builder: (context, state) => const PracticePage(),
-        ),
       ],
+    ),
+    GoRoute(
+      path: '/practice',
+      builder: (context, state) => const PracticePage(),
     ),
   ],
 );
@@ -83,6 +84,7 @@ class _AppState extends State<App> {
   final userRepository = UserRepository();
   final wordRepository = WordRepository();
   final ttsRepository = TTSRepository();
+  final quizRepository = QuizRepository();
 
   @override
   Widget build(BuildContext context) {
@@ -106,6 +108,12 @@ class _AppState extends State<App> {
         ),
         BlocProvider<LearningProgressCubit>(
           create: (context) => LearningProgressCubit(),
+        ),
+        BlocProvider<PracticeCubit>(
+          create: (context) => PracticeCubit(
+            quizRepository: quizRepository,
+            userRepository: userRepository,
+          ),
         ),
       ],
       child: MaterialApp.router(
