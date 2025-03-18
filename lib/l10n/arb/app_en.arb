@@ -271,5 +271,62 @@
     "home": "Home",
     "@home": {
         "description": "Text for home button"
+    },
+    "exitConfirmationTitle": "Are you sure you want to exit?",
+    "@exitConfirmationTitle": {
+        "description": "Title for exit confirmation dialog"
+    },
+    "exitConfirmationMessage": "Your progress will not be saved.",
+    "@exitConfirmationMessage": {
+        "description": "Message for exit confirmation dialog"
+    },
+    "exit": "Exit",
+    "@exit": {
+        "description": "Text for exit button"
+    },
+    "continueAction": "Continue",
+    "@continueAction": {
+        "description": "Text for continue button"
+    },
+    "vocabularyQuiz": "Vocabulary Quiz",
+    "@vocabularyQuiz": {
+        "description": "Title for vocabulary quiz"
+    },
+    "questionCounter": "{current}/{total}",
+    "@questionCounter": {
+        "description": "Question counter format",
+        "placeholders": {
+            "current": {
+                "type": "int"
+            },
+            "total": {
+                "type": "int"
+            }
+        }
+    },
+    "selectCorrectWord": "Select the correct word to complete the sentence.",
+    "@selectCorrectWord": {
+        "description": "Instruction for vocabulary quiz"
+    },
+    "next": "Next",
+    "@next": {
+        "description": "Text for next button"
+    },
+    "finish": "Finish",
+    "@finish": {
+        "description": "Text for finish button"
+    },
+    "noQuizQuestions": "No quiz questions available",
+    "@noQuizQuestions": {
+        "description": "Message when no quiz questions are available"
+    },
+    "errorWithMessage": "Error: {message}",
+    "@errorWithMessage": {
+        "description": "Error message with details",
+        "placeholders": {
+            "message": {
+                "type": "String"
+            }
+        }
     }
 }

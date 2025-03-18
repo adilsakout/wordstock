@@ -22,7 +22,7 @@ class _QuizInitialState extends State<QuizInitial>
     super.initState();
     _animationController = AnimationController(
       vsync: this,
-      duration: const Duration(milliseconds: 400),
+      duration: const Duration(milliseconds: 20),
     );
 
     // Start forward animation automatically

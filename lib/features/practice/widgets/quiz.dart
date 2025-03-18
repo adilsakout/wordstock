@@ -3,8 +3,10 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:go_router/go_router.dart';
+import 'package:wordstock/features/home/view/home_page.dart';
 import 'package:wordstock/features/practice/cubit/cubit.dart';
 import 'package:wordstock/features/practice/widgets/question.dart';
+import 'package:wordstock/l10n/l10n.dart';
 import 'package:wordstock/widgets/button.dart';
 
 class VocabularyQuiz extends StatefulWidget {
@@ -58,8 +60,101 @@ class _VocabularyQuizState extends State<VocabularyQuiz>
     context.read<PracticeCubit>().nextQuestion();
   }
 
+  void _showExitConfirmationDialog(BuildContext context) {
+    final l10n = context.l10n;
+    showDialog<void>(
+      context: context,
+      builder: (BuildContext dialogContext) {
+        return Dialog(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(20),
+          ),
+          elevation: 0,
+          backgroundColor: Colors.transparent,
+          child: Container(
+            padding: const EdgeInsets.all(20),
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(20),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.black.withAlpha(26),
+                  spreadRadius: 5,
+                  blurRadius: 10,
+                ),
+              ],
+            ),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                const Icon(
+                  Icons.warning_amber_rounded,
+                  size: 64,
+                  color: Color(0xffE94E77),
+                ).animate().scale(
+                      begin: const Offset(0.9, 0.9),
+                      end: const Offset(1, 1),
+                      duration: 300.ms,
+                      curve: Curves.elasticOut,
+                    ),
+                const SizedBox(height: 16),
+                Text(
+                  l10n.exitConfirmationTitle,
+                  textAlign: TextAlign.center,
+                  style: const TextStyle(
+                    fontSize: 24,
+                    fontWeight: FontWeight.bold,
+                    color: Color(0xffE94E77),
+                  ),
+                ),
+                const SizedBox(height: 16),
+                Text(
+                  l10n.exitConfirmationMessage,
+                  textAlign: TextAlign.center,
+                  style: const TextStyle(
+                    fontSize: 16,
+                    color: Colors.black87,
+                  ),
+                ),
+                const SizedBox(height: 24),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    PushableButton(
+                      width: 120,
+                      height: 50,
+                      textColor: Colors.grey.shade600,
+                      buttonColor: Colors.grey.shade200,
+                      shadowColor: Colors.grey.shade400,
+                      text: l10n.exit,
+                      onTap: () {
+                        Navigator.of(dialogContext).pop();
+                        context.go(HomePage.name);
+                      },
+                    ),
+                    const SizedBox(width: 16),
+                    PushableButton(
+                      width: 120,
+                      height: 50,
+                      buttonColor: const Color(0xffE94E77),
+                      shadowColor: const Color(0xff963E00),
+                      text: l10n.continueAction,
+                      onTap: () => Navigator.of(dialogContext).pop(),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          ),
+        );
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
+    final l10n = context.l10n;
+
     return BlocConsumer<PracticeCubit, PracticeState>(
       listener: (context, state) {
         // Listen for state changes to update PageView
@@ -97,7 +192,7 @@ class _VocabularyQuizState extends State<VocabularyQuiz>
         if (state is PracticeError) {
           return Center(
             child: Text(
-              'Error: ${state.message}',
+              l10n.errorWithMessage(state.message),
               style: const TextStyle(color: Colors.red),
             ),
           );
@@ -121,8 +216,8 @@ class _VocabularyQuizState extends State<VocabularyQuiz>
                       buttonColor: const Color(0xffE94E77),
                       shadowColor: const Color(0xff963E00),
                       text: '',
-                      prefixIcon: Icons.arrow_back_ios_new,
-                      onTap: () => context.pop(),
+                      prefixIcon: Icons.close_rounded,
+                      onTap: () => _showExitConfirmationDialog(context),
                     ),
                     const SizedBox(width: 16),
                     Expanded(
@@ -139,9 +234,9 @@ class _VocabularyQuizState extends State<VocabularyQuiz>
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             const SizedBox(width: 16),
-                            const Text(
-                              'Vocabulary Quiz',
-                              style: TextStyle(
+                            Text(
+                              l10n.vocabularyQuiz,
+                              style: const TextStyle(
                                 color: Color(0xffE94E77),
                                 fontSize: 16,
                                 fontWeight: FontWeight.w600,
@@ -160,7 +255,10 @@ class _VocabularyQuizState extends State<VocabularyQuiz>
                               ),
                               child: Center(
                                 child: Text(
-                                  '${currentIndex + 1}/${questions.length}',
+                                  l10n.questionCounter(
+                                    currentIndex + 1,
+                                    questions.length,
+                                  ),
                                   style: const TextStyle(
                                     color: Colors.white,
                                     fontSize: 16,
@@ -178,12 +276,12 @@ class _VocabularyQuizState extends State<VocabularyQuiz>
               ),
 
               const SizedBox(height: 16),
-              const Padding(
-                padding: EdgeInsets.symmetric(horizontal: 16),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 16),
                 child: Text(
-                  'Select the correct word to complete the sentence.',
+                  l10n.selectCorrectWord,
                   textAlign: TextAlign.center,
-                  style: TextStyle(
+                  style: const TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.w600,
                   ),
@@ -232,7 +330,7 @@ class _VocabularyQuizState extends State<VocabularyQuiz>
                     height: 56,
                     buttonColor: const Color(0xff1CB0F6),
                     shadowColor: const Color(0xff1899D6),
-                    text: state.isLastQuestion ? 'Finish' : 'Next',
+                    text: state.isLastQuestion ? l10n.finish : l10n.next,
                     onTap: hasSubmittedAnswer
                         ? () => _goToNextQuestion(context, state)
                         : () {}, // Empty function as fallback
@@ -249,8 +347,8 @@ class _VocabularyQuizState extends State<VocabularyQuiz>
         }
 
         // Fallback empty state
-        return const Center(
-          child: Text('No quiz questions available'),
+        return Center(
+          child: Text(l10n.noQuizQuestions),
         );
       },
     );
