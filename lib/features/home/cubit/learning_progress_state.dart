@@ -5,6 +5,7 @@ class LearningProgressState extends Equatable {
     this.wordsLearned = 0,
     this.lastPracticeReminder = 0,
     this.shouldShowPracticeReminder = false,
+    this.shouldShowSwipeUpReminder = true,
     this.wordsSinceLastReminder = 0,
     this.cumulativeWords = 0,
   });
@@ -12,6 +13,7 @@ class LearningProgressState extends Equatable {
   final int wordsLearned;
   final int lastPracticeReminder;
   final bool shouldShowPracticeReminder;
+  final bool shouldShowSwipeUpReminder;
   final int wordsSinceLastReminder;
   final int cumulativeWords;
 
@@ -19,6 +21,7 @@ class LearningProgressState extends Equatable {
     int? wordsLearned,
     int? lastPracticeReminder,
     bool? shouldShowPracticeReminder,
+    bool? shouldShowSwipeUpReminder,
     int? wordsSinceLastReminder,
     int? cumulativeWords,
   }) {
@@ -27,6 +30,8 @@ class LearningProgressState extends Equatable {
       lastPracticeReminder: lastPracticeReminder ?? this.lastPracticeReminder,
       shouldShowPracticeReminder:
           shouldShowPracticeReminder ?? this.shouldShowPracticeReminder,
+      shouldShowSwipeUpReminder:
+          shouldShowSwipeUpReminder ?? this.shouldShowSwipeUpReminder,
       wordsSinceLastReminder:
           wordsSinceLastReminder ?? this.wordsSinceLastReminder,
       cumulativeWords: cumulativeWords ?? this.cumulativeWords,
@@ -38,6 +43,7 @@ class LearningProgressState extends Equatable {
         wordsLearned,
         lastPracticeReminder,
         shouldShowPracticeReminder,
+        shouldShowSwipeUpReminder,
         wordsSinceLastReminder,
         cumulativeWords,
       ];

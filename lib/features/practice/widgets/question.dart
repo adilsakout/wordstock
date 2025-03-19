@@ -1,5 +1,7 @@
+import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
+import 'package:gaimon/gaimon.dart';
 import 'package:wordstock/model/models.dart';
 import 'package:wordstock/widgets/quiz_button.dart';
 
@@ -26,6 +28,9 @@ class _QuestionState extends State<Question>
   late final AnimationController _animationController;
   // Track when a wrong answer is newly selected
   bool _justSelectedWrong = false;
+  // Audio players for different sounds
+  final AudioPlayer _correctPlayer = AudioPlayer();
+  final AudioPlayer _errorPlayer = AudioPlayer();
 
   @override
   void initState() {
@@ -35,6 +40,18 @@ class _QuestionState extends State<Question>
       duration: const Duration(milliseconds: 400),
     );
     _animationController.forward();
+
+    // Preload sound assets
+    _loadSounds();
+  }
+
+  Future<void> _loadSounds() async {
+    await _correctPlayer.setSource(AssetSource('sounds/correct.wav'));
+    await _errorPlayer.setSource(AssetSource('sounds/error.wav'));
+
+    // Set volume levels
+    await _correctPlayer.setVolume(1);
+    await _errorPlayer.setVolume(0.7);
   }
 
   @override
@@ -53,12 +70,20 @@ class _QuestionState extends State<Question>
     final wasAnswered = oldWidget.isAnswered;
     final isNowAnswered = widget.isAnswered;
 
-    if (!wasAnswered &&
-        isNowAnswered &&
-        widget.selectedOption != null &&
-        widget.selectedOption != widget.question.correctAnswer) {
-      // User just selected a wrong answer
-      _justSelectedWrong = true;
+    if (!wasAnswered && isNowAnswered && widget.selectedOption != null) {
+      // Check if the selection was correct or wrong and provide
+      // appropriate feedback
+      if (widget.selectedOption == widget.question.correctAnswer) {
+        // Play correct sound and haptic
+        _correctPlayer.resume();
+        Gaimon.success();
+      } else {
+        // Play error sound and haptic
+        _errorPlayer.resume();
+        Gaimon.error();
+        // User just selected a wrong answer
+        _justSelectedWrong = true;
+      }
 
       // Reset flag after animation completes
       Future.delayed(const Duration(milliseconds: 600), () {
@@ -74,6 +99,8 @@ class _QuestionState extends State<Question>
   @override
   void dispose() {
     _animationController.dispose();
+    _correctPlayer.dispose();
+    _errorPlayer.dispose();
     super.dispose();
   }
 
@@ -135,7 +162,8 @@ class _QuestionState extends State<Question>
 
                 // Create the button with base styling
                 Widget button = QuizButton(
-                  width: double.infinity,
+                  width: MediaQuery.of(context).size.width *
+                      0.5, // Half of screen width
                   height: 56,
                   buttonColor: buttonColor,
                   backgroundColor: backgroundColor,
@@ -144,25 +172,71 @@ class _QuestionState extends State<Question>
                   text: option,
                   onTap: widget.isAnswered
                       ? () {} // Disabled when answered
-                      : () => widget.onTap(option),
+                      : () {
+                          // Standard haptic feedback when selecting an option
+                          Gaimon.light();
+                          widget.onTap(option);
+                        },
                 );
 
-                // Apply shake animation directly when wrong answer is selected
-                if (isWrongSelection && _justSelectedWrong) {
-                  button = button
-                      .animate() // Create a new separate animation sequence
-                      .shake(
-                        delay: 10.ms,
-                        duration: 500.ms,
-                        hz: 5,
-                        rotation: 0.03,
-                        curve: Curves.easeInOut,
-                      );
+                // Apply animations based on answer state
+                if (widget.isAnswered) {
+                  if (isCorrect) {
+                    // Celebratory animation for correct answer
+                    button = button
+                        .animate()
+                        // Initial pulse effect
+                        .scale(
+                          begin: const Offset(1, 1),
+                          end: const Offset(1.05, 1.05),
+                          duration: 300.ms,
+                          curve: Curves.easeOut,
+                        )
+                        .then()
+                        .scale(
+                          begin: const Offset(1.05, 1.05),
+                          end: const Offset(1, 1),
+                          duration: 300.ms,
+                          curve: Curves.elasticOut,
+                        )
+                        // Followed by a shimmer
+                        .shimmer(
+                          duration: 1000.ms,
+                          color: Colors.white.withAlpha(120),
+                        )
+                        .then()
+                        .scaleXY(
+                          begin: 1,
+                          end: 1.03,
+                          duration: 400.ms,
+                          curve: Curves.easeInOut,
+                        )
+                        .then()
+                        .scaleXY(
+                          begin: 1.03,
+                          end: 1,
+                          duration: 400.ms,
+                          curve: Curves.easeInOut,
+                        );
+                  } else if (isWrongSelection && _justSelectedWrong) {
+                    // Shake animation for wrong selection
+                    button = button
+                        .animate() // Create a new separate animation sequence
+                        .shake(
+                          delay: 10.ms,
+                          duration: 500.ms,
+                          hz: 5,
+                          rotation: 0.03,
+                          curve: Curves.easeInOut,
+                        );
+                  }
                 }
 
                 return Padding(
                   padding: const EdgeInsets.only(bottom: 16),
-                  child: button,
+                  child: Center(
+                    child: button,
+                  ),
                 );
               },
             ),

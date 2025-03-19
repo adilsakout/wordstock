@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:developer';
 
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
@@ -82,14 +81,12 @@ class HomeCubit extends Cubit<HomeState> {
   Timer? _updateTimer;
 
   void markWordAsLearned(String wordId) {
-    log('markWordAsLearned: $wordId', name: 'HomeCubit');
     _learnedWordIds.add(wordId);
     _updateTimer?.cancel();
     _updateTimer = Timer(const Duration(seconds: 5), _submitProgress);
   }
 
   Future<void> _submitProgress() async {
-    log('submitProgress: $_learnedWordIds', name: 'HomeCubit');
     if (_learnedWordIds.isEmpty) return;
 
     await wordRepository.markWordAsLearned(_learnedWordIds);

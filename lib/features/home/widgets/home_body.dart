@@ -1,6 +1,8 @@
 // ignore_for_file: use_build_context_synchronously
 
 import 'package:flutter/material.dart';
+import 'package:flutter_animate/flutter_animate.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:gaimon/gaimon.dart';
 import 'package:go_router/go_router.dart';
 import 'package:in_app_review/in_app_review.dart';
@@ -13,6 +15,7 @@ import 'package:wordstock/features/practice/practice.dart';
 import 'package:wordstock/features/user_data/cubit/user_data_cubit.dart';
 import 'package:wordstock/features/user_data/widget/user_point_widget.dart';
 import 'package:wordstock/features/user_data/widget/user_strek_widget.dart';
+import 'package:wordstock/gen/assets.gen.dart';
 import 'package:wordstock/widgets/button.dart';
 
 /// {@template home_body}
@@ -28,17 +31,29 @@ class HomeBody extends StatefulWidget {
   State<HomeBody> createState() => _HomeBodyState();
 }
 
-class _HomeBodyState extends State<HomeBody> {
+class _HomeBodyState extends State<HomeBody>
+    with SingleTickerProviderStateMixin {
   final PageController pageController = PageController();
   final InAppReview inAppReview = InAppReview.instance;
+  late final AnimationController _controller;
 
   @override
   void initState() {
+    super.initState();
+    _controller = AnimationController(
+      duration: const Duration(milliseconds: 700),
+      vsync: this,
+    )..repeat(reverse: true);
     WidgetsBinding.instance.addPostFrameCallback((_) {
       context.read<HomeCubit>().fetchWords();
       _requestReview();
     });
-    super.initState();
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
   }
 
   Future<void> _requestReview() async {
@@ -83,6 +98,10 @@ class _HomeBodyState extends State<HomeBody> {
               builder: (context, learningState) {
                 final shouldShowPracticeReminder =
                     learningState.shouldShowPracticeReminder;
+
+                final shouldShowSwipeUpReminder =
+                    learningState.shouldShowSwipeUpReminder;
+
                 return SafeArea(
                   child: Stack(
                     children: [
@@ -133,7 +152,10 @@ class _HomeBodyState extends State<HomeBody> {
                         left: 0,
                         right: 0,
                         child: AnimatedOpacity(
-                          opacity: shouldShowPracticeReminder ? 0 : 1,
+                          opacity: (shouldShowPracticeReminder ||
+                                  shouldShowSwipeUpReminder)
+                              ? 0
+                              : 1,
                           duration: const Duration(milliseconds: 700),
                           child: Padding(
                             padding: const EdgeInsets.symmetric(horizontal: 20),
@@ -175,6 +197,45 @@ class _HomeBodyState extends State<HomeBody> {
                           ),
                         ),
                       ),
+                      if (shouldShowSwipeUpReminder)
+                        Animate(
+                          controller: _controller,
+                          onComplete: (controller) =>
+                              controller.repeat(reverse: true),
+                          effects: [
+                            MoveEffect(
+                              duration: 700.ms,
+                              begin: const Offset(0, 10),
+                              end: Offset.zero,
+                            ),
+                            FadeEffect(
+                              duration: 700.ms,
+                              begin: 0,
+                              end: 1,
+                            ),
+                          ],
+                          child: Positioned(
+                            bottom: 20,
+                            left: 0,
+                            right: 0,
+                            child: Column(
+                              children: [
+                                SvgPicture.asset(
+                                  Assets.icons.hand,
+                                  width: 50,
+                                  height: 50,
+                                ),
+                                const Text(
+                                  'Swipe up',
+                                  style: TextStyle(
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
                     ],
                   ),
                 );

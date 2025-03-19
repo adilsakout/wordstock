@@ -1,6 +1,8 @@
+import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:gaimon/gaimon.dart';
 import 'package:go_router/go_router.dart';
 import 'package:wordstock/features/home/home.dart';
 import 'package:wordstock/features/practice/cubit/cubit.dart';
@@ -24,6 +26,9 @@ class QuizResult extends StatefulWidget {
 class _QuizResultState extends State<QuizResult>
     with SingleTickerProviderStateMixin {
   late final AnimationController _animationController;
+  // Audio players for result sounds
+  final AudioPlayer _resultSoundPlayer = AudioPlayer();
+  bool _soundLoaded = false;
 
   @override
   void initState() {
@@ -32,6 +37,9 @@ class _QuizResultState extends State<QuizResult>
       vsync: this,
       duration: const Duration(milliseconds: 1500),
     );
+
+    // We'll play the sound when we have the performance data
+    // in the build method after loading the state
 
     // Start forward animation automatically
     _animationController.forward();
@@ -42,9 +50,29 @@ class _QuizResultState extends State<QuizResult>
     });
   }
 
+  Future<void> _playResultSound(double percentCorrect) async {
+    // Only play sound once
+    if (_soundLoaded) return;
+
+    try {
+      // Always play the success sound on the result screen
+      await _resultSoundPlayer.setSource(AssetSource('sounds/success.mp3'));
+      await _resultSoundPlayer.setVolume(0.8);
+      await _resultSoundPlayer.resume();
+
+      // Success vibration for good performance
+      Gaimon.success();
+
+      _soundLoaded = true;
+    } catch (e) {
+      debugPrint('Error playing result sound: $e');
+    }
+  }
+
   @override
   void dispose() {
     _animationController.dispose();
+    _resultSoundPlayer.dispose();
     super.dispose();
   }
 
@@ -66,6 +94,10 @@ class _QuizResultState extends State<QuizResult>
             context.read<PracticeCubit>().getTotalAnsweredQuestions();
         final percentCorrect =
             totalAnswered > 0 ? (correctAnswers / totalAnswered) * 100 : 0.0;
+
+        // Play the appropriate sound based on performance
+        // We do this here to ensure we have the performance data
+        _playResultSound(percentCorrect);
 
         // Calculate points (10 points per correct answer)
         final pointsEarned = correctAnswers * 10;
@@ -267,7 +299,10 @@ class _QuizResultState extends State<QuizResult>
                       buttonColor: const Color(0xff1CB0F6),
                       shadowColor: const Color(0xff1899D6),
                       text: l10n.playAgain,
-                      onTap: widget.onPlayAgain,
+                      onTap: () {
+                        Gaimon.light();
+                        widget.onPlayAgain();
+                      },
                     )
                         .animate(controller: _animationController)
                         .fadeIn(delay: 900.ms, duration: 500.ms)
@@ -290,7 +325,10 @@ class _QuizResultState extends State<QuizResult>
                       buttonColor: const Color(0xff58CC02),
                       shadowColor: const Color(0xff58A700),
                       text: l10n.home,
-                      onTap: () => context.go(HomePage.name),
+                      onTap: () {
+                        Gaimon.light();
+                        context.go(HomePage.name);
+                      },
                     )
                         .animate(controller: _animationController)
                         .fadeIn(delay: 1000.ms, duration: 500.ms)

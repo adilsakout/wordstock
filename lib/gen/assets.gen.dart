@@ -24,6 +24,9 @@ class $AssetsIconsGen {
   /// File path: assets/icons/flame.svg
   String get flame => 'assets/icons/flame.svg';
 
+  /// File path: assets/icons/hand.svg
+  String get hand => 'assets/icons/hand.svg';
+
   /// File path: assets/icons/logo.png
   AssetGenImage get logo => const AssetGenImage('assets/icons/logo.png');
 
@@ -31,7 +34,15 @@ class $AssetsIconsGen {
   String get quizIcon => 'assets/icons/quiz_icon.svg';
 
   /// List of all assets
-  List<dynamic> get values => [aiIcon, check, coin, flame, logo, quizIcon];
+  List<dynamic> get values => [
+    aiIcon,
+    check,
+    coin,
+    flame,
+    hand,
+    logo,
+    quizIcon,
+  ];
 }
 
 class $AssetsImagesGen {
@@ -96,8 +107,14 @@ class $AssetsSoundsGen {
   /// File path: assets/sounds/error.wav
   String get error => 'assets/sounds/error.wav';
 
+  /// File path: assets/sounds/fa-la-la.mp3
+  String get faLaLa => 'assets/sounds/fa-la-la.mp3';
+
+  /// File path: assets/sounds/success.mp3
+  String get success => 'assets/sounds/success.mp3';
+
   /// List of all assets
-  List<String> get values => [click, correct, error];
+  List<String> get values => [click, correct, error, faLaLa, success];
 }
 
 class Assets {

@@ -25,8 +25,10 @@ final _router = GoRouter(
     if (state.uri.path == '/') {
       final prefs = await SharedPreferences.getInstance();
       final hasSeenOnboarding = prefs.getBool('onboarding_completed') ?? false;
+
       if (!hasSeenOnboarding) {
         await prefs.setBool('onboarding_completed', true);
+        await prefs.setBool('should_show_swipe_up_reminder', true);
         return '/';
       }
       return '/home';

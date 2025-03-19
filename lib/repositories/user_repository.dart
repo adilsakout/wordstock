@@ -83,4 +83,10 @@ class UserRepository {
       throw Exception('Failed to load profile: $e');
     }
   }
+
+  Future<bool> isFirstTimeUser() async {
+    // Implement logic to check if it's the user's first time
+    // This could be a check in shared preferences or a database
+    return true; // Placeholder implementation
+  }
 }

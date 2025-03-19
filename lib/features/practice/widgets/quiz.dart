@@ -23,6 +23,7 @@ class _VocabularyQuizState extends State<VocabularyQuiz>
   late final AnimationController _animationController;
   late final PageController _pageController;
   Timer? _resultPageNavigationTimer;
+  bool _showNextButton = false;
 
   @override
   void initState() {
@@ -49,6 +50,11 @@ class _VocabularyQuizState extends State<VocabularyQuiz>
       widget.onTap(); // Go to results page
       return;
     }
+
+    // Reset next button visibility
+    setState(() {
+      _showNextButton = false;
+    });
 
     // Animate to next page in PageView
     _pageController.nextPage(
@@ -164,6 +170,19 @@ class _VocabularyQuizState extends State<VocabularyQuiz>
             if (_pageController.page?.round() != state.currentQuestionIndex) {
               _pageController.jumpToPage(state.currentQuestionIndex);
             }
+          }
+
+          // Check if answer was just submitted
+          if (state.hasSubmittedAnswer && !_showNextButton) {
+            // Delay showing the next button until animations complete
+            // Total animation time is approximately 1.5s
+            Future.delayed(const Duration(milliseconds: 1500), () {
+              if (mounted) {
+                setState(() {
+                  _showNextButton = true;
+                });
+              }
+            });
           }
 
           // Setup auto-navigation to results on last question
@@ -320,10 +339,11 @@ class _VocabularyQuizState extends State<VocabularyQuiz>
               ),
 
               // Next button - only show when answer is submitted
+              //and animations are complete
               Padding(
                 padding: const EdgeInsets.only(bottom: 16),
                 child: AnimatedOpacity(
-                  opacity: hasSubmittedAnswer ? 1.0 : 0.0,
+                  opacity: (hasSubmittedAnswer && _showNextButton) ? 1.0 : 0.0,
                   duration: const Duration(milliseconds: 300),
                   child: PushableButton(
                     width: 150,
@@ -331,7 +351,7 @@ class _VocabularyQuizState extends State<VocabularyQuiz>
                     buttonColor: const Color(0xff1CB0F6),
                     shadowColor: const Color(0xff1899D6),
                     text: state.isLastQuestion ? l10n.finish : l10n.next,
-                    onTap: hasSubmittedAnswer
+                    onTap: (hasSubmittedAnswer && _showNextButton)
                         ? () => _goToNextQuestion(context, state)
                         : () {}, // Empty function as fallback
                   ).animate().fadeIn(duration: 300.ms).scale(

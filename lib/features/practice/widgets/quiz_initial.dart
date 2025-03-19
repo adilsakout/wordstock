@@ -1,6 +1,8 @@
+import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:gaimon/gaimon.dart';
 import 'package:wordstock/gen/assets.gen.dart';
 import 'package:wordstock/widgets/button.dart';
 
@@ -16,6 +18,9 @@ class QuizInitial extends StatefulWidget {
 class _QuizInitialState extends State<QuizInitial>
     with SingleTickerProviderStateMixin {
   late final AnimationController _animationController;
+  // Add audio player for la-la-la sound effect
+  final AudioPlayer _introSoundPlayer = AudioPlayer();
+  bool _soundLoaded = false;
 
   @override
   void initState() {
@@ -25,13 +30,30 @@ class _QuizInitialState extends State<QuizInitial>
       duration: const Duration(milliseconds: 20),
     );
 
+    // Load and play intro sound
+    _loadAndPlaySound();
+
     // Start forward animation automatically
     _animationController.forward();
+  }
+
+  Future<void> _loadAndPlaySound() async {
+    if (_soundLoaded) return;
+
+    try {
+      await _introSoundPlayer.setSource(AssetSource('sounds/fa-la-la.mp3'));
+      await _introSoundPlayer.setVolume(0.7);
+      await _introSoundPlayer.resume();
+      _soundLoaded = true;
+    } catch (e) {
+      debugPrint('Error playing sound: $e');
+    }
   }
 
   @override
   void dispose() {
     _animationController.dispose();
+    _introSoundPlayer.dispose();
     super.dispose();
   }
 
@@ -122,7 +144,11 @@ class _QuizInitialState extends State<QuizInitial>
           buttonColor: const Color(0xffE94E77),
           shadowColor: const Color(0xff963E00),
           text: 'Start',
-          onTap: widget.onTap,
+          onTap: () {
+            // Add haptic feedback
+            Gaimon.light();
+            widget.onTap();
+          },
         )
             .animate(controller: _animationController)
             .fadeIn(delay: 300.ms, duration: 250.ms)

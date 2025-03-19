@@ -40,7 +40,6 @@ class LearningProgressCubit extends Cubit<LearningProgressState> {
 
     await prefs.setInt(_wordsLearnedKey, newCount);
     await prefs.setInt(_cumulativeWordsKey, newCumulativeCount);
-
     final wordsSinceLastReminder = newCount - state.lastPracticeReminder;
     final shouldShowReminder = wordsSinceLastReminder >= 5;
 
@@ -49,6 +48,7 @@ class LearningProgressCubit extends Cubit<LearningProgressState> {
         wordsLearned: newCount,
         shouldShowPracticeReminder: shouldShowReminder,
         wordsSinceLastReminder: wordsSinceLastReminder,
+        shouldShowSwipeUpReminder: false,
         cumulativeWords: newCumulativeCount,
       ),
     );
