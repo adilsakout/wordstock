@@ -15,6 +15,9 @@ class $AssetsIconsGen {
   /// File path: assets/icons/ai_icon.svg
   String get aiIcon => 'assets/icons/ai_icon.svg';
 
+  /// File path: assets/icons/ai_word_icon.svg
+  String get aiWordIcon => 'assets/icons/ai_word_icon.svg';
+
   /// File path: assets/icons/check.svg
   String get check => 'assets/icons/check.svg';
 
@@ -27,6 +30,9 @@ class $AssetsIconsGen {
   /// File path: assets/icons/hand.svg
   String get hand => 'assets/icons/hand.svg';
 
+  /// File path: assets/icons/handshake.svg
+  String get handshake => 'assets/icons/handshake.svg';
+
   /// File path: assets/icons/logo.png
   AssetGenImage get logo => const AssetGenImage('assets/icons/logo.png');
 
@@ -36,10 +42,12 @@ class $AssetsIconsGen {
   /// List of all assets
   List<dynamic> get values => [
     aiIcon,
+    aiWordIcon,
     check,
     coin,
     flame,
     hand,
+    handshake,
     logo,
     quizIcon,
   ];

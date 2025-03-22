@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:wordstock/features/onboarding/cubit/cubit.dart';
 import 'package:wordstock/features/onboarding/widgets/onboarding_pages/age_selection_page.dart';
+import 'package:wordstock/features/onboarding/widgets/onboarding_pages/commitment_pact_page.dart';
 import 'package:wordstock/features/onboarding/widgets/onboarding_pages/customization_loading_page.dart';
 import 'package:wordstock/features/onboarding/widgets/onboarding_pages/gender_selection_page.dart';
 import 'package:wordstock/features/onboarding/widgets/onboarding_pages/goal_selection_page.dart';
@@ -85,9 +86,8 @@ class OnboardingBody extends StatelessWidget {
                     ),
                     const GoalSelectionPage(),
                     const TopicSelectionPage(),
-                    StreakGoalPage(
-                      onNext: cubit.nextPage,
-                    ),
+                    const StreakGoalPage(),
+                    const CommitmentPactPage(),
                     CustomizationLoadingPage(
                       onComplete: () {
                         context.read<OnboardingCubit>().disposePageController();
@@ -127,7 +127,7 @@ class _OnboardingAppBarState extends State<OnboardingAppBar> {
   @override
   Widget build(BuildContext context) {
     // Hide app bar for first two screens (0, 1) and last screen (12)
-    final shouldShowAppBar = widget.currentPage > 1 && widget.currentPage < 13;
+    final shouldShowAppBar = widget.currentPage > 1 && widget.currentPage < 14;
 
     return AnimatedOpacity(
       opacity: shouldShowAppBar ? 1.0 : 0.0,

@@ -328,5 +328,102 @@
                 "type": "String"
             }
         }
+    },
+    "commitmentPactTitle": "Commitment Pact",
+    "@commitmentPactTitle": {
+        "description": "Title for the commitment pact page"
+    },
+    "commitmentPactIntro": "I want to ",
+    "@commitmentPactIntro": {
+        "description": "Introduction text for the commitment pact"
+    },
+    "commitmentPactInnerNeeds": "stay connected to my inner needs",
+    "@commitmentPactInnerNeeds": {
+        "description": "Text about inner needs in the commitment pact"
+    },
+    "commitmentPactByLearning": " by learning",
+    "@commitmentPactByLearning": {
+        "description": "Text connecting needs and learning amount"
+    },
+    "commitmentPactWordsPerDay": " {count} words per day",
+    "@commitmentPactWordsPerDay": {
+        "description": "Text showing the number of words per day",
+        "placeholders": {
+            "count": {
+                "type": "int"
+            }
+        }
+    },
+    "commitmentPactHelpBecome": " to help me become ",
+    "@commitmentPactHelpBecome": {
+        "description": "Text about helping to become something"
+    },
+    "commitmentPactVocabularyMaster": "vocabulary master.",
+    "@commitmentPactVocabularyMaster": {
+        "description": "Text for vocabulary master goal"
+    },
+    "commitmentPactTestChampion": "test champion.",
+    "@commitmentPactTestChampion": {
+        "description": "Text for test champion goal"
+    },
+    "commitmentPactCareerAchiever": "career achiever.",
+    "@commitmentPactCareerAchiever": {
+        "description": "Text for career achiever goal"
+    },
+    "commitmentPactLifelongLearner": "lifelong learner.",
+    "@commitmentPactLifelongLearner": {
+        "description": "Text for lifelong learner goal"
+    },
+    "commitmentPactTrust": "I want and trust Wordstock AI to guide me along the way and help me accomplish all my resolutions.",
+    "@commitmentPactTrust": {
+        "description": "Text about trusting the app"
+    },
+    "commitmentPactButton": "I commit to my Goals",
+    "@commitmentPactButton": {
+        "description": "Text for the commitment button"
+    },
+    "commitmentCongratulationsTitle": "Congratulations!",
+    "@commitmentCongratulationsTitle": {
+        "description": "Title for the commitment congratulations message"
+    },
+    "commitmentCongratulationsMessage": "You've taken the first step on your vocabulary learning journey. Your commitment will help you reach your goals!",
+    "@commitmentCongratulationsMessage": {
+        "description": "Congratulations message after committing to goals"
+    },
+    "nextButton": "Next",
+    "@nextButton": {
+        "description": "Text for the next button after commitment"
+    },
+    "goalSelectionTitle": "What is your primary learning goal?",
+    "@goalSelectionTitle": {
+        "description": "Title for the goal selection page"
+    },
+    "goalSelectionDescription": "Select the goal that best describes your main learning objective.",
+    "@goalSelectionDescription": {
+        "description": "Description for the goal selection page"
+    },
+    "goalMasteringWords": "📚 Mastering new words",
+    "@goalMasteringWords": {
+        "description": "Goal option for mastering new words"
+    },
+    "goalImprovingMemory": "🧠 Improving memory",
+    "@goalImprovingMemory": {
+        "description": "Goal option for improving memory"
+    },
+    "goalSpeakingConfidence": "🗣️ Speaking with confidence",
+    "@goalSpeakingConfidence": {
+        "description": "Goal option for speaking with confidence"
+    },
+    "goalWritingClearly": "✍️ Writing more clearly",
+    "@goalWritingClearly": {
+        "description": "Goal option for writing more clearly"
+    },
+    "goalUnderstandingContent": "🧩 Understanding content",
+    "@goalUnderstandingContent": {
+        "description": "Goal option for understanding content"
+    },
+    "goalReachingLanguageGoals": "🎯 Reaching language goals",
+    "@goalReachingLanguageGoals": {
+        "description": "Goal option for reaching language goals"
     }
 }

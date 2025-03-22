@@ -6,11 +6,23 @@ import 'package:wordstock/features/onboarding/widgets/selector.dart';
 class VocabularyLevelPage extends StatelessWidget {
   const VocabularyLevelPage({super.key});
 
+  static const List<String> _vocabularyLevels = [
+    '🐣 Beginner',
+    '🚶‍♂️ Intermediate',
+    '🧗‍♀️ Advanced',
+  ];
+
+  void _selectVocabularyLevel(BuildContext context, int level) {
+    context.read<OnboardingCubit>()
+      ..selectVocabularyLevel(level)
+      ..nextPage();
+  }
+
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<OnboardingCubit, OnboardingState>(
       builder: (context, state) {
-        final cubit = context.read<OnboardingCubit>();
+        context.read<OnboardingCubit>();
         return Padding(
           padding: const EdgeInsets.all(20),
           child: Column(
@@ -34,26 +46,26 @@ class VocabularyLevelPage extends StatelessWidget {
               ),
               const SizedBox(height: 16),
               Selector(
-                text: 'Beginner',
+                text: _vocabularyLevels[0],
                 selected: state.vocabularyLevel == 0,
                 onTap: () {
-                  cubit.selectVocabularyLevel(0);
+                  _selectVocabularyLevel(context, 0);
                 },
               ),
               const SizedBox(height: 16),
               Selector(
-                text: 'Intermediate',
+                text: _vocabularyLevels[1],
                 selected: state.vocabularyLevel == 1,
                 onTap: () {
-                  cubit.selectVocabularyLevel(1);
+                  _selectVocabularyLevel(context, 1);
                 },
               ),
               const SizedBox(height: 16),
               Selector(
-                text: 'Advanced',
+                text: _vocabularyLevels[2],
                 selected: state.vocabularyLevel == 2,
                 onTap: () {
-                  cubit.selectVocabularyLevel(2);
+                  _selectVocabularyLevel(context, 2);
                 },
               ),
             ],

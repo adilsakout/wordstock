@@ -15,7 +15,7 @@ class OnboardingCubit extends Cubit<OnboardingState> {
         );
   // Define totalPages here or pass it as a parameter
 
-  static const int totalPages = 13;
+  static const int totalPages = 14;
   final PageController pageController = PageController();
   final UserRepository _userRepository;
 
@@ -78,14 +78,17 @@ class OnboardingCubit extends Cubit<OnboardingState> {
   }
 
   int get wordsPerDay => state.wordsPerDay;
+  String get selectedGoals => state.selectedGoals;
+
+  int get streakGoal => state.streakGoal;
 
   void selectVocabularyLevel(int level) {
     emit(state.copyWith(vocabularyLevel: level));
     nextPage();
   }
 
-  void selectLearningGoal(int goal) {
-    emit(state.copyWith(selectedGoals: [goal]));
+  void selectLearningGoal(String goal) {
+    emit(state.copyWith(selectedGoals: goal));
     nextPage();
   }
 
@@ -115,14 +118,8 @@ class OnboardingCubit extends Cubit<OnboardingState> {
     emit(state.copyWith(selectedTopics: currentTopics));
   }
 
-  void toggleGoal(int goal) {
-    final currentGoals = List<int>.from(state.selectedGoals);
-    if (currentGoals.contains(goal)) {
-      currentGoals.remove(goal);
-    } else {
-      currentGoals.add(goal);
-    }
-    emit(state.copyWith(selectedGoals: currentGoals));
+  void selectGoal(String goal) {
+    emit(state.copyWith(selectedGoals: goal));
   }
 
   /// Convert gender index to string representation
@@ -136,24 +133,6 @@ class OnboardingCubit extends Cubit<OnboardingState> {
         return 'other';
       case 3:
         return 'prefer_not_to_say';
-      default:
-        return 'not_specified';
-    }
-  }
-
-  /// Convert goal index to string representation
-  String _getGoalString(int goalIndex) {
-    switch (goalIndex) {
-      case 0:
-        return 'improve_vocabulary';
-      case 1:
-        return 'prepare_for_exam';
-      case 2:
-        return 'improve_writing';
-      case 3:
-        return 'improve_reading';
-      case 4:
-        return 'other';
       default:
         return 'not_specified';
     }
@@ -187,7 +166,7 @@ class OnboardingCubit extends Cubit<OnboardingState> {
       final genderString = _getGenderString(state.selectedGender);
 
       // Convert goal indices to strings
-      final goalStrings = state.selectedGoals.map(_getGoalString).toList();
+      final goalStrings = state.selectedGoals;
 
       // Convert topic indices to strings
       final topicStrings = state.selectedTopics.map(_getTopicString).toList();

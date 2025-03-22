@@ -2,85 +2,71 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:wordstock/features/onboarding/cubit/onboarding_cubit.dart';
 import 'package:wordstock/features/onboarding/widgets/selector.dart';
-import 'package:wordstock/widgets/button.dart';
+import 'package:wordstock/l10n/l10n.dart';
 
 class GoalSelectionPage extends StatelessWidget {
   const GoalSelectionPage({super.key});
 
+  List<String> _getLocalizedGoals(AppLocalizations l10n) {
+    return [
+      l10n.goalMasteringWords,
+      l10n.goalImprovingMemory,
+      l10n.goalSpeakingConfidence,
+      l10n.goalWritingClearly,
+      l10n.goalUnderstandingContent,
+      l10n.goalReachingLanguageGoals,
+    ];
+  }
+
+  void _selectGoal(BuildContext context, String goal) {
+    context.read<OnboardingCubit>()
+      ..selectGoal(goal)
+      ..nextPage();
+  }
+
   @override
   Widget build(BuildContext context) {
+    final l10n = context.l10n;
+    final goals = _getLocalizedGoals(l10n);
+
     return BlocBuilder<OnboardingCubit, OnboardingState>(
       builder: (context, state) {
-        final cubit = context.read<OnboardingCubit>();
         return Padding(
           padding: const EdgeInsets.all(20),
           child: Column(
             children: [
-              const Text(
-                'What are your learning goals?',
+              Text(
+                l10n.goalSelectionTitle,
                 textAlign: TextAlign.center,
-                style: TextStyle(
+                style: const TextStyle(
                   fontSize: 24,
                   fontWeight: FontWeight.bold,
                 ),
               ),
               const SizedBox(height: 16),
-              const Text(
-                'Select the goals that best describe your learning objectives.',
+              Text(
+                l10n.goalSelectionDescription,
                 textAlign: TextAlign.center,
-                style: TextStyle(
+                style: const TextStyle(
                   fontSize: 16,
                   fontWeight: FontWeight.normal,
                 ),
               ),
               const SizedBox(height: 16),
-              Selector(
-                text: 'Enhance my lexicon',
-                selected: state.selectedGoals.contains(0),
-                onTap: () {
-                  cubit.toggleGoal(0);
-                },
-              ),
-              const SizedBox(height: 16),
-              Selector(
-                text: 'Get ready for a test',
-                selected: state.selectedGoals.contains(1),
-                onTap: () {
-                  cubit.toggleGoal(1);
-                },
-              ),
-              const SizedBox(height: 16),
-              Selector(
-                text: 'Improve my job prospects',
-                selected: state.selectedGoals.contains(2),
-                onTap: () {
-                  cubit.toggleGoal(2);
-                },
-              ),
-              const SizedBox(height: 16),
-              Selector(
-                text: 'Enjoy learning new words',
-                selected: state.selectedGoals.contains(3),
-                onTap: () {
-                  cubit.toggleGoal(3);
-                },
-              ),
-              const SizedBox(height: 16),
-              Selector(
-                text: 'Other',
-                selected: state.selectedGoals.contains(4),
-                onTap: () {
-                  cubit.toggleGoal(4);
-                },
+              ...goals.map(
+                (goal) => Padding(
+                  padding: const EdgeInsets.only(bottom: 16),
+                  child: Selector(
+                    text: goal,
+                    selected: state.selectedGoals.isNotEmpty &&
+                        state.selectedGoals == goal,
+                    onTap: () {
+                      _selectGoal(context, goal);
+                    },
+                  ),
+                ),
               ),
               const Spacer(),
-              PushableButton(
-                width: 200,
-                height: 56,
-                text: 'Continue',
-                onTap: cubit.nextPage,
-              ),
-              const SizedBox(height: 40),
             ],
           ),
         );

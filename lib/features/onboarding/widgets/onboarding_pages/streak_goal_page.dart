@@ -4,15 +4,18 @@ import 'package:wordstock/features/onboarding/cubit/onboarding_cubit.dart';
 import 'package:wordstock/features/onboarding/widgets/selector.dart';
 
 class StreakGoalPage extends StatelessWidget {
-  const StreakGoalPage({required this.onNext, super.key});
+  const StreakGoalPage({super.key});
 
-  final VoidCallback onNext;
+  void _selectStreakGoal(BuildContext context, int streakGoal) {
+    context.read<OnboardingCubit>()
+      ..selectStreakGoal(streakGoal)
+      ..nextPage();
+  }
 
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<OnboardingCubit, OnboardingState>(
       builder: (context, state) {
-        final cubit = context.read<OnboardingCubit>();
         return Padding(
           padding: const EdgeInsets.all(20),
           child: Column(
@@ -39,8 +42,7 @@ class StreakGoalPage extends StatelessWidget {
                 text: '7 days',
                 selected: state.streakGoal == 7,
                 onTap: () {
-                  cubit.selectStreakGoal(7);
-                  onNext();
+                  _selectStreakGoal(context, 7);
                 },
               ),
               const SizedBox(height: 16),
@@ -48,8 +50,7 @@ class StreakGoalPage extends StatelessWidget {
                 text: '14 days',
                 selected: state.streakGoal == 14,
                 onTap: () {
-                  cubit.selectStreakGoal(14);
-                  onNext();
+                  _selectStreakGoal(context, 14);
                 },
               ),
               const SizedBox(height: 16),
@@ -57,8 +58,7 @@ class StreakGoalPage extends StatelessWidget {
                 text: '30 days',
                 selected: state.streakGoal == 30,
                 onTap: () {
-                  cubit.selectStreakGoal(30);
-                  onNext();
+                  _selectStreakGoal(context, 30);
                 },
               ),
             ],

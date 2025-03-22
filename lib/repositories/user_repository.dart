@@ -40,7 +40,7 @@ class UserRepository {
     int? timeCommitment,
     int? wordsPerDay,
     VocabularyLevel? vocabularyLevel,
-    List<String>? selectedGoals,
+    String? selectedGoals,
     List<String>? selectedTopics,
     int? streakGoal,
   }) async {
