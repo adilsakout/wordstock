@@ -1,12 +1,10 @@
-import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:wordstock/features/onboarding/cubit/onboarding_cubit.dart';
-import 'package:wordstock/gen/assets.gen.dart';
+import 'package:wordstock/features/onboarding/widgets/customization_loading_step.dart';
 import 'package:wordstock/l10n/l10n.dart';
 import 'package:wordstock/widgets/button.dart';
-import 'package:wordstock/widgets/progress_bar.dart';
 
 class CustomizationLoadingPage extends StatefulWidget {
   const CustomizationLoadingPage({
@@ -22,203 +20,266 @@ class CustomizationLoadingPage extends StatefulWidget {
 }
 
 class _CustomizationLoadingPageState extends State<CustomizationLoadingPage>
-    with SingleTickerProviderStateMixin {
-  late AnimationController _animationController;
-  late Animation<double> _progressAnimation;
-  Timer? _timer;
-  int _currentStep = 0;
-  bool _isComplete = false;
+    with TickerProviderStateMixin {
+  // Animation controllers for each step
+  late AnimationController _controllerStep1;
+  late AnimationController _controllerStep2;
+  late AnimationController _controllerStep3;
 
-  late List<String> _customizationSteps;
+  // Animation objects for each step
+  late Animation<double> _progressStep1;
+  late Animation<double> _progressStep2;
+  late Animation<double> _progressStep3;
+
+  // Tracking completion state of each step
+  bool _isStep1Completed = false;
+  bool _isStep2Completed = false;
+  bool _isStep3Completed = false;
+
+  // Tracking if steps are paused waiting for user input
+  bool _isStep1Paused = false;
+  bool _isStep2Paused = false;
+  bool _isStep3Paused = false;
 
   @override
   void initState() {
     super.initState();
-    _animationController = AnimationController(
+
+    // Initialize controllers with 2 second duration
+    _controllerStep1 = AnimationController(
       vsync: this,
-      duration: const Duration(milliseconds: 1500),
+      duration: const Duration(seconds: 2),
     );
 
-    _progressAnimation = Tween<double>(
-      begin: 0,
-      end: 1,
-    ).animate(
-      CurvedAnimation(
-        parent: _animationController,
-        curve: Curves.easeInOut,
-      ),
+    _controllerStep2 = AnimationController(
+      vsync: this,
+      duration: const Duration(seconds: 2),
     );
 
-    _startCustomization();
+    _controllerStep3 = AnimationController(
+      vsync: this,
+      duration: const Duration(seconds: 2),
+    );
+
+    // Create animations with easing
+    _progressStep1 = CurvedAnimation(
+      parent: _controllerStep1,
+      curve: Curves.easeInOut,
+    );
+
+    _progressStep2 = CurvedAnimation(
+      parent: _controllerStep2,
+      curve: Curves.easeInOut,
+    );
+
+    _progressStep3 = CurvedAnimation(
+      parent: _controllerStep3,
+      curve: Curves.easeInOut,
+    );
+
+    // Add listeners to trigger rebuilds when animation values change
+    _controllerStep1.addListener(_handleAnimationChanges);
+    _controllerStep2.addListener(_handleAnimationChanges);
+    _controllerStep3.addListener(_handleAnimationChanges);
+
+    // Start the first step
+    _startFirstStep();
   }
 
-  void _startCustomization() {
-    // Start the animation
-    _animationController.forward();
+  // Trigger a rebuild when animations change
+  void _handleAnimationChanges() {
+    setState(() {});
+  }
 
-    // Set up a timer to cycle through the customization steps
-    _timer = Timer.periodic(const Duration(milliseconds: 1500), (timer) {
-      if (_currentStep < _customizationSteps.length - 1) {
-        setState(() {
-          _currentStep++;
-          _animationController
-            ..reset()
-            ..forward();
-        });
-      } else if (!_isComplete) {
-        setState(() {
-          _isComplete = true;
-          timer.cancel();
-          _timer = null;
-        });
-
-        // Save the onboarding data
-        context.read<OnboardingCubit>().saveOnboardingData();
-      }
+  // First step - animate to 49% then pause
+  void _startFirstStep() {
+    _controllerStep1
+        .animateTo(0.49, duration: 3.seconds, curve: Curves.easeInOut)
+        .then((_) {
+      setState(() {
+        _isStep1Paused = true;
+      });
     });
   }
 
+  // Complete first step and start second
+  void _completeFirstStep() {
+    setState(() {
+      _isStep1Paused = false;
+    });
+
+    _controllerStep1
+        .animateTo(1, duration: 3.seconds, curve: Curves.easeInOut)
+        .then((_) {
+      setState(() {
+        _isStep1Completed = true;
+      });
+
+      // Start second step
+      _startSecondStep();
+    });
+  }
+
+  // Second step - animate to 49% then pause
+  void _startSecondStep() {
+    _controllerStep2
+        .animateTo(0.49, duration: 3.seconds, curve: Curves.easeInOut)
+        .then((_) {
+      setState(() {
+        _isStep2Paused = true;
+      });
+    });
+  }
+
+  // Complete second step and start third
+  void _completeSecondStep() {
+    setState(() {
+      _isStep2Paused = false;
+    });
+
+    _controllerStep2
+        .animateTo(1, duration: 3.seconds, curve: Curves.easeInOut)
+        .then((_) {
+      setState(() {
+        _isStep2Completed = true;
+      });
+
+      // Start third step
+      _startThirdStep();
+    });
+  }
+
+  // Third step - animate to 49% then pause
+  void _startThirdStep() {
+    _controllerStep3
+        .animateTo(0.49, duration: 3.seconds, curve: Curves.easeInOut)
+        .then((_) {
+      setState(() {
+        _isStep3Paused = true;
+      });
+    });
+  }
+
+  // Complete third step and trigger onComplete callback
+  void _completeThirdStep() {
+    setState(() {
+      _isStep3Paused = false;
+    });
+
+    _controllerStep3
+        .animateTo(1, duration: 3.seconds, curve: Curves.easeInOut)
+        .then((_) {
+      setState(() {
+        _isStep3Completed = true;
+      });
+    });
+  }
+
+  // End of Selection
+
   @override
   void dispose() {
-    _animationController.dispose();
-    _timer?.cancel();
+    // Remove listeners
+    _controllerStep1.removeListener(_handleAnimationChanges);
+    _controllerStep2.removeListener(_handleAnimationChanges);
+    _controllerStep3.removeListener(_handleAnimationChanges);
+
+    // Dispose controllers
+    _controllerStep1.dispose();
+    _controllerStep2.dispose();
+    _controllerStep3.dispose();
+
     super.dispose();
   }
 
-  String _getTitle(bool isComplete, String userName) {
+  String _getTitle(BuildContext context) {
     final l10n = context.l10n;
-    if (isComplete) {
-      // Complete state
-      if (userName.isNotEmpty) {
-        return l10n.customizationCompleteTitleWithName(userName);
-      } else {
-        return l10n.customizationCompleteTitle;
-      }
+    final state = context.read<OnboardingCubit>().state;
+    final name = state.userName;
+
+    if (_isStep3Completed) {
+      return name.isEmpty
+          ? l10n.customizationCompleteTitle
+          : l10n.customizationCompleteTitleWithName(name);
     } else {
-      // Loading state
-      if (userName.isNotEmpty) {
-        return l10n.customizationLoadingTitleWithName(userName);
-      } else {
-        return l10n.customizationLoadingTitle;
-      }
+      return name.isEmpty
+          ? l10n.customizationLoadingTitle
+          : l10n.customizationLoadingTitleWithName(name);
     }
-  }
-
-  // Calculate the overall progress based on current step and animation
-  double _calculateOverallProgress() {
-    if (_isComplete) return 1;
-
-    // Each step represents 1/5 of the total progress
-    final stepProgress = _currentStep / (_customizationSteps.length - 1);
-    // The animation represents progress within the current step
-    final animationContribution =
-        _progressAnimation.value / _customizationSteps.length;
-
-    // Start at 30% progress
-    return 0.3 + stepProgress * 0.7 + animationContribution * 0.7;
   }
 
   @override
   Widget build(BuildContext context) {
     final l10n = context.l10n;
-    final state = context.read<OnboardingCubit>().state;
-    final title = _getTitle(_isComplete, state.userName);
-
-    // Initialize the steps with localized strings
-    _customizationSteps = [
-      l10n.analyzingPreferences,
-      l10n.selectingWords,
-      l10n.personalizingPath,
-      l10n.creatingWordList,
-      l10n.finalizingExperience,
-    ];
 
     return Padding(
       padding: const EdgeInsets.all(20),
       child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Expanded(
-            child: Image.asset(
-              Assets.images.onb5.path,
-              width: 300,
-              height: 300,
-            ).animate(controller: _animationController).moveY(
-                  begin: 0.9,
-                  end: 1.1,
-                  duration: const Duration(seconds: 1),
-                  curve: Curves.easeInOut,
+          // Title that changes based on completion and user name
+          Text(
+            _getTitle(context),
+            style: Theme.of(context)
+                .textTheme
+                .headlineLarge
+                ?.copyWith(fontWeight: FontWeight.bold, fontSize: 24),
+          ),
+          Text(
+            l10n.learningExperienceSubtitle,
+            style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                  fontSize: 24,
+                  color: const Color(0xff58CC02),
+                  fontWeight: FontWeight.bold,
                 ),
           ),
+
+          const SizedBox(height: 40),
+
+          // First step - always visible
+          CustomizationLoadingStep(
+            title: l10n.profileSetupTitle,
+            question: l10n.forgetWordsQuestion,
+            onTap: _isStep1Paused ? _completeFirstStep : null,
+            progress: _progressStep1.value,
+            isCompleted: _isStep1Completed,
+          ),
+
           const SizedBox(height: 20),
-          Expanded(
-            child: Column(
-              children: [
-                AnimatedSwitcher(
-                  duration: const Duration(milliseconds: 500),
-                  transitionBuilder:
-                      (Widget child, Animation<double> animation) {
-                    return FadeTransition(opacity: animation, child: child);
-                  },
-                  child: Text(
-                    title,
-                    key: ValueKey<String>(title),
-                    textAlign: TextAlign.center,
-                    style: const TextStyle(
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                ),
-                const Spacer(),
-                AnimatedOpacity(
-                  opacity: _isComplete ? 0.0 : 1.0,
-                  duration: const Duration(milliseconds: 300),
-                  child: AnimatedBuilder(
-                    animation: _animationController,
-                    builder: (context, child) {
-                      return SizedBox(
-                        width: MediaQuery.of(context).size.width * 0.8,
-                        child:
-                            ProgressBar(progress: _calculateOverallProgress()),
-                      );
-                    },
-                  ),
-                ),
-                const SizedBox(height: 20),
-                AnimatedOpacity(
-                  opacity: _isComplete ? 0.0 : 1.0,
-                  duration: const Duration(milliseconds: 300),
-                  child: Text(
-                    _customizationSteps[_currentStep],
-                    textAlign: TextAlign.center,
-                    style: const TextStyle(
-                      fontSize: 18,
-                      fontWeight: FontWeight.w500,
-                    ),
-                  ),
-                ),
-                const Spacer(),
-                AnimatedOpacity(
-                  opacity: _isComplete ? 1.0 : 0.0,
-                  duration: const Duration(milliseconds: 500),
-                  child: _isComplete
-                      ? PushableButton(
-                          text: l10n.startLearning,
-                          onTap: widget.onComplete,
-                          width: 200,
-                          height: 50,
-                          buttonColor: const Color(0xff1CB0F6),
-                          shadowColor: const Color(0xff1899D6),
-                        )
-                      : const SizedBox.shrink(),
-                ),
-                const SafeArea(
-                  child: SizedBox.shrink(),
-                ),
-              ],
+
+          // Second step - visible when first is completed
+          if (_isStep1Completed)
+            CustomizationLoadingStep(
+              title: l10n.learningPreferencesTitle,
+              question: l10n.readingConversationQuestion,
+              onTap: _isStep2Paused ? _completeSecondStep : null,
+              progress: _progressStep2.value,
+              isCompleted: _isStep2Completed,
             ),
-          ),
+
+          const SizedBox(height: 20),
+
+          // Third step - visible when second is completed
+          if (_isStep2Completed)
+            CustomizationLoadingStep(
+              title: l10n.growthAreasTitle,
+              question: l10n.progressFrustrationQuestion,
+              onTap: _isStep3Paused ? _completeThirdStep : null,
+              progress: _progressStep3.value,
+              isCompleted: _isStep3Completed,
+            ),
+          if (_isStep3Completed) ...[
+            const Spacer(),
+            Center(
+              child: PushableButton(
+                text: l10n.continueText,
+                onTap: widget.onComplete,
+                width: 150,
+                height: 50,
+              ),
+            ),
+            const SizedBox(height: 40),
+          ],
         ],
       ),
     );

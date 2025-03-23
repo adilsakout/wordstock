@@ -135,6 +135,50 @@
     "@customizationCompleteTitle": {
         "description": "Complete title on customization loading page"
     },
+    "craftingExperienceTitle": "We are crafting your",
+    "@craftingExperienceTitle": {
+        "description": "First part of the title on customization loading page"
+    },
+    "learningExperienceSubtitle": "Learning experience...",
+    "@learningExperienceSubtitle": {
+        "description": "Second part of the title on customization loading page"
+    },
+    "profileSetupTitle": "Setting up your profile",
+    "@profileSetupTitle": {
+        "description": "Title for the first step in customization loading"
+    },
+    "forgetWordsQuestion": "Do you often forget new words even after reviewing them several times?",
+    "@forgetWordsQuestion": {
+        "description": "Question about forgetting words in the customization process"
+    },
+    "learningPreferencesTitle": "Adjusting your learning preferences",
+    "@learningPreferencesTitle": {
+        "description": "Title for the second step in customization loading"
+    },
+    "readingConversationQuestion": "Do you feel frustrated when you understand a word while reading, but can't use it in conversation?",
+    "@readingConversationQuestion": {
+        "description": "Question about reading vs conversation in the customization process"
+    },
+    "growthAreasTitle": "Analyzing your growth areas",
+    "@growthAreasTitle": {
+        "description": "Title for the third step in customization loading"
+    },
+    "progressFrustrationQuestion": "Are you putting in the effort but still feel like you're not making fast progress?",
+    "@progressFrustrationQuestion": {
+        "description": "Question about progress frustration in the customization process"
+    },
+    "buttonYes": "Yes",
+    "@buttonYes": {
+        "description": "Text for Yes button"
+    },
+    "buttonNo": "No",
+    "@buttonNo": {
+        "description": "Text for No button"
+    },
+    "toMoveForwardSpecify": "To move forward, specify",
+    "@toMoveForwardSpecify": {
+        "description": "Instruction text in the customization step"
+    },
     "startLearning": "Start Learning",
     "@startLearning": {
         "description": "Text for start learning button"

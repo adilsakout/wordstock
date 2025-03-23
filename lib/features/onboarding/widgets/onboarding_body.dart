@@ -126,8 +126,7 @@ class OnboardingAppBar extends StatefulWidget {
 class _OnboardingAppBarState extends State<OnboardingAppBar> {
   @override
   Widget build(BuildContext context) {
-    // Hide app bar for first two screens (0, 1) and last screen (12)
-    final shouldShowAppBar = widget.currentPage > 1 && widget.currentPage < 14;
+    final shouldShowAppBar = widget.currentPage > 1;
 
     return AnimatedOpacity(
       opacity: shouldShowAppBar ? 1.0 : 0.0,
@@ -137,7 +136,7 @@ class _OnboardingAppBarState extends State<OnboardingAppBar> {
         child: Row(
           children: [
             PushableButton(
-              width: 50,
+              width: 45,
               height: 50,
               borderRadius: 50,
               text: '',
@@ -146,7 +145,19 @@ class _OnboardingAppBarState extends State<OnboardingAppBar> {
             ),
             const SizedBox(width: 10),
             Expanded(child: ProgressBar(progress: widget.progress)),
-            const SizedBox(width: 60, height: 50),
+            const SizedBox(width: 10),
+            Container(
+              width: 45,
+              height: 45,
+              decoration: BoxDecoration(
+                color: Colors.grey.shade200,
+                shape: BoxShape.circle,
+              ),
+              child: const Icon(
+                Icons.star_rounded,
+                color: Color(0xFF77D728),
+              ),
+            ),
           ],
         ),
       ),
