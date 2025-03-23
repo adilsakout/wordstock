@@ -52,7 +52,7 @@ class _PracticeBodyState extends State<PracticeBody> {
                 onPlayAgain: () {
                   _pageController.animateToPage(
                     0,
-                    duration: const Duration(milliseconds: 150),
+                    duration: const Duration(milliseconds: 300),
                     curve: Curves.easeInOut,
                   );
                   context.read<PracticeCubit>().resetQuiz();
