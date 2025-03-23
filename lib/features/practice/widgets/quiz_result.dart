@@ -100,7 +100,7 @@ class _QuizResultState extends State<QuizResult>
         _playResultSound(percentCorrect);
 
         // Calculate points (10 points per correct answer)
-        final pointsEarned = correctAnswers * 10;
+        final pointsEarned = correctAnswers * 2;
 
         // Determine result message based on performance
         String resultMessage;
