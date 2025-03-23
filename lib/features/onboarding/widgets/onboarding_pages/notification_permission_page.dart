@@ -38,6 +38,7 @@ class _NotificationPermissionPageState
               badge: true,
               sound: true,
             );
+        if (context.mounted) context.read<OnboardingCubit>().nextPage();
       } else {
         result = await flutterLocalNotificationsPlugin
             .resolvePlatformSpecificImplementation<
