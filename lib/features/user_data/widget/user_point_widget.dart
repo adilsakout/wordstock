@@ -36,7 +36,7 @@ class _UserPointWidgetState extends State<UserPointWidget>
             width: 60,
             height: 60,
             child: Stack(
-              alignment: Alignment.center,
+              alignment: Alignment.centerLeft,
               children: [
                 Container(
                   padding: const EdgeInsets.symmetric(
@@ -70,7 +70,7 @@ class _UserPointWidgetState extends State<UserPointWidget>
                   ),
                 ).animate().fadeIn(duration: 300.ms, curve: Curves.easeOut),
                 Positioned(
-                  right: -2,
+                  right: 0,
                   top: 0,
                   child: ConstrainedBox(
                     constraints: const BoxConstraints(
@@ -82,9 +82,9 @@ class _UserPointWidgetState extends State<UserPointWidget>
                       padding: const EdgeInsets.symmetric(
                         horizontal: 5,
                       ),
-                      decoration: const BoxDecoration(
-                        color: Color(0xffFFC20E),
-                        shape: BoxShape.circle,
+                      decoration: BoxDecoration(
+                        color: const Color(0xffFFC20E),
+                        borderRadius: BorderRadius.circular(50),
                       ),
                       child: AnimatedFlipCounter(
                         value: state.profile!.totalPoints ?? 0,
