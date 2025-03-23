@@ -24,6 +24,9 @@ class $AssetsIconsGen {
   /// File path: assets/icons/coin.svg
   String get coin => 'assets/icons/coin.svg';
 
+  /// File path: assets/icons/crown.svg
+  String get crown => 'assets/icons/crown.svg';
+
   /// File path: assets/icons/flame.svg
   String get flame => 'assets/icons/flame.svg';
 
@@ -45,6 +48,7 @@ class $AssetsIconsGen {
     aiWordIcon,
     check,
     coin,
+    crown,
     flame,
     hand,
     handshake,

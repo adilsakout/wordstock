@@ -16,9 +16,9 @@ class WordRepository {
   }) async {
     try {
       final response = await _supabase.from('words').select('''
-    id, word, definition, example, level, topic_id, 
+    id, word, definition, example, level, 
     user_favorites!user_favorites_word_id_fkey(user_id)
-''').limit(100);
+''').eq('level', 'beginner').limit(100);
 
       final words = response.map((json) {
         final isFavorite =

@@ -136,7 +136,7 @@ ${widget.word.definition}
                     ),
                     const SizedBox(height: 10),
                     Text(
-                      widget.word.example ?? '',
+                      widget.word.example?.replaceAll('"', '') ?? '',
                       textAlign: TextAlign.center,
                       style: Theme.of(context).textTheme.bodySmall?.copyWith(
                             fontFamily: 'Poppins',

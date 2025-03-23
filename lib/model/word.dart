@@ -10,7 +10,6 @@ sealed class Word with _$Word {
     required String id,
     required String word,
     required String definition,
-    @JsonKey(name: 'topic_id') required String topicId,
     String? example,
     VocabularyLevel? level,
     bool? isFavorite,

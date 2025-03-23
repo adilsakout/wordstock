@@ -18,8 +18,6 @@ mixin _$Word {
   String get id;
   String get word;
   String get definition;
-  @JsonKey(name: 'topic_id')
-  String get topicId;
   String? get example;
   VocabularyLevel? get level;
   bool? get isFavorite;
@@ -43,7 +41,6 @@ mixin _$Word {
             (identical(other.word, word) || other.word == word) &&
             (identical(other.definition, definition) ||
                 other.definition == definition) &&
-            (identical(other.topicId, topicId) || other.topicId == topicId) &&
             (identical(other.example, example) || other.example == example) &&
             (identical(other.level, level) || other.level == level) &&
             (identical(other.isFavorite, isFavorite) ||
@@ -53,11 +50,11 @@ mixin _$Word {
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(
-      runtimeType, id, word, definition, topicId, example, level, isFavorite);
+      runtimeType, id, word, definition, example, level, isFavorite);
 
   @override
   String toString() {
-    return 'Word(id: $id, word: $word, definition: $definition, topicId: $topicId, example: $example, level: $level, isFavorite: $isFavorite)';
+    return 'Word(id: $id, word: $word, definition: $definition, example: $example, level: $level, isFavorite: $isFavorite)';
   }
 }
 
@@ -70,7 +67,6 @@ abstract mixin class $WordCopyWith<$Res> {
       {String id,
       String word,
       String definition,
-      @JsonKey(name: 'topic_id') String topicId,
       String? example,
       VocabularyLevel? level,
       bool? isFavorite});
@@ -91,7 +87,6 @@ class _$WordCopyWithImpl<$Res> implements $WordCopyWith<$Res> {
     Object? id = null,
     Object? word = null,
     Object? definition = null,
-    Object? topicId = null,
     Object? example = freezed,
     Object? level = freezed,
     Object? isFavorite = freezed,
@@ -108,10 +103,6 @@ class _$WordCopyWithImpl<$Res> implements $WordCopyWith<$Res> {
       definition: null == definition
           ? _self.definition
           : definition // ignore: cast_nullable_to_non_nullable
-              as String,
-      topicId: null == topicId
-          ? _self.topicId
-          : topicId // ignore: cast_nullable_to_non_nullable
               as String,
       example: freezed == example
           ? _self.example
@@ -136,7 +127,6 @@ class _Word implements Word {
       {required this.id,
       required this.word,
       required this.definition,
-      @JsonKey(name: 'topic_id') required this.topicId,
       this.example,
       this.level,
       this.isFavorite});
@@ -148,9 +138,6 @@ class _Word implements Word {
   final String word;
   @override
   final String definition;
-  @override
-  @JsonKey(name: 'topic_id')
-  final String topicId;
   @override
   final String? example;
   @override
@@ -182,7 +169,6 @@ class _Word implements Word {
             (identical(other.word, word) || other.word == word) &&
             (identical(other.definition, definition) ||
                 other.definition == definition) &&
-            (identical(other.topicId, topicId) || other.topicId == topicId) &&
             (identical(other.example, example) || other.example == example) &&
             (identical(other.level, level) || other.level == level) &&
             (identical(other.isFavorite, isFavorite) ||
@@ -192,11 +178,11 @@ class _Word implements Word {
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(
-      runtimeType, id, word, definition, topicId, example, level, isFavorite);
+      runtimeType, id, word, definition, example, level, isFavorite);
 
   @override
   String toString() {
-    return 'Word(id: $id, word: $word, definition: $definition, topicId: $topicId, example: $example, level: $level, isFavorite: $isFavorite)';
+    return 'Word(id: $id, word: $word, definition: $definition, example: $example, level: $level, isFavorite: $isFavorite)';
   }
 }
 
@@ -210,7 +196,6 @@ abstract mixin class _$WordCopyWith<$Res> implements $WordCopyWith<$Res> {
       {String id,
       String word,
       String definition,
-      @JsonKey(name: 'topic_id') String topicId,
       String? example,
       VocabularyLevel? level,
       bool? isFavorite});
@@ -231,7 +216,6 @@ class __$WordCopyWithImpl<$Res> implements _$WordCopyWith<$Res> {
     Object? id = null,
     Object? word = null,
     Object? definition = null,
-    Object? topicId = null,
     Object? example = freezed,
     Object? level = freezed,
     Object? isFavorite = freezed,
@@ -248,10 +232,6 @@ class __$WordCopyWithImpl<$Res> implements _$WordCopyWith<$Res> {
       definition: null == definition
           ? _self.definition
           : definition // ignore: cast_nullable_to_non_nullable
-              as String,
-      topicId: null == topicId
-          ? _self.topicId
-          : topicId // ignore: cast_nullable_to_non_nullable
               as String,
       example: freezed == example
           ? _self.example
