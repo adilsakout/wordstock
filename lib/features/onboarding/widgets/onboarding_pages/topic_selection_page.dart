@@ -39,6 +39,7 @@ class TopicSelectionPage extends StatelessWidget {
               Selector(
                 text: l10n.topicSociety,
                 selected: state.selectedTopics.contains(0),
+                isMultipleChoice: true,
                 onTap: () {
                   cubit.toggleTopic(0);
                 },
@@ -47,6 +48,7 @@ class TopicSelectionPage extends StatelessWidget {
               Selector(
                 text: l10n.topicForeignLanguages,
                 selected: state.selectedTopics.contains(1),
+                isMultipleChoice: true,
                 onTap: () {
                   cubit.toggleTopic(1);
                 },
@@ -55,6 +57,7 @@ class TopicSelectionPage extends StatelessWidget {
               Selector(
                 text: l10n.topicHumanBody,
                 selected: state.selectedTopics.contains(2),
+                isMultipleChoice: true,
                 onTap: () {
                   cubit.toggleTopic(2);
                 },
@@ -63,6 +66,7 @@ class TopicSelectionPage extends StatelessWidget {
               Selector(
                 text: l10n.topicEmotions,
                 selected: state.selectedTopics.contains(3),
+                isMultipleChoice: true,
                 onTap: () {
                   cubit.toggleTopic(3);
                 },
@@ -71,6 +75,7 @@ class TopicSelectionPage extends StatelessWidget {
               Selector(
                 text: l10n.topicOther,
                 selected: state.selectedTopics.contains(5),
+                isMultipleChoice: true,
                 onTap: () {
                   cubit.toggleTopic(5);
                 },

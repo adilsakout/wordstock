@@ -7,10 +7,12 @@ class Selector extends StatefulWidget {
     required this.onTap,
     super.key,
     this.selected = false,
+    this.isMultipleChoice = false,
   });
   final String text;
   final VoidCallback onTap;
   final bool selected;
+  final bool isMultipleChoice;
   @override
   SelectorState createState() => SelectorState();
 }
@@ -134,7 +136,12 @@ class SelectorState extends State<Selector>
                                   ? const Color(0xff1899D6)
                                   : const Color(0xff999999),
                             ),
-                            shape: BoxShape.circle,
+                            shape: widget.isMultipleChoice
+                                ? BoxShape.rectangle
+                                : BoxShape.circle,
+                            borderRadius: widget.isMultipleChoice
+                                ? BorderRadius.circular(8)
+                                : null,
                           ),
                           child: widget.selected
                               ? const Icon(
