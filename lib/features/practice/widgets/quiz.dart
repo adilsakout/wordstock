@@ -5,6 +5,7 @@ import 'package:flutter_animate/flutter_animate.dart';
 import 'package:go_router/go_router.dart';
 import 'package:wordstock/features/home/view/home_page.dart';
 import 'package:wordstock/features/practice/cubit/cubit.dart';
+import 'package:wordstock/features/practice/widgets/loading_quiz.dart';
 import 'package:wordstock/features/practice/widgets/question.dart';
 import 'package:wordstock/l10n/l10n.dart';
 import 'package:wordstock/widgets/button.dart';
@@ -201,11 +202,7 @@ class _VocabularyQuizState extends State<VocabularyQuiz>
       },
       builder: (context, state) {
         if (state is PracticeLoading) {
-          return const Center(
-            child: CircularProgressIndicator(
-              color: Color(0xffE94E77),
-            ),
-          );
+          return const LoadingQuiz();
         }
 
         if (state is PracticeError) {

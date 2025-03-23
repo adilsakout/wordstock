@@ -41,7 +41,8 @@ class WordRepository {
           .from('user_progress')
           .select('word_id, words!inner(*)')
           .eq('user_id', _userId)
-          .order('next_review_date');
+          .order('next_review_date')
+          .limit(10);
 
       return response
           .map(
