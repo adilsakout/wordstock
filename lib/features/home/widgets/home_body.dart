@@ -1,5 +1,6 @@
 // ignore_for_file: use_build_context_synchronously
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_svg/svg.dart';
@@ -46,6 +47,7 @@ class _HomeBodyState extends State<HomeBody>
     )..repeat(reverse: true);
     WidgetsBinding.instance.addPostFrameCallback((_) {
       context.read<HomeCubit>().fetchWords();
+
       _requestReview();
     });
   }
@@ -57,7 +59,7 @@ class _HomeBodyState extends State<HomeBody>
   }
 
   Future<void> _requestReview() async {
-    if (await inAppReview.isAvailable()) {
+    if (await inAppReview.isAvailable() && !kDebugMode) {
       await inAppReview.requestReview();
     }
   }
