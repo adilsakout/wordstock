@@ -35,15 +35,12 @@ class WordRepository {
   }
 
   /// Get words due for review today (spaced repetition)
-  Future<List<Word>> getTodaysReviewWords(String userId) async {
+  Future<List<Word>> getTodaysReviewWords() async {
     try {
-      final now = DateTime.now().toIso8601String();
-
       final response = await _supabase
           .from('user_progress')
           .select('word_id, words!inner(*)')
-          .eq('user_id', userId)
-          .lte('next_review_date', now)
+          .eq('user_id', _userId)
           .order('next_review_date');
 
       return response
@@ -143,6 +140,26 @@ class WordRepository {
           );
     } catch (e) {
       throw Exception('Failed to learn word: $e');
+    }
+  }
+
+  /// Get the latest reviewed words for the current user
+  Future<List<Word>> getLatestReviewedWords({
+    int limit = 10,
+  }) async {
+    try {
+      final response = await _supabase
+          .from('user_progress')
+          .select('word_id, words!inner(*)')
+          .eq('user_id', _userId)
+          .order('updated_at', ascending: false)
+          .limit(limit);
+
+      return response
+          .map((json) => Word.fromJson(json['words'] as Map<String, dynamic>))
+          .toList();
+    } catch (e) {
+      throw Exception('Failed to load latest reviewed words: $e');
     }
   }
 }

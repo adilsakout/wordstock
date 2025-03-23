@@ -31,7 +31,6 @@ class _PracticeBodyState extends State<PracticeBody> {
             children: [
               QuizInitial(
                 onTap: () {
-                  context.read<PracticeCubit>().getQuiz();
                   _pageController.animateToPage(
                     1,
                     duration: const Duration(milliseconds: 150),

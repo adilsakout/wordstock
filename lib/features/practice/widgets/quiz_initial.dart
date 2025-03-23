@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:gaimon/gaimon.dart';
+import 'package:wordstock/features/practice/cubit/cubit.dart';
 import 'package:wordstock/gen/assets.gen.dart';
 import 'package:wordstock/widgets/button.dart';
 
@@ -124,29 +125,46 @@ class _QuizInitialState extends State<QuizInitial>
               curve: Curves.easeOutCubic,
             ),
         const SizedBox(height: 16),
-        const SizedBox(
-          width: 200,
-          child: Text(
-            'Test your vocabulary knowledge with this fun quiz!',
+        SizedBox(
+          width: 250,
+          child: RichText(
             textAlign: TextAlign.center,
-            style: TextStyle(
-              color: Colors.black54,
-              fontSize: 14,
+            text: const TextSpan(
+              text: 'Test your vocabulary knowledge with one of our ',
+              style: TextStyle(
+                color: Colors.black54,
+                fontSize: 14,
+              ),
+              children: [
+                TextSpan(
+                  text: 'AI-generated',
+                  style: TextStyle(fontWeight: FontWeight.bold),
+                ),
+                TextSpan(
+                  text: ' quiz!',
+                ),
+              ],
             ),
-          ),
-        )
-            .animate(controller: _animationController)
-            .fadeIn(delay: 150.ms, duration: 250.ms),
-        const SizedBox(height: 16),
+          )
+              .animate(controller: _animationController)
+              .fadeIn(delay: 150.ms, duration: 250.ms),
+        ),
+        const SizedBox(height: 24),
+
+        // Standard Quiz Button
         PushableButton(
-          width: 100,
+          width: 220,
           height: 56,
           buttonColor: const Color(0xffE94E77),
           shadowColor: const Color(0xff963E00),
-          text: 'Start',
+          text: 'Start Quiz',
+          prefixIcon: Icons.auto_awesome,
+          spacing: 8,
           onTap: () {
             // Add haptic feedback
             Gaimon.light();
+            // Get OpenAI-generated quiz
+            context.read<PracticeCubit>().getQuizFromWords();
             widget.onTap();
           },
         )
@@ -158,12 +176,6 @@ class _QuizInitialState extends State<QuizInitial>
               end: 0,
               duration: 250.ms,
               curve: Curves.easeOutCubic,
-            )
-            .shimmer(
-              delay: 600.ms,
-              duration: 1500.ms,
-              color: Colors.white.withAlpha(77),
-              size: 0.5,
             ),
       ],
     );

@@ -115,6 +115,7 @@ class _AppState extends State<App> {
           create: (context) => PracticeCubit(
             quizRepository: quizRepository,
             userRepository: userRepository,
+            wordRepository: wordRepository,
           ),
         ),
       ],

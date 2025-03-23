@@ -5,22 +5,47 @@ import 'package:equatable/equatable.dart';
 import 'package:wordstock/model/models.dart';
 import 'package:wordstock/repositories/quiz_repository.dart';
 import 'package:wordstock/repositories/user_repository.dart';
+import 'package:wordstock/repositories/word_repository.dart';
 part 'practice_state.dart';
 
 class PracticeCubit extends Cubit<PracticeState> {
   PracticeCubit({
     required this.quizRepository,
     required this.userRepository,
+    required this.wordRepository,
   }) : super(const PracticeInitial());
 
   final QuizRepository quizRepository;
   final UserRepository userRepository;
+  final WordRepository wordRepository;
 
   Future<void> getQuiz() async {
     try {
       emit(const PracticeLoading());
 
       final questions = await quizRepository.getQuiz();
+
+      emit(PracticeQuizLoaded(questions));
+    } catch (e) {
+      emit(PracticeError(e.toString()));
+    }
+  }
+
+  Future<void> getQuizFromWords({List<Word>? words}) async {
+    try {
+      emit(const PracticeLoading());
+
+      // If no words provided, get from repository
+      final wordsToUse = words ?? await wordRepository.getTodaysReviewWords();
+
+      if (wordsToUse.isEmpty) {
+        emit(const PracticeError('No words available for quiz'));
+        return;
+      }
+
+      final questions = await quizRepository.getQuizFromOpenAI(
+        words: wordsToUse,
+      );
 
       emit(PracticeQuizLoaded(questions));
     } catch (e) {
