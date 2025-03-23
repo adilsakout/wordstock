@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:wordstock/model/models.dart';
 
@@ -27,6 +29,28 @@ class WordRepository {
         return Word.fromJson({...json, 'isFavorite': isFavorite});
       }).toList()
         ..shuffle();
+
+      return words;
+    } catch (e) {
+      throw Exception('Failed to load words: $e');
+    }
+  }
+
+  Future<List<Word>> getQuizWords() async {
+    try {
+      final response = await _supabase.rpc<dynamic>(
+        'get_words_in_order',
+        params: {
+          'user_id_param': _userId,
+          'total_questions': 10,
+        },
+      );
+
+      log('response: $response');
+
+      final words = (response as List<dynamic>)
+          .map((dynamic json) => Word.fromJson(json as Map<String, dynamic>))
+          .toList();
 
       return words;
     } catch (e) {

@@ -36,7 +36,7 @@ class PracticeCubit extends Cubit<PracticeState> {
       emit(const PracticeLoading());
 
       // If no words provided, get from repository
-      final wordsToUse = words ?? await wordRepository.getTodaysReviewWords();
+      final wordsToUse = words ?? await wordRepository.getQuizWords();
 
       if (wordsToUse.isEmpty) {
         emit(const PracticeError('No words available for quiz'));
@@ -56,7 +56,7 @@ class PracticeCubit extends Cubit<PracticeState> {
   Future<void> updateTotalPoints() async {
     try {
       await userRepository.updateTotalPoints(
-        getCorrectAnswersCount() * 10,
+        getCorrectAnswersCount() * 2,
       );
     } catch (e) {
       emit(PracticeError(e.toString()));
