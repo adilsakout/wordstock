@@ -6,49 +6,99 @@ import 'package:flutter_svg/svg.dart';
 import 'package:wordstock/features/user_data/cubit/user_data_cubit.dart';
 import 'package:wordstock/gen/assets.gen.dart';
 
-class UserPointWidget extends StatelessWidget {
+class UserPointWidget extends StatefulWidget {
   const UserPointWidget({super.key});
 
   @override
+  State<UserPointWidget> createState() => _UserPointWidgetState();
+}
+
+class _UserPointWidgetState extends State<UserPointWidget>
+    with TickerProviderStateMixin {
+  late final AnimationController _controller = AnimationController(
+    vsync: this,
+  );
+
+  @override
   Widget build(BuildContext context) {
-    return BlocBuilder<StreakCubit, StreakState>(
+    return BlocConsumer<StreakCubit, StreakState>(
+      listener: (context, state) async {
+        await _controller.reverse();
+        await _controller.forward();
+      },
+      listenWhen: (previous, current) {
+        return previous.profile?.totalPoints != current.profile?.totalPoints;
+      },
       builder: (context, state) {
         if (state.isLoaded && state.profile != null) {
-          return Container(
-            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-            height: 50,
-            decoration: BoxDecoration(
-              color: Theme.of(context).colorScheme.surface,
-              border: Border.all(
-                color: const Color(0xffFFC20E),
-                width: 2,
-              ),
-              borderRadius: BorderRadius.circular(10),
-            ),
-            child: Row(
+          return SizedBox(
+            width: 60,
+            height: 60,
+            child: Stack(
+              alignment: Alignment.center,
               children: [
-                AnimatedFlipCounter(
-                  duration: 1.seconds,
-                  value: state.profile!.totalPoints ?? 0,
-                  textStyle: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                        fontSize: 20,
-                        fontWeight: FontWeight.w600,
-                        color: const Color(0xffFFC20E),
+                Container(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 10,
+                    vertical: 5,
+                  ),
+                  height: 50,
+                  width: 50,
+                  decoration: BoxDecoration(
+                    color: Theme.of(context).colorScheme.surface,
+                    border: Border.all(
+                      color: const Color(0xffFFC20E),
+                      width: 2,
+                    ),
+                    shape: BoxShape.circle,
+                  ),
+                  child: Stack(
+                    children: [
+                      SvgPicture.asset(
+                        Assets.icons.coin,
+                      )
+                          .animate(
+                            controller: _controller,
+                          )
+                          .scale(duration: 300.ms, curve: Curves.easeOut)
+                          .then(delay: 100.ms)
+                          .shake(
+                            hz: 2,
+                          ),
+                    ],
+                  ),
+                ).animate().fadeIn(duration: 300.ms, curve: Curves.easeOut),
+                Positioned(
+                  right: -2,
+                  top: 0,
+                  child: ConstrainedBox(
+                    constraints: const BoxConstraints(
+                      minWidth: 25,
+                      maxHeight: 25,
+                      minHeight: 25,
+                    ),
+                    child: Container(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 5,
                       ),
-                ).animate().slideX(
-                      duration: 300.ms,
-                      curve: Curves.easeOut,
-                      begin: 1,
-                      end: 0,
+                      decoration: const BoxDecoration(
+                        color: Color(0xffFFC20E),
+                        shape: BoxShape.circle,
+                      ),
+                      child: AnimatedFlipCounter(
+                        value: state.profile!.totalPoints ?? 0,
+                        duration: const Duration(milliseconds: 800),
+                        curve: Curves.easeOutBack,
+                        textStyle:
+                            Theme.of(context).textTheme.bodyMedium?.copyWith(
+                                  fontSize: 10,
+                                  fontWeight: FontWeight.w600,
+                                  color: const Color(0xffFFFFFF),
+                                ),
+                      ),
                     ),
-                const SizedBox(width: 5),
-                SvgPicture.asset(Assets.icons.coin)
-                    .animate()
-                    .scale(duration: 300.ms, curve: Curves.easeOut)
-                    .then(delay: 100.ms)
-                    .shake(
-                      hz: 2,
-                    ),
+                  ),
+                ),
               ],
             ),
           ).animate().fadeIn(duration: 300.ms, curve: Curves.easeOut);

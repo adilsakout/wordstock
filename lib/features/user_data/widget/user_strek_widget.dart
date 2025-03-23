@@ -7,17 +7,26 @@ import 'package:wordstock/features/user_data/cubit/user_data_cubit.dart';
 import 'package:wordstock/features/user_data/widget/new_streak_bottom_sheet.dart';
 import 'package:wordstock/gen/assets.gen.dart';
 
-class UserStreakWidget extends StatelessWidget {
+class UserStreakWidget extends StatefulWidget {
   const UserStreakWidget({super.key});
+
+  @override
+  State<UserStreakWidget> createState() => _UserStreakWidgetState();
+}
+
+class _UserStreakWidgetState extends State<UserStreakWidget>
+    with TickerProviderStateMixin {
+  late final AnimationController _controller = AnimationController(
+    vsync: this,
+  );
 
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<StreakCubit, StreakState>(
-      listener: (context, state) {
+      listener: (context, state) async {
         if (state.isLoaded && state.profile != null) {
           final currentStreak = state.profile!.dailyStreak;
-
-          showModalBottomSheet<void>(
+          await showModalBottomSheet<void>(
             context: context,
             isScrollControlled: true,
             constraints: BoxConstraints(
@@ -43,44 +52,71 @@ class UserStreakWidget extends StatelessWidget {
       },
       builder: (context, state) {
         if (state.isLoaded && state.profile != null) {
-          return Container(
-            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-            height: 50,
-            decoration: BoxDecoration(
-              color: Theme.of(context).colorScheme.surface,
-              border: Border.all(
-                color: const Color(0xffF97316),
-                width: 2,
-              ),
-              borderRadius: BorderRadius.circular(10),
-            ),
-            child: Row(
+          final streakValue = state.profile!.dailyStreak;
+
+          return SizedBox(
+            width: 60,
+            height: 60,
+            child: Stack(
+              alignment: Alignment.center,
               children: [
-                SvgPicture.asset(Assets.icons.flame)
-                    .animate()
-                    .scale(duration: 500.ms, curve: Curves.easeInOut)
-                    .then(delay: 100.ms)
-                    .shake(
-                      hz: 2,
+                Container(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                  height: 50,
+                  width: 50,
+                  decoration: BoxDecoration(
+                    color: Theme.of(context).colorScheme.surface,
+                    border: Border.all(
+                      color: const Color(0xffF97316),
+                      width: 2,
                     ),
-                const SizedBox(width: 5),
-                AnimatedFlipCounter(
-                  duration: const Duration(milliseconds: 500),
-                  value: state.profile!.dailyStreak,
-                  textStyle: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                        fontSize: 20,
-                        fontWeight: FontWeight.w600,
-                        color: const Color(0xffF97316),
+                    shape: BoxShape.circle,
+                  ),
+                  child: SvgPicture.asset(Assets.icons.flame)
+                      .animate(
+                        controller: _controller,
+                      )
+                      .scale(duration: 500.ms, curve: Curves.easeInOut)
+                      .then(delay: 100.ms)
+                      .shake(
+                        hz: 2,
                       ),
-                ).animate().slideX(
-                      duration: 500.ms,
-                      curve: Curves.easeInOut,
-                      begin: -1,
-                      end: 0,
+                ).animate().fadeIn(duration: 500.ms, curve: Curves.easeInOut),
+                Positioned(
+                  right: 0,
+                  top: 0,
+                  child: ConstrainedBox(
+                    constraints: const BoxConstraints(
+                      minWidth: 25,
+                      minHeight: 20,
+                      maxHeight: 25,
                     ),
+                    child: Container(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 5,
+                      ),
+                      decoration: BoxDecoration(
+                        color: const Color(0xffF97316),
+                        borderRadius: BorderRadius.circular(50),
+                      ),
+                      child: AnimatedFlipCounter(
+                        value: streakValue,
+                        duration: const Duration(milliseconds: 800),
+                        curve: Curves.easeOutBack,
+                        textStyle:
+                            Theme.of(context).textTheme.bodyMedium?.copyWith(
+                                  fontSize: 10,
+                                  fontWeight: FontWeight.w600,
+                                  color: const Color(0xffFFFFFF),
+                                ),
+                      ),
+                    ),
+                  ),
+                ),
               ],
             ),
-          ).animate().fadeIn(duration: 500.ms, curve: Curves.easeInOut);
+          );
         }
         return const SizedBox.shrink();
       },

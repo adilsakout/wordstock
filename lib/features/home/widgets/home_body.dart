@@ -139,7 +139,6 @@ class _HomeBodyState extends State<HomeBody>
                         child: Padding(
                           padding: EdgeInsets.symmetric(horizontal: 20),
                           child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               UserStreakWidget(),
                               UserPointWidget(),
