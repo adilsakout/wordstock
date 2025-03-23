@@ -17,6 +17,7 @@ class _UserPointWidgetState extends State<UserPointWidget>
     with TickerProviderStateMixin {
   late final AnimationController _controller = AnimationController(
     vsync: this,
+    duration: const Duration(milliseconds: 300),
   );
 
   @override
