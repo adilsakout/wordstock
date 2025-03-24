@@ -44,17 +44,17 @@ class $AssetsIconsGen {
 
   /// List of all assets
   List<dynamic> get values => [
-    aiIcon,
-    aiWordIcon,
-    check,
-    coin,
-    crown,
-    flame,
-    hand,
-    handshake,
-    logo,
-    quizIcon,
-  ];
+        aiIcon,
+        aiWordIcon,
+        check,
+        coin,
+        crown,
+        flame,
+        hand,
+        handshake,
+        logo,
+        quizIcon,
+      ];
 }
 
 class $AssetsImagesGen {
@@ -86,15 +86,15 @@ class $AssetsImagesGen {
 
   /// List of all assets
   List<AssetGenImage> get values => [
-    onb1Png,
-    onb1Png_,
-    onb2Png,
-    onb2Png_,
-    onb3Png,
-    onb3Png_,
-    onb4,
-    onb5,
-  ];
+        onb1Png,
+        onb1Png_,
+        onb2Png,
+        onb2Png_,
+        onb3Png,
+        onb3Png_,
+        onb4,
+        onb5,
+      ];
 }
 
 class $AssetsSecretsGen {
