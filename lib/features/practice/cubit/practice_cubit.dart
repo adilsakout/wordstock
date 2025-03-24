@@ -53,16 +53,6 @@ class PracticeCubit extends Cubit<PracticeState> {
     }
   }
 
-  Future<void> updateTotalPoints() async {
-    try {
-      await userRepository.updateTotalPoints(
-        getCorrectAnswersCount() * 2,
-      );
-    } catch (e) {
-      emit(PracticeError(e.toString()));
-    }
-  }
-
   void selectAnswer(String selectedOption) {
     if (state is PracticeQuizLoaded) {
       final currentState = state as PracticeQuizLoaded;

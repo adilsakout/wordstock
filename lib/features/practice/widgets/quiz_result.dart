@@ -45,8 +45,11 @@ class _QuizResultState extends State<QuizResult>
     _animationController.forward();
 
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      context.read<PracticeCubit>().updateTotalPoints();
-      context.read<StreakCubit>().loadProfile();
+      final correctAnswers =
+          context.read<PracticeCubit>().getCorrectAnswersCount();
+      context.read<StreakCubit>().updateTotalPoints(
+            points: correctAnswers * 2,
+          );
     });
   }
 

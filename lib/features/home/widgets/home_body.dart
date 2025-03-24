@@ -58,6 +58,12 @@ class _HomeBodyState extends State<HomeBody>
     super.dispose();
   }
 
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    context.read<StreakCubit>().updateStreak();
+  }
+
   Future<void> _requestReview() async {
     if (await inAppReview.isAvailable() && !kDebugMode) {
       await inAppReview.requestReview();

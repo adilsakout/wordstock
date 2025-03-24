@@ -33,6 +33,26 @@ class StreakCubit extends Cubit<StreakState> {
     }
   }
 
+  Future<void> updateTotalPoints({required int points}) async {
+    try {
+      await userRepository.updateTotalPoints(points);
+      final updatedProfile = await userRepository.getProfile();
+      emit(
+        state.copyWith(
+          status: StreakStatus.loaded,
+          profile: updatedProfile,
+        ),
+      );
+    } catch (e) {
+      emit(
+        state.copyWith(
+          status: StreakStatus.error,
+          errorMessage: e.toString(),
+        ),
+      );
+    }
+  }
+
   Future<void> updateStreak() async {
     try {
       if (state.isLoaded && state.profile != null) {
