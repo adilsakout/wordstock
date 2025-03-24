@@ -39,7 +39,7 @@ class StreakGoalPage extends StatelessWidget {
               ),
               const SizedBox(height: 16),
               Selector(
-                text: '7 days',
+                text: '🌱 7 days',
                 selected: state.streakGoal == 7,
                 onTap: () {
                   _selectStreakGoal(context, 7);
@@ -47,7 +47,7 @@ class StreakGoalPage extends StatelessWidget {
               ),
               const SizedBox(height: 16),
               Selector(
-                text: '14 days',
+                text: '⏳ 14 days',
                 selected: state.streakGoal == 14,
                 onTap: () {
                   _selectStreakGoal(context, 14);
@@ -55,7 +55,7 @@ class StreakGoalPage extends StatelessWidget {
               ),
               const SizedBox(height: 16),
               Selector(
-                text: '30 days',
+                text: '🏆 30 days',
                 selected: state.streakGoal == 30,
                 onTap: () {
                   _selectStreakGoal(context, 30);

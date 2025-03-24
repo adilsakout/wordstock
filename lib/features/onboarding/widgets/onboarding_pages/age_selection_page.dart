@@ -37,7 +37,7 @@ class _AgeSelectionPageState extends State<AgeSelectionPage> {
               ),
               const SizedBox(height: 16),
               Selector(
-                text: '13 to 17',
+                text: '🎒 13 to 17',
                 selected: state.selectedAgeRange == 0,
                 onTap: () {
                   cubit.selectAgeRange(0);
@@ -45,7 +45,7 @@ class _AgeSelectionPageState extends State<AgeSelectionPage> {
               ),
               const SizedBox(height: 16),
               Selector(
-                text: '18 to 24',
+                text: '🎓 18 to 24',
                 selected: state.selectedAgeRange == 1,
                 onTap: () {
                   cubit.selectAgeRange(1);
@@ -53,7 +53,7 @@ class _AgeSelectionPageState extends State<AgeSelectionPage> {
               ),
               const SizedBox(height: 16),
               Selector(
-                text: '25 to 34',
+                text: '💼 25 to 34',
                 selected: state.selectedAgeRange == 2,
                 onTap: () {
                   cubit.selectAgeRange(2);
@@ -61,7 +61,7 @@ class _AgeSelectionPageState extends State<AgeSelectionPage> {
               ),
               const SizedBox(height: 16),
               Selector(
-                text: '35 to 44',
+                text: '🍀 35 to 44',
                 selected: state.selectedAgeRange == 3,
                 onTap: () {
                   cubit.selectAgeRange(3);
@@ -69,7 +69,7 @@ class _AgeSelectionPageState extends State<AgeSelectionPage> {
               ),
               const SizedBox(height: 16),
               Selector(
-                text: '45 and above',
+                text: '🌟 45 and above',
                 selected: state.selectedAgeRange == 4,
                 onTap: () {
                   cubit.selectAgeRange(4);

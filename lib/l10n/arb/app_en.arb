@@ -65,19 +65,19 @@
     "@timeCommitmentDescription": {
         "description": "Description text for time commitment selection"
     },
-    "fiveMinutes": "5 minutes a day",
+    "fiveMinutes": "⚡️ 5 minutes a day",
     "@fiveMinutes": {
         "description": "5 minutes time commitment option"
     },
-    "tenMinutes": "10 minutes a day",
+    "tenMinutes": "⏱️ 10 minutes a day",
     "@tenMinutes": {
         "description": "10 minutes time commitment option"
     },
-    "fifteenMinutes": "15 minutes a day",
+    "fifteenMinutes": "⏳ 15 minutes a day",
     "@fifteenMinutes": {
         "description": "15 minutes time commitment option"
     },
-    "thirtyMinutes": "30 minutes a day",
+    "thirtyMinutes": "🕰️ 30 minutes a day",
     "@thirtyMinutes": {
         "description": "30 minutes time commitment option"
     },
@@ -89,23 +89,23 @@
     "@topicSelectionDescription": {
         "description": "Description text for topic selection"
     },
-    "topicSociety": "Society",
+    "topicSociety": "👥 Society",
     "@topicSociety": {
         "description": "Society topic option"
     },
-    "topicForeignLanguages": "Words in foreign languages",
+    "topicForeignLanguages": "🌏 Foreign languages",
     "@topicForeignLanguages": {
         "description": "Foreign languages topic option"
     },
-    "topicHumanBody": "Human body",
+    "topicHumanBody": "💪 Human body",
     "@topicHumanBody": {
         "description": "Human body topic option"
     },
-    "topicEmotions": "Emotions",
+    "topicEmotions": "😃 Emotions",
     "@topicEmotions": {
         "description": "Emotions topic option"
     },
-    "topicOther": "Other",
+    "topicOther": "🔍 Other",
     "@topicOther": {
         "description": "Other topics option"
     },

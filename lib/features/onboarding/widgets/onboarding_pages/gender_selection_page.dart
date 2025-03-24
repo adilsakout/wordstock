@@ -37,7 +37,7 @@ class _GenderSelectionPageState extends State<GenderSelectionPage> {
               ),
               const SizedBox(height: 16),
               Selector(
-                text: 'Male',
+                text: '👦 Male',
                 selected: state.selectedGender == 0,
                 onTap: () {
                   cubit.selectGender(0);
@@ -45,7 +45,7 @@ class _GenderSelectionPageState extends State<GenderSelectionPage> {
               ),
               const SizedBox(height: 16),
               Selector(
-                text: 'Female',
+                text: '👩‍🦰 Female',
                 selected: state.selectedGender == 1,
                 onTap: () {
                   cubit.selectGender(1);
@@ -53,7 +53,7 @@ class _GenderSelectionPageState extends State<GenderSelectionPage> {
               ),
               const SizedBox(height: 16),
               Selector(
-                text: 'Other',
+                text: '👤 Other',
                 selected: state.selectedGender == 2,
                 onTap: () {
                   cubit.selectGender(2);
