@@ -11,6 +11,8 @@ PODS:
   - Flutter (1.0.0)
   - flutter_local_notifications (0.0.1):
     - Flutter
+  - flutter_native_splash (2.4.3):
+    - Flutter
   - gaimon (0.0.1):
     - Flutter
   - image_gallery_saver (2.0.2):
@@ -38,6 +40,7 @@ DEPENDENCIES:
   - connectivity_plus (from `.symlinks/plugins/connectivity_plus/ios`)
   - Flutter (from `Flutter`)
   - flutter_local_notifications (from `.symlinks/plugins/flutter_local_notifications/ios`)
+  - flutter_native_splash (from `.symlinks/plugins/flutter_native_splash/ios`)
   - gaimon (from `.symlinks/plugins/gaimon/ios`)
   - image_gallery_saver (from `.symlinks/plugins/image_gallery_saver/ios`)
   - in_app_review (from `.symlinks/plugins/in_app_review/ios`)
@@ -64,6 +67,8 @@ EXTERNAL SOURCES:
     :path: Flutter
   flutter_local_notifications:
     :path: ".symlinks/plugins/flutter_local_notifications/ios"
+  flutter_native_splash:
+    :path: ".symlinks/plugins/flutter_native_splash/ios"
   gaimon:
     :path: ".symlinks/plugins/gaimon/ios"
   image_gallery_saver:
@@ -88,6 +93,7 @@ SPEC CHECKSUMS:
   connectivity_plus: bf0076dd84a130856aa636df1c71ccaff908fa1d
   Flutter: e0871f40cf51350855a761d2e70bf5af5b9b5de7
   flutter_local_notifications: df98d66e515e1ca797af436137b4459b160ad8c9
+  flutter_native_splash: df59bb2e1421aa0282cb2e95618af4dcb0c56c29
   gaimon: 266fec2cd27726df54a6694c14fc9e3f2a415c33
   image_gallery_saver: cb43cc43141711190510e92c460eb1655cd343cb
   in_app_review: a31b5257259646ea78e0e35fc914979b0031d011

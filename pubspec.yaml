@@ -23,6 +23,7 @@ dependencies:
   flutter_local_notifications: ^18.0.1
   flutter_localizations:
     sdk: flutter
+  flutter_native_splash: ^2.4.5
   flutter_svg: ^2.0.17
   freezed: ^3.0.3
   freezed_annotation: ^3.0.0
