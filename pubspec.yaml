@@ -9,7 +9,7 @@ environment:
 dependencies:
   advanced_in_app_review: ^1.3.0
   animated_flip_counter: ^0.3.4
-  audioplayers: ^6.3.0
+  audioplayers: ^6.4.0
   bloc: ^8.1.4
   cloud_text_to_speech: ^1.1.3
   connectivity_plus: ^5.0.2
