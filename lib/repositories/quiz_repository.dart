@@ -5,12 +5,13 @@ import 'package:http/http.dart' as http;
 import 'package:logger/logger.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:wordstock/model/models.dart';
+import 'package:wordstock/repositories/supabase_repository.dart';
 
 /// Repository responsible for quiz-related operations
 class QuizRepository {
   QuizRepository()
-      : _supabase = Supabase.instance.client,
-        _userId = Supabase.instance.client.auth.currentUser?.id ?? '',
+      : _supabase = SupabaseRepository.client,
+        _userId = SupabaseRepository.client.auth.currentUser?.id ?? '',
         _client = http.Client();
 
   final SupabaseClient _supabase;

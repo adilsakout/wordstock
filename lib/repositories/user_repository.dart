@@ -1,19 +1,23 @@
+import 'dart:developer';
+
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:wordstock/model/user_profile.dart';
+import 'package:wordstock/repositories/supabase_repository.dart';
 
 class UserRepository {
-  UserRepository()
-      : _supabase = Supabase.instance.client,
-        _userId = Supabase.instance.client.auth.currentUser?.id ?? '';
+  UserRepository() : _supabase = SupabaseRepository.client;
   final SupabaseClient _supabase;
-  final String _userId;
+
+  String _getUserId() {
+    return _supabase.auth.currentUser?.id ?? '';
+  }
 
   /// Update the daily streak for the user
   Future<void> updateDailyStreak() async {
     try {
       await _supabase.rpc<void>(
         'update_user_streak',
-        params: {'target_user_id': _userId},
+        params: {'target_user_id': _getUserId()},
       );
     } catch (e) {
       throw Exception('Failed to update streak: $e');
@@ -25,7 +29,7 @@ class UserRepository {
     try {
       await _supabase.rpc<void>(
         'update_user_total_points',
-        params: {'target_user_id': _userId, 'points': points},
+        params: {'target_user_id': _getUserId(), 'points': points},
       );
     } catch (e) {
       throw Exception('Failed to update total points: $e');
@@ -46,7 +50,7 @@ class UserRepository {
   }) async {
     try {
       final data = <String, dynamic>{
-        'user_id': _userId,
+        'user_id': _getUserId(),
         'onboarding_completed': true,
       };
 
@@ -72,14 +76,23 @@ class UserRepository {
   /// Get the user's profile
   Future<UserProfile> getProfile() async {
     try {
+      log(
+        'Loading user profile for user: ${_getUserId()}',
+        name: 'UserRepository',
+      );
       final response = await _supabase
           .from('user_profiles')
           .select()
-          .eq('user_id', _userId)
+          .eq('user_id', _getUserId())
           .single();
 
+      log(
+        'User profile loaded successfully: $response',
+        name: 'UserRepository',
+      );
       return UserProfile.fromJson(response);
     } catch (e) {
+      log('Failed to load profile: $e', name: 'UserRepository', error: e);
       throw Exception('Failed to load profile: $e');
     }
   }

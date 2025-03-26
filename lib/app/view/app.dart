@@ -1,5 +1,4 @@
 import 'dart:developer';
-
 import 'package:advanced_in_app_review/advanced_in_app_review.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
@@ -13,6 +12,7 @@ import 'package:wordstock/features/practice/practice.dart';
 import 'package:wordstock/features/user_data/cubit/user_data_cubit.dart';
 import 'package:wordstock/l10n/l10n.dart';
 import 'package:wordstock/repositories/quiz_repository.dart';
+import 'package:wordstock/repositories/supabase_repository.dart';
 import 'package:wordstock/repositories/tts_repository.dart';
 import 'package:wordstock/repositories/user_repository.dart';
 import 'package:wordstock/repositories/word_repository.dart';
@@ -73,6 +73,7 @@ class App extends StatefulWidget {
 class _AppState extends State<App> {
   @override
   void initState() {
+    _initializeRepositories();
     AdvancedInAppReview()
         .setMinDaysBeforeRemind(7)
         .setMinDaysAfterInstall(2)
@@ -80,6 +81,20 @@ class _AppState extends State<App> {
         .setMinSecondsBeforeShowDialog(4)
         .monitor();
     super.initState();
+  }
+
+  @override
+  void dispose() {
+    SupabaseRepository.instance.dispose();
+    super.dispose();
+  }
+
+  Future<void> _initializeRepositories() async {
+    try {
+      await SupabaseRepository.instance.initialize();
+    } catch (e) {
+      log('Failed to initialize repositories: $e', name: 'App');
+    }
   }
 
   // Initialize repositories

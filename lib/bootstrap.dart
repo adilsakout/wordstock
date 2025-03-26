@@ -4,7 +4,7 @@ import 'package:bloc/bloc.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:logger/logger.dart';
-import 'package:supabase_flutter/supabase_flutter.dart';
+import 'package:wordstock/repositories/supabase_repository.dart';
 
 // Create a logger instance
 final logger = Logger(
@@ -60,24 +60,15 @@ Future<void> bootstrap(FutureOr<Widget> Function() builder) async {
   await dotenv.load();
   logger.i('Loaded environment variables');
 
-  // Initialize Supabase
+  // Initialize Supabase and sign in anonymously
   try {
-    await Supabase.initialize(
-      url: dotenv.env['SUPABASE_URL']!,
-      anonKey: dotenv.env['SUPABASE_ANON_KEY']!,
-    );
-    logger.i('Supabase initialized successfully');
-
-    // Check for existing session or log in anonymously
-    final currentUser = Supabase.instance.client.auth.currentUser;
-    if (currentUser == null) {
-      await Supabase.instance.client.auth.signInAnonymously();
-      logger.i('Signed in anonymously');
-    } else {
-      logger.i('Using existing session for user: ${currentUser.id}');
-    }
+    await SupabaseRepository.instance.initialize();
   } catch (e, stackTrace) {
-    logger.e('Failed to initialize Supabase', error: e, stackTrace: stackTrace);
+    logger.e(
+      'Failed to initialize Supabase or sign in',
+      error: e,
+      stackTrace: stackTrace,
+    );
   }
 
   runApp(await builder());

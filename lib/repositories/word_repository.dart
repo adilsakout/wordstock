@@ -2,13 +2,16 @@ import 'dart:developer';
 
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:wordstock/model/models.dart';
+import 'package:wordstock/repositories/supabase_repository.dart';
 
 class WordRepository {
-  WordRepository()
-      : _supabase = Supabase.instance.client,
-        _userId = Supabase.instance.client.auth.currentUser!.id;
+  WordRepository() : _supabase = SupabaseRepository.client;
   final SupabaseClient _supabase;
-  final String _userId;
+
+  String _getUserId() {
+    return _supabase.auth.currentUser?.id ?? '';
+  }
+
   // ================== Core Word Operations ================== //
 
   /// Get words filtered by level and topics
@@ -41,7 +44,7 @@ class WordRepository {
       final response = await _supabase.rpc<dynamic>(
         'get_words_in_order',
         params: {
-          'user_id_param': _userId,
+          'user_id_param': _getUserId(),
           'total_questions': 10,
         },
       );
@@ -64,7 +67,7 @@ class WordRepository {
       final response = await _supabase
           .from('user_progress')
           .select('word_id, words!inner(*)')
-          .eq('user_id', _userId)
+          .eq('user_id', _getUserId())
           .order('next_review_date')
           .limit(10);
 
@@ -87,7 +90,7 @@ class WordRepository {
       final isFavorited = await _supabase
           .from('user_favorites')
           .select()
-          .eq('user_id', _userId)
+          .eq('user_id', _getUserId())
           .eq('word_id', wordId)
           .maybeSingle();
 
@@ -95,11 +98,11 @@ class WordRepository {
         await _supabase
             .from('user_favorites')
             .delete()
-            .eq('user_id', _userId)
+            .eq('user_id', _getUserId())
             .eq('word_id', wordId);
       } else {
         await _supabase.from('user_favorites').insert({
-          'user_id': _userId,
+          'user_id': _getUserId(),
           'word_id': wordId,
         });
       }
@@ -114,7 +117,7 @@ class WordRepository {
       final response = await _supabase
           .from('user_favorites')
           .select('words(*)') // Fetch related words
-          .eq('user_id', _userId);
+          .eq('user_id', _getUserId());
 
       return response
           .map((json) => Word.fromJson(json['words'] as Map<String, dynamic>))
@@ -130,7 +133,7 @@ class WordRepository {
       final response = await _supabase
           .from('user_favorites')
           .select()
-          .eq('user_id', _userId)
+          .eq('user_id', _getUserId())
           .eq('word_id', wordId)
           .maybeSingle();
 
@@ -145,16 +148,19 @@ class WordRepository {
     try {
       if (wordIds.isEmpty) return;
 
+      // Filter out empty or invalid word IDs
+      final validWordIds =
+          wordIds.where((id) => id.isNotEmpty).toSet().toList();
+      if (validWordIds.isEmpty) return;
+
       final now = DateTime.now();
       final nextReviewDate = now.add(const Duration(days: 1));
 
-      final uniqueWordIds = wordIds.toSet().toList();
-
       await _supabase.from('user_progress').upsert(
-            uniqueWordIds
+            validWordIds
                 .map(
                   (wordId) => {
-                    'user_id': _userId,
+                    'user_id': _getUserId(),
                     'word_id': wordId,
                     'mastered': true,
                     'next_review_date': nextReviewDate.toIso8601String(),
@@ -176,7 +182,7 @@ class WordRepository {
       final response = await _supabase
           .from('user_progress')
           .select('word_id, words!inner(*)')
-          .eq('user_id', _userId)
+          .eq('user_id', _getUserId())
           .order('updated_at', ascending: false)
           .limit(limit);
 

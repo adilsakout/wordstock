@@ -128,7 +128,7 @@ class _VocabularyQuizState extends State<VocabularyQuiz>
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     PushableButton(
-                      width: 120,
+                      width: 100,
                       height: 50,
                       textColor: Colors.grey.shade600,
                       buttonColor: Colors.grey.shade200,
