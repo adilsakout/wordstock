@@ -1,21 +1,21 @@
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 import 'package:googleapis/texttospeech/v1.dart';
 import 'package:googleapis_auth/auth_io.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:wordstock/repositories/audio_player_repository.dart';
 
 class TTSRepository {
   TTSRepository() {
-    _audioPlayer = AudioPlayer();
+    _audioPlayer = AudioPlayerRepository();
   }
 
   TexttospeechApi? _ttsClient;
   bool _isInitialized = false;
-  late final AudioPlayer _audioPlayer;
+  late final AudioPlayerRepository _audioPlayer;
   File? _tempFile;
 
   Future<void> initialize() async {
@@ -74,8 +74,8 @@ class TTSRepository {
       );
       await _tempFile!.writeAsBytes(audioBytes);
 
-      // Play from temp file
-      await _audioPlayer.play(DeviceFileSource(_tempFile!.path));
+      // Play from temp file using AudioPlayerRepository
+      await _audioPlayer.playFromFile(_tempFile!.path);
     } catch (e) {
       if (kDebugMode) {
         print('TTS Error: $e');

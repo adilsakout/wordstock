@@ -1,6 +1,6 @@
-import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
 import 'package:gaimon/gaimon.dart';
+import 'package:wordstock/repositories/audio_player_repository.dart';
 
 class PushableButton extends StatefulWidget {
   const PushableButton({
@@ -39,7 +39,7 @@ class PushableButton extends StatefulWidget {
 class PushableButtonState extends State<PushableButton>
     with SingleTickerProviderStateMixin {
   late final AnimationController _animationController;
-  final AudioPlayer _audioPlayer = AudioPlayer();
+  final _audioPlayer = AudioPlayerRepository();
 
   @override
   void initState() {
@@ -75,7 +75,12 @@ class PushableButtonState extends State<PushableButton>
   }
 
   Future<void> _playSound() async {
-    await _audioPlayer.play(AssetSource('sounds/click.mp3'));
+    try {
+      await _audioPlayer.playFromAsset('sounds/click.mp3', volume: 0.5);
+    } catch (e) {
+      // Silently handle errors to prevent UI disruption
+      debugPrint('Error playing button sound: $e');
+    }
   }
 
   @override
