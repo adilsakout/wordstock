@@ -4,6 +4,7 @@ import 'package:bloc/bloc.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:logger/logger.dart';
+import 'package:sentry_flutter/sentry_flutter.dart';
 import 'package:wordstock/repositories/supabase_repository.dart';
 
 // Create a logger instance
@@ -71,6 +72,22 @@ Future<void> bootstrap(FutureOr<Widget> Function() builder) async {
     );
   }
 
-  runApp(await builder());
+  await SentryFlutter.init(
+    (options) {
+      options
+        ..dsn = dotenv.env['SENTRY_DSN']
+        ..experimental.replay.sessionSampleRate = 1.0
+        ..experimental.replay.onErrorSampleRate = 1.0
+        ..sendDefaultPii = true;
+    },
+    appRunner: () async {
+      return runApp(
+        SentryWidget(
+          child: await builder(),
+        ),
+      );
+    },
+  );
+
   logger.i('App started successfully');
 }

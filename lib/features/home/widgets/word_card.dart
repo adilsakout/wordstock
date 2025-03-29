@@ -1,11 +1,15 @@
 import 'dart:async';
+import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gaimon/gaimon.dart';
+import 'package:path_provider/path_provider.dart';
+import 'package:screenshot/screenshot.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:wordstock/features/home/cubit/home_cubit.dart';
+import 'package:wordstock/features/home/widgets/shareable_word_card.dart';
 import 'package:wordstock/model/word.dart';
 import 'package:wordstock/widgets/button.dart';
 
@@ -28,6 +32,8 @@ class _WordCardState extends State<WordCard>
   late final Animation<double> _scaleAnimation;
   late final Animation<double> _opacityAnimation;
   late final Animation<double> _moveAnimation;
+
+  final ScreenshotController _screenshotController = ScreenshotController();
 
   @override
   void initState() {
@@ -75,16 +81,17 @@ class _WordCardState extends State<WordCard>
   }
 
   Future<void> shareWord() async {
-    final text = '''
-📚 Word of the Day:
-${widget.word.word}
-
-📖 Definition:
-${widget.word.definition}
-
-#Wordstock #Vocabulary
-''';
-    await Share.share(text);
+    Gaimon.soft();
+    await _screenshotController
+        .captureFromWidget(
+      ShareableWordCard(word: widget.word),
+    )
+        .then((capturedImage) async {
+      final tempDir = await getTemporaryDirectory();
+      final file = File('${tempDir.path}/wordstock_${widget.word.word}.png');
+      await file.writeAsBytes(capturedImage);
+      await Share.shareXFiles([XFile(file.path)]);
+    });
   }
 
   void _handleFavoriteClick() {

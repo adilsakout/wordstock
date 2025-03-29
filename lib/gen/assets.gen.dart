@@ -44,21 +44,25 @@ class $AssetsIconsGen {
 
   /// List of all assets
   List<dynamic> get values => [
-        aiIcon,
-        aiWordIcon,
-        check,
-        coin,
-        crown,
-        flame,
-        hand,
-        handshake,
-        logo,
-        quizIcon,
-      ];
+    aiIcon,
+    aiWordIcon,
+    check,
+    coin,
+    crown,
+    flame,
+    hand,
+    handshake,
+    logo,
+    quizIcon,
+  ];
 }
 
 class $AssetsImagesGen {
   const $AssetsImagesGen();
+
+  /// File path: assets/images/branding.png
+  AssetGenImage get branding =>
+      const AssetGenImage('assets/images/branding.png');
 
   /// File path: assets/images/onb-1.png
   AssetGenImage get onb1Png => const AssetGenImage('assets/images/onb-1.png');
@@ -86,15 +90,16 @@ class $AssetsImagesGen {
 
   /// List of all assets
   List<AssetGenImage> get values => [
-        onb1Png,
-        onb1Png_,
-        onb2Png,
-        onb2Png_,
-        onb3Png,
-        onb3Png_,
-        onb4,
-        onb5,
-      ];
+    branding,
+    onb1Png,
+    onb1Png_,
+    onb2Png,
+    onb2Png_,
+    onb3Png,
+    onb3Png_,
+    onb4,
+    onb5,
+  ];
 }
 
 class $AssetsSecretsGen {
