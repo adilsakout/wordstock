@@ -12,7 +12,6 @@ class AudioPlayerRepository {
   late final AudioPlayer _audioPlayer;
   final _logger = Logger();
   StreamSubscription<PlayerState>? _playerStateSubscription;
-  StreamSubscription<Duration>? _durationSubscription;
   StreamSubscription<Duration>? _positionSubscription;
 
   void _setupListeners() {
@@ -22,15 +21,6 @@ class AudioPlayerRepository {
       },
       onError: (Object error) {
         _logger.e('Player state error: $error');
-      },
-    );
-
-    _durationSubscription = _audioPlayer.onDurationChanged.listen(
-      (duration) {
-        _logger.d('Duration changed: $duration');
-      },
-      onError: (Object error) {
-        _logger.e('Duration error: $error');
       },
     );
 
@@ -177,7 +167,6 @@ class AudioPlayerRepository {
   Future<void> dispose() async {
     try {
       await _playerStateSubscription?.cancel();
-      await _durationSubscription?.cancel();
       await _positionSubscription?.cancel();
       await _audioPlayer.dispose();
     } catch (e) {
