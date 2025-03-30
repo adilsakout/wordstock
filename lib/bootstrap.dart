@@ -5,6 +5,8 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:logger/logger.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
+import 'package:superwallkit_flutter/superwallkit_flutter.dart';
+import 'package:wordstock/core/rc_purches_controller/rc_purchase_controller.dart';
 import 'package:wordstock/repositories/supabase_repository.dart';
 
 // Create a logger instance
@@ -60,6 +62,17 @@ Future<void> bootstrap(FutureOr<Widget> Function() builder) async {
 
   await dotenv.load();
   logger.i('Loaded environment variables');
+
+  // Configure Superwall
+  final purchaseController = RCPurchaseController();
+
+  // Configure Superwall
+  Superwall.configure(
+    dotenv.env['SUPERWALL_API_KEY']!,
+    purchaseController: purchaseController,
+  );
+
+  await purchaseController.configureAndSyncSubscriptionStatus();
 
   // Initialize Supabase and sign in anonymously
   try {

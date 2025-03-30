@@ -26,7 +26,13 @@ PODS:
     - FlutterMacOS
   - permission_handler_apple (9.3.0):
     - Flutter
+  - purchases_flutter (8.7.0):
+    - Flutter
+    - PurchasesHybridCommon (= 13.26.0)
+  - PurchasesHybridCommon (13.26.0):
+    - RevenueCat (= 5.20.0)
   - ReachabilitySwift (5.2.4)
+  - RevenueCat (5.20.0)
   - Sentry/HybridSDK (8.46.0)
   - sentry_flutter (8.14.1):
     - Flutter
@@ -37,6 +43,12 @@ PODS:
   - shared_preferences_foundation (0.0.1):
     - Flutter
     - FlutterMacOS
+  - Superscript (0.1.18)
+  - SuperwallKit (4.0.3):
+    - Superscript (= 0.1.18)
+  - superwallkit_flutter (0.0.1):
+    - Flutter
+    - SuperwallKit (= 4.0.3)
   - url_launcher_ios (0.0.1):
     - Flutter
 
@@ -54,15 +66,21 @@ DEPENDENCIES:
   - package_info_plus (from `.symlinks/plugins/package_info_plus/ios`)
   - path_provider_foundation (from `.symlinks/plugins/path_provider_foundation/darwin`)
   - permission_handler_apple (from `.symlinks/plugins/permission_handler_apple/ios`)
+  - purchases_flutter (from `.symlinks/plugins/purchases_flutter/ios`)
   - sentry_flutter (from `.symlinks/plugins/sentry_flutter/ios`)
   - share_plus (from `.symlinks/plugins/share_plus/ios`)
   - shared_preferences_foundation (from `.symlinks/plugins/shared_preferences_foundation/darwin`)
+  - superwallkit_flutter (from `.symlinks/plugins/superwallkit_flutter/ios`)
   - url_launcher_ios (from `.symlinks/plugins/url_launcher_ios/ios`)
 
 SPEC REPOS:
   trunk:
+    - PurchasesHybridCommon
     - ReachabilitySwift
+    - RevenueCat
     - Sentry
+    - Superscript
+    - SuperwallKit
 
 EXTERNAL SOURCES:
   advanced_in_app_review:
@@ -91,12 +109,16 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/path_provider_foundation/darwin"
   permission_handler_apple:
     :path: ".symlinks/plugins/permission_handler_apple/ios"
+  purchases_flutter:
+    :path: ".symlinks/plugins/purchases_flutter/ios"
   sentry_flutter:
     :path: ".symlinks/plugins/sentry_flutter/ios"
   share_plus:
     :path: ".symlinks/plugins/share_plus/ios"
   shared_preferences_foundation:
     :path: ".symlinks/plugins/shared_preferences_foundation/darwin"
+  superwallkit_flutter:
+    :path: ".symlinks/plugins/superwallkit_flutter/ios"
   url_launcher_ios:
     :path: ".symlinks/plugins/url_launcher_ios/ios"
 
@@ -114,11 +136,17 @@ SPEC CHECKSUMS:
   package_info_plus: c0502532a26c7662a62a356cebe2692ec5fe4ec4
   path_provider_foundation: 2b6b4c569c0fb62ec74538f866245ac84301af46
   permission_handler_apple: 9878588469a2b0d0fc1e048d9f43605f92e6cec2
+  purchases_flutter: e4dde9cbe9baa61c0d2d6ba859bedfb8d4df8f88
+  PurchasesHybridCommon: fa166fc8b385cf80f581f923c91d8ccffe5dd7f8
   ReachabilitySwift: 32793e867593cfc1177f5d16491e3a197d2fccda
+  RevenueCat: e47ff90dfd271fde155a4befe48e8fc02e8281e4
   Sentry: da60d980b197a46db0b35ea12cb8f39af48d8854
   sentry_flutter: 6a134f9d381e49f22ea25a67736cf0cf4d02ec9c
   share_plus: 8b6f8b3447e494cca5317c8c3073de39b3600d1f
   shared_preferences_foundation: fcdcbc04712aee1108ac7fda236f363274528f78
+  Superscript: 88a0e5e467fc986289f99e20e383232513c41ea9
+  SuperwallKit: 26895fd3e65b94391ff3b32f4a93a01fcb49f18c
+  superwallkit_flutter: 70ba571cf9867170995b19a604ca8ddb6b3ce030
   url_launcher_ios: 5334b05cef931de560670eeae103fd3e431ac3fe
 
 PODFILE CHECKSUM: abd443950e39581896bf0041a9c0725c8b2dbfb8
