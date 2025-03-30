@@ -48,25 +48,46 @@ class PointsProgressBottomSheet extends StatelessWidget {
                   borderRadius: BorderRadius.circular(10),
                 ),
               ),
-              const SizedBox(height: 40),
-
-              // Points display
-              SvgPicture.asset(
-                Assets.icons.coin,
-                width: 60,
-                height: 60,
-                colorFilter: const ColorFilter.mode(
-                  Color(0xffFFC20E),
-                  BlendMode.srcIn,
-                ),
-              ).animate().scale(
-                    begin: const Offset(0.8, 0.8),
-                    end: const Offset(1, 1),
-                    curve: Curves.elasticOut,
-                    duration: 500.ms,
-                  ),
-
               const SizedBox(height: 24),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 24),
+                child: Row(
+                  children: [
+                    SvgPicture.asset(
+                      Assets.icons.coin,
+                      width: 32,
+                      height: 32,
+                      colorFilter: const ColorFilter.mode(
+                        Color(0xffFFC20E),
+                        BlendMode.srcIn,
+                      ),
+                    ),
+                    const SizedBox(width: 12),
+                    Text(
+                      l10n.pointsProgressTitle,
+                      style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                            fontWeight: FontWeight.bold,
+                            color: const Color(0xffFFC20E),
+                          ),
+                    ),
+                  ],
+                ).animate().fadeIn(duration: 400.ms).slideX(
+                      begin: -0.2,
+                      end: 0,
+                      curve: Curves.easeOutQuad,
+                    ),
+              ),
+              const SizedBox(height: 16),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 20),
+                child: Text(
+                  l10n.totalPoints,
+                  style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                        fontWeight: FontWeight.w600,
+                      ),
+                ).animate(delay: 200.ms).fadeIn(duration: 400.ms),
+              ),
+              const SizedBox(height: 8),
               Text(
                 '$totalPoints',
                 style: Theme.of(context).textTheme.headlineLarge?.copyWith(
@@ -74,24 +95,7 @@ class PointsProgressBottomSheet extends StatelessWidget {
                       color: const Color(0xffFFC20E),
                     ),
               ).animate(delay: 300.ms).fadeIn().slideY(begin: 0.3, end: 0),
-
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 20),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      l10n.totalPoints,
-                      style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                            color: Colors.black54,
-                          ),
-                    ),
-                    _buildPointsText(context, totalPoints),
-                  ],
-                ).animate(delay: 400.ms).fadeIn(),
-              ),
-
-              const SizedBox(height: 40),
+              const SizedBox(height: 30),
 
               // Achievement levels
               Container(
@@ -134,9 +138,13 @@ class PointsProgressBottomSheet extends StatelessWidget {
                       currentPoints: totalPoints,
                       color: Colors.purple,
                     ),
+
+                    // Add progress towards next level
+                    const SizedBox(height: 16),
+                    _buildNextLevelProgress(context, totalPoints),
                   ],
                 ),
-              ).animate(delay: 500.ms).fadeIn(),
+              ).animate(delay: 500.ms).fadeIn(duration: 400.ms),
 
               const SizedBox(height: 24),
               Padding(
@@ -151,7 +159,7 @@ class PointsProgressBottomSheet extends StatelessWidget {
                 ),
               ).animate(delay: 600.ms).fadeIn(duration: 400.ms),
 
-              const SizedBox(height: 40),
+              const SizedBox(height: 30),
               PushableButton(
                 text: l10n.closeButton,
                 width: 200,
@@ -161,9 +169,67 @@ class PointsProgressBottomSheet extends StatelessWidget {
                 onTap: () {
                   Navigator.pop(context);
                 },
-              ).animate(delay: 700.ms).fadeIn().slideY(begin: 0.3, end: 0),
+              ).animate(delay: 800.ms).fadeIn(duration: 400.ms).slideY(
+                    begin: 0.3,
+                    end: 0,
+                  ),
               const SafeArea(child: SizedBox(height: 20)),
             ],
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildNextLevelProgress(BuildContext context, int currentPoints) {
+    final l10n = context.l10n;
+
+    // Determine next level threshold and color
+    int nextLevelPoints;
+    Color nextLevelColor;
+
+    if (currentPoints < 100) {
+      nextLevelPoints = 100;
+      nextLevelColor = Colors.green;
+    } else if (currentPoints < 500) {
+      nextLevelPoints = 500;
+      nextLevelColor = Colors.blue;
+    } else {
+      nextLevelPoints = 1000;
+      nextLevelColor = Colors.purple;
+    }
+
+    // Calculate progress percentage
+    final previousLevelPoints = currentPoints < 100
+        ? 0
+        : currentPoints < 500
+            ? 100
+            : 500;
+
+    final progressPercentage = nextLevelPoints <= currentPoints
+        ? 100
+        : ((currentPoints - previousLevelPoints) /
+                (nextLevelPoints - previousLevelPoints) *
+                100)
+            .toInt();
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          l10n.percentToGoal(progressPercentage),
+          style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                fontWeight: FontWeight.w500,
+              ),
+        ),
+        const SizedBox(height: 8),
+        ClipRRect(
+          borderRadius: BorderRadius.circular(4),
+          child: LinearProgressIndicator(
+            value: progressPercentage / 100,
+            minHeight: 8,
+            backgroundColor: Colors.grey.shade300,
+            valueColor: AlwaysStoppedAnimation<Color>(nextLevelColor),
           ),
         ),
       ],
@@ -214,16 +280,6 @@ class PointsProgressBottomSheet extends StatelessWidget {
               ),
         ),
       ],
-    );
-  }
-
-  Text _buildPointsText(BuildContext context, int points) {
-    return Text(
-      context.l10n.pointsFormat(points),
-      style: Theme.of(context).textTheme.bodySmall?.copyWith(
-            fontWeight: FontWeight.w600,
-            color: Colors.grey,
-          ),
     );
   }
 }
