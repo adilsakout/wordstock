@@ -67,9 +67,9 @@ class _VocabularyQuizState extends State<VocabularyQuiz>
     context.read<PracticeCubit>().nextQuestion();
   }
 
-  void _showExitConfirmationDialog(BuildContext context) {
+  Future<bool?> _showExitConfirmationDialog(BuildContext context) async {
     final l10n = context.l10n;
-    showDialog<void>(
+    return showDialog<bool?>(
       context: context,
       builder: (BuildContext dialogContext) {
         return Dialog(
@@ -135,8 +135,7 @@ class _VocabularyQuizState extends State<VocabularyQuiz>
                       shadowColor: Colors.grey.shade400,
                       text: l10n.exit,
                       onTap: () {
-                        Navigator.of(dialogContext).pop();
-                        context.go(HomePage.name);
+                        Navigator.of(dialogContext).pop(true);
                       },
                     ),
                     const SizedBox(width: 16),
@@ -233,7 +232,13 @@ class _VocabularyQuizState extends State<VocabularyQuiz>
                       shadowColor: const Color(0xff963E00),
                       text: '',
                       prefixIcon: Icons.close_rounded,
-                      onTap: () => _showExitConfirmationDialog(context),
+                      onTap: () async {
+                        final result =
+                            await _showExitConfirmationDialog(context);
+                        if (result == true) {
+                          context.replace(HomePage.name);
+                        }
+                      },
                     ),
                     const SizedBox(width: 16),
                     Expanded(

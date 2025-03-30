@@ -21,8 +21,8 @@ class RCPurchaseController extends PurchaseController {
     // Configure RevenueCat
     await Purchases.setLogLevel(LogLevel.debug);
     final configuration = Platform.isIOS
-        ? PurchasesConfiguration('ios_rc_key')
-        : PurchasesConfiguration('android_rc_key');
+        ? PurchasesConfiguration(await getRevenueCatAPIKey())
+        : PurchasesConfiguration(await getRevenueCatAPIKey());
     await Purchases.configure(configuration);
 
     // Listen for changes
