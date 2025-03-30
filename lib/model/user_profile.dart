@@ -11,6 +11,7 @@ sealed class UserProfile with _$UserProfile {
     @JsonKey(name: 'daily_streak') required int dailyStreak,
     @JsonKey(name: 'last_active_date') required DateTime lastActiveDate,
     @JsonKey(name: 'longest_streak') required int longestStreak,
+    @JsonKey(name: 'streak_goal') int? streakGoal,
     @JsonKey(name: 'total_points') int? totalPoints,
   }) = _UserProfile;
 

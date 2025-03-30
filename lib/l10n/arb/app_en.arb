@@ -469,5 +469,57 @@
     "goalReachingLanguageGoals": "🎯 Reaching language goals",
     "@goalReachingLanguageGoals": {
         "description": "Goal option for reaching language goals"
+    },
+    "weeklyProgress": "Weekly Progress",
+    "@weeklyProgress": {
+        "description": "Title for weekly progress section"
+    },
+    "currentStreakSingular": "Current Streak: {count} day",
+    "@currentStreakSingular": {
+        "description": "Text showing current streak for one day",
+        "placeholders": {
+            "count": {
+                "type": "int"
+            }
+        }
+    },
+    "currentStreakPlural": "Current Streak: {count} days",
+    "@currentStreakPlural": {
+        "description": "Text showing current streak for multiple days",
+        "placeholders": {
+            "count": {
+                "type": "int"
+            }
+        }
+    },
+    "current": "Current",
+    "@current": {
+        "description": "Label for current streak in stats"
+    },
+    "goal": "Goal",
+    "@goal": {
+        "description": "Label for streak goal in stats"
+    },
+    "daysText": "{count} days",
+    "@daysText": {
+        "description": "Text showing number of days",
+        "placeholders": {
+            "count": {
+                "type": "int"
+            }
+        }
+    },
+    "percentToGoal": "{percent}% to your goal",
+    "@percentToGoal": {
+        "description": "Text showing percentage progress to goal",
+        "placeholders": {
+            "percent": {
+                "type": "int"
+            }
+        }
+    },
+    "streakMotivationMessage": "Keep up your streak for better learning results!",
+    "@streakMotivationMessage": {
+        "description": "Motivational message for maintaining streak"
     }
 }

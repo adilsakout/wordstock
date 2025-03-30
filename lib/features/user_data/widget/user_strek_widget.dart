@@ -5,7 +5,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:wordstock/features/user_data/cubit/user_data_cubit.dart';
 import 'package:wordstock/features/user_data/widget/new_streak_bottom_sheet.dart';
+import 'package:wordstock/features/user_data/widget/streak_progress_bottom_sheet.dart';
 import 'package:wordstock/gen/assets.gen.dart';
+import 'package:wordstock/model/user_profile.dart';
 
 class UserStreakWidget extends StatefulWidget {
   const UserStreakWidget({super.key});
@@ -21,6 +23,30 @@ class _UserStreakWidgetState extends State<UserStreakWidget>
     duration: const Duration(milliseconds: 300),
     reverseDuration: const Duration(milliseconds: 300),
   );
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  // Function to show streak progress bottom sheet
+  Future<void> _showStreakProgressBottomSheet(
+    BuildContext context,
+    UserProfile profile,
+  ) async {
+    await showModalBottomSheet<void>(
+      context: context,
+      isScrollControlled: true,
+      constraints: BoxConstraints(
+        maxHeight: MediaQuery.of(context).size.height * 0.7,
+      ),
+      backgroundColor: Colors.transparent,
+      builder: (BuildContext context) {
+        return StreakProgressBottomSheet(userProfile: profile);
+      },
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -54,69 +80,72 @@ class _UserStreakWidgetState extends State<UserStreakWidget>
       },
       builder: (context, state) {
         if (state.isLoaded && state.profile != null) {
-          final streakValue = state.profile!.dailyStreak;
+          final profile = state.profile!;
 
-          return SizedBox(
-            width: 60,
-            height: 60,
-            child: Stack(
-              alignment: Alignment.center,
-              children: [
-                Container(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-                  height: 50,
-                  width: 50,
-                  decoration: BoxDecoration(
-                    color: Theme.of(context).colorScheme.surface,
-                    border: Border.all(
-                      color: const Color(0xffF97316),
-                      width: 2,
-                    ),
-                    shape: BoxShape.circle,
-                  ),
-                  child: SvgPicture.asset(Assets.icons.flame)
-                      .animate(
-                        controller: _controller,
-                      )
-                      .scale(duration: 500.ms, curve: Curves.easeInOut)
-                      .then(delay: 100.ms)
-                      .shake(
-                        hz: 2,
-                      ),
-                ).animate().fadeIn(duration: 500.ms, curve: Curves.easeInOut),
-                Positioned(
-                  right: 0,
-                  top: 0,
-                  child: ConstrainedBox(
-                    constraints: const BoxConstraints(
-                      minWidth: 25,
-                      minHeight: 20,
-                      maxHeight: 25,
-                    ),
-                    child: Container(
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 5,
-                      ),
-                      decoration: BoxDecoration(
+          return GestureDetector(
+            onTap: () => _showStreakProgressBottomSheet(context, profile),
+            child: SizedBox(
+              width: 60,
+              height: 60,
+              child: Stack(
+                alignment: Alignment.center,
+                children: [
+                  Container(
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                    height: 50,
+                    width: 50,
+                    decoration: BoxDecoration(
+                      color: Theme.of(context).colorScheme.surface,
+                      border: Border.all(
                         color: const Color(0xffF97316),
-                        borderRadius: BorderRadius.circular(50),
+                        width: 2,
                       ),
-                      child: AnimatedFlipCounter(
-                        value: streakValue,
-                        duration: const Duration(milliseconds: 800),
-                        curve: Curves.easeOutBack,
-                        textStyle:
-                            Theme.of(context).textTheme.bodyMedium?.copyWith(
-                                  fontSize: 10,
-                                  fontWeight: FontWeight.w600,
-                                  color: const Color(0xffFFFFFF),
-                                ),
+                      shape: BoxShape.circle,
+                    ),
+                    child: SvgPicture.asset(Assets.icons.flame)
+                        .animate(
+                          controller: _controller,
+                        )
+                        .scale(duration: 500.ms, curve: Curves.easeInOut)
+                        .then(delay: 100.ms)
+                        .shake(
+                          hz: 2,
+                        ),
+                  ).animate().fadeIn(duration: 500.ms, curve: Curves.easeInOut),
+                  Positioned(
+                    right: 0,
+                    top: 0,
+                    child: ConstrainedBox(
+                      constraints: const BoxConstraints(
+                        minWidth: 25,
+                        minHeight: 20,
+                        maxHeight: 25,
+                      ),
+                      child: Container(
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 5,
+                        ),
+                        decoration: BoxDecoration(
+                          color: const Color(0xffF97316),
+                          borderRadius: BorderRadius.circular(50),
+                        ),
+                        child: AnimatedFlipCounter(
+                          value: profile.dailyStreak,
+                          duration: const Duration(milliseconds: 800),
+                          curve: Curves.easeOutBack,
+                          textStyle:
+                              Theme.of(context).textTheme.bodyMedium?.copyWith(
+                                    fontSize: 10,
+                                    fontWeight: FontWeight.w600,
+                                    color: const Color(0xffFFFFFF),
+                                  ),
+                        ),
                       ),
                     ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           );
         }
