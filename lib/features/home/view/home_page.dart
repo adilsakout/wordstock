@@ -1,6 +1,4 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:sentry_flutter/sentry_flutter.dart';
 import 'package:wordstock/features/home/widgets/home_body.dart';
 
 /// {@template home_page}
@@ -19,16 +17,8 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: const HomeView(),
-      floatingActionButton: kDebugMode
-          ? FloatingActionButton(
-              onPressed: () {
-                Sentry.captureException(Exception('Test exception'));
-              },
-              child: const Icon(Icons.error),
-            )
-          : null,
+    return const Scaffold(
+      body: HomeView(),
     );
   }
 }
