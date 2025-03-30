@@ -235,7 +235,7 @@ class _VocabularyQuizState extends State<VocabularyQuiz>
                       onTap: () async {
                         final result =
                             await _showExitConfirmationDialog(context);
-                        if (result == true) {
+                        if ((result ?? false) && context.mounted) {
                           context.replace(HomePage.name);
                         }
                       },

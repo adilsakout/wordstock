@@ -21,7 +21,6 @@ class HomeCubit extends Cubit<HomeState> {
   final WordRepository wordRepository;
   final UserRepository userRepository;
   final TTSRepository ttsRepository;
-  int wordsReadCount = 0;
 
   Future<void> _initializeTTS() async {
     try {
@@ -73,15 +72,13 @@ class HomeCubit extends Cubit<HomeState> {
     }
   }
 
-  void resetCounter() {
-    wordsReadCount = 0;
-  }
-
   final List<String> _learnedWordIds = [];
   Timer? _updateTimer;
 
   void markWordAsLearned(String wordId) {
-    _learnedWordIds.add(wordId);
+    if (!_learnedWordIds.contains(wordId)) {
+      _learnedWordIds.add(wordId);
+    }
     _updateTimer?.cancel();
     _updateTimer = Timer(const Duration(seconds: 5), _submitProgress);
   }

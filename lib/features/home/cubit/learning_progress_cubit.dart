@@ -13,6 +13,9 @@ class LearningProgressCubit extends Cubit<LearningProgressState> {
   static const _lastPracticeReminderKey = 'last_practice_reminder_count';
   static const _cumulativeWordsKey = 'cumulative_words_count';
 
+  // Set to track which word IDs have been learned
+  final Set<String> _learnedWordIds = {};
+
   Future<void> _loadProgress() async {
     final prefs = await SharedPreferences.getInstance();
     final wordsLearned = prefs.getInt(_wordsLearnedKey) ?? 0;
@@ -33,7 +36,18 @@ class LearningProgressCubit extends Cubit<LearningProgressState> {
     );
   }
 
-  Future<void> incrementWordsLearned() async {
+  Future<void> incrementWordsLearned({String? wordId}) async {
+    // If a wordId is provided and it's already been marked as learned,
+    // don't increment
+    if (wordId != null && _learnedWordIds.contains(wordId)) {
+      return;
+    }
+
+    // Add the word ID to the set of learned words if provided
+    if (wordId != null) {
+      _learnedWordIds.add(wordId);
+    }
+
     final prefs = await SharedPreferences.getInstance();
     final newCount = state.wordsLearned + 1;
     final newCumulativeCount = state.cumulativeWords + 1;
@@ -110,6 +124,7 @@ class LearningProgressCubit extends Cubit<LearningProgressState> {
     await prefs.setInt(_wordsLearnedKey, 0);
     await prefs.setInt(_lastPracticeReminderKey, 0);
     await prefs.setInt(_cumulativeWordsKey, 0);
+    _learnedWordIds.clear();
 
     emit(const LearningProgressState());
   }
