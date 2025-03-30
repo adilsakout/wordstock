@@ -4,7 +4,9 @@ import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:wordstock/features/user_data/cubit/user_data_cubit.dart';
+import 'package:wordstock/features/user_data/widget/points_progress_bottom_sheet.dart';
 import 'package:wordstock/gen/assets.gen.dart';
+import 'package:wordstock/model/user_profile.dart';
 
 class UserPointWidget extends StatefulWidget {
   const UserPointWidget({super.key});
@@ -21,6 +23,22 @@ class _UserPointWidgetState extends State<UserPointWidget>
     reverseDuration: const Duration(milliseconds: 300),
   );
 
+  Future<void> _showPointsProgressBottomSheet(
+    BuildContext context,
+    UserProfile profile,
+  ) async {
+    await showModalBottomSheet<void>(
+      context: context,
+      isScrollControlled: true,
+      backgroundColor: Colors.transparent,
+      builder: (BuildContext context) {
+        return PointsProgressBottomSheet(
+          userProfile: profile,
+        );
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<StreakCubit, StreakState>(
@@ -33,75 +51,79 @@ class _UserPointWidgetState extends State<UserPointWidget>
       },
       builder: (context, state) {
         if (state.isLoaded && state.profile != null) {
-          return SizedBox(
-            width: 60,
-            height: 60,
-            child: Stack(
-              alignment: Alignment.centerLeft,
-              children: [
-                Container(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 10,
-                    vertical: 5,
-                  ),
-                  height: 50,
-                  width: 50,
-                  decoration: BoxDecoration(
-                    color: Theme.of(context).colorScheme.surface,
-                    border: Border.all(
-                      color: const Color(0xffFFC20E),
-                      width: 2,
+          return GestureDetector(
+            onTap: () =>
+                _showPointsProgressBottomSheet(context, state.profile!),
+            child: SizedBox(
+              width: 60,
+              height: 60,
+              child: Stack(
+                alignment: Alignment.centerLeft,
+                children: [
+                  Container(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 10,
+                      vertical: 5,
                     ),
-                    shape: BoxShape.circle,
-                  ),
-                  child: Stack(
-                    children: [
-                      SvgPicture.asset(
-                        Assets.icons.coin,
-                      )
-                          .animate(
-                            controller: _controller,
-                          )
-                          .scale(duration: 300.ms, curve: Curves.easeOut)
-                          .then(delay: 100.ms)
-                          .shake(
-                            hz: 2,
-                          ),
-                    ],
-                  ),
-                ).animate().fadeIn(duration: 300.ms, curve: Curves.easeOut),
-                Positioned(
-                  right: 0,
-                  top: 0,
-                  child: ConstrainedBox(
-                    constraints: const BoxConstraints(
-                      minWidth: 25,
-                      maxHeight: 25,
-                      minHeight: 25,
-                    ),
-                    child: Container(
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 5,
-                      ),
-                      decoration: BoxDecoration(
+                    height: 50,
+                    width: 50,
+                    decoration: BoxDecoration(
+                      color: Theme.of(context).colorScheme.surface,
+                      border: Border.all(
                         color: const Color(0xffFFC20E),
-                        borderRadius: BorderRadius.circular(50),
+                        width: 2,
                       ),
-                      child: AnimatedFlipCounter(
-                        value: state.profile!.totalPoints ?? 0,
-                        duration: const Duration(milliseconds: 800),
-                        curve: Curves.easeOutBack,
-                        textStyle:
-                            Theme.of(context).textTheme.bodyMedium?.copyWith(
-                                  fontSize: 10,
-                                  fontWeight: FontWeight.w600,
-                                  color: const Color(0xffFFFFFF),
-                                ),
+                      shape: BoxShape.circle,
+                    ),
+                    child: Stack(
+                      children: [
+                        SvgPicture.asset(
+                          Assets.icons.coin,
+                        )
+                            .animate(
+                              controller: _controller,
+                            )
+                            .scale(duration: 300.ms, curve: Curves.easeOut)
+                            .then(delay: 100.ms)
+                            .shake(
+                              hz: 2,
+                            ),
+                      ],
+                    ),
+                  ).animate().fadeIn(duration: 300.ms, curve: Curves.easeOut),
+                  Positioned(
+                    right: 0,
+                    top: 0,
+                    child: ConstrainedBox(
+                      constraints: const BoxConstraints(
+                        minWidth: 25,
+                        maxHeight: 25,
+                        minHeight: 25,
+                      ),
+                      child: Container(
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 5,
+                        ),
+                        decoration: BoxDecoration(
+                          color: const Color(0xffFFC20E),
+                          borderRadius: BorderRadius.circular(50),
+                        ),
+                        child: AnimatedFlipCounter(
+                          value: state.profile!.totalPoints ?? 0,
+                          duration: const Duration(milliseconds: 800),
+                          curve: Curves.easeOutBack,
+                          textStyle:
+                              Theme.of(context).textTheme.bodyMedium?.copyWith(
+                                    fontSize: 10,
+                                    fontWeight: FontWeight.w600,
+                                    color: const Color(0xffFFFFFF),
+                                  ),
+                        ),
                       ),
                     ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           ).animate().fadeIn(duration: 300.ms, curve: Curves.easeOut);
         }

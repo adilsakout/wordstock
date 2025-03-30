@@ -521,5 +521,44 @@
     "streakMotivationMessage": "Keep up your streak for better learning results!",
     "@streakMotivationMessage": {
         "description": "Motivational message for maintaining streak"
-    }
+    },
+    "pointsProgressTitle": "Points Progress",
+    "@pointsProgressTitle": {
+        "description": "Title for the points progress bottom sheet"
+    },
+    "totalPoints": "Total Points",
+    "@totalPoints": {
+        "description": "Label for total points display"
+    },
+    "pointsLearningJourney": "Your Learning Journey",
+    "@pointsLearningJourney": {
+        "description": "Title for achievement levels section in points progress"
+    },
+    "achievementWordExplorer": "Word Explorer",
+    "@achievementWordExplorer": {
+        "description": "Name for beginner achievement level"
+    },
+    "achievementVocabularyBuilder": "Vocabulary Builder",
+    "@achievementVocabularyBuilder": {
+        "description": "Name for intermediate achievement level"
+    },
+    "achievementLanguageMaster": "Language Master",
+    "@achievementLanguageMaster": {
+        "description": "Name for advanced achievement level"
+    },
+    "pointsFormat": "{count} pts",
+    "@pointsFormat": {
+        "description": "Format for displaying points with the pts suffix",
+        "placeholders": {
+            "count": {
+                "type": "int",
+                "example": "100"
+            }
+        }
+    },
+    "pointsMotivationMessage": "Keep earning points to unlock new achievements!",
+    "@pointsMotivationMessage": {
+        "description": "Motivational message shown in the points progress bottom sheet"
+    },
+    "closeButton": "Close"
 }
