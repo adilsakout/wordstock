@@ -25,10 +25,27 @@ class StreakProgressBottomSheet extends StatelessWidget {
     final allWeekDays = ['Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa', 'Su'];
     final today =
         DateTime.now().weekday - 1; // 0-based (0 = Monday, 6 = Sunday)
-    final weekDays = [
-      ...allWeekDays.sublist(today),
-      ...allWeekDays.sublist(0, today),
-    ];
+
+    // Get the days in a new order: previous 5 days, today, and tomorrow
+    final weekDays = <String>[];
+
+    // Add 5 previous days (oldest first)
+    for (var i = 5; i >= 1; i--) {
+      final previousDayIndex = (today - i) % 7;
+      final adjustedIndex =
+          previousDayIndex < 0 ? previousDayIndex + 7 : previousDayIndex;
+      weekDays.add(allWeekDays[adjustedIndex]);
+    }
+
+    // Add today
+    weekDays.add(allWeekDays[today]);
+
+    // Add tomorrow
+    final tomorrowIndex = (today + 1) % 7;
+    weekDays.add(allWeekDays[tomorrowIndex]);
+
+    // No need to replace day names anymore, use actual day abbreviations
+    final dayLabels = weekDays;
 
     return Wrap(
       children: [
@@ -108,8 +125,15 @@ class StreakProgressBottomSheet extends StatelessWidget {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: List.generate(7, (index) {
-                    final isToday = index == 0;
-                    final hasStreak = index < currentStreak;
+                    final isToday = index == 5; // Today is now at index 5
+                    final isTomorrow = index == 6;
+                    // For streaks, a streak day must be today or before today
+                    // (not tomorrow)
+                    // and must be within the streak count
+                    // If streak is 3, it means today + 2 previous days
+                    final isInStreakRange =
+                        !isTomorrow && (5 - index < currentStreak);
+                    final hasStreak = isToday || (index < 5 && isInStreakRange);
 
                     return Column(
                       children: [
@@ -124,7 +148,7 @@ class StreakProgressBottomSheet extends StatelessWidget {
                                     : const Color(0xffFFA360))
                                 : Colors.grey.shade200,
                             border: Border.all(
-                              color: isToday
+                              color: isToday || isTomorrow
                                   ? const Color(0xffF97316)
                                   : Colors.transparent,
                               width: 2,
@@ -155,12 +179,15 @@ class StreakProgressBottomSheet extends StatelessWidget {
                             ),
                         const SizedBox(height: 8),
                         Text(
-                          weekDays[index],
+                          dayLabels[index],
                           style: TextStyle(
-                            fontWeight:
-                                isToday ? FontWeight.w900 : FontWeight.bold,
+                            fontWeight: isToday || isTomorrow
+                                ? FontWeight.w900
+                                : FontWeight.bold,
                             fontSize: 14,
-                            color: isToday ? const Color(0xffF97316) : null,
+                            color: isToday || isTomorrow
+                                ? const Color(0xffF97316)
+                                : null,
                           ),
                         ),
                       ],
