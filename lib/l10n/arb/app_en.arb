@@ -560,5 +560,38 @@
     "@pointsMotivationMessage": {
         "description": "Motivational message shown in the points progress bottom sheet"
     },
-    "closeButton": "Close"
+    "closeButton": "Close",
+    "@closeButton": {
+        "description": "Text for close button"
+    },
+    "chatWithAITitle": "Chat about \"{word}\"",
+    "@chatWithAITitle": {
+        "description": "Title for the chat with AI bottom sheet",
+        "placeholders": {
+            "word": {
+                "type": "String",
+                "example": "Eloquent"
+            }
+        }
+    },
+    "chatWithAIPlaceholder": "Ask a question about \"{word}\"...",
+    "@chatWithAIPlaceholder": {
+        "description": "Placeholder text for the chat input field",
+        "placeholders": {
+            "word": {
+                "type": "String",
+                "example": "Eloquent"
+            }
+        }
+    },
+    "chatWithAIError": "Error: {message}",
+    "@chatWithAIError": {
+        "description": "Error message in the chat with AI",
+        "placeholders": {
+            "message": {
+                "type": "String",
+                "example": "Failed to connect"
+            }
+        }
+    }
 }
