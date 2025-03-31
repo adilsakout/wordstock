@@ -12,6 +12,7 @@ class LearningProgressCubit extends Cubit<LearningProgressState> {
   static const _wordsLearnedKey = 'words_learned_count';
   static const _lastPracticeReminderKey = 'last_practice_reminder_count';
   static const _cumulativeWordsKey = 'cumulative_words_count';
+  static const _swipeUpReminderShownKey = 'swipe_up_reminder_shown';
 
   // Set to track which word IDs have been learned
   final Set<String> _learnedWordIds = {};
@@ -21,6 +22,8 @@ class LearningProgressCubit extends Cubit<LearningProgressState> {
     final wordsLearned = prefs.getInt(_wordsLearnedKey) ?? 0;
     final lastPracticeReminder = prefs.getInt(_lastPracticeReminderKey) ?? 0;
     final cumulativeWords = prefs.getInt(_cumulativeWordsKey) ?? 0;
+    final swipeUpReminderShown =
+        prefs.getBool(_swipeUpReminderShownKey) ?? false;
 
     final wordsSinceLastReminder = wordsLearned - lastPracticeReminder;
     final shouldShowReminder = wordsSinceLastReminder >= 5 && wordsLearned > 0;
@@ -32,6 +35,7 @@ class LearningProgressCubit extends Cubit<LearningProgressState> {
         shouldShowPracticeReminder: shouldShowReminder,
         wordsSinceLastReminder: wordsSinceLastReminder,
         cumulativeWords: cumulativeWords,
+        shouldShowSwipeUpReminder: wordsLearned == 0 && !swipeUpReminderShown,
       ),
     );
   }
@@ -54,6 +58,12 @@ class LearningProgressCubit extends Cubit<LearningProgressState> {
 
     await prefs.setInt(_wordsLearnedKey, newCount);
     await prefs.setInt(_cumulativeWordsKey, newCumulativeCount);
+
+    // If this is the first word learned, mark the swipe up reminder as shown
+    if (state.wordsLearned == 0) {
+      await prefs.setBool(_swipeUpReminderShownKey, true);
+    }
+
     final wordsSinceLastReminder = newCount - state.lastPracticeReminder;
     final shouldShowReminder = wordsSinceLastReminder >= 5;
 
@@ -118,12 +128,23 @@ class LearningProgressCubit extends Cubit<LearningProgressState> {
     }
   }
 
+  // Method to hide the swipe up reminder and persist the setting
+  Future<void> hideSwipeUpReminder() async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setBool(_swipeUpReminderShownKey, true);
+
+    if (state.shouldShowSwipeUpReminder) {
+      emit(state.copyWith(shouldShowSwipeUpReminder: false));
+    }
+  }
+
   // Method to reset all counters (for testing or user request)
   Future<void> resetAllCounters() async {
     final prefs = await SharedPreferences.getInstance();
     await prefs.setInt(_wordsLearnedKey, 0);
     await prefs.setInt(_lastPracticeReminderKey, 0);
     await prefs.setInt(_cumulativeWordsKey, 0);
+    await prefs.setBool(_swipeUpReminderShownKey, false);
     _learnedWordIds.clear();
 
     emit(const LearningProgressState());

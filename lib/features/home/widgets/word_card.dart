@@ -241,8 +241,9 @@ class _WordCardState extends State<WordCard>
                     text: '',
                     iconSize: 25,
                     shouldPlaySound: false,
-                    buttonColor: const Color(0xff1CB0F6),
-                    shadowColor: const Color(0xff1899D6),
+                    buttonColor: Theme.of(context).primaryColor,
+                    shadowColor:
+                        Theme.of(context).primaryColor.withValues(alpha: 0.7),
                     suffixIcon: Icons.auto_awesome_rounded,
                     onTap: _showChatWithAI,
                   ),

@@ -120,6 +120,11 @@ class _HomeBodyState extends State<HomeBody>
                         scrollDirection: Axis.vertical,
                         onPageChanged: (index) {
                           _onWordLearned(homeState.words[index].id);
+                          if (shouldShowSwipeUpReminder) {
+                            context
+                                .read<LearningProgressCubit>()
+                                .hideSwipeUpReminder();
+                          }
                         },
                         itemBuilder: (context, index) {
                           if (shouldShowPracticeReminder) {
