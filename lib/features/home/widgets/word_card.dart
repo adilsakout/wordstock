@@ -114,6 +114,7 @@ class _WordCardState extends State<WordCard>
       context: context,
       isScrollControlled: true,
       backgroundColor: Colors.transparent,
+      useSafeArea: true,
       builder: (BuildContext context) {
         return BlocProvider(
           create: (context) => ChatAICubit(),

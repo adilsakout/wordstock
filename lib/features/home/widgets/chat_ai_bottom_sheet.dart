@@ -52,7 +52,19 @@ class _ChatAIBottomSheetState extends State<ChatAIBottomSheet> {
     if (message.isNotEmpty) {
       context.read<ChatAICubit>().sendMessage(message);
       _messageController.clear();
-      _scrollToBottom();
+      // Save current scroll position before keyboard dismissal
+      final currentPosition = _scrollController.hasClients
+          ? _scrollController.position.pixels
+          : 0.0;
+
+      // Wait for keyboard to close then restore position before scrolling to
+      // bottom
+      Future.delayed(const Duration(milliseconds: 200), () {
+        if (_scrollController.hasClients) {
+          _scrollController.jumpTo(currentPosition);
+          _scrollToBottom();
+        }
+      });
     }
   }
 
@@ -88,34 +100,39 @@ class _ChatAIBottomSheetState extends State<ChatAIBottomSheet> {
                 maxHeight: MediaQuery.of(context).size.height * 0.8,
                 minHeight: MediaQuery.of(context).size.height * 0.5,
               ),
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  _buildHeader(context),
-                  const Divider(),
-                  if (state is ChatAILoading)
-                    Expanded(
-                      child: Center(
-                        child: CircularProgressIndicator(
-                          color: Theme.of(context).primaryColor,
+              child: Padding(
+                padding: EdgeInsets.only(
+                  bottom: MediaQuery.of(context).viewInsets.bottom,
+                ),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    _buildHeader(context),
+                    const Divider(),
+                    if (state is ChatAILoading)
+                      Expanded(
+                        child: Center(
+                          child: CircularProgressIndicator(
+                            color: Theme.of(context).primaryColor,
+                          ),
+                        ),
+                      )
+                    else if (state is ChatAILoaded)
+                      Expanded(
+                        child: _buildChatList(context, state),
+                      )
+                    else if (state is ChatAIError)
+                      Expanded(
+                        child: Center(
+                          child: Text(
+                            l10n.chatWithAIError(state.errorMessage),
+                            style: const TextStyle(color: Colors.red),
+                          ),
                         ),
                       ),
-                    )
-                  else if (state is ChatAILoaded)
-                    Expanded(
-                      child: _buildChatList(context, state),
-                    )
-                  else if (state is ChatAIError)
-                    Expanded(
-                      child: Center(
-                        child: Text(
-                          l10n.chatWithAIError(state.errorMessage),
-                          style: const TextStyle(color: Colors.red),
-                        ),
-                      ),
-                    ),
-                  if (state is ChatAILoaded) _buildInputField(context, state),
-                ],
+                    if (state is ChatAILoaded) _buildInputField(context, state),
+                  ],
+                ),
               ),
             ),
           ],
@@ -257,7 +274,7 @@ class _ChatAIBottomSheetState extends State<ChatAIBottomSheet> {
                   vertical: 10,
                 ),
               ),
-              textInputAction: TextInputAction.send,
+              textInputAction: TextInputAction.newline,
               onSubmitted: (_) => _sendMessage(),
               enabled: !state.isLoading,
             ),
