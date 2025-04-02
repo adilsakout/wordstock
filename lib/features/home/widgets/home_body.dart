@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
@@ -5,6 +7,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:gaimon/gaimon.dart';
 import 'package:go_router/go_router.dart';
 import 'package:in_app_review/in_app_review.dart';
+import 'package:purchases_ui_flutter/purchases_ui_flutter.dart';
 import 'package:wordstock/features/favorite_words/favorite_words.dart';
 import 'package:wordstock/features/home/cubit/cubit.dart';
 import 'package:wordstock/features/home/cubit/learning_progress_cubit.dart';
@@ -45,9 +48,14 @@ class _HomeBodyState extends State<HomeBody>
     )..repeat(reverse: true);
     WidgetsBinding.instance.addPostFrameCallback((_) {
       context.read<HomeCubit>().fetchWords();
-
+      presentPaywall();
       _requestReview();
     });
+  }
+
+  Future<void> presentPaywall() async {
+    final paywallResult = await RevenueCatUI.presentPaywall();
+    log('Paywall result: $paywallResult');
   }
 
   @override
