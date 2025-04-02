@@ -11,6 +11,7 @@ import 'package:purchases_ui_flutter/purchases_ui_flutter.dart';
 import 'package:wordstock/features/favorite_words/favorite_words.dart';
 import 'package:wordstock/features/home/cubit/cubit.dart';
 import 'package:wordstock/features/home/cubit/learning_progress_cubit.dart';
+import 'package:wordstock/features/home/widgets/paywall_button.dart';
 import 'package:wordstock/features/home/widgets/practice_reminder_page.dart';
 import 'package:wordstock/features/home/widgets/word_card.dart';
 import 'package:wordstock/features/practice/practice.dart';
@@ -161,6 +162,8 @@ class _HomeBodyState extends State<HomeBody>
                             children: [
                               UserStreakWidget(),
                               UserPointWidget(),
+                              Spacer(),
+                              PaywallButton(),
                             ],
                           ),
                         ),
