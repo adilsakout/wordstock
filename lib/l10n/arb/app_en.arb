@@ -593,5 +593,13 @@
                 "example": "Failed to connect"
             }
         }
+    },
+    "practiceButtonText": "Practice",
+    "@practiceButtonText": {
+        "description": "Text shown on the practice button for subscribed users"
+    },
+    "goProButtonText": "Go Pro",
+    "@goProButtonText": {
+        "description": "Text shown on the practice button for non-subscribed users"
     }
 }

@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
@@ -7,14 +5,14 @@ import 'package:flutter_svg/svg.dart';
 import 'package:gaimon/gaimon.dart';
 import 'package:go_router/go_router.dart';
 import 'package:in_app_review/in_app_review.dart';
-import 'package:purchases_ui_flutter/purchases_ui_flutter.dart';
 import 'package:wordstock/features/favorite_words/favorite_words.dart';
 import 'package:wordstock/features/home/cubit/cubit.dart';
 import 'package:wordstock/features/home/cubit/learning_progress_cubit.dart';
 import 'package:wordstock/features/home/widgets/paywall_button.dart';
+import 'package:wordstock/features/home/widgets/practice_button.dart';
 import 'package:wordstock/features/home/widgets/practice_reminder_page.dart';
 import 'package:wordstock/features/home/widgets/word_card.dart';
-import 'package:wordstock/features/practice/practice.dart';
+import 'package:wordstock/features/subscription/cubit/subscription_cubit.dart';
 import 'package:wordstock/features/user_data/cubit/user_data_cubit.dart';
 import 'package:wordstock/features/user_data/widget/user_point_widget.dart';
 import 'package:wordstock/features/user_data/widget/user_strek_widget.dart';
@@ -49,14 +47,11 @@ class _HomeBodyState extends State<HomeBody>
     )..repeat(reverse: true);
     WidgetsBinding.instance.addPostFrameCallback((_) {
       context.read<HomeCubit>().fetchWords();
-      presentPaywall();
+      context.read<SubscriptionCubit>()
+        ..checkSubscription()
+        ..showPaywall();
       _requestReview();
     });
-  }
-
-  Future<void> presentPaywall() async {
-    final paywallResult = await RevenueCatUI.presentPaywall();
-    log('Paywall result: $paywallResult');
   }
 
   @override
@@ -196,23 +191,7 @@ class _HomeBodyState extends State<HomeBody>
                                   },
                                 ),
                                 const Spacer(),
-                                PushableButton(
-                                  width: 140,
-                                  height: 50,
-                                  text: 'Practice',
-                                  spacing: 10,
-                                  iconSize: 25,
-                                  prefixIcon: Icons.gamepad_rounded,
-                                  onTap: () async {
-                                    await context
-                                        .read<LearningProgressCubit>()
-                                        .startPractice();
-
-                                    if (context.mounted) {
-                                      context.go(PracticePage.name);
-                                    }
-                                  },
-                                ),
+                                const PracticeButton(),
                               ],
                             ),
                           ),

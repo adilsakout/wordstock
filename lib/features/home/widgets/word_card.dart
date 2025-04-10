@@ -8,9 +8,8 @@ import 'package:gaimon/gaimon.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:screenshot/screenshot.dart';
 import 'package:share_plus/share_plus.dart';
-import 'package:wordstock/features/home/cubit/chat_ai_cubit.dart';
 import 'package:wordstock/features/home/cubit/home_cubit.dart';
-import 'package:wordstock/features/home/widgets/chat_ai_bottom_sheet.dart';
+import 'package:wordstock/features/home/widgets/chat_ai_button.dart';
 import 'package:wordstock/features/home/widgets/shareable_word_card.dart';
 import 'package:wordstock/model/word.dart';
 import 'package:wordstock/widgets/button.dart';
@@ -106,22 +105,6 @@ class _WordCardState extends State<WordCard>
         _heartController.reset();
       });
     }
-  }
-
-  Future<void> _showChatWithAI() async {
-    Gaimon.soft();
-    await showModalBottomSheet<void>(
-      context: context,
-      isScrollControlled: true,
-      backgroundColor: Colors.transparent,
-      useSafeArea: true,
-      builder: (BuildContext context) {
-        return BlocProvider(
-          create: (context) => ChatAICubit(),
-          child: ChatAIBottomSheet(word: widget.word),
-        );
-      },
-    );
   }
 
   @override
@@ -235,18 +218,7 @@ class _WordCardState extends State<WordCard>
                     onTap: () =>
                         context.read<HomeCubit>().speakWord(widget.word.word),
                   ),
-                  PushableButton(
-                    width: 50,
-                    height: 50,
-                    text: '',
-                    iconSize: 25,
-                    shouldPlaySound: false,
-                    buttonColor: Theme.of(context).primaryColor,
-                    shadowColor:
-                        Theme.of(context).primaryColor.withValues(alpha: 0.7),
-                    suffixIcon: Icons.auto_awesome_rounded,
-                    onTap: _showChatWithAI,
-                  ),
+                  ChatAIButton(word: widget.word),
                 ],
               ),
             ),

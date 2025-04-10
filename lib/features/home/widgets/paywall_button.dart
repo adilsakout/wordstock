@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:wordstock/repositories/rc_repository.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:wordstock/features/subscription/cubit/subscription_cubit.dart';
 import 'package:wordstock/widgets/button.dart';
 
 class PaywallButton extends StatefulWidget {
@@ -10,42 +11,34 @@ class PaywallButton extends StatefulWidget {
 }
 
 class _PaywallButtonState extends State<PaywallButton> {
-  late Future<bool> getIsSubscribed;
-
   @override
   void initState() {
     super.initState();
-    getIsSubscribed = RcRepository().isUserSubscribed();
-  }
-
-  Future<void> _refreshSubscriptionStatus() async {
-    setState(() {
-      getIsSubscribed = RcRepository().isUserSubscribed();
-    });
+    // Check subscription status when widget initializes
+    context.read<SubscriptionCubit>().checkSubscription();
   }
 
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder(
-      future: getIsSubscribed,
-      builder: (context, snapshot) {
-        if (snapshot.hasData) {
-          final isSubscribed = snapshot.data ?? false;
-          return !isSubscribed
-              ? PushableButton(
-                  width: 50,
-                  height: 50,
-                  text: '',
-                  suffixIcon: Icons.star_rounded,
-                  iconSize: 25,
-                  onTap: () async {
-                    await RcRepository().presentPaywall();
-                    await _refreshSubscriptionStatus();
-                  },
-                )
-              : const SizedBox.shrink();
-        }
-        return const SizedBox.shrink();
+    return BlocBuilder<SubscriptionCubit, SubscriptionState>(
+      builder: (context, state) {
+        return state.maybeWhen(
+          loaded: (isSubscribed) {
+            return !isSubscribed
+                ? PushableButton(
+                    width: 50,
+                    height: 50,
+                    text: '',
+                    suffixIcon: Icons.star_rounded,
+                    iconSize: 25,
+                    onTap: () {
+                      context.read<SubscriptionCubit>().showPaywall();
+                    },
+                  )
+                : const SizedBox.shrink();
+          },
+          orElse: () => const SizedBox.shrink(),
+        );
       },
     );
   }
