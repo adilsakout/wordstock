@@ -41,18 +41,10 @@ class PracticeButton extends StatelessWidget {
         return PushableButton(
           width: 140,
           height: 50,
-          text: subscriptionState.maybeWhen(
-            loaded: (isSubscribed) =>
-                isSubscribed ? l10n.practiceButtonText : l10n.goProButtonText,
-            orElse: () => l10n.practiceButtonText,
-          ),
+          text: l10n.practiceButtonText,
           spacing: 10,
           iconSize: 25,
-          prefixIcon: subscriptionState.maybeWhen(
-            loaded: (isSubscribed) =>
-                isSubscribed ? Icons.gamepad_rounded : Icons.star_rounded,
-            orElse: () => Icons.gamepad_rounded,
-          ),
+          prefixIcon: Icons.gamepad_rounded,
           onTap: () => _handlePracticeClick(context),
         );
       },
