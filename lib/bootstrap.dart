@@ -1,7 +1,6 @@
 import 'dart:async';
 
 import 'package:bloc/bloc.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:logger/logger.dart';
@@ -79,7 +78,7 @@ Future<void> bootstrap(FutureOr<Widget> Function() builder) async {
   await SentryFlutter.init(
     (options) {
       options
-        ..dsn = kDebugMode ? dotenv.env['SENTRY_DSN'] : null
+        ..dsn = dotenv.env['SENTRY_DSN']
         ..experimental.replay.sessionSampleRate = 1.0
         ..experimental.replay.onErrorSampleRate = 1.0
         ..sendDefaultPii = true;

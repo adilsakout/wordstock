@@ -54,5 +54,13 @@
 	<false/>
 	<key>ITSAppUsesNonExemptEncryption</key>
 	<false/>
+	<key>NSMicrophoneUsageDescription</key>
+<string>We need microphone access for speech recognition</string>
+<key>NSUserNotificationUsageDescription</key>
+<string>We'll send you notifications about new words and practice reminders</string>
+<key>UIBackgroundModes</key>
+<array>
+    <string>remote-notification</string>
+</array>
 </dict>
 </plist>
