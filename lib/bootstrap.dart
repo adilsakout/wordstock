@@ -7,6 +7,7 @@ import 'package:logger/logger.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
 import 'package:wordstock/repositories/rc_repository.dart';
 import 'package:wordstock/repositories/supabase_repository.dart';
+import 'package:wordstock/services/posthog_service.dart';
 
 // Create a logger instance
 final logger = Logger(
@@ -70,6 +71,17 @@ Future<void> bootstrap(FutureOr<Widget> Function() builder) async {
   } catch (e, stackTrace) {
     logger.e(
       'Failed to initialize Supabase or sign in',
+      error: e,
+      stackTrace: stackTrace,
+    );
+  }
+
+  // Initialize PostHog analytics
+  try {
+    await PosthogService.instance.initialize();
+  } catch (e, stackTrace) {
+    logger.e(
+      'Failed to initialize PostHog',
       error: e,
       stackTrace: stackTrace,
     );

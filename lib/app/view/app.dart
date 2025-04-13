@@ -2,6 +2,7 @@ import 'dart:developer';
 import 'package:advanced_in_app_review/advanced_in_app_review.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:posthog_flutter/posthog_flutter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:wordstock/features/favorite_words/favorite_words.dart';
 import 'package:wordstock/features/home/cubit/home_cubit.dart';
@@ -18,10 +19,10 @@ import 'package:wordstock/repositories/supabase_repository.dart';
 import 'package:wordstock/repositories/tts_repository.dart';
 import 'package:wordstock/repositories/user_repository.dart';
 import 'package:wordstock/repositories/word_repository.dart';
-
-GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
+import 'package:wordstock/services/posthog_service.dart';
 
 final _router = GoRouter(
+  observers: [PosthogObserver()],
   redirect: (context, state) async {
     log('redirect: ${state.uri}', name: 'GoRouter');
     if (state.uri.path == '/') {
@@ -35,6 +36,7 @@ final _router = GoRouter(
       }
       return '/home';
     }
+
     return null;
   },
   errorPageBuilder: (context, state) => MaterialPage(
@@ -46,20 +48,24 @@ final _router = GoRouter(
   routes: [
     GoRoute(
       path: '/',
+      name: 'Onboarding',
       builder: (context, state) => const OnboardingPage(),
     ),
     GoRoute(
       path: '/home',
+      name: 'Home',
       builder: (context, state) => const HomePage(),
       routes: [
         GoRoute(
           path: 'favorites',
+          name: 'Favorites',
           builder: (context, state) => const FavoriteWordsPage(),
         ),
       ],
     ),
     GoRoute(
       path: '/practice',
+      name: 'Practice',
       builder: (context, state) => const PracticePage(),
     ),
   ],
@@ -75,7 +81,7 @@ class App extends StatefulWidget {
 class _AppState extends State<App> {
   @override
   void initState() {
-    _initializeRepositories();
+    _initializeServices();
     AdvancedInAppReview()
         .setMinDaysBeforeRemind(7)
         .setMinDaysAfterInstall(2)
@@ -91,12 +97,15 @@ class _AppState extends State<App> {
     super.dispose();
   }
 
-  Future<void> _initializeRepositories() async {
+  Future<void> _initializeServices() async {
     try {
-      await SupabaseRepository.instance.initialize();
-      await RcRepository().initPlatformState();
+      await Future.wait([
+        SupabaseRepository.instance.initialize(),
+        RcRepository().initPlatformState(),
+        PosthogService.instance.initialize(),
+      ]);
     } catch (e) {
-      log('Failed to initialize repositories: $e', name: 'App');
+      log('Failed to initialize services: $e', name: 'App');
     }
   }
 

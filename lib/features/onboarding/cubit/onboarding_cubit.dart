@@ -3,8 +3,10 @@ import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
+import 'package:wordstock/model/onboarding_enums.dart';
 import 'package:wordstock/model/user_profile.dart';
 import 'package:wordstock/repositories/user_repository.dart';
+
 part 'onboarding_state.dart';
 
 class OnboardingCubit extends Cubit<OnboardingState> {

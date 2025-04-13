@@ -55,12 +55,20 @@
 	<key>ITSAppUsesNonExemptEncryption</key>
 	<false/>
 	<key>NSMicrophoneUsageDescription</key>
-<string>We need microphone access for speech recognition</string>
-<key>NSUserNotificationUsageDescription</key>
-<string>We'll send you notifications about new words and practice reminders</string>
-<key>UIBackgroundModes</key>
-<array>
-    <string>remote-notification</string>
-</array>
+	<string>We need microphone access for speech recognition</string>
+	<key>NSUserNotificationUsageDescription</key>
+	<string>We'll send you notifications about new words and practice reminders</string>
+	<key>UIBackgroundModes</key>
+	<array>
+		<string>remote-notification</string>
+	</array>
+
+	<!-- PostHog Configuration -->
+	<key>com.posthog.posthog.API_KEY</key>
+	<string>phc_MmFJCIabPYzQ1xI30eNN37ntnT87A0IpPyIW0AOrpnR</string>
+	<key>com.posthog.posthog.POSTHOG_HOST</key>
+	<string>https://us.i.posthog.com</string>
+	<key>com.posthog.posthog.CAPTURE_APPLICATION_LIFECYCLE_EVENTS</key>
+	<true/>
 </dict>
 </plist>

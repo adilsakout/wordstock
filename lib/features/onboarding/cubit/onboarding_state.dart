@@ -8,28 +8,55 @@ class OnboardingState extends Equatable {
   const OnboardingState({
     required this.currentPage,
     required this.progress,
-    this.selectedAgeRange = -1, // Default to -1 indicating no selection
-    this.selectedGender = -1, // Add this line
-    this.userName = '', // Add this line
-    this.selectedTimeCommitment = -1, // Add this line
-    this.wordsPerDay = 10, // Add this line
-    this.vocabularyLevel = -1, // Add this line
-    this.selectedGoals = '', // Change this line
-    this.selectedTopics = const [], // Change this line
-    this.streakGoal = -1, // Add this line
+    this.selectedAgeRange = -1,
+    this.selectedGender = -1,
+    this.userName = '',
+    this.selectedTimeCommitment = -1,
+    this.wordsPerDay = 10,
+    this.vocabularyLevel = -1,
+    this.selectedGoals = '',
+    this.selectedTopics = const [],
+    this.streakGoal = -1,
   });
 
   final int currentPage;
   final double progress;
   final int selectedAgeRange;
-  final int selectedGender; // Add this line
-  final String userName; // Add this line
-  final int selectedTimeCommitment; // Add this line
-  final int wordsPerDay; // Add this line
-  final int vocabularyLevel; // Add this line
-  final String selectedGoals; // Change this line
-  final List<int> selectedTopics; // Change this line
-  final int streakGoal; // Add this line
+  final int selectedGender;
+  final String userName;
+  final int selectedTimeCommitment;
+  final int wordsPerDay;
+  final int vocabularyLevel;
+  final String selectedGoals;
+  final List<int> selectedTopics;
+  final int streakGoal;
+
+  /// Returns the selected age range as an enum value
+  AgeRange? get ageRange =>
+      selectedAgeRange >= 0 && selectedAgeRange < AgeRange.values.length
+          ? AgeRange.values[selectedAgeRange]
+          : null;
+
+  /// Returns the selected gender as an enum value
+  Gender? get gender =>
+      selectedGender >= 0 && selectedGender < Gender.values.length
+          ? Gender.values[selectedGender]
+          : null;
+
+  /// Returns the selected time commitment as an enum value
+  TimeCommitment? get timeCommitment => selectedTimeCommitment >= 0 &&
+          selectedTimeCommitment < TimeCommitment.values.length
+      ? TimeCommitment.values[selectedTimeCommitment]
+      : null;
+
+  /// Returns a string representation of the age range for analytics
+  String get age => ageRange?.name ?? 'not_specified';
+
+  /// Returns a string representation of the gender for analytics
+  String get genderString => gender?.name ?? 'not_specified';
+
+  /// Returns a string representation of the time commitment for analytics
+  String get timeCommitmentString => timeCommitment?.name ?? 'not_specified';
 
   @override
   List<Object> get props => [
@@ -38,12 +65,12 @@ class OnboardingState extends Equatable {
         selectedAgeRange,
         selectedGender,
         userName,
-        selectedTimeCommitment, // Add this line
-        wordsPerDay, // Add this line
-        vocabularyLevel, // Add this line
-        selectedGoals, // Change this line
-        selectedTopics, // Change this line
-        streakGoal, // Add this line
+        selectedTimeCommitment,
+        wordsPerDay,
+        vocabularyLevel,
+        selectedGoals,
+        selectedTopics,
+        streakGoal,
       ];
 
   /// Creates a copy of the current OnboardingState with property changes
@@ -51,28 +78,28 @@ class OnboardingState extends Equatable {
     int? currentPage,
     double? progress,
     int? selectedAgeRange,
-    int? selectedGender, // Add this line
-    String? userName, // Add this line
-    int? selectedTimeCommitment, // Add this line
-    int? wordsPerDay, // Add this line
-    int? vocabularyLevel, // Add this line
-    String? selectedGoals, // Change this line
-    List<int>? selectedTopics, // Change this line
-    int? streakGoal, // Add this line
+    int? selectedGender,
+    String? userName,
+    int? selectedTimeCommitment,
+    int? wordsPerDay,
+    int? vocabularyLevel,
+    String? selectedGoals,
+    List<int>? selectedTopics,
+    int? streakGoal,
   }) {
     return OnboardingState(
       currentPage: currentPage ?? this.currentPage,
       progress: progress ?? this.progress,
       selectedAgeRange: selectedAgeRange ?? this.selectedAgeRange,
-      selectedGender: selectedGender ?? this.selectedGender, // Add this line
-      userName: userName ?? this.userName, // Add this line
-      selectedTimeCommitment: selectedTimeCommitment ??
-          this.selectedTimeCommitment, // Add this line
-      wordsPerDay: wordsPerDay ?? this.wordsPerDay, // Add this line
-      vocabularyLevel: vocabularyLevel ?? this.vocabularyLevel, // Add this line
-      selectedGoals: selectedGoals ?? this.selectedGoals, // Change this line
-      selectedTopics: selectedTopics ?? this.selectedTopics, // Change this line
-      streakGoal: streakGoal ?? this.streakGoal, // Add this line
+      selectedGender: selectedGender ?? this.selectedGender,
+      userName: userName ?? this.userName,
+      selectedTimeCommitment:
+          selectedTimeCommitment ?? this.selectedTimeCommitment,
+      wordsPerDay: wordsPerDay ?? this.wordsPerDay,
+      vocabularyLevel: vocabularyLevel ?? this.vocabularyLevel,
+      selectedGoals: selectedGoals ?? this.selectedGoals,
+      selectedTopics: selectedTopics ?? this.selectedTopics,
+      streakGoal: streakGoal ?? this.streakGoal,
     );
   }
 }

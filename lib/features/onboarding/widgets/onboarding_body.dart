@@ -15,17 +15,74 @@ import 'package:wordstock/features/onboarding/widgets/onboarding_pages/topic_sel
 import 'package:wordstock/features/onboarding/widgets/onboarding_pages/vocabulary_level_page.dart';
 import 'package:wordstock/gen/assets.gen.dart';
 import 'package:wordstock/l10n/l10n.dart';
+import 'package:wordstock/services/posthog_service.dart';
 import 'package:wordstock/widgets/button.dart';
 import 'package:wordstock/widgets/progress_bar.dart';
+
+/// List of onboarding page names for analytics
+const onboardingPages = [
+  'Welcome',
+  'Info',
+  'Age Selection',
+  'Gender Selection',
+  'Name Input',
+  'Personalization Intro',
+  'Time Commitment',
+  'Notification Permission',
+  'Vocabulary Level',
+  'Features Overview',
+  'Goal Selection',
+  'Topic Selection',
+  'Streak Goal',
+  'Commitment Pact',
+  'Customization Loading',
+];
 
 /// {@template onboarding_body}
 /// Body of the OnboardingPage.
 ///
 /// Add what it does
 /// {@endtemplate}
-class OnboardingBody extends StatelessWidget {
+class OnboardingBody extends StatefulWidget {
   /// {@macro onboarding_body}
   const OnboardingBody({super.key});
+
+  @override
+  State<OnboardingBody> createState() => _OnboardingBodyState();
+}
+
+class _OnboardingBodyState extends State<OnboardingBody> {
+  @override
+  void initState() {
+    super.initState();
+    // Track onboarding start
+    PosthogService.instance.track('Onboarding Started');
+  }
+
+  void _trackPageView(int pageIndex, OnboardingState state) {
+    final pageName = onboardingPages[pageIndex];
+    PosthogService.instance.track(
+      'Onboarding Page View: $pageName',
+      properties: {
+        'page_name': pageName,
+        'page_index': pageIndex,
+        'progress': state.progress,
+        'user_name': state.userName,
+        'age': state.age,
+        'gender': state.genderString,
+        'time_commitment': state.timeCommitmentString,
+        'vocabulary_level': state.vocabularyLevel,
+        'selected_topics': state.selectedTopics,
+        'streak_goal': state.streakGoal,
+      },
+    );
+  }
+
+  void _onOnboardingComplete() {
+    PosthogService.instance.track('Onboarding Completed');
+    context.read<OnboardingCubit>().disposePageController();
+    context.replace('/home');
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -33,6 +90,10 @@ class OnboardingBody extends StatelessWidget {
     return BlocBuilder<OnboardingCubit, OnboardingState>(
       builder: (context, state) {
         final cubit = context.read<OnboardingCubit>();
+
+        // Track page view when state changes
+        _trackPageView(state.currentPage, state);
+
         return SafeArea(
           child: Column(
             children: [
@@ -89,10 +150,7 @@ class OnboardingBody extends StatelessWidget {
                     const StreakGoalPage(),
                     const CommitmentPactPage(),
                     CustomizationLoadingPage(
-                      onComplete: () {
-                        context.read<OnboardingCubit>().disposePageController();
-                        context.replace('/home');
-                      },
+                      onComplete: _onOnboardingComplete,
                     ),
                   ],
                 ),
