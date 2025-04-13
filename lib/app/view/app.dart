@@ -24,14 +24,13 @@ import 'package:wordstock/services/posthog_service.dart';
 final _router = GoRouter(
   observers: [PosthogObserver()],
   redirect: (context, state) async {
-    log('redirect: ${state.uri}', name: 'GoRouter');
+    log('redirect: \\${state.uri}', name: 'GoRouter');
     if (state.uri.path == '/') {
       final prefs = await SharedPreferences.getInstance();
-      final hasSeenOnboarding = prefs.getBool('onboarding_completed') ?? false;
+      final hasCompletedOnboarding =
+          prefs.getBool('onboarding_completed') ?? false;
 
-      if (!hasSeenOnboarding) {
-        await prefs.setBool('onboarding_completed', true);
-        await prefs.setBool('should_show_swipe_up_reminder', true);
+      if (!hasCompletedOnboarding) {
         return '/';
       }
       return '/home';

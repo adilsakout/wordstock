@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:wordstock/model/onboarding_enums.dart';
 import 'package:wordstock/model/user_profile.dart';
 import 'package:wordstock/repositories/user_repository.dart';
@@ -14,21 +15,36 @@ class OnboardingCubit extends Cubit<OnboardingState> {
       : _userRepository = userRepository ?? UserRepository(),
         super(
           const OnboardingState(currentPage: 0, progress: 0),
-        );
+        ) {
+    _initializePageController();
+  }
   // Define totalPages here or pass it as a parameter
 
   static const int totalPages = 14;
   final PageController pageController = PageController();
   final UserRepository _userRepository;
 
+  Future<void> _initializePageController() async {
+    final prefs = await SharedPreferences.getInstance();
+    final savedPage = prefs.getInt('onboarding_current_page') ?? 0;
+    pageController.jumpToPage(savedPage);
+  }
+
   void disposePageController() {
     pageController.dispose();
   }
 
-  void updatePage() {
+  Future<void> updatePage() async {
     final currentPage = pageController.page?.round() ?? 0;
     final progress = currentPage / totalPages;
     emit(state.copyWith(currentPage: currentPage, progress: progress));
+
+    // Save the current page index to SharedPreferences
+    final prefs = await SharedPreferences.getInstance();
+    if (currentPage == totalPages) {
+      await prefs.setBool('onboarding_completed', true);
+    }
+    await prefs.setInt('onboarding_current_page', currentPage);
   }
 
   void nextPage() {
@@ -39,7 +55,7 @@ class OnboardingCubit extends Cubit<OnboardingState> {
           duration: const Duration(milliseconds: 500),
           curve: Curves.easeInOut,
         );
-        updatePage();
+        await updatePage();
       }
     });
   }
@@ -51,7 +67,7 @@ class OnboardingCubit extends Cubit<OnboardingState> {
         duration: const Duration(milliseconds: 500),
         curve: Curves.easeInOut,
       );
-      updatePage();
+      await updatePage();
     }
   }
 
@@ -189,10 +205,4 @@ class OnboardingCubit extends Cubit<OnboardingState> {
       debugPrint('Error saving onboarding data: $e');
     }
   }
-
-  // @override
-  // Future<void> close() {
-  //   pageController.dispose();
-  //   return super.close();
-  // }
 }
