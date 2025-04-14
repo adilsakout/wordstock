@@ -153,6 +153,7 @@ class _AppState extends State<App> {
       ],
       child: MaterialApp.router(
         routerConfig: _router,
+        debugShowCheckedModeBanner: false,
         theme: ThemeData(
           appBarTheme: AppBarTheme(
             backgroundColor: Theme.of(context).colorScheme.inversePrimary,

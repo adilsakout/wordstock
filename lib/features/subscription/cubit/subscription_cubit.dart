@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:purchases_flutter/purchases_flutter.dart';
@@ -47,7 +48,11 @@ class SubscriptionCubit extends Cubit<SubscriptionState> {
     try {
       emit(const SubscriptionState.loading());
       final isSubscribed = await _rcRepository.isUserSubscribed();
-      emit(SubscriptionState.loaded(isSubscribed: isSubscribed));
+      if (kDebugMode) {
+        emit(const SubscriptionState.loaded(isSubscribed: true));
+      } else {
+        emit(SubscriptionState.loaded(isSubscribed: isSubscribed));
+      }
     } catch (e) {
       emit(SubscriptionState.error(message: e.toString()));
     }
