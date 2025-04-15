@@ -65,7 +65,6 @@ class ChatAIButton extends StatelessWidget {
         height: 50,
         text: '',
         iconSize: 25,
-        shouldPlaySound: false,
         buttonColor: Theme.of(context).primaryColor,
         shadowColor: Theme.of(context).primaryColor.withValues(alpha: 0.7),
         suffixIcon: Icons.auto_awesome_rounded,

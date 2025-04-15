@@ -2,10 +2,11 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:purchases_flutter/purchases_flutter.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:wordstock/repositories/rc_repository.dart';
 
-part 'subscription_state.dart';
 part 'subscription_cubit.freezed.dart';
+part 'subscription_state.dart';
 
 /// Manages the subscription state of the application
 class SubscriptionCubit extends Cubit<SubscriptionState> {
@@ -51,6 +52,41 @@ class SubscriptionCubit extends Cubit<SubscriptionState> {
       if (kDebugMode) {
         emit(const SubscriptionState.loaded(isSubscribed: true));
       } else {
+        emit(SubscriptionState.loaded(isSubscribed: isSubscribed));
+      }
+    } catch (e) {
+      emit(SubscriptionState.error(message: e.toString()));
+    }
+  }
+
+  /// Checks if the user is subscribed and shows the paywall if they are not
+  Future<void> checkSubscriptionAndShowPaywallAfterOnboarding() async {
+    try {
+      emit(const SubscriptionState.loading());
+
+      // Get SharedPreferences instance
+      final prefs = await SharedPreferences.getInstance();
+      final hasSeenOnboarding = prefs.getBool('onboarding_completed') ?? false;
+
+      // Only check subscription and show paywall if onboarding is completed
+      if (hasSeenOnboarding) {
+        final isSubscribed = await _rcRepository.isUserSubscribed();
+
+        if (kDebugMode) {
+          emit(const SubscriptionState.loaded(isSubscribed: true));
+          return;
+        }
+
+        emit(SubscriptionState.loaded(isSubscribed: isSubscribed));
+
+        // Show paywall if user is not subscribed
+        if (!isSubscribed) {
+          await showPaywall();
+        }
+      } else {
+        // If onboarding is not completed, just emit loaded state with
+        // current subscription status
+        final isSubscribed = await _rcRepository.isUserSubscribed();
         emit(SubscriptionState.loaded(isSubscribed: isSubscribed));
       }
     } catch (e) {

@@ -121,7 +121,6 @@ ${widget.word.definition}
                     width: 40,
                     height: 40,
                     text: '',
-                    shouldPlaySound: false,
                     buttonColor: const Color(0xff1CB0F6),
                     shadowColor: const Color(0xff1899D6),
                     suffixIcon: Icons.volume_down_rounded,

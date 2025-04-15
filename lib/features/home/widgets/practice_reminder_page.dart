@@ -3,6 +3,7 @@ import 'package:flutter_animate/flutter_animate.dart';
 import 'package:go_router/go_router.dart';
 import 'package:wordstock/features/home/cubit/learning_progress_cubit.dart';
 import 'package:wordstock/features/practice/practice.dart';
+import 'package:wordstock/features/subscription/cubit/subscription_cubit.dart';
 import 'package:wordstock/l10n/l10n.dart';
 import 'package:wordstock/widgets/button.dart';
 
@@ -13,6 +14,30 @@ class PracticeReminderPage extends StatelessWidget {
   });
 
   final VoidCallback onContinue;
+
+  Future<void> _handlePracticeButtonTap(BuildContext context) async {
+    // Check subscription status
+    final subscriptionState = context.read<SubscriptionCubit>().state;
+    final isSubscribed = subscriptionState.maybeWhen(
+      loaded: (isSubscribed) => isSubscribed,
+      orElse: () => false,
+    );
+
+    if (!isSubscribed) {
+      // Show paywall if not subscribed
+      await context.read<SubscriptionCubit>().showPaywall();
+      return;
+    }
+
+    // Reset cumulative words counter when starting practice
+    final learningCubit = context.read<LearningProgressCubit>();
+    await learningCubit.startPractice();
+
+    // Navigate to practice page if context is still mounted
+    if (context.mounted) {
+      await context.push(PracticePage.name);
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -62,16 +87,7 @@ class PracticeReminderPage extends StatelessWidget {
             spacing: 10,
             iconSize: 25,
             prefixIcon: Icons.gamepad_rounded,
-            onTap: () async {
-              // Reset cumulative words counter when starting practice
-              final learningCubit = context.read<LearningProgressCubit>();
-              await learningCubit.startPractice();
-
-              // Navigate to practice page
-              if (context.mounted) {
-                await context.push(PracticePage.name);
-              }
-            },
+            onTap: () => _handlePracticeButtonTap(context),
           ).animate().fadeIn(
                 delay: const Duration(milliseconds: 300),
                 duration: const Duration(milliseconds: 500),

@@ -211,7 +211,6 @@ class _WordCardState extends State<WordCard>
                     height: 50,
                     text: '',
                     iconSize: 25,
-                    shouldPlaySound: false,
                     buttonColor: const Color(0xff1CB0F6),
                     shadowColor: const Color(0xff1899D6),
                     suffixIcon: Icons.volume_down_rounded,

@@ -47,9 +47,9 @@ class _HomeBodyState extends State<HomeBody>
     )..repeat(reverse: true);
     WidgetsBinding.instance.addPostFrameCallback((_) {
       context.read<HomeCubit>().fetchWords();
-      context.read<SubscriptionCubit>()
-        ..checkSubscription()
-        ..showPaywall();
+      context
+          .read<SubscriptionCubit>()
+          .checkSubscriptionAndShowPaywallAfterOnboarding();
       _requestReview();
     });
   }

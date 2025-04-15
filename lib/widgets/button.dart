@@ -17,12 +17,10 @@ class PushableButton extends StatefulWidget {
     this.suffixIcon,
     this.prefixIcon,
     this.spacing = 0.0,
-    this.shouldPlaySound = true,
   });
   final double width;
   final double height;
   final String text;
-  final bool shouldPlaySound;
   final VoidCallback onTap;
   final Color buttonColor;
   final Color shadowColor;
@@ -65,22 +63,10 @@ class PushableButtonState extends State<PushableButton>
     _animationController.reverse();
     widget.onTap();
     Gaimon.selection();
-    if (widget.shouldPlaySound) {
-      _playSound();
-    }
   }
 
   void _handleTapCancel() {
     _animationController.reverse();
-  }
-
-  Future<void> _playSound() async {
-    try {
-      await _audioPlayer.playFromAsset('sounds/click.mp3', volume: 0.5);
-    } catch (e) {
-      // Silently handle errors to prevent UI disruption
-      debugPrint('Error playing button sound: $e');
-    }
   }
 
   @override
