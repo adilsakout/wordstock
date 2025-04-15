@@ -17,6 +17,7 @@ import 'package:wordstock/features/user_data/cubit/user_data_cubit.dart';
 import 'package:wordstock/features/user_data/widget/user_point_widget.dart';
 import 'package:wordstock/features/user_data/widget/user_strek_widget.dart';
 import 'package:wordstock/gen/assets.gen.dart';
+import 'package:wordstock/l10n/l10n.dart';
 import 'package:wordstock/widgets/button.dart';
 
 /// {@template home_body}
@@ -50,6 +51,7 @@ class _HomeBodyState extends State<HomeBody>
       context
           .read<SubscriptionCubit>()
           .checkSubscriptionAndShowPaywallAfterOnboarding();
+
       _requestReview();
     });
   }
@@ -66,8 +68,81 @@ class _HomeBodyState extends State<HomeBody>
     context.read<StreakCubit>().updateStreak();
   }
 
+  Future<void> _showMotivationalDialog(BuildContext context) async {
+    final l10n = context.l10n;
+    return showDialog<void>(
+      context: context,
+      builder: (BuildContext context) {
+        return Dialog(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(20),
+          ),
+          child: Padding(
+            padding: const EdgeInsets.all(24),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                const Icon(
+                  Icons.favorite,
+                  color: Color(0xffE94E77),
+                  size: 48,
+                ).animate().scale(
+                      duration: const Duration(milliseconds: 500),
+                      curve: Curves.easeOut,
+                    ),
+                const SizedBox(height: 24),
+                Text(
+                  l10n.letsGrowTogether,
+                  style: const TextStyle(
+                    fontSize: 24,
+                    fontWeight: FontWeight.bold,
+                    color: Color(0xff1CB0F6),
+                  ),
+                  textAlign: TextAlign.center,
+                ).animate().fadeIn(
+                      duration: const Duration(milliseconds: 500),
+                      delay: const Duration(milliseconds: 200),
+                    ),
+                const SizedBox(height: 16),
+                Text(
+                  l10n.reviewMotivationText,
+                  style: const TextStyle(
+                    fontSize: 16,
+                    color: Colors.black87,
+                  ),
+                  textAlign: TextAlign.center,
+                ).animate().fadeIn(
+                      duration: const Duration(milliseconds: 500),
+                      delay: const Duration(milliseconds: 400),
+                    ),
+                const SizedBox(height: 24),
+                PushableButton(
+                  width: double.infinity,
+                  height: 50,
+                  text: l10n.letsGrowTogetherButton,
+                  buttonColor: const Color(0xff1CB0F6),
+                  shadowColor: const Color(0xff1899D6),
+                  onTap: () {
+                    Navigator.of(context).pop();
+                  },
+                ).animate().fadeIn(
+                      duration: const Duration(milliseconds: 500),
+                      delay: const Duration(milliseconds: 600),
+                    ),
+              ],
+            ),
+          ),
+        );
+      },
+    );
+  }
+
   Future<void> _requestReview() async {
     if (await inAppReview.isAvailable() && !kDebugMode) {
+      // Show motivational dialog first
+      if (!mounted) return;
+      await _showMotivationalDialog(context);
+      // Then request the review
       await inAppReview.requestReview();
     }
   }

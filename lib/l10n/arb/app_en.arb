@@ -601,5 +601,17 @@
     "goProButtonText": "Go Pro",
     "@goProButtonText": {
         "description": "Text shown on the practice button for non-subscribed users"
+    },
+    "letsGrowTogether": "Let's Grow Together! 🌱",
+    "@letsGrowTogether": {
+        "description": "Title for the review request dialog"
+    },
+    "reviewMotivationText": "Your feedback helps us create a better learning experience. Share your thoughts and help others discover the joy of learning!",
+    "@reviewMotivationText": {
+        "description": "Description text for the review request dialog"
+    },
+    "letsGrowTogetherButton": "Let's Grow Together",
+    "@letsGrowTogetherButton": {
+        "description": "Text for the review dialog button"
     }
 }
