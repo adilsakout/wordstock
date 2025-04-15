@@ -51,6 +51,7 @@ class ShareableWordCard extends StatelessWidget {
           const SizedBox(height: 10),
           Text(
             word.definition,
+            textAlign: TextAlign.center,
             style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                   color: Colors.black54,
                 ),
@@ -58,6 +59,7 @@ class ShareableWordCard extends StatelessWidget {
           const SizedBox(height: 20),
           Text(
             word.example?.replaceAll('"', '') ?? '',
+            textAlign: TextAlign.center,
             style: Theme.of(context).textTheme.bodySmall?.copyWith(
                   fontFamily: 'Poppins',
                 ),
