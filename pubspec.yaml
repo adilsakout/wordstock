@@ -50,6 +50,7 @@ dependencies:
   shared_preferences: ^2.5.2
   shimmer: ^3.0.0
   supabase_flutter: ^2.8.4
+  url_launcher: ^6.3.1
 
 dev_dependencies:
   bloc_test: ^9.1.7

@@ -613,5 +613,29 @@
     "letsGrowTogetherButton": "Let's Grow Together",
     "@letsGrowTogetherButton": {
         "description": "Text for the review dialog button"
+    },
+    "profileTitle": "Profile",
+    "@profileTitle": {
+        "description": "Title for the profile page"
+    },
+    "favoriteWords": "Favorite Words",
+    "@favoriteWords": {
+        "description": "Text for favorite words menu item"
+    },
+    "termsOfService": "Terms of Service",
+    "@termsOfService": {
+        "description": "Text for terms of service menu item"
+    },
+    "privacyPolicy": "Privacy Policy",
+    "@privacyPolicy": {
+        "description": "Text for privacy policy menu item"
+    },
+    "reviewUs": "Review Us",
+    "@reviewUs": {
+        "description": "Text for review us menu item"
+    },
+    "contactSupport": "Contact Support",
+    "@contactSupport": {
+        "description": "Text for contact support menu item"
     }
 }
