@@ -136,20 +136,32 @@ class _WordCardState extends State<WordCard>
                     ).animate(delay: 0.5.seconds).slideY(),
                     const SizedBox(height: 15),
                     Text(
-                      widget.word.definition,
+                      widget.word.phonetic ?? '',
                       textAlign: TextAlign.center,
-                      style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                            color: Colors.black54,
+                      style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                            fontFamily: 'Poppins',
+                            fontSize: 16,
                           ),
                     ),
                     const SizedBox(height: 10),
                     Text(
-                      widget.word.example?.replaceAll('"', '') ?? '',
+                      widget.word.definition,
                       textAlign: TextAlign.center,
-                      style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                            fontFamily: 'Poppins',
+                      style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                            color: Colors.black87,
+                            fontSize: 16,
                           ),
                     ),
+                    const SizedBox(height: 10),
+                    if (widget.word.example != null)
+                      Text(
+                        '\u201c${widget.word.example}\u201d',
+                        textAlign: TextAlign.center,
+                        style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                              fontFamily: 'Poppins',
+                              fontSize: 14,
+                            ),
+                      ),
                   ],
                 ),
               ),

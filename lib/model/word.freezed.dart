@@ -24,6 +24,7 @@ mixin _$Word {
   String get word => throw _privateConstructorUsedError;
   String get definition => throw _privateConstructorUsedError;
   String? get example => throw _privateConstructorUsedError;
+  String? get phonetic => throw _privateConstructorUsedError;
   VocabularyLevel? get level => throw _privateConstructorUsedError;
   bool? get isFavorite => throw _privateConstructorUsedError;
 
@@ -46,6 +47,7 @@ abstract class $WordCopyWith<$Res> {
       String word,
       String definition,
       String? example,
+      String? phonetic,
       VocabularyLevel? level,
       bool? isFavorite});
 }
@@ -69,6 +71,7 @@ class _$WordCopyWithImpl<$Res, $Val extends Word>
     Object? word = null,
     Object? definition = null,
     Object? example = freezed,
+    Object? phonetic = freezed,
     Object? level = freezed,
     Object? isFavorite = freezed,
   }) {
@@ -88,6 +91,10 @@ class _$WordCopyWithImpl<$Res, $Val extends Word>
       example: freezed == example
           ? _value.example
           : example // ignore: cast_nullable_to_non_nullable
+              as String?,
+      phonetic: freezed == phonetic
+          ? _value.phonetic
+          : phonetic // ignore: cast_nullable_to_non_nullable
               as String?,
       level: freezed == level
           ? _value.level
@@ -113,6 +120,7 @@ abstract class _$$WordImplCopyWith<$Res> implements $WordCopyWith<$Res> {
       String word,
       String definition,
       String? example,
+      String? phonetic,
       VocabularyLevel? level,
       bool? isFavorite});
 }
@@ -133,6 +141,7 @@ class __$$WordImplCopyWithImpl<$Res>
     Object? word = null,
     Object? definition = null,
     Object? example = freezed,
+    Object? phonetic = freezed,
     Object? level = freezed,
     Object? isFavorite = freezed,
   }) {
@@ -152,6 +161,10 @@ class __$$WordImplCopyWithImpl<$Res>
       example: freezed == example
           ? _value.example
           : example // ignore: cast_nullable_to_non_nullable
+              as String?,
+      phonetic: freezed == phonetic
+          ? _value.phonetic
+          : phonetic // ignore: cast_nullable_to_non_nullable
               as String?,
       level: freezed == level
           ? _value.level
@@ -173,6 +186,7 @@ class _$WordImpl implements _Word {
       required this.word,
       required this.definition,
       this.example,
+      this.phonetic,
       this.level,
       this.isFavorite});
 
@@ -188,13 +202,15 @@ class _$WordImpl implements _Word {
   @override
   final String? example;
   @override
+  final String? phonetic;
+  @override
   final VocabularyLevel? level;
   @override
   final bool? isFavorite;
 
   @override
   String toString() {
-    return 'Word(id: $id, word: $word, definition: $definition, example: $example, level: $level, isFavorite: $isFavorite)';
+    return 'Word(id: $id, word: $word, definition: $definition, example: $example, phonetic: $phonetic, level: $level, isFavorite: $isFavorite)';
   }
 
   @override
@@ -207,6 +223,8 @@ class _$WordImpl implements _Word {
             (identical(other.definition, definition) ||
                 other.definition == definition) &&
             (identical(other.example, example) || other.example == example) &&
+            (identical(other.phonetic, phonetic) ||
+                other.phonetic == phonetic) &&
             (identical(other.level, level) || other.level == level) &&
             (identical(other.isFavorite, isFavorite) ||
                 other.isFavorite == isFavorite));
@@ -215,7 +233,7 @@ class _$WordImpl implements _Word {
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(
-      runtimeType, id, word, definition, example, level, isFavorite);
+      runtimeType, id, word, definition, example, phonetic, level, isFavorite);
 
   /// Create a copy of Word
   /// with the given fields replaced by the non-null parameter values.
@@ -239,6 +257,7 @@ abstract class _Word implements Word {
       required final String word,
       required final String definition,
       final String? example,
+      final String? phonetic,
       final VocabularyLevel? level,
       final bool? isFavorite}) = _$WordImpl;
 
@@ -252,6 +271,8 @@ abstract class _Word implements Word {
   String get definition;
   @override
   String? get example;
+  @override
+  String? get phonetic;
   @override
   VocabularyLevel? get level;
   @override

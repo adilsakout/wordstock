@@ -11,6 +11,7 @@ sealed class Word with _$Word {
     required String word,
     required String definition,
     String? example,
+    String? phonetic,
     VocabularyLevel? level,
     bool? isFavorite,
   }) = _Word;
