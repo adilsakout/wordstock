@@ -59,7 +59,7 @@ class GoalSelectionPage extends StatelessWidget {
                   child: Selector(
                     text: goal,
                     selected: state.selectedGoals.isNotEmpty &&
-                        state.selectedGoals == goal,
+                        state.selectedGoals.contains(goal),
                     onTap: () {
                       _selectGoal(context, goal);
                     },

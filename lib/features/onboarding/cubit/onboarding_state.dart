@@ -14,7 +14,7 @@ class OnboardingState extends Equatable {
     this.selectedTimeCommitment = -1,
     this.wordsPerDay = 10,
     this.vocabularyLevel = -1,
-    this.selectedGoals = '',
+    this.selectedGoals = const [],
     this.selectedTopics = const [],
     this.streakGoal = -1,
   });
@@ -27,7 +27,7 @@ class OnboardingState extends Equatable {
   final int selectedTimeCommitment;
   final int wordsPerDay;
   final int vocabularyLevel;
-  final String selectedGoals;
+  final List<String> selectedGoals;
   final List<int> selectedTopics;
   final int streakGoal;
 
@@ -83,7 +83,7 @@ class OnboardingState extends Equatable {
     int? selectedTimeCommitment,
     int? wordsPerDay,
     int? vocabularyLevel,
-    String? selectedGoals,
+    List<String>? selectedGoals,
     List<int>? selectedTopics,
     int? streakGoal,
   }) {

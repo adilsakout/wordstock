@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:logger/logger.dart';
+import 'package:onesignal_flutter/onesignal_flutter.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 class SupabaseRepository {
@@ -35,11 +36,28 @@ class SupabaseRepository {
       final currentUser = client.auth.currentUser;
       if (currentUser == null) {
         await client.auth.signInAnonymously();
+        await _saveUserIdToOneSignal();
         _logger.i('Signed in anonymously after connection restored');
       }
     } catch (e, stackTrace) {
       _logger.e(
         'Failed to sign in after connection restored',
+        error: e,
+        stackTrace: stackTrace,
+      );
+    }
+  }
+
+  Future<void> _saveUserIdToOneSignal() async {
+    try {
+      final userId = client.auth.currentUser?.id;
+      if (userId != null) {
+        await OneSignal.login(userId);
+        _logger.i('Saved user ID to OneSignal');
+      }
+    } catch (e, stackTrace) {
+      _logger.e(
+        'Failed to save user ID to OneSignal',
         error: e,
         stackTrace: stackTrace,
       );

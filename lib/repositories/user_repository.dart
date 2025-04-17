@@ -1,5 +1,6 @@
 import 'dart:developer';
 
+import 'package:onesignal_flutter/onesignal_flutter.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:wordstock/model/user_profile.dart';
 import 'package:wordstock/repositories/supabase_repository.dart';
@@ -44,7 +45,7 @@ class UserRepository {
     int? timeCommitment,
     int? wordsPerDay,
     VocabularyLevel? vocabularyLevel,
-    String? selectedGoals,
+    List<String>? selectedGoals,
     List<String>? selectedTopics,
     int? streakGoal,
   }) async {
@@ -52,6 +53,7 @@ class UserRepository {
       final data = <String, dynamic>{
         'user_id': _getUserId(),
         'onboarding_completed': true,
+        'onesignal_id': OneSignal.User.pushSubscription.id,
       };
 
       // Only add fields that are not null
@@ -87,7 +89,7 @@ class UserRepository {
           .single();
 
       log(
-        'User profile loaded successfully: $response',
+        'User profile loaded successfully',
         name: 'UserRepository',
       );
       return UserProfile.fromJson(response);

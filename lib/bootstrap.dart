@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:bloc/bloc.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:logger/logger.dart';
@@ -91,7 +92,7 @@ Future<void> bootstrap(FutureOr<Widget> Function() builder) async {
   await SentryFlutter.init(
     (options) {
       options
-        ..dsn = dotenv.env['SENTRY_DSN']
+        ..dsn = kDebugMode ? '' : dotenv.env['SENTRY_DSN']
         ..experimental.replay.sessionSampleRate = 1.0
         ..experimental.replay.onErrorSampleRate = 1.0
         ..sendDefaultPii = true;
@@ -106,14 +107,11 @@ Future<void> bootstrap(FutureOr<Widget> Function() builder) async {
   );
 
   // Enable verbose logging for debugging (remove in production)
-  await OneSignal.Debug.setLogLevel(OSLogLevel.verbose);
+  if (kDebugMode) {
+    await OneSignal.Debug.setLogLevel(OSLogLevel.verbose);
+  }
   // Initialize with your OneSignal App ID
   OneSignal.initialize(dotenv.env['ONESIGNAL_APP_ID']!);
-  // Use this method to prompt for push notifications.
-  // We recommend removing this method after testing and instead u
-  //se In-App Message
-  //s to prompt for notification permission.
-  await OneSignal.Notifications.requestPermission(false);
 
   logger.i('App started successfully');
 }

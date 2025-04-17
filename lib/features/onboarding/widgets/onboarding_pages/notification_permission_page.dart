@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:onesignal_flutter/onesignal_flutter.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:wordstock/features/home/cubit/cubit.dart';
 import 'package:wordstock/features/onboarding/cubit/onboarding_cubit.dart';
@@ -30,14 +31,7 @@ class _NotificationPermissionPageState
     } else {
       bool? result;
       if (Platform.isIOS) {
-        result = await flutterLocalNotificationsPlugin
-            .resolvePlatformSpecificImplementation<
-                IOSFlutterLocalNotificationsPlugin>()
-            ?.requestPermissions(
-              alert: true,
-              badge: true,
-              sound: true,
-            );
+        result = await OneSignal.Notifications.requestPermission(true);
         if (context.mounted) context.read<OnboardingCubit>().nextPage();
       } else {
         result = await flutterLocalNotificationsPlugin

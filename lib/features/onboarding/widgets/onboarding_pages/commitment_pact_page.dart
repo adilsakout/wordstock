@@ -178,20 +178,20 @@ class _CommitmentPactPageState extends State<CommitmentPactPage> {
 
   String _getLocalizedLearningGoal(
     AppLocalizations l10n,
-    String selectedGoals,
+    List<String> selectedGoals,
   ) {
     if (selectedGoals.isEmpty) return l10n.commitmentPactVocabularyMaster;
 
     // Match based on the localized goal strings
-    if (selectedGoals == l10n.goalMasteringWords) {
+    if (selectedGoals.contains(l10n.goalMasteringWords)) {
       return l10n.commitmentPactVocabularyMaster;
-    } else if (selectedGoals == l10n.goalImprovingMemory ||
-        selectedGoals == l10n.goalReachingLanguageGoals) {
+    } else if (selectedGoals.contains(l10n.goalImprovingMemory) ||
+        selectedGoals.contains(l10n.goalReachingLanguageGoals)) {
       return l10n.commitmentPactTestChampion;
-    } else if (selectedGoals == l10n.goalSpeakingConfidence ||
-        selectedGoals == l10n.goalWritingClearly) {
+    } else if (selectedGoals.contains(l10n.goalSpeakingConfidence) ||
+        selectedGoals.contains(l10n.goalWritingClearly)) {
       return l10n.commitmentPactCareerAchiever;
-    } else if (selectedGoals == l10n.goalUnderstandingContent) {
+    } else if (selectedGoals.contains(l10n.goalUnderstandingContent)) {
       return l10n.commitmentPactLifelongLearner;
     }
 

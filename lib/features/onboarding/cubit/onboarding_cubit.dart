@@ -43,6 +43,8 @@ class OnboardingCubit extends Cubit<OnboardingState> {
     final prefs = await SharedPreferences.getInstance();
     if (currentPage == totalPages) {
       await prefs.setBool('onboarding_completed', true);
+      // Save onboarding data when reaching the last page
+      await saveOnboardingData();
     }
     await prefs.setInt('onboarding_current_page', currentPage);
   }
@@ -96,7 +98,7 @@ class OnboardingCubit extends Cubit<OnboardingState> {
   }
 
   int get wordsPerDay => state.wordsPerDay;
-  String get selectedGoals => state.selectedGoals;
+  List<String> get selectedGoals => state.selectedGoals;
 
   int get streakGoal => state.streakGoal;
 
@@ -106,7 +108,7 @@ class OnboardingCubit extends Cubit<OnboardingState> {
   }
 
   void selectLearningGoal(String goal) {
-    emit(state.copyWith(selectedGoals: goal));
+    emit(state.copyWith(selectedGoals: [...state.selectedGoals, goal]));
     nextPage();
   }
 
@@ -137,7 +139,7 @@ class OnboardingCubit extends Cubit<OnboardingState> {
   }
 
   void selectGoal(String goal) {
-    emit(state.copyWith(selectedGoals: goal));
+    emit(state.copyWith(selectedGoals: [...state.selectedGoals, goal]));
   }
 
   /// Convert gender index to string representation
@@ -183,8 +185,10 @@ class OnboardingCubit extends Cubit<OnboardingState> {
       // Convert gender index to string
       final genderString = _getGenderString(state.selectedGender);
 
-      // Convert goal indices to strings
-      final goalStrings = state.selectedGoals;
+      // Clean up the goal string by removing emoji
+      final goalString = state.selectedGoals
+          .map((goal) => goal.replaceAll('🧠 ', ''))
+          .toList();
 
       // Convert topic indices to strings
       final topicStrings = state.selectedTopics.map(_getTopicString).toList();
@@ -196,7 +200,7 @@ class OnboardingCubit extends Cubit<OnboardingState> {
         timeCommitment: state.selectedTimeCommitment,
         wordsPerDay: state.wordsPerDay,
         vocabularyLevel: vocabularyLevel,
-        selectedGoals: goalStrings,
+        selectedGoals: goalString,
         selectedTopics: topicStrings,
         streakGoal: state.streakGoal,
       );
