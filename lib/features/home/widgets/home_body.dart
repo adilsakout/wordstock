@@ -81,15 +81,6 @@ class _HomeBodyState extends State<HomeBody>
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
-                const Icon(
-                  Icons.favorite,
-                  color: Color(0xffE94E77),
-                  size: 48,
-                ).animate().scale(
-                      duration: const Duration(milliseconds: 500),
-                      curve: Curves.easeOut,
-                    ),
-                const SizedBox(height: 24),
                 Text(
                   l10n.letsGrowTogether,
                   style: const TextStyle(
@@ -140,9 +131,10 @@ class _HomeBodyState extends State<HomeBody>
     if (await inAppReview.isAvailable() && !kDebugMode) {
       // Show motivational dialog first
       if (!mounted) return;
-      await _showMotivationalDialog(context);
-      // Then request the review
-      await inAppReview.requestReview();
+      await _showMotivationalDialog(context).then((_) async {
+        // Then request the review
+        await inAppReview.requestReview();
+      });
     }
   }
 

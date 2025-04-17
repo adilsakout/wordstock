@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:gaimon/gaimon.dart';
 import 'package:wordstock/gen/assets.gen.dart';
 import 'package:wordstock/l10n/l10n.dart';
 import 'package:wordstock/model/user_profile.dart';
@@ -20,7 +21,9 @@ class StreakProgressBottomSheet extends StatelessWidget {
     final currentStreak = userProfile.dailyStreak;
     final streakGoal = userProfile.streakGoal ?? 7; // Default to 7 if not set
 
-    // Create a list of abbreviated day names
+    Gaimon.heavy();
+
+    // Create a list of a bbreviated day names
     //(2 characters) starting from the current day
     final allWeekDays = ['Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa', 'Su'];
     final today =

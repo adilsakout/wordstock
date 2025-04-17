@@ -1,5 +1,6 @@
 import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
+import 'package:gaimon/gaimon.dart';
 
 class Selector extends StatefulWidget {
   const Selector({
@@ -57,15 +58,11 @@ class SelectorState extends State<Selector>
     _animationController.reverse();
   }
 
-  Future<void> _playSound() async {
-    await _audioPlayer.play(AssetSource('sounds/click.mp3'), balance: 10);
-  }
-
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        _playSound();
+        Gaimon.selection();
         widget.onTap();
       },
       onTapCancel: _handleTapCancel,
