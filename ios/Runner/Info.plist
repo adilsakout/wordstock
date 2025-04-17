@@ -58,6 +58,8 @@
 	<string>We need microphone access for speech recognition</string>
 	<key>NSUserNotificationUsageDescription</key>
 	<string>We'll send you notifications about new words and practice reminders</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>We need location access to provide region-specific word recommendations</string>
 	<key>UIBackgroundModes</key>
 	<array>
 		<string>remote-notification</string>
