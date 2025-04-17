@@ -4,6 +4,7 @@ import 'package:bloc/bloc.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:logger/logger.dart';
+import 'package:onesignal_flutter/onesignal_flutter.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
 import 'package:wordstock/repositories/rc_repository.dart';
 import 'package:wordstock/repositories/supabase_repository.dart';
@@ -103,6 +104,16 @@ Future<void> bootstrap(FutureOr<Widget> Function() builder) async {
       );
     },
   );
+
+  // Enable verbose logging for debugging (remove in production)
+  await OneSignal.Debug.setLogLevel(OSLogLevel.verbose);
+  // Initialize with your OneSignal App ID
+  OneSignal.initialize(dotenv.env['ONESIGNAL_APP_ID']!);
+  // Use this method to prompt for push notifications.
+  // We recommend removing this method after testing and instead u
+  //se In-App Message
+  //s to prompt for notification permission.
+  await OneSignal.Notifications.requestPermission(false);
 
   logger.i('App started successfully');
 }
