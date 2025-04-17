@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:gaimon/gaimon.dart';
 import 'package:go_router/go_router.dart';
@@ -7,6 +8,7 @@ import 'package:url_launcher/url_launcher.dart';
 import 'package:wordstock/features/favorite_words/favorite_words.dart';
 import 'package:wordstock/features/profile/cubit/cubit.dart';
 import 'package:wordstock/l10n/l10n.dart';
+import 'package:wordstock/repositories/user_repository.dart';
 import 'package:wordstock/widgets/button.dart';
 
 /// {@template profile_body}
@@ -112,6 +114,28 @@ class ProfileBody extends StatelessWidget {
                       ),
                   _buildMenuItem(
                     context,
+                    icon: Icons.copy,
+                    title: 'Copy User ID',
+                    onTap: () async {
+                      Gaimon.soft();
+                      final userId = UserRepository().getUserId();
+                      await Clipboard.setData(ClipboardData(text: userId));
+                      if (context.mounted) {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(
+                            content: Text('User ID copied to clipboard'),
+                            duration: Duration(seconds: 2),
+                          ),
+                        );
+                      }
+                    },
+                  ).animate().fadeIn().slideY(
+                        begin: 1,
+                        delay: 300.milliseconds,
+                        duration: 400.milliseconds,
+                      ),
+                  _buildMenuItem(
+                    context,
                     icon: Icons.support_agent,
                     title: l10n.contactSupport,
                     onTap: () {
@@ -120,7 +144,7 @@ class ProfileBody extends StatelessWidget {
                     },
                   ).animate().fadeIn().slideY(
                         begin: 1,
-                        delay: 300.milliseconds,
+                        delay: 400.milliseconds,
                         duration: 400.milliseconds,
                       ),
                   _buildMenuItem(
@@ -133,7 +157,7 @@ class ProfileBody extends StatelessWidget {
                     },
                   ).animate().fadeIn().slideY(
                         begin: 1,
-                        delay: 400.milliseconds,
+                        delay: 500.milliseconds,
                         duration: 400.milliseconds,
                       ),
                   _buildMenuItem(
@@ -146,7 +170,7 @@ class ProfileBody extends StatelessWidget {
                     },
                   ).animate().fadeIn().slideY(
                         begin: 1,
-                        delay: 500.milliseconds,
+                        delay: 600.milliseconds,
                         duration: 400.milliseconds,
                       ),
                 ],

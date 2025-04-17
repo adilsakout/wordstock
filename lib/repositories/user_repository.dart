@@ -13,6 +13,11 @@ class UserRepository {
     return _supabase.auth.currentUser?.id ?? '';
   }
 
+  /// Get the user's ID
+  String getUserId() {
+    return _getUserId();
+  }
+
   /// Update the daily streak for the user
   Future<void> updateDailyStreak() async {
     try {

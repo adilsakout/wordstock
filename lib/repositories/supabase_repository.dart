@@ -3,6 +3,7 @@ import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:logger/logger.dart';
 import 'package:onesignal_flutter/onesignal_flutter.dart';
+import 'package:purchases_flutter/purchases_flutter.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 class SupabaseRepository {
@@ -53,6 +54,11 @@ class SupabaseRepository {
       final userId = client.auth.currentUser?.id;
       if (userId != null) {
         await OneSignal.login(userId);
+        await Purchases.logIn(userId);
+        final onesignalId = await OneSignal.User.getOnesignalId();
+        if (onesignalId != null) {
+          await Purchases.setOnesignalID(onesignalId);
+        }
         _logger.i('Saved user ID to OneSignal');
       }
     } catch (e, stackTrace) {
