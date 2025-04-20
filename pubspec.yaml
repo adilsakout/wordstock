@@ -1,6 +1,6 @@
 name: wordstock
 description: A Very Good Project created by Very Good CLI.
-version: 1.0.0+11
+version: 1.0.1+12
 publish_to: none
 
 environment:
@@ -75,5 +75,3 @@ flutter:
     - assets/sounds/
     - assets/secrets/service_account.json
     - .env
-
-

@@ -129,12 +129,16 @@ class _HomeBodyState extends State<HomeBody>
 
   Future<void> _requestReview() async {
     if (await inAppReview.isAvailable() && !kDebugMode) {
-      // Show motivational dialog first
       if (!mounted) return;
-      await _showMotivationalDialog(context).then((_) async {
-        // Then request the review
-        await inAppReview.requestReview();
-      });
+
+      final homeState = context.read<HomeCubit>().state;
+      if (homeState is HomeLoaded && !homeState.hasShownReview) {
+        await _showMotivationalDialog(context).then((_) async {
+          await inAppReview.requestReview();
+          if (!mounted) return;
+          context.read<HomeCubit>().markReviewAsShown();
+        });
+      }
     }
   }
 

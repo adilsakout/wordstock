@@ -54,6 +54,13 @@ class HomeCubit extends Cubit<HomeState> {
     }
   }
 
+  void markReviewAsShown() {
+    if (state is HomeLoaded) {
+      final currentState = state as HomeLoaded;
+      emit(currentState.copyWith(hasShownReview: true));
+    }
+  }
+
   Future<void> toggleFavorite(String wordId) async {
     try {
       await wordRepository.toggleFavorite(wordId: wordId);
