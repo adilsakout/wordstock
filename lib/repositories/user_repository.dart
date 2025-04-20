@@ -57,11 +57,13 @@ class UserRepository {
   }) async {
     try {
       final timeZone = await FlutterTimezone.getLocalTimezone();
+      final onesignalId = await OneSignal.User.getOnesignalId();
 
       final data = <String, dynamic>{
         'user_id': _getUserId(),
         'onboarding_completed': true,
-        'onesignal_id': await OneSignal.User.getOnesignalId(),
+        'onesignal_id': onesignalId,
+        'time_zone': timeZone,
       };
 
       // Only add fields that are not null
@@ -76,7 +78,6 @@ class UserRepository {
       if (selectedGoals != null) data['goals'] = selectedGoals;
       if (selectedTopics != null) data['topics'] = selectedTopics;
       if (streakGoal != null) data['streak_goal'] = streakGoal;
-      data['time_zone'] = timeZone;
 
       await _supabase.from('user_profiles').upsert(data);
     } catch (e) {
