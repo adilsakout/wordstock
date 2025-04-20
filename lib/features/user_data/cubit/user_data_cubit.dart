@@ -1,7 +1,9 @@
 import 'dart:async';
+import 'dart:developer';
 
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
+import 'package:onesignal_flutter/onesignal_flutter.dart';
 import 'package:wordstock/model/user_profile.dart';
 import 'package:wordstock/repositories/user_repository.dart';
 
@@ -23,6 +25,7 @@ class StreakCubit extends Cubit<StreakState> {
           profile: profile,
         ),
       );
+      await updateOneSignalId();
     } catch (e) {
       emit(
         state.copyWith(
@@ -30,6 +33,26 @@ class StreakCubit extends Cubit<StreakState> {
           errorMessage: e.toString(),
         ),
       );
+    }
+  }
+
+  Future<void> updateOneSignalId() async {
+    try {
+      if (state.isLoaded && state.profile != null) {
+        final onesignalId = await OneSignal.User.getOnesignalId();
+        if (onesignalId != null && state.profile?.onesignalId != onesignalId) {
+          await userRepository.updateOneSignalId(onesignalId);
+          final updatedProfile = await userRepository.getProfile();
+          emit(
+            state.copyWith(
+              status: StreakStatus.loaded,
+              profile: updatedProfile,
+            ),
+          );
+        }
+      }
+    } catch (e) {
+      log('Error updating OneSignal ID: $e', name: 'StreakCubit');
     }
   }
 

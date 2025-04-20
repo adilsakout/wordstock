@@ -58,7 +58,7 @@ class UserRepository {
       final data = <String, dynamic>{
         'user_id': _getUserId(),
         'onboarding_completed': true,
-        'onesignal_id': OneSignal.User.pushSubscription.id,
+        'onesignal_id': await OneSignal.User.getOnesignalId(),
       };
 
       // Only add fields that are not null
@@ -101,6 +101,18 @@ class UserRepository {
     } catch (e) {
       log('Failed to load profile: $e', name: 'UserRepository', error: e);
       throw Exception('Failed to load profile: $e');
+    }
+  }
+
+  /// Update the user's OneSignal ID
+  Future<void> updateOneSignalId(String id) async {
+    try {
+      await _supabase.from('user_profiles').upsert({
+        'user_id': _getUserId(),
+        'onesignal_id': id,
+      });
+    } catch (e) {
+      throw Exception('Failed to update OneSignal ID: $e');
     }
   }
 

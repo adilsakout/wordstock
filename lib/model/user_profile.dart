@@ -13,6 +13,7 @@ sealed class UserProfile with _$UserProfile {
     @JsonKey(name: 'longest_streak') required int longestStreak,
     @JsonKey(name: 'streak_goal') int? streakGoal,
     @JsonKey(name: 'total_points') int? totalPoints,
+    @JsonKey(name: 'onesignal_id') String? onesignalId,
   }) = _UserProfile;
 
   factory UserProfile.fromJson(Map<String, dynamic> json) =>
