@@ -1,5 +1,6 @@
 import 'dart:developer';
 
+import 'package:flutter_timezone/flutter_timezone.dart';
 import 'package:onesignal_flutter/onesignal_flutter.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:wordstock/model/user_profile.dart';
@@ -55,6 +56,8 @@ class UserRepository {
     int? streakGoal,
   }) async {
     try {
+      final timeZone = await FlutterTimezone.getLocalTimezone();
+
       final data = <String, dynamic>{
         'user_id': _getUserId(),
         'onboarding_completed': true,
@@ -73,6 +76,7 @@ class UserRepository {
       if (selectedGoals != null) data['goals'] = selectedGoals;
       if (selectedTopics != null) data['topics'] = selectedTopics;
       if (streakGoal != null) data['streak_goal'] = streakGoal;
+      data['time_zone'] = timeZone;
 
       await _supabase.from('user_profiles').upsert(data);
     } catch (e) {
@@ -107,9 +111,11 @@ class UserRepository {
   /// Update the user's OneSignal ID
   Future<void> updateOneSignalId(String id) async {
     try {
+      final timeZone = await FlutterTimezone.getLocalTimezone();
       await _supabase.from('user_profiles').upsert({
         'user_id': _getUserId(),
         'onesignal_id': id,
+        'time_zone': timeZone,
       });
     } catch (e) {
       throw Exception('Failed to update OneSignal ID: $e');
