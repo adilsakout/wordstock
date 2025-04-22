@@ -60,6 +60,8 @@
 	<string>We'll send you notifications about new words and practice reminders</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>We need location access to provide region-specific word recommendations</string>
+	<key>NSUserTrackingUsageDescription</key>
+	<string>We use tracking to provide personalized word recommendations and improve your learning experience</string>
 	<key>UIBackgroundModes</key>
 	<array>
 		<string>remote-notification</string>
@@ -67,6 +69,36 @@
 
 	<!-- PostHog Configuration -->
 	<key>com.posthog.posthog.AUTO_INIT</key>
+    <false/>
+
+	<!-- Branch.io Configuration -->
+	<key>branch_universal_link_domains</key>
+	<array>
+		<string>fkzzw.app.link</string>
+		<string>fkzzw-alternate.app.link</string>
+		<string>fkzzw.test.app.link</string>
+	</array>
+	<key>CFBundleURLTypes</key>
+	<array>
+		<dict>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>branchsters</string>
+			</array>
+			<key>CFBundleURLName</key>
+			<string>io.Branch.Branchsters</string>
+		</dict>
+	</array>
+	<key>branch_key</key>
+	<dict>
+		<key>live</key>
+		<string>key_live_gDvehnq21sDbGg8JXkUyxkbovrbIDHru</string>
+		<key>test</key>
+		<string>key_test_gDvhbiF2ZBznGdZQWmKqzhgoBqkQrRyG</string>
+	</dict>
+	<key>FlutterDeepLinkingEnabled</key>
     <false/>
 </dict>
 </plist>

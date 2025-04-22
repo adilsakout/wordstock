@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_branch_sdk/flutter_branch_sdk.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:logger/logger.dart';
 import 'package:onesignal_flutter/onesignal_flutter.dart';
@@ -61,6 +62,11 @@ Future<void> bootstrap(FutureOr<Widget> Function() builder) async {
 
   // Add cross-flavor configuration here
   WidgetsFlutterBinding.ensureInitialized();
+
+  await FlutterBranchSdk.init(
+    enableLogging: kDebugMode,
+    branchAttributionLevel: BranchAttributionLevel.REDUCED,
+  );
 
   await dotenv.load();
   logger.i('Loaded environment variables');
