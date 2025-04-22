@@ -14,7 +14,7 @@ Deno.serve(async () => {
   // 1. Get all pending and due notifications
   const { data: pending, error } = await supabase
     .from("word_notifications")
-    .select("id, onesignal_id, word, definition")
+    .select("id, onesignal_id, word, definition, user_id")
     .eq("sent", false)
     .lte("scheduled_at", now)
     .limit(100);
@@ -35,16 +35,19 @@ Deno.serve(async () => {
   for (const notif of pending) {
     try {
       const response = await fetch(
-        "https://onesignal.com/api/v1/notifications",
+        "https://api.onesignal.com/notifications?c=push",
         {
           method: "POST",
           headers: {
-            "Authorization": `Basic ${ONE_SIGNAL_API_KEY}`,
+            "Authorization": `Key ${ONE_SIGNAL_API_KEY}`,
             "Content-Type": "application/json",
           },
           body: JSON.stringify({
             app_id: ONE_SIGNAL_APP_ID,
-            include_player_ids: [notif.onesignal_id],
+            include_aliases: {
+              external_id: [notif.user_id],
+            },
+            target_channel: "push",
             headings: { en: notif.word },
             contents: { en: notif.definition },
           }),
