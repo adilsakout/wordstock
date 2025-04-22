@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:logger/logger.dart';
 import 'package:posthog_flutter/posthog_flutter.dart';
@@ -28,8 +29,9 @@ class PosthogService {
       }
 
       final config = PostHogConfig(apiKey)
-        ..debug = true
+        ..debug = kDebugMode
         ..captureApplicationLifecycleEvents = true
+        ..sessionReplay = true
         ..host = 'https://us.i.posthog.com';
       await Posthog().setup(config);
 

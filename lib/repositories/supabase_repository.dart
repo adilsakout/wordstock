@@ -3,6 +3,7 @@ import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:logger/logger.dart';
 import 'package:onesignal_flutter/onesignal_flutter.dart';
+import 'package:posthog_flutter/posthog_flutter.dart';
 import 'package:purchases_flutter/purchases_flutter.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
@@ -38,11 +39,32 @@ class SupabaseRepository {
       if (currentUser == null) {
         await client.auth.signInAnonymously();
         await _saveUserIdToOneSignal();
+        await _saveUserIdToPosthog();
         _logger.i('Signed in anonymously after connection restored');
       }
     } catch (e, stackTrace) {
       _logger.e(
         'Failed to sign in after connection restored',
+        error: e,
+        stackTrace: stackTrace,
+      );
+    }
+  }
+
+  Future<void> _saveUserIdToPosthog() async {
+    try {
+      final userId = client.auth.currentUser?.id;
+      if (userId != null) {
+        await Posthog().identify(
+          userId: userId,
+          userProperties: {
+            'createdAt': DateTime.now().toIso8601String(),
+          },
+        );
+      }
+    } catch (e, stackTrace) {
+      _logger.e(
+        'Failed to save user ID to Posthog',
         error: e,
         stackTrace: stackTrace,
       );
