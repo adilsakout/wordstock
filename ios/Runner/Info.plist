@@ -72,5 +72,7 @@
 	<string>https://us.i.posthog.com</string>
 	<key>com.posthog.posthog.CAPTURE_APPLICATION_LIFECYCLE_EVENTS</key>
 	<true/>
+	<key>com.posthog.posthog.DEBUG</key>
+	<true/>
 </dict>
 </plist>

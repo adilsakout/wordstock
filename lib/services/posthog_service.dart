@@ -27,7 +27,10 @@ class PosthogService {
         throw Exception('PostHog API key not found in .env');
       }
 
-      final config = PostHogConfig(apiKey);
+      final config = PostHogConfig(apiKey)
+        ..debug = true
+        ..captureApplicationLifecycleEvents = true
+        ..host = 'https://us.i.posthog.com';
       await Posthog().setup(config);
 
       // Enable tracking
