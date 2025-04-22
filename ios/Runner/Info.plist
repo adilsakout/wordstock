@@ -66,13 +66,7 @@
 	</array>
 
 	<!-- PostHog Configuration -->
-	<key>com.posthog.posthog.API_KEY</key>
-	<string>phc_MmFJCIabPYzQ1xI30eNN37ntnT87A0IpPyIW0AOrpnR</string>
-	<key>com.posthog.posthog.POSTHOG_HOST</key>
-	<string>https://us.i.posthog.com</string>
-	<key>com.posthog.posthog.CAPTURE_APPLICATION_LIFECYCLE_EVENTS</key>
-	<true/>
-	<key>com.posthog.posthog.DEBUG</key>
-	<true/>
+	<key>com.posthog.posthog.AUTO_INIT</key>
+    <false/>
 </dict>
 </plist>

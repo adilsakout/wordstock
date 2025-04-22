@@ -1,6 +1,6 @@
 name: wordstock
 description: A Very Good Project created by Very Good CLI.
-version: 1.0.1+14
+version: 1.0.2+15
 publish_to: none
 
 environment:
