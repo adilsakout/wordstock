@@ -10,8 +10,6 @@ import 'package:wordstock/features/onboarding/widgets/onboarding_pages/info_page
 import 'package:wordstock/features/onboarding/widgets/onboarding_pages/name_input_page.dart';
 import 'package:wordstock/features/onboarding/widgets/onboarding_pages/notification_permission_page.dart';
 import 'package:wordstock/features/onboarding/widgets/onboarding_pages/streak_goal_page.dart';
-import 'package:wordstock/features/onboarding/widgets/onboarding_pages/time_commitment_page.dart';
-import 'package:wordstock/features/onboarding/widgets/onboarding_pages/topic_selection_page.dart';
 import 'package:wordstock/features/onboarding/widgets/onboarding_pages/vocabulary_level_page.dart';
 import 'package:wordstock/gen/assets.gen.dart';
 import 'package:wordstock/l10n/l10n.dart';
@@ -132,21 +130,9 @@ class _OnboardingBodyState extends State<OnboardingBody> {
                       buttonText: l10n.continueText,
                       imageHeight: 300,
                     ),
-                    const TimeCommitmentPage(),
                     const NotificationPermissionPage(),
                     const VocabularyLevelPage(),
-                    InfoPage(
-                      image: Assets.images.onb4.path,
-                      title: state.userName.isEmpty
-                          ? l10n.makeYoursTitle
-                          : l10n.makeYoursWithNameTitle(state.userName),
-                      description: l10n.personalizeDescription,
-                      buttonText: l10n.continueText,
-                      imageWidth: 400,
-                      imageHeight: 400,
-                    ),
                     const GoalSelectionPage(),
-                    const TopicSelectionPage(),
                     const StreakGoalPage(),
                     const CommitmentPactPage(),
                     CustomizationLoadingPage(
