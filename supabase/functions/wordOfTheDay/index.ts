@@ -43,6 +43,8 @@ Deno.serve(async () => {
   const notificationPayload = {
     app_id: ONE_SIGNAL_APP_ID,
     included_segments: ["All"],
+    delayed_option: "timezone",
+    delivery_time_of_day: "9:00AM",
     headings: { en: title },
     contents: { en: message },
   };
