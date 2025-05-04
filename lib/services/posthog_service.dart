@@ -32,6 +32,8 @@ class PosthogService {
         ..debug = kDebugMode
         ..captureApplicationLifecycleEvents = true
         ..sessionReplay = true
+        ..sessionReplayConfig.maskAllTexts = false
+        ..sessionReplayConfig.maskAllImages = false
         ..host = 'https://us.i.posthog.com';
       await Posthog().setup(config);
 

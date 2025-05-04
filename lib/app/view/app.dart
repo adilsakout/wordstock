@@ -161,6 +161,14 @@ class _AppState extends State<App> {
             ),
             useMaterial3: true,
           ),
+          builder: (context, child) => MediaQuery(
+            data: MediaQuery.of(context).copyWith(
+              textScaler: MediaQuery.textScalerOf(
+                context,
+              ).clamp(minScaleFactor: 0.8, maxScaleFactor: 1.5),
+            ),
+            child: child!,
+          ),
           localizationsDelegates: AppLocalizations.localizationsDelegates,
           supportedLocales: AppLocalizations.supportedLocales,
         ),

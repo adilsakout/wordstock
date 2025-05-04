@@ -1,0 +1,691 @@
+{
+    "@@locale": "de",
+    "welcomeTitle": "Willkommen bei Wordstock",
+    "@welcomeTitle": {
+        "description": "Text shown in the Welcome Page"
+    },
+    "welcomeDescription": "Wordstock ist ein Tool, das Ihnen hilft, neue Wörter zu lernen.",
+    "@welcomeDescription": {
+        "description": "Text shown in the Welcome Page"
+    },
+    "infoTitle": "Erstellen Sie Ihre eigene Wortliste",
+    "@infoTitle": {
+        "description": "Text shown in the Info Page"
+    },
+    "infoDescription": "Wordstock ist ein Tool, das Ihnen hilft, neue Wörter zu lernen.",
+    "@infoDescription": {
+        "description": "Text shown in the Info Page"
+    },
+    "getStarted": "Loslegen",
+    "@getStarted": {
+        "description": "Text for get started button"
+    },
+    "continueText": "Weiter",
+    "@continueText": {
+        "description": "Text for continue button"
+    },
+    "makeYoursTitle": "Machen Sie Wordstock zu Ihrem eigenen",
+    "@makeYoursTitle": {
+        "description": "Title for personalization page"
+    },
+    "makeYoursWithNameTitle": "Machen Sie Wordstock zu Ihrem eigenen, {name}",
+    "@makeYoursWithNameTitle": {
+        "description": "Title for personalization page with user's name",
+        "placeholders": {
+            "name": {
+                "type": "String"
+            }
+        }
+    },
+    "personalizeDescription": "Einige letzte Fragen, um Ihre Erfahrung zu personalisieren.",
+    "@personalizeDescription": {
+        "description": "Description for personalization pages"
+    },
+    "favoriteWordsTitle": "Ihre Lieblingswörter",
+    "@favoriteWordsTitle": {
+        "description": "Title for favorite words screen"
+    },
+    "tryAgain": "Erneut versuchen",
+    "@tryAgain": {
+        "description": "Text for try again button"
+    },
+    "noFavoritesTitle": "Noch keine Lieblingswörter",
+    "@noFavoritesTitle": {
+        "description": "Title shown when no favorite words exist"
+    },
+    "noFavoritesDescription": "Beginnen Sie, Wörter zu Ihren Favoriten hinzuzufügen",
+    "@noFavoritesDescription": {
+        "description": "Description shown when no favorite words exist"
+    },
+    "timeCommitmentTitle": "Wie viel Zeit möchten Sie dem Lernen widmen?",
+    "@timeCommitmentTitle": {
+        "description": "Title shown on the time commitment selection page"
+    },
+    "timeCommitmentDescription": "Wählen Sie, wie viel Zeit Sie täglich zum Lernen aufwenden können.",
+    "@timeCommitmentDescription": {
+        "description": "Description text for time commitment selection"
+    },
+    "fiveMinutes": "⚡️ 5 Minuten täglich",
+    "@fiveMinutes": {
+        "description": "5 minutes time commitment option"
+    },
+    "tenMinutes": "⏱️ 10 Minuten täglich",
+    "@tenMinutes": {
+        "description": "10 minutes time commitment option"
+    },
+    "fifteenMinutes": "⏳ 15 Minuten täglich",
+    "@fifteenMinutes": {
+        "description": "15 minutes time commitment option"
+    },
+    "thirtyMinutes": "🕰️ 30 Minuten täglich",
+    "@thirtyMinutes": {
+        "description": "30 minutes time commitment option"
+    },
+    "topicSelectionTitle": "Welche Themen interessieren Sie?",
+    "@topicSelectionTitle": {
+        "description": "Title shown on the topic selection page"
+    },
+    "topicSelectionDescription": "Wählen Sie die Themen, die Sie am meisten interessieren.",
+    "@topicSelectionDescription": {
+        "description": "Description text for topic selection"
+    },
+    "topicSociety": "👥 Gesellschaft",
+    "@topicSociety": {
+        "description": "Society topic option"
+    },
+    "topicForeignLanguages": "🌏 Fremdsprachen",
+    "@topicForeignLanguages": {
+        "description": "Foreign languages topic option"
+    },
+    "topicHumanBody": "💪 Menschlicher Körper",
+    "@topicHumanBody": {
+        "description": "Human body topic option"
+    },
+    "topicEmotions": "😃 Emotionen",
+    "@topicEmotions": {
+        "description": "Emotions topic option"
+    },
+    "topicOther": "🔍 Andere",
+    "@topicOther": {
+        "description": "Other topics option"
+    },
+    "customizationLoadingTitleWithName": "Einen Moment, {name}! Wir personalisieren Ihre Wordstock-Erfahrung.",
+    "@customizationLoadingTitleWithName": {
+        "description": "Loading title with user's name on customization loading page",
+        "placeholders": {
+            "name": {
+                "type": "String"
+            }
+        }
+    },
+    "customizationLoadingTitle": "Einen Moment! Wir personalisieren Ihre Wordstock-Erfahrung.",
+    "@customizationLoadingTitle": {
+        "description": "Loading title on customization loading page"
+    },
+    "customizationCompleteTitleWithName": "Fertig, {name}! Ihre Wordstock-Erfahrung ist bereit.",
+    "@customizationCompleteTitleWithName": {
+        "description": "Complete title with user's name on customization loading page",
+        "placeholders": {
+            "name": {
+                "type": "String"
+            }
+        }
+    },
+    "customizationCompleteTitle": "Fertig! Ihre Wordstock-Erfahrung ist bereit.",
+    "@customizationCompleteTitle": {
+        "description": "Complete title on customization loading page"
+    },
+    "craftingExperienceTitle": "Wir erstellen Ihre",
+    "@craftingExperienceTitle": {
+        "description": "First part of the title on customization loading page"
+    },
+    "learningExperienceSubtitle": "Lernerfahrung...",
+    "@learningExperienceSubtitle": {
+        "description": "Second part of the title on customization loading page"
+    },
+    "profileSetupTitle": "Einrichtung Ihres Profils",
+    "@profileSetupTitle": {
+        "description": "Title for the first step in customization loading"
+    },
+    "forgetWordsQuestion": "Vergessen Sie oft neue Wörter, auch nachdem Sie sie mehrmals wiederholt haben?",
+    "@forgetWordsQuestion": {
+        "description": "Question about forgetting words in the customization process"
+    },
+    "learningPreferencesTitle": "Anpassung Ihrer Lernpräferenzen",
+    "@learningPreferencesTitle": {
+        "description": "Title for the second step in customization loading"
+    },
+    "readingConversationQuestion": "Fühlen Sie sich frustriert, wenn Sie ein Wort beim Lesen verstehen, es aber nicht in der Konversation verwenden können?",
+    "@readingConversationQuestion": {
+        "description": "Question about reading vs conversation in the customization process"
+    },
+    "growthAreasTitle": "Analyse Ihrer Wachstumsbereiche",
+    "@growthAreasTitle": {
+        "description": "Title for the third step in customization loading"
+    },
+    "progressFrustrationQuestion": "Machen Sie Fortschritte, haben aber das Gefühl, nicht schnell genug voranzukommen?",
+    "@progressFrustrationQuestion": {
+        "description": "Question about progress frustration in the customization process"
+    },
+    "buttonYes": "Ja",
+    "@buttonYes": {
+        "description": "Text for Yes button"
+    },
+    "buttonNo": "Nein",
+    "@buttonNo": {
+        "description": "Text for No button"
+    },
+    "toMoveForwardSpecify": "Um fortzufahren, geben Sie an",
+    "@toMoveForwardSpecify": {
+        "description": "Instruction text in the customization step"
+    },
+    "startLearning": "Lernen beginnen",
+    "@startLearning": {
+        "description": "Text for start learning button"
+    },
+    "analyzingPreferences": "Analyse Ihrer Präferenzen...",
+    "@analyzingPreferences": {
+        "description": "Text for analyzing preferences step"
+    },
+    "selectingWords": "Auswahl von Wörtern nach Ihrem Niveau...",
+    "@selectingWords": {
+        "description": "Text for selecting words step"
+    },
+    "personalizingPath": "Personalisierung Ihres Lernwegs...",
+    "@personalizingPath": {
+        "description": "Text for personalizing learning path step"
+    },
+    "creatingWordList": "Erstellung Ihrer persönlichen Wortliste...",
+    "@creatingWordList": {
+        "description": "Text for creating word list step"
+    },
+    "finalizingExperience": "Fertigstellung Ihrer Erfahrung...",
+    "@finalizingExperience": {
+        "description": "Text for finalizing experience step"
+    },
+    "practiceReminderTitle": "Ausgezeichneter Fortschritt!",
+    "@practiceReminderTitle": {
+        "description": "Title for practice reminder screen"
+    },
+    "practiceReminderDescription": "Sie haben {count} neue Wörter gelernt! Es ist der perfekte Zeitpunkt, um zu üben und Ihr Lernen zu festigen.",
+    "@practiceReminderDescription": {
+        "description": "Description for practice reminder screen with dynamic word count",
+        "placeholders": {
+            "count": {
+                "type": "int"
+            }
+        }
+    },
+    "startPractice": "Übung beginnen",
+    "@startPractice": {
+        "description": "Text for start practice button"
+    },
+    "continueLearning": "Weiterlernen",
+    "@continueLearning": {
+        "description": "Text for continue learning button"
+    },
+    "streakMilestoneTitle": "Lernserie erreicht!",
+    "@streakMilestoneTitle": {
+        "description": "Title shown on streak milestone celebration"
+    },
+    "streakDaysCount": "{count} Tage",
+    "@streakDaysCount": {
+        "description": "Text showing number of streak days",
+        "placeholders": {
+            "count": {
+                "type": "int"
+            }
+        }
+    },
+    "streakCongratulationsMessage": "Glückwunsch! Sie lernen seit {count} Tagen kontinuierlich. Machen Sie so weiter!",
+    "@streakCongratulationsMessage": {
+        "description": "Congratulatory message for streak milestone",
+        "placeholders": {
+            "count": {
+                "type": "int"
+            }
+        }
+    },
+    "streakCongratulationsMessageSingular": "Glückwunsch! Sie haben heute Ihre Lernreise begonnen. Machen Sie so weiter!",
+    "@streakCongratulationsMessageSingular": {
+        "description": "Congratulatory message for first day streak"
+    },
+    "streakCongratulationsMessagePlural": "Glückwunsch! Sie lernen seit {count} Tagen kontinuierlich. Machen Sie so weiter!",
+    "@streakCongratulationsMessagePlural": {
+        "description": "Congratulatory message for multiple day streak",
+        "placeholders": {
+            "count": {
+                "type": "int"
+            }
+        }
+    },
+    "keepGoing": "Weiter so!",
+    "@keepGoing": {
+        "description": "Text for button to dismiss streak milestone celebration"
+    },
+    "streakCongratulationsSingular": "Glückwunsch! Sie haben heute Ihre Lernreise begonnen. Machen Sie so weiter!",
+    "@streakCongratulationsSingular": {
+        "description": "Congratulatory message for first day streak"
+    },
+    "quizResultExcellent": "Ausgezeichnet!",
+    "@quizResultExcellent": {
+        "description": "Quiz result feedback for high scores (80%+)"
+    },
+    "quizResultGoodJob": "Gut gemacht!",
+    "@quizResultGoodJob": {
+        "description": "Quiz result feedback for good scores (60-79%)"
+    },
+    "quizResultNiceTry": "Guter Versuch!",
+    "@quizResultNiceTry": {
+        "description": "Quiz result feedback for moderate scores (40-59%)"
+    },
+    "quizResultKeepPracticing": "Weiter üben!",
+    "@quizResultKeepPracticing": {
+        "description": "Quiz result feedback for lower scores (below 40%)"
+    },
+    "quizCompleteMessage": "Sie haben den Vokabeltest abgeschlossen.",
+    "@quizCompleteMessage": {
+        "description": "Message shown when a quiz is completed"
+    },
+    "coinsEarned": "{count} Münzen verdient",
+    "@coinsEarned": {
+        "description": "Message showing how many coins were earned",
+        "placeholders": {
+            "count": {
+                "type": "int"
+            }
+        }
+    },
+    "quizResultSummary": "Sie haben {correct} von {total} Fragen richtig beantwortet.",
+    "@quizResultSummary": {
+        "description": "Summary of quiz performance",
+        "placeholders": {
+            "correct": {
+                "type": "int"
+            },
+            "total": {
+                "type": "int"
+            }
+        }
+    },
+    "playAgain": "Erneut spielen",
+    "@playAgain": {
+        "description": "Text for play again button"
+    },
+    "home": "Startseite",
+    "@home": {
+        "description": "Text for home button"
+    },
+    "exitConfirmationTitle": "Sind Sie sicher, dass Sie beenden möchten?",
+    "@exitConfirmationTitle": {
+        "description": "Title for exit confirmation dialog"
+    },
+    "exitConfirmationMessage": "Ihr Fortschritt wird nicht gespeichert.",
+    "@exitConfirmationMessage": {
+        "description": "Message for exit confirmation dialog"
+    },
+    "exit": "Beenden",
+    "@exit": {
+        "description": "Text for exit button"
+    },
+    "continueAction": "Weiter",
+    "@continueAction": {
+        "description": "Text for continue button"
+    },
+    "vocabularyQuiz": "Vokabeltest",
+    "@vocabularyQuiz": {
+        "description": "Title for vocabulary quiz"
+    },
+    "questionCounter": "{current}/{total}",
+    "@questionCounter": {
+        "description": "Question counter format",
+        "placeholders": {
+            "current": {
+                "type": "int"
+            },
+            "total": {
+                "type": "int"
+            }
+        }
+    },
+    "selectCorrectWord": "Wählen Sie das richtige Wort, um den Satz zu vervollständigen.",
+    "@selectCorrectWord": {
+        "description": "Instruction for vocabulary quiz"
+    },
+    "next": "Weiter",
+    "@next": {
+        "description": "Text for next button"
+    },
+    "finish": "Beenden",
+    "@finish": {
+        "description": "Text for finish button"
+    },
+    "noQuizQuestions": "Keine Fragen verfügbar",
+    "@noQuizQuestions": {
+        "description": "Message when no quiz questions are available"
+    },
+    "errorWithMessage": "Fehler: {message}",
+    "@errorWithMessage": {
+        "description": "Error message with details",
+        "placeholders": {
+            "message": {
+                "type": "String"
+            }
+        }
+    },
+    "commitmentPactTitle": "Verpflichtungspakt",
+    "@commitmentPactTitle": {
+        "description": "Title for the commitment pact page"
+    },
+    "commitmentPactIntro": "Ich möchte ",
+    "@commitmentPactIntro": {
+        "description": "Introduction text for the commitment pact"
+    },
+    "commitmentPactInnerNeeds": "mit meinen inneren Bedürfnissen verbunden bleiben",
+    "@commitmentPactInnerNeeds": {
+        "description": "Text about inner needs in the commitment pact"
+    },
+    "commitmentPactByLearning": " durch das Lernen von",
+    "@commitmentPactByLearning": {
+        "description": "Text connecting needs and learning amount"
+    },
+    "commitmentPactWordsPerDay": " {count} Wörtern täglich",
+    "@commitmentPactWordsPerDay": {
+        "description": "Text showing the number of words per day",
+        "placeholders": {
+            "count": {
+                "type": "int"
+            }
+        }
+    },
+    "commitmentPactHelpBecome": " um mir zu helfen, ein ",
+    "@commitmentPactHelpBecome": {
+        "description": "Text about helping to become something"
+    },
+    "commitmentPactVocabularyMaster": "Vokabelmeister zu werden.",
+    "@commitmentPactVocabularyMaster": {
+        "description": "Text for vocabulary master goal"
+    },
+    "commitmentPactTestChampion": "Testchampion zu werden.",
+    "@commitmentPactTestChampion": {
+        "description": "Text for test champion goal"
+    },
+    "commitmentPactCareerAchiever": "beruflich erfolgreich zu werden.",
+    "@commitmentPactCareerAchiever": {
+        "description": "Text for career achiever goal"
+    },
+    "commitmentPactLifelongLearner": "lebenslang Lernender zu werden.",
+    "@commitmentPactLifelongLearner": {
+        "description": "Text for lifelong learner goal"
+    },
+    "commitmentPactTrust": "Ich möchte und vertraue darauf, dass Wordstock AI mich führt und mir hilft, alle meine Verpflichtungen zu erfüllen.",
+    "@commitmentPactTrust": {
+        "description": "Text about trusting the app"
+    },
+    "commitmentPactButton": "Ich verpflichte mich, meine Ziele zu erreichen",
+    "@commitmentPactButton": {
+        "description": "Text for the commitment button"
+    },
+    "commitmentCongratulationsTitle": "Glückwunsch!",
+    "@commitmentCongratulationsTitle": {
+        "description": "Title for the commitment congratulations message"
+    },
+    "commitmentCongratulationsMessage": "Sie haben den ersten Schritt auf Ihrer Vokabellernreise gemacht. Ihre Verpflichtung wird Ihnen helfen, Ihre Ziele zu erreichen!",
+    "@commitmentCongratulationsMessage": {
+        "description": "Congratulations message after committing to goals"
+    },
+    "nextButton": "Weiter",
+    "@nextButton": {
+        "description": "Text for the next button after commitment"
+    },
+    "goalSelectionTitle": "Was ist Ihr Hauptlernziel?",
+    "@goalSelectionTitle": {
+        "description": "Title for the goal selection page"
+    },
+    "goalSelectionDescription": "Wählen Sie das Ziel, das Ihr Hauptlernziel am besten beschreibt.",
+    "@goalSelectionDescription": {
+        "description": "Description for the goal selection page"
+    },
+    "goalMasteringWords": "📚 Neue Wörter beherrschen",
+    "@goalMasteringWords": {
+        "description": "Goal option for mastering new words"
+    },
+    "goalImprovingMemory": "🧠 Gedächtnis verbessern",
+    "@goalImprovingMemory": {
+        "description": "Goal option for improving memory"
+    },
+    "goalSpeakingConfidence": "🗣️ Selbstbewusst sprechen",
+    "@goalSpeakingConfidence": {
+        "description": "Goal option for speaking with confidence"
+    },
+    "goalWritingClearly": "✍️ Klar schreiben",
+    "@goalWritingClearly": {
+        "description": "Goal option for writing more clearly"
+    },
+    "goalUnderstandingContent": "🧩 Inhalte verstehen",
+    "@goalUnderstandingContent": {
+        "description": "Goal option for understanding content"
+    },
+    "goalReachingLanguageGoals": "🎯 Sprachziele erreichen",
+    "@goalReachingLanguageGoals": {
+        "description": "Goal option for reaching language goals"
+    },
+    "weeklyProgress": "Wöchentlicher Fortschritt",
+    "@weeklyProgress": {
+        "description": "Title for weekly progress section"
+    },
+    "currentStreakSingular": "Aktuelle Serie: {count} Tag",
+    "@currentStreakSingular": {
+        "description": "Text showing current streak for one day",
+        "placeholders": {
+            "count": {
+                "type": "int"
+            }
+        }
+    },
+    "currentStreakPlural": "Aktuelle Serie: {count} Tage",
+    "@currentStreakPlural": {
+        "description": "Text showing current streak for multiple days",
+        "placeholders": {
+            "count": {
+                "type": "int"
+            }
+        }
+    },
+    "current": "Aktuell",
+    "@current": {
+        "description": "Label for current streak in stats"
+    },
+    "goal": "Ziel",
+    "@goal": {
+        "description": "Label for streak goal in stats"
+    },
+    "daysText": "{count} Tage",
+    "@daysText": {
+        "description": "Text showing number of days",
+        "placeholders": {
+            "count": {
+                "type": "int"
+            }
+        }
+    },
+    "percentToGoal": "{percent}% Ihres Ziels",
+    "@percentToGoal": {
+        "description": "Text showing percentage progress to goal",
+        "placeholders": {
+            "percent": {
+                "type": "int"
+            }
+        }
+    },
+    "streakMotivationMessage": "Halten Sie Ihre Serie aufrecht für bessere Lernergebnisse!",
+    "@streakMotivationMessage": {
+        "description": "Motivational message for maintaining streak"
+    },
+    "pointsProgressTitle": "Punktestand",
+    "@pointsProgressTitle": {
+        "description": "Title for the points progress bottom sheet"
+    },
+    "totalPoints": "Gesamtpunkte",
+    "@totalPoints": {
+        "description": "Label for total points display"
+    },
+    "pointsLearningJourney": "Ihre Lernreise",
+    "@pointsLearningJourney": {
+        "description": "Title for achievement levels section in points progress"
+    },
+    "achievementWordExplorer": "Worterforscher",
+    "@achievementWordExplorer": {
+        "description": "Name for beginner achievement level"
+    },
+    "achievementVocabularyBuilder": "Vokabelbauer",
+    "@achievementVocabularyBuilder": {
+        "description": "Name for intermediate achievement level"
+    },
+    "achievementLanguageMaster": "Sprachmeister",
+    "@achievementLanguageMaster": {
+        "description": "Name for advanced achievement level"
+    },
+    "pointsFormat": "{count} Punkte",
+    "@pointsFormat": {
+        "description": "Format for displaying points with the pts suffix",
+        "placeholders": {
+            "count": {
+                "type": "int",
+                "example": "100"
+            }
+        }
+    },
+    "pointsMotivationMessage": "Sammeln Sie weiter Punkte, um neue Erfolge freizuschalten!",
+    "@pointsMotivationMessage": {
+        "description": "Motivational message shown in the points progress bottom sheet"
+    },
+    "closeButton": "Schließen",
+    "@closeButton": {
+        "description": "Text for close button"
+    },
+    "chatWithAITitle": "Chatten Sie über \"{word}\"",
+    "@chatWithAITitle": {
+        "description": "Title for the chat with AI bottom sheet",
+        "placeholders": {
+            "word": {
+                "type": "String",
+                "example": "Eloquent"
+            }
+        }
+    },
+    "chatWithAIPlaceholder": "Stellen Sie eine Frage über \"{word}\"...",
+    "@chatWithAIPlaceholder": {
+        "description": "Placeholder text for the chat input field",
+        "placeholders": {
+            "word": {
+                "type": "String",
+                "example": "Eloquent"
+            }
+        }
+    },
+    "chatWithAIError": "Fehler: {message}",
+    "@chatWithAIError": {
+        "description": "Error message in the chat with AI",
+        "placeholders": {
+            "message": {
+                "type": "String",
+                "example": "Failed to connect"
+            }
+        }
+    },
+    "practiceButtonText": "Üben",
+    "@practiceButtonText": {
+        "description": "Text shown on the practice button for subscribed users"
+    },
+    "goProButtonText": "Pro werden",
+    "@goProButtonText": {
+        "description": "Text shown on the practice button for non-subscribed users"
+    },
+    "letsGrowTogether": "Lassen Sie uns zusammen wachsen! 🌱",
+    "@letsGrowTogether": {
+        "description": "Title for the review request dialog"
+    },
+    "reviewMotivationText": "Ihr Feedback hilft uns, eine bessere Lernerfahrung zu schaffen. Teilen Sie Ihre Gedanken und helfen Sie anderen, die Freude am Lernen zu entdecken!",
+    "@reviewMotivationText": {
+        "description": "Description text for the review request dialog"
+    },
+    "letsGrowTogetherButton": "Lassen Sie uns zusammen wachsen",
+    "@letsGrowTogetherButton": {
+        "description": "Text for the review dialog button"
+    },
+    "profileTitle": "Profil",
+    "@profileTitle": {
+        "description": "Title for the profile page"
+    },
+    "favoriteWords": "Lieblingswörter",
+    "@favoriteWords": {
+        "description": "Text for favorite words menu item"
+    },
+    "termsOfService": "Nutzungsbedingungen",
+    "@termsOfService": {
+        "description": "Text for terms of service menu item"
+    },
+    "privacyPolicy": "Datenschutzrichtlinie",
+    "@privacyPolicy": {
+        "description": "Text for privacy policy menu item"
+    },
+    "reviewUs": "Bewerten Sie uns",
+    "@reviewUs": {
+        "description": "Text for review us menu item"
+    },
+    "contactSupport": "Support kontaktieren",
+    "@contactSupport": {
+        "description": "Text for contact support menu item"
+    },
+    "onboardingStarted": "Onboarding gestartet",
+    "@onboardingStarted": {
+        "description": "Analytics event for onboarding start"
+    },
+    "onboardingCompleted": "Onboarding abgeschlossen",
+    "@onboardingCompleted": {
+        "description": "Analytics event for onboarding completion"
+    },
+    "onboardingPageView": "Onboarding-Seitenansicht: {pageName}",
+    "@onboardingPageView": {
+        "description": "Analytics event for onboarding page view",
+        "placeholders": {
+            "pageName": {
+                "type": "String"
+            }
+        }
+    },
+    "onboardingProgress": "Fortschritt: {progress}%",
+    "@onboardingProgress": {
+        "description": "Text showing onboarding progress percentage",
+        "placeholders": {
+            "progress": {
+                "type": "int"
+            }
+        }
+    },
+    "onboardingSkip": "Überspringen",
+    "@onboardingSkip": {
+        "description": "Text for skip button in onboarding"
+    },
+    "onboardingBack": "Zurück",
+    "@onboardingBack": {
+        "description": "Text for back button in onboarding"
+    },
+    "onboardingStar": "Stern",
+    "@onboardingStar": {
+        "description": "Accessibility label for star icon in onboarding"
+    },
+    "onboardingNext": "Weiter",
+    "@onboardingNext": {
+        "description": "Text for next button in onboarding"
+    },
+    "onboardingPrevious": "Zurück",
+    "@onboardingPrevious": {
+        "description": "Text for previous button in onboarding"
+    },
+    "onboardingProgressLabel": "Fortschritt",
+    "@onboardingProgressLabel": {
+        "description": "Label for progress indicator in onboarding"
+    }
+} 
