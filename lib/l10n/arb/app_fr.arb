@@ -1,34 +1,34 @@
 {
-    "@@locale": "en",
-    "welcomeTitle": "Welcome to Wordstock",
+    "@@locale": "fr",
+    "welcomeTitle": "Bienvenue sur Wordstock",
     "@welcomeTitle": {
         "description": "Text shown in the Welcome Page"
     },
-    "welcomeDescription": "Wordstock is a tool that helps you learn new words.",
+    "welcomeDescription": "Wordstock est un outil qui vous aide à apprendre de nouveaux mots.",
     "@welcomeDescription": {
         "description": "Text shown in the Welcome Page"
     },
-    "infoTitle": "Create a custom word list",
+    "infoTitle": "Créez une liste personnalisée de mots",
     "@infoTitle": {
         "description": "Text shown in the Info Page"
     },
-    "infoDescription": "Wordstock is a tool that helps you learn new words.",
+    "infoDescription": "Wordstock est un outil qui vous aide à apprendre de nouveaux mots.",
     "@infoDescription": {
         "description": "Text shown in the Info Page"
     },
-    "getStarted": "Get Started",
+    "getStarted": "Commencer",
     "@getStarted": {
         "description": "Text for get started button"
     },
-    "continueText": "Continue",
+    "continueText": "Continuer",
     "@continueText": {
         "description": "Text for continue button"
     },
-    "makeYoursTitle": "Let's make WordStock yours",
+    "makeYoursTitle": "Personnalisons WordStock pour vous",
     "@makeYoursTitle": {
         "description": "Title for personalization page"
     },
-    "makeYoursWithNameTitle": "Let's make WordStock yours, {name}",
+    "makeYoursWithNameTitle": "Personnalisons WordStock pour vous, {name}",
     "@makeYoursWithNameTitle": {
         "description": "Title for personalization page with user's name",
         "placeholders": {
@@ -37,79 +37,79 @@
             }
         }
     },
-    "personalizeDescription": "Some final questions to help us personalize your experience.",
+    "personalizeDescription": "Quelques questions finales pour nous aider à personnaliser votre expérience.",
     "@personalizeDescription": {
         "description": "Description for personalization pages"
     },
-    "favoriteWordsTitle": "Your Favorite Words",
+    "favoriteWordsTitle": "Vos Mots Favoris",
     "@favoriteWordsTitle": {
         "description": "Title for favorite words screen"
     },
-    "tryAgain": "Try Again",
+    "tryAgain": "Réessayer",
     "@tryAgain": {
         "description": "Text for try again button"
     },
-    "noFavoritesTitle": "No favorite words yet",
+    "noFavoritesTitle": "Pas encore de mots favoris",
     "@noFavoritesTitle": {
         "description": "Title shown when no favorite words exist"
     },
-    "noFavoritesDescription": "Start adding words to your favorites",
+    "noFavoritesDescription": "Commencez à ajouter des mots à vos favoris",
     "@noFavoritesDescription": {
         "description": "Description shown when no favorite words exist"
     },
-    "timeCommitmentTitle": "How much time will you devote to learning?",
+    "timeCommitmentTitle": "Combien de temps allez-vous consacrer à l'apprentissage ?",
     "@timeCommitmentTitle": {
         "description": "Title shown on the time commitment selection page"
     },
-    "timeCommitmentDescription": "Choose the amount of time you can commit to learning each day.",
+    "timeCommitmentDescription": "Choisissez le temps que vous pouvez consacrer à l'apprentissage chaque jour.",
     "@timeCommitmentDescription": {
         "description": "Description text for time commitment selection"
     },
-    "fiveMinutes": "⚡️ 5 minutes a day",
+    "fiveMinutes": "⚡️ 5 minutes par jour",
     "@fiveMinutes": {
         "description": "5 minutes time commitment option"
     },
-    "tenMinutes": "⏱️ 10 minutes a day",
+    "tenMinutes": "⏱️ 10 minutes par jour",
     "@tenMinutes": {
         "description": "10 minutes time commitment option"
     },
-    "fifteenMinutes": "⏳ 15 minutes a day",
+    "fifteenMinutes": "⏳ 15 minutes par jour",
     "@fifteenMinutes": {
         "description": "15 minutes time commitment option"
     },
-    "thirtyMinutes": "🕰️ 30 minutes a day",
+    "thirtyMinutes": "🕰️ 30 minutes par jour",
     "@thirtyMinutes": {
         "description": "30 minutes time commitment option"
     },
-    "topicSelectionTitle": "Which topics are you interested in?",
+    "topicSelectionTitle": "Quels sujets vous intéressent ?",
     "@topicSelectionTitle": {
         "description": "Title shown on the topic selection page"
     },
-    "topicSelectionDescription": "Select the topics that you are most interested in learning about.",
+    "topicSelectionDescription": "Sélectionnez les sujets qui vous intéressent le plus.",
     "@topicSelectionDescription": {
         "description": "Description text for topic selection"
     },
-    "topicSociety": "👥 Society",
+    "topicSociety": "👥 Société",
     "@topicSociety": {
         "description": "Society topic option"
     },
-    "topicForeignLanguages": "🌏 Foreign languages",
+    "topicForeignLanguages": "🌏 Langues étrangères",
     "@topicForeignLanguages": {
         "description": "Foreign languages topic option"
     },
-    "topicHumanBody": "💪 Human body",
+    "topicHumanBody": "💪 Corps humain",
     "@topicHumanBody": {
         "description": "Human body topic option"
     },
-    "topicEmotions": "😃 Emotions",
+    "topicEmotions": "😃 Émotions",
     "@topicEmotions": {
         "description": "Emotions topic option"
     },
-    "topicOther": "🔍 Other",
+    "topicOther": "🔍 Autres",
     "@topicOther": {
         "description": "Other topics option"
     },
-    "customizationLoadingTitleWithName": "Hang tight, {name}! We are personalizing your Wordstock experience.",
+    "customizationLoadingTitleWithName": "Un instant, {name} ! Nous personnalisons votre expérience Wordstock.",
     "@customizationLoadingTitleWithName": {
         "description": "Loading title with user's name on customization loading page",
         "placeholders": {
@@ -118,11 +118,11 @@
             }
         }
     },
-    "customizationLoadingTitle": "Hang tight! We are personalizing your Wordstock experience.",
+    "customizationLoadingTitle": "Un instant ! Nous personnalisons votre expérience Wordstock.",
     "@customizationLoadingTitle": {
         "description": "Loading title on customization loading page"
     },
-    "customizationCompleteTitleWithName": "All set, {name}! Your Wordstock experience is ready!",
+    "customizationCompleteTitleWithName": "Voilà, {name} ! Votre expérience Wordstock est prête.",
     "@customizationCompleteTitleWithName": {
         "description": "Complete title with user's name on customization loading page",
         "placeholders": {
@@ -131,83 +131,83 @@
             }
         }
     },
-    "customizationCompleteTitle": "All set! Your Wordstock experience is ready!",
+    "customizationCompleteTitle": "Voilà ! Votre expérience Wordstock est prête.",
     "@customizationCompleteTitle": {
         "description": "Complete title on customization loading page"
     },
-    "craftingExperienceTitle": "We are crafting your",
+    "craftingExperienceTitle": "Nous créons votre",
     "@craftingExperienceTitle": {
         "description": "First part of the title on customization loading page"
     },
-    "learningExperienceSubtitle": "Learning experience...",
+    "learningExperienceSubtitle": "Expérience d'apprentissage...",
     "@learningExperienceSubtitle": {
         "description": "Second part of the title on customization loading page"
     },
-    "profileSetupTitle": "Setting up your profile",
+    "profileSetupTitle": "Configuration de votre profil",
     "@profileSetupTitle": {
         "description": "Title for the first step in customization loading"
     },
-    "forgetWordsQuestion": "Do you often forget new words even after reviewing them several times?",
+    "forgetWordsQuestion": "Oubliez-vous souvent de nouveaux mots même après les avoir revus plusieurs fois ?",
     "@forgetWordsQuestion": {
         "description": "Question about forgetting words in the customization process"
     },
-    "learningPreferencesTitle": "Adjusting your learning preferences",
+    "learningPreferencesTitle": "Ajustement de vos préférences d'apprentissage",
     "@learningPreferencesTitle": {
         "description": "Title for the second step in customization loading"
     },
-    "readingConversationQuestion": "Do you feel frustrated when you understand a word while reading, but can't use it in conversation?",
+    "readingConversationQuestion": "Vous sentez-vous frustré lorsque vous comprenez un mot en lecture mais ne pouvez pas l'utiliser en conversation ?",
     "@readingConversationQuestion": {
         "description": "Question about reading vs conversation in the customization process"
     },
-    "growthAreasTitle": "Analyzing your growth areas",
+    "growthAreasTitle": "Analyse de vos domaines de croissance",
     "@growthAreasTitle": {
         "description": "Title for the third step in customization loading"
     },
-    "progressFrustrationQuestion": "Are you putting in the effort but still feel like you're not making fast progress?",
+    "progressFrustrationQuestion": "Faites-vous des efforts mais avez l'impression de ne pas progresser rapidement ?",
     "@progressFrustrationQuestion": {
         "description": "Question about progress frustration in the customization process"
     },
-    "buttonYes": "Yes",
+    "buttonYes": "Oui",
     "@buttonYes": {
         "description": "Text for Yes button"
     },
-    "buttonNo": "No",
+    "buttonNo": "Non",
     "@buttonNo": {
         "description": "Text for No button"
     },
-    "toMoveForwardSpecify": "To move forward, specify",
+    "toMoveForwardSpecify": "Pour continuer, spécifiez",
     "@toMoveForwardSpecify": {
         "description": "Instruction text in the customization step"
     },
-    "startLearning": "Start Learning",
+    "startLearning": "Commencer à Apprendre",
     "@startLearning": {
         "description": "Text for start learning button"
     },
-    "analyzingPreferences": "Analyzing your preferences...",
+    "analyzingPreferences": "Analyse de vos préférences...",
     "@analyzingPreferences": {
         "description": "Text for analyzing preferences step"
     },
-    "selectingWords": "Selecting words based on your level...",
+    "selectingWords": "Sélection des mots selon votre niveau...",
     "@selectingWords": {
         "description": "Text for selecting words step"
     },
-    "personalizingPath": "Personalizing your learning path...",
+    "personalizingPath": "Personnalisation de votre parcours d'apprentissage...",
     "@personalizingPath": {
         "description": "Text for personalizing learning path step"
     },
-    "creatingWordList": "Creating your custom word list...",
+    "creatingWordList": "Création de votre liste personnalisée de mots...",
     "@creatingWordList": {
         "description": "Text for creating word list step"
     },
-    "finalizingExperience": "Finalizing your experience...",
+    "finalizingExperience": "Finalisation de votre expérience...",
     "@finalizingExperience": {
         "description": "Text for finalizing experience step"
     },
-    "practiceReminderTitle": "Great progress!",
+    "practiceReminderTitle": "Excellent progrès !",
     "@practiceReminderTitle": {
         "description": "Title for practice reminder screen"
     },
-    "practiceReminderDescription": "You've learned {count} new words! Now is a perfect time to practice and reinforce your learning.",
+    "practiceReminderDescription": "Vous avez appris {count} nouveaux mots ! C'est le moment idéal pour pratiquer et renforcer votre apprentissage.",
     "@practiceReminderDescription": {
         "description": "Description for practice reminder screen with dynamic word count",
         "placeholders": {
@@ -216,19 +216,19 @@
             }
         }
     },
-    "startPractice": "Start Practice",
+    "startPractice": "Commencer la Pratique",
     "@startPractice": {
         "description": "Text for start practice button"
     },
-    "continueLearning": "Continue Learning",
+    "continueLearning": "Continuer l'Apprentissage",
     "@continueLearning": {
         "description": "Text for continue learning button"
     },
-    "streakMilestoneTitle": "Streak Milestone!",
+    "streakMilestoneTitle": "Objectif de Série Atteint !",
     "@streakMilestoneTitle": {
         "description": "Title shown on streak milestone celebration"
     },
-    "streakDaysCount": "{count} days",
+    "streakDaysCount": "{count} jours",
     "@streakDaysCount": {
         "description": "Text showing number of streak days",
         "placeholders": {
@@ -237,7 +237,7 @@
             }
         }
     },
-    "streakCongratulationsMessage": "Congratulations! You've been learning consistently for {count} days. Keep up the great work!",
+    "streakCongratulationsMessage": "Félicitations ! Vous apprenez de manière constante depuis {count} jours. Continuez ainsi !",
     "@streakCongratulationsMessage": {
         "description": "Congratulatory message for streak milestone",
         "placeholders": {
@@ -246,11 +246,11 @@
             }
         }
     },
-    "streakCongratulationsMessageSingular": "Congratulations! You've started your learning journey today. Keep it up!",
+    "streakCongratulationsMessageSingular": "Félicitations ! Vous avez commencé votre parcours d'apprentissage aujourd'hui. Continuez ainsi !",
     "@streakCongratulationsMessageSingular": {
         "description": "Congratulatory message for first day streak"
     },
-    "streakCongratulationsMessagePlural": "Congratulations! You've been learning consistently for {count} days. Keep up the great work!",
+    "streakCongratulationsMessagePlural": "Félicitations ! Vous apprenez de manière constante depuis {count} jours. Continuez ainsi !",
     "@streakCongratulationsMessagePlural": {
         "description": "Congratulatory message for multiple day streak",
         "placeholders": {
@@ -259,35 +259,35 @@
             }
         }
     },
-    "keepGoing": "Keep Going!",
+    "keepGoing": "Continuez !",
     "@keepGoing": {
         "description": "Text for button to dismiss streak milestone celebration"
     },
-    "streakCongratulationsSingular": "Congratulations! You've started your learning journey today. Keep it up!",
+    "streakCongratulationsSingular": "Félicitations ! Vous avez commencé votre parcours d'apprentissage aujourd'hui. Continuez ainsi !",
     "@streakCongratulationsSingular": {
         "description": "Congratulatory message for first day streak"
     },
-    "quizResultExcellent": "Excellent!",
+    "quizResultExcellent": "Excellent !",
     "@quizResultExcellent": {
         "description": "Quiz result feedback for high scores (80%+)"
     },
-    "quizResultGoodJob": "Good job!",
+    "quizResultGoodJob": "Bon travail !",
     "@quizResultGoodJob": {
         "description": "Quiz result feedback for good scores (60-79%)"
     },
-    "quizResultNiceTry": "Nice try!",
+    "quizResultNiceTry": "Bien essayé !",
     "@quizResultNiceTry": {
         "description": "Quiz result feedback for moderate scores (40-59%)"
     },
-    "quizResultKeepPracticing": "Keep practicing!",
+    "quizResultKeepPracticing": "Continuez à pratiquer !",
     "@quizResultKeepPracticing": {
         "description": "Quiz result feedback for lower scores (below 40%)"
     },
-    "quizCompleteMessage": "You've finished the vocabulary quiz.",
+    "quizCompleteMessage": "Vous avez terminé le quiz de vocabulaire.",
     "@quizCompleteMessage": {
         "description": "Message shown when a quiz is completed"
     },
-    "coinsEarned": "{count} coins earned",
+    "coinsEarned": "{count} pièces gagnées",
     "@coinsEarned": {
         "description": "Message showing how many coins were earned",
         "placeholders": {
@@ -296,7 +296,7 @@
             }
         }
     },
-    "quizResultSummary": "You answered {correct} out of {total} questions correctly.",
+    "quizResultSummary": "Vous avez répondu correctement à {correct} questions sur {total}.",
     "@quizResultSummary": {
         "description": "Summary of quiz performance",
         "placeholders": {
@@ -308,31 +308,31 @@
             }
         }
     },
-    "playAgain": "Play Again",
+    "playAgain": "Rejouer",
     "@playAgain": {
         "description": "Text for play again button"
     },
-    "home": "Home",
+    "home": "Accueil",
     "@home": {
         "description": "Text for home button"
     },
-    "exitConfirmationTitle": "Are you sure you want to exit?",
+    "exitConfirmationTitle": "Êtes-vous sûr de vouloir quitter ?",
     "@exitConfirmationTitle": {
         "description": "Title for exit confirmation dialog"
     },
-    "exitConfirmationMessage": "Your progress will not be saved.",
+    "exitConfirmationMessage": "Votre progression ne sera pas sauvegardée.",
     "@exitConfirmationMessage": {
         "description": "Message for exit confirmation dialog"
     },
-    "exit": "Exit",
+    "exit": "Quitter",
     "@exit": {
         "description": "Text for exit button"
     },
-    "continueAction": "Continue",
+    "continueAction": "Continuer",
     "@continueAction": {
         "description": "Text for continue button"
     },
-    "vocabularyQuiz": "Vocabulary Quiz",
+    "vocabularyQuiz": "Quiz de Vocabulaire",
     "@vocabularyQuiz": {
         "description": "Title for vocabulary quiz"
     },
@@ -348,23 +348,23 @@
             }
         }
     },
-    "selectCorrectWord": "Select the correct word to complete the sentence.",
+    "selectCorrectWord": "Sélectionnez le mot correct pour compléter la phrase.",
     "@selectCorrectWord": {
         "description": "Instruction for vocabulary quiz"
     },
-    "next": "Next",
+    "next": "Suivant",
     "@next": {
         "description": "Text for next button"
     },
-    "finish": "Finish",
+    "finish": "Terminer",
     "@finish": {
         "description": "Text for finish button"
     },
-    "noQuizQuestions": "No quiz questions available",
+    "noQuizQuestions": "Aucune question disponible",
     "@noQuizQuestions": {
         "description": "Message when no quiz questions are available"
     },
-    "errorWithMessage": "Error: {message}",
+    "errorWithMessage": "Erreur : {message}",
     "@errorWithMessage": {
         "description": "Error message with details",
         "placeholders": {
@@ -373,23 +373,23 @@
             }
         }
     },
-    "commitmentPactTitle": "Commitment Pact",
+    "commitmentPactTitle": "Pacte d'Engagement",
     "@commitmentPactTitle": {
         "description": "Title for the commitment pact page"
     },
-    "commitmentPactIntro": "I want to ",
+    "commitmentPactIntro": "Je veux ",
     "@commitmentPactIntro": {
         "description": "Introduction text for the commitment pact"
     },
-    "commitmentPactInnerNeeds": "stay connected to my inner needs",
+    "commitmentPactInnerNeeds": "rester connecté à mes besoins intérieurs",
     "@commitmentPactInnerNeeds": {
         "description": "Text about inner needs in the commitment pact"
     },
-    "commitmentPactByLearning": " by learning",
+    "commitmentPactByLearning": " en apprenant",
     "@commitmentPactByLearning": {
         "description": "Text connecting needs and learning amount"
     },
-    "commitmentPactWordsPerDay": " {count} words per day",
+    "commitmentPactWordsPerDay": " {count} mots par jour",
     "@commitmentPactWordsPerDay": {
         "description": "Text showing the number of words per day",
         "placeholders": {
@@ -398,83 +398,83 @@
             }
         }
     },
-    "commitmentPactHelpBecome": " to help me become ",
+    "commitmentPactHelpBecome": " pour m'aider à devenir ",
     "@commitmentPactHelpBecome": {
         "description": "Text about helping to become something"
     },
-    "commitmentPactVocabularyMaster": "vocabulary master.",
+    "commitmentPactVocabularyMaster": "maître du vocabulaire.",
     "@commitmentPactVocabularyMaster": {
         "description": "Text for vocabulary master goal"
     },
-    "commitmentPactTestChampion": "test champion.",
+    "commitmentPactTestChampion": "champion des tests.",
     "@commitmentPactTestChampion": {
         "description": "Text for test champion goal"
     },
-    "commitmentPactCareerAchiever": "career achiever.",
+    "commitmentPactCareerAchiever": "professionnel accompli.",
     "@commitmentPactCareerAchiever": {
         "description": "Text for career achiever goal"
     },
-    "commitmentPactLifelongLearner": "lifelong learner.",
+    "commitmentPactLifelongLearner": "apprenant à vie.",
     "@commitmentPactLifelongLearner": {
         "description": "Text for lifelong learner goal"
     },
-    "commitmentPactTrust": "I want and trust Wordstock AI to guide me along the way and help me accomplish all my resolutions.",
+    "commitmentPactTrust": "Je veux et je fais confiance à Wordstock AI pour me guider et m'aider à atteindre toutes mes résolutions.",
     "@commitmentPactTrust": {
         "description": "Text about trusting the app"
     },
-    "commitmentPactButton": "I commit to my Goals",
+    "commitmentPactButton": "Je m'engage à atteindre mes Objectifs",
     "@commitmentPactButton": {
         "description": "Text for the commitment button"
     },
-    "commitmentCongratulationsTitle": "Congratulations!",
+    "commitmentCongratulationsTitle": "Félicitations !",
     "@commitmentCongratulationsTitle": {
         "description": "Title for the commitment congratulations message"
     },
-    "commitmentCongratulationsMessage": "You've taken the first step on your vocabulary learning journey. Your commitment will help you reach your goals!",
+    "commitmentCongratulationsMessage": "Vous avez fait le premier pas dans votre parcours d'apprentissage du vocabulaire. Votre engagement vous aidera à atteindre vos objectifs !",
     "@commitmentCongratulationsMessage": {
         "description": "Congratulations message after committing to goals"
     },
-    "nextButton": "Next",
+    "nextButton": "Suivant",
     "@nextButton": {
         "description": "Text for the next button after commitment"
     },
-    "goalSelectionTitle": "What is your primary learning goal?",
+    "goalSelectionTitle": "Quel est votre objectif principal d'apprentissage ?",
     "@goalSelectionTitle": {
         "description": "Title for the goal selection page"
     },
-    "goalSelectionDescription": "Select the goal that best describes your main learning objective.",
+    "goalSelectionDescription": "Sélectionnez l'objectif qui décrit le mieux votre principal objectif d'apprentissage.",
     "@goalSelectionDescription": {
         "description": "Description for the goal selection page"
     },
-    "goalMasteringWords": "📚 Mastering new words",
+    "goalMasteringWords": "📚 Maîtriser de nouveaux mots",
     "@goalMasteringWords": {
         "description": "Goal option for mastering new words"
     },
-    "goalImprovingMemory": "🧠 Improving memory",
+    "goalImprovingMemory": "🧠 Améliorer la mémoire",
     "@goalImprovingMemory": {
         "description": "Goal option for improving memory"
     },
-    "goalSpeakingConfidence": "🗣️ Speaking with confidence",
+    "goalSpeakingConfidence": "🗣️ Parler avec confiance",
     "@goalSpeakingConfidence": {
         "description": "Goal option for speaking with confidence"
     },
-    "goalWritingClearly": "✍️ Writing more clearly",
+    "goalWritingClearly": "✍️ Écrire plus clairement",
     "@goalWritingClearly": {
         "description": "Goal option for writing more clearly"
     },
-    "goalUnderstandingContent": "🧩 Understanding content",
+    "goalUnderstandingContent": "🧩 Comprendre le contenu",
     "@goalUnderstandingContent": {
         "description": "Goal option for understanding content"
     },
-    "goalReachingLanguageGoals": "🎯 Reaching language goals",
+    "goalReachingLanguageGoals": "🎯 Atteindre les objectifs linguistiques",
     "@goalReachingLanguageGoals": {
         "description": "Goal option for reaching language goals"
     },
-    "weeklyProgress": "Weekly Progress",
+    "weeklyProgress": "Progrès Hebdomadaire",
     "@weeklyProgress": {
         "description": "Title for weekly progress section"
     },
-    "currentStreakSingular": "Current Streak: {count} day",
+    "currentStreakSingular": "Série actuelle : {count} jour",
     "@currentStreakSingular": {
         "description": "Text showing current streak for one day",
         "placeholders": {
@@ -483,7 +483,7 @@
             }
         }
     },
-    "currentStreakPlural": "Current Streak: {count} days",
+    "currentStreakPlural": "Série actuelle : {count} jours",
     "@currentStreakPlural": {
         "description": "Text showing current streak for multiple days",
         "placeholders": {
@@ -492,15 +492,15 @@
             }
         }
     },
-    "current": "Current",
+    "current": "Actuel",
     "@current": {
         "description": "Label for current streak in stats"
     },
-    "goal": "Goal",
+    "goal": "Objectif",
     "@goal": {
         "description": "Label for streak goal in stats"
     },
-    "daysText": "{count} days",
+    "daysText": "{count} jours",
     "@daysText": {
         "description": "Text showing number of days",
         "placeholders": {
@@ -509,7 +509,7 @@
             }
         }
     },
-    "percentToGoal": "{percent}% to your goal",
+    "percentToGoal": "{percent}% de votre objectif",
     "@percentToGoal": {
         "description": "Text showing percentage progress to goal",
         "placeholders": {
@@ -518,31 +518,31 @@
             }
         }
     },
-    "streakMotivationMessage": "Keep up your streak for better learning results!",
+    "streakMotivationMessage": "Maintenez votre série pour de meilleurs résultats d'apprentissage !",
     "@streakMotivationMessage": {
         "description": "Motivational message for maintaining streak"
     },
-    "pointsProgressTitle": "Points Progress",
+    "pointsProgressTitle": "Progrès des Points",
     "@pointsProgressTitle": {
         "description": "Title for the points progress bottom sheet"
     },
-    "totalPoints": "Total Points",
+    "totalPoints": "Points Totaux",
     "@totalPoints": {
         "description": "Label for total points display"
     },
-    "pointsLearningJourney": "Your Learning Journey",
+    "pointsLearningJourney": "Votre Parcours d'Apprentissage",
     "@pointsLearningJourney": {
         "description": "Title for achievement levels section in points progress"
     },
-    "achievementWordExplorer": "Word Explorer",
+    "achievementWordExplorer": "Explorateur de Mots",
     "@achievementWordExplorer": {
         "description": "Name for beginner achievement level"
     },
-    "achievementVocabularyBuilder": "Vocabulary Builder",
+    "achievementVocabularyBuilder": "Constructeur de Vocabulaire",
     "@achievementVocabularyBuilder": {
         "description": "Name for intermediate achievement level"
     },
-    "achievementLanguageMaster": "Language Master",
+    "achievementLanguageMaster": "Maître des Langues",
     "@achievementLanguageMaster": {
         "description": "Name for advanced achievement level"
     },
@@ -556,15 +556,15 @@
             }
         }
     },
-    "pointsMotivationMessage": "Keep earning points to unlock new achievements!",
+    "pointsMotivationMessage": "Continuez à gagner des points pour débloquer de nouveaux accomplissements !",
     "@pointsMotivationMessage": {
         "description": "Motivational message shown in the points progress bottom sheet"
     },
-    "closeButton": "Close",
+    "closeButton": "Fermer",
     "@closeButton": {
         "description": "Text for close button"
     },
-    "chatWithAITitle": "Chat about \"{word}\"",
+    "chatWithAITitle": "Discutez à propos de \"{word}\"",
     "@chatWithAITitle": {
         "description": "Title for the chat with AI bottom sheet",
         "placeholders": {
@@ -574,7 +574,7 @@
             }
         }
     },
-    "chatWithAIPlaceholder": "Ask a question about \"{word}\"...",
+    "chatWithAIPlaceholder": "Posez une question à propos de \"{word}\"...",
     "@chatWithAIPlaceholder": {
         "description": "Placeholder text for the chat input field",
         "placeholders": {
@@ -584,7 +584,7 @@
             }
         }
     },
-    "chatWithAIError": "Error: {message}",
+    "chatWithAIError": "Erreur : {message}",
     "@chatWithAIError": {
         "description": "Error message in the chat with AI",
         "placeholders": {
@@ -594,59 +594,59 @@
             }
         }
     },
-    "practiceButtonText": "Practice",
+    "practiceButtonText": "Pratiquer",
     "@practiceButtonText": {
         "description": "Text shown on the practice button for subscribed users"
     },
-    "goProButtonText": "Go Pro",
+    "goProButtonText": "Passez Pro",
     "@goProButtonText": {
         "description": "Text shown on the practice button for non-subscribed users"
     },
-    "letsGrowTogether": "Let's Grow Together! 🌱",
+    "letsGrowTogether": "Grandissons Ensemble ! 🌱",
     "@letsGrowTogether": {
         "description": "Title for the review request dialog"
     },
-    "reviewMotivationText": "Your feedback helps us create a better learning experience. Share your thoughts and help others discover the joy of learning!",
+    "reviewMotivationText": "Votre retour nous aide à créer une meilleure expérience d'apprentissage. Partagez vos pensées et aidez les autres à découvrir la joie d'apprendre !",
     "@reviewMotivationText": {
         "description": "Description text for the review request dialog"
     },
-    "letsGrowTogetherButton": "Let's Grow Together",
+    "letsGrowTogetherButton": "Grandissons Ensemble",
     "@letsGrowTogetherButton": {
         "description": "Text for the review dialog button"
     },
-    "profileTitle": "Profile",
+    "profileTitle": "Profil",
     "@profileTitle": {
         "description": "Title for the profile page"
     },
-    "favoriteWords": "Favorite Words",
+    "favoriteWords": "Mots Favoris",
     "@favoriteWords": {
         "description": "Text for favorite words menu item"
     },
-    "termsOfService": "Terms of Service",
+    "termsOfService": "Conditions d'Utilisation",
     "@termsOfService": {
         "description": "Text for terms of service menu item"
     },
-    "privacyPolicy": "Privacy Policy",
+    "privacyPolicy": "Politique de Confidentialité",
     "@privacyPolicy": {
         "description": "Text for privacy policy menu item"
     },
-    "reviewUs": "Review Us",
+    "reviewUs": "Évaluez-nous",
     "@reviewUs": {
         "description": "Text for review us menu item"
     },
-    "contactSupport": "Contact Support",
+    "contactSupport": "Contacter le Support",
     "@contactSupport": {
         "description": "Text for contact support menu item"
     },
-    "onboardingStarted": "Onboarding Started",
+    "onboardingStarted": "Onboarding Commencé",
     "@onboardingStarted": {
         "description": "Analytics event for onboarding start"
     },
-    "onboardingCompleted": "Onboarding Completed",
+    "onboardingCompleted": "Onboarding Terminé",
     "@onboardingCompleted": {
         "description": "Analytics event for onboarding completion"
     },
-    "onboardingPageView": "Onboarding Page View: {pageName}",
+    "onboardingPageView": "Vue de Page d'Onboarding : {pageName}",
     "@onboardingPageView": {
         "description": "Analytics event for onboarding page view",
         "placeholders": {
@@ -655,7 +655,7 @@
             }
         }
     },
-    "onboardingProgress": "Progress: {progress}%",
+    "onboardingProgress": "Progrès : {progress}%",
     "@onboardingProgress": {
         "description": "Text showing onboarding progress percentage",
         "placeholders": {
@@ -664,28 +664,28 @@
             }
         }
     },
-    "onboardingSkip": "Skip",
+    "onboardingSkip": "Passer",
     "@onboardingSkip": {
         "description": "Text for skip button in onboarding"
     },
-    "onboardingBack": "Back",
+    "onboardingBack": "Retour",
     "@onboardingBack": {
         "description": "Text for back button in onboarding"
     },
-    "onboardingStar": "Star",
+    "onboardingStar": "Étoile",
     "@onboardingStar": {
         "description": "Accessibility label for star icon in onboarding"
     },
-    "onboardingNext": "Next",
+    "onboardingNext": "Suivant",
     "@onboardingNext": {
         "description": "Text for next button in onboarding"
     },
-    "onboardingPrevious": "Previous",
+    "onboardingPrevious": "Précédent",
     "@onboardingPrevious": {
         "description": "Text for previous button in onboarding"
     },
-    "onboardingProgressLabel": "Progress",
+    "onboardingProgressLabel": "Progrès",
     "@onboardingProgressLabel": {
         "description": "Label for progress indicator in onboarding"
     }
-}
+} 

@@ -170,6 +170,7 @@ class OnboardingAppBar extends StatefulWidget {
 class _OnboardingAppBarState extends State<OnboardingAppBar> {
   @override
   Widget build(BuildContext context) {
+    final l10n = context.l10n;
     final shouldShowAppBar = widget.currentPage > 1;
 
     return AnimatedOpacity(
@@ -186,9 +187,16 @@ class _OnboardingAppBarState extends State<OnboardingAppBar> {
               text: '',
               suffixIcon: Icons.arrow_back_ios,
               onTap: widget.onBack,
+              tooltip: l10n.onboardingBack,
             ),
             const SizedBox(width: 10),
-            Expanded(child: ProgressBar(progress: widget.progress)),
+            Expanded(
+              child: Semantics(
+                label: l10n.onboardingProgressLabel,
+                value: '${(widget.progress * 100).round()}%',
+                child: ProgressBar(progress: widget.progress),
+              ),
+            ),
             const SizedBox(width: 10),
             Container(
               width: 45,
@@ -197,9 +205,10 @@ class _OnboardingAppBarState extends State<OnboardingAppBar> {
                 color: Colors.grey.shade200,
                 shape: BoxShape.circle,
               ),
-              child: const Icon(
+              child: Icon(
                 Icons.star_rounded,
-                color: Color(0xFF77D728),
+                color: const Color(0xFF77D728),
+                semanticLabel: l10n.onboardingStar,
               ),
             ),
           ],

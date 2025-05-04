@@ -1,34 +1,34 @@
 {
-    "@@locale": "en",
-    "welcomeTitle": "Welcome to Wordstock",
+    "@@locale": "hi",
+    "welcomeTitle": "वर्डस्टॉक में आपका स्वागत है",
     "@welcomeTitle": {
         "description": "Text shown in the Welcome Page"
     },
-    "welcomeDescription": "Wordstock is a tool that helps you learn new words.",
+    "welcomeDescription": "वर्डस्टॉक एक ऐसा टूल है जो आपको नए शब्द सीखने में मदद करता है।",
     "@welcomeDescription": {
         "description": "Text shown in the Welcome Page"
     },
-    "infoTitle": "Create a custom word list",
+    "infoTitle": "अपनी खुद की शब्द सूची बनाएं",
     "@infoTitle": {
         "description": "Text shown in the Info Page"
     },
-    "infoDescription": "Wordstock is a tool that helps you learn new words.",
+    "infoDescription": "वर्डस्टॉक एक ऐसा टूल है जो आपको नए शब्द सीखने में मदद करता है।",
     "@infoDescription": {
         "description": "Text shown in the Info Page"
     },
-    "getStarted": "Get Started",
+    "getStarted": "शुरू करें",
     "@getStarted": {
         "description": "Text for get started button"
     },
-    "continueText": "Continue",
+    "continueText": "जारी रखें",
     "@continueText": {
         "description": "Text for continue button"
     },
-    "makeYoursTitle": "Let's make WordStock yours",
+    "makeYoursTitle": "वर्डस्टॉक को अपना बनाएं",
     "@makeYoursTitle": {
         "description": "Title for personalization page"
     },
-    "makeYoursWithNameTitle": "Let's make WordStock yours, {name}",
+    "makeYoursWithNameTitle": "वर्डस्टॉक को अपना बनाएं, {name}",
     "@makeYoursWithNameTitle": {
         "description": "Title for personalization page with user's name",
         "placeholders": {
@@ -37,79 +37,79 @@
             }
         }
     },
-    "personalizeDescription": "Some final questions to help us personalize your experience.",
+    "personalizeDescription": "आपके अनुभव को व्यक्तिगत बनाने के लिए कुछ अंतिम प्रश्न।",
     "@personalizeDescription": {
         "description": "Description for personalization pages"
     },
-    "favoriteWordsTitle": "Your Favorite Words",
+    "favoriteWordsTitle": "आपके पसंदीदा शब्द",
     "@favoriteWordsTitle": {
         "description": "Title for favorite words screen"
     },
-    "tryAgain": "Try Again",
+    "tryAgain": "पुनः प्रयास करें",
     "@tryAgain": {
         "description": "Text for try again button"
     },
-    "noFavoritesTitle": "No favorite words yet",
+    "noFavoritesTitle": "अभी तक कोई पसंदीदा शब्द नहीं हैं",
     "@noFavoritesTitle": {
         "description": "Title shown when no favorite words exist"
     },
-    "noFavoritesDescription": "Start adding words to your favorites",
+    "noFavoritesDescription": "अपने पसंदीदा शब्दों को जोड़ना शुरू करें",
     "@noFavoritesDescription": {
         "description": "Description shown when no favorite words exist"
     },
-    "timeCommitmentTitle": "How much time will you devote to learning?",
+    "timeCommitmentTitle": "आप सीखने के लिए कितना समय देंगे?",
     "@timeCommitmentTitle": {
         "description": "Title shown on the time commitment selection page"
     },
-    "timeCommitmentDescription": "Choose the amount of time you can commit to learning each day.",
+    "timeCommitmentDescription": "प्रतिदिन सीखने के लिए आप कितना समय दे सकते हैं, चुनें।",
     "@timeCommitmentDescription": {
         "description": "Description text for time commitment selection"
     },
-    "fiveMinutes": "⚡️ 5 minutes a day",
+    "fiveMinutes": "⚡️ प्रतिदिन 5 मिनट",
     "@fiveMinutes": {
         "description": "5 minutes time commitment option"
     },
-    "tenMinutes": "⏱️ 10 minutes a day",
+    "tenMinutes": "⏱️ प्रतिदिन 10 मिनट",
     "@tenMinutes": {
         "description": "10 minutes time commitment option"
     },
-    "fifteenMinutes": "⏳ 15 minutes a day",
+    "fifteenMinutes": "⏳ प्रतिदिन 15 मिनट",
     "@fifteenMinutes": {
         "description": "15 minutes time commitment option"
     },
-    "thirtyMinutes": "🕰️ 30 minutes a day",
+    "thirtyMinutes": "🕰️ प्रतिदिन 30 मिनट",
     "@thirtyMinutes": {
         "description": "30 minutes time commitment option"
     },
-    "topicSelectionTitle": "Which topics are you interested in?",
+    "topicSelectionTitle": "आपको कौन से विषय रुचिकर लगते हैं?",
     "@topicSelectionTitle": {
         "description": "Title shown on the topic selection page"
     },
-    "topicSelectionDescription": "Select the topics that you are most interested in learning about.",
+    "topicSelectionDescription": "वे विषय चुनें जो आपको सबसे अधिक रुचिकर लगते हैं।",
     "@topicSelectionDescription": {
         "description": "Description text for topic selection"
     },
-    "topicSociety": "👥 Society",
+    "topicSociety": "👥 समाज",
     "@topicSociety": {
         "description": "Society topic option"
     },
-    "topicForeignLanguages": "🌏 Foreign languages",
+    "topicForeignLanguages": "🌏 विदेशी भाषाएं",
     "@topicForeignLanguages": {
         "description": "Foreign languages topic option"
     },
-    "topicHumanBody": "💪 Human body",
+    "topicHumanBody": "💪 मानव शरीर",
     "@topicHumanBody": {
         "description": "Human body topic option"
     },
-    "topicEmotions": "😃 Emotions",
+    "topicEmotions": "😃 भावनाएं",
     "@topicEmotions": {
         "description": "Emotions topic option"
     },
-    "topicOther": "🔍 Other",
+    "topicOther": "🔍 अन्य",
     "@topicOther": {
         "description": "Other topics option"
     },
-    "customizationLoadingTitleWithName": "Hang tight, {name}! We are personalizing your Wordstock experience.",
+    "customizationLoadingTitleWithName": "एक पल, {name}! हम आपका वर्डस्टॉक अनुभव व्यक्तिगत बना रहे हैं।",
     "@customizationLoadingTitleWithName": {
         "description": "Loading title with user's name on customization loading page",
         "placeholders": {
@@ -118,11 +118,11 @@
             }
         }
     },
-    "customizationLoadingTitle": "Hang tight! We are personalizing your Wordstock experience.",
+    "customizationLoadingTitle": "एक पल! हम आपका वर्डस्टॉक अनुभव व्यक्तिगत बना रहे हैं।",
     "@customizationLoadingTitle": {
         "description": "Loading title on customization loading page"
     },
-    "customizationCompleteTitleWithName": "All set, {name}! Your Wordstock experience is ready!",
+    "customizationCompleteTitleWithName": "तैयार है, {name}! आपका वर्डस्टॉक अनुभव तैयार है।",
     "@customizationCompleteTitleWithName": {
         "description": "Complete title with user's name on customization loading page",
         "placeholders": {
@@ -131,83 +131,83 @@
             }
         }
     },
-    "customizationCompleteTitle": "All set! Your Wordstock experience is ready!",
+    "customizationCompleteTitle": "तैयार है! आपका वर्डस्टॉक अनुभव तैयार है।",
     "@customizationCompleteTitle": {
         "description": "Complete title on customization loading page"
     },
-    "craftingExperienceTitle": "We are crafting your",
+    "craftingExperienceTitle": "हम बना रहे हैं आपका",
     "@craftingExperienceTitle": {
         "description": "First part of the title on customization loading page"
     },
-    "learningExperienceSubtitle": "Learning experience...",
+    "learningExperienceSubtitle": "सीखने का अनुभव...",
     "@learningExperienceSubtitle": {
         "description": "Second part of the title on customization loading page"
     },
-    "profileSetupTitle": "Setting up your profile",
+    "profileSetupTitle": "आपकी प्रोफ़ाइल सेटअप",
     "@profileSetupTitle": {
         "description": "Title for the first step in customization loading"
     },
-    "forgetWordsQuestion": "Do you often forget new words even after reviewing them several times?",
+    "forgetWordsQuestion": "क्या आप अक्सर नए शब्दों को कई बार दोहराने के बाद भी भूल जाते हैं?",
     "@forgetWordsQuestion": {
         "description": "Question about forgetting words in the customization process"
     },
-    "learningPreferencesTitle": "Adjusting your learning preferences",
+    "learningPreferencesTitle": "आपकी सीखने की प्राथमिकताएं समायोजित करना",
     "@learningPreferencesTitle": {
         "description": "Title for the second step in customization loading"
     },
-    "readingConversationQuestion": "Do you feel frustrated when you understand a word while reading, but can't use it in conversation?",
+    "readingConversationQuestion": "क्या आप निराश होते हैं जब आप पढ़ते समय एक शब्द समझ लेते हैं लेकिन बातचीत में उसका उपयोग नहीं कर पाते?",
     "@readingConversationQuestion": {
         "description": "Question about reading vs conversation in the customization process"
     },
-    "growthAreasTitle": "Analyzing your growth areas",
+    "growthAreasTitle": "आपके विकास के क्षेत्रों का विश्लेषण",
     "@growthAreasTitle": {
         "description": "Title for the third step in customization loading"
     },
-    "progressFrustrationQuestion": "Are you putting in the effort but still feel like you're not making fast progress?",
+    "progressFrustrationQuestion": "क्या आप प्रयास कर रहे हैं लेकिन फिर भी तेजी से प्रगति नहीं कर पा रहे हैं?",
     "@progressFrustrationQuestion": {
         "description": "Question about progress frustration in the customization process"
     },
-    "buttonYes": "Yes",
+    "buttonYes": "हाँ",
     "@buttonYes": {
         "description": "Text for Yes button"
     },
-    "buttonNo": "No",
+    "buttonNo": "नहीं",
     "@buttonNo": {
         "description": "Text for No button"
     },
-    "toMoveForwardSpecify": "To move forward, specify",
+    "toMoveForwardSpecify": "आगे बढ़ने के लिए, निर्दिष्ट करें",
     "@toMoveForwardSpecify": {
         "description": "Instruction text in the customization step"
     },
-    "startLearning": "Start Learning",
+    "startLearning": "सीखना शुरू करें",
     "@startLearning": {
         "description": "Text for start learning button"
     },
-    "analyzingPreferences": "Analyzing your preferences...",
+    "analyzingPreferences": "आपकी प्राथमिकताओं का विश्लेषण...",
     "@analyzingPreferences": {
         "description": "Text for analyzing preferences step"
     },
-    "selectingWords": "Selecting words based on your level...",
+    "selectingWords": "आपके स्तर के अनुसार शब्दों का चयन...",
     "@selectingWords": {
         "description": "Text for selecting words step"
     },
-    "personalizingPath": "Personalizing your learning path...",
+    "personalizingPath": "आपके सीखने के मार्ग को व्यक्तिगत बनाना...",
     "@personalizingPath": {
         "description": "Text for personalizing learning path step"
     },
-    "creatingWordList": "Creating your custom word list...",
+    "creatingWordList": "आपकी व्यक्तिगत शब्द सूची बनाना...",
     "@creatingWordList": {
         "description": "Text for creating word list step"
     },
-    "finalizingExperience": "Finalizing your experience...",
+    "finalizingExperience": "आपके अनुभव को अंतिम रूप देना...",
     "@finalizingExperience": {
         "description": "Text for finalizing experience step"
     },
-    "practiceReminderTitle": "Great progress!",
+    "practiceReminderTitle": "उत्कृष्ट प्रगति!",
     "@practiceReminderTitle": {
         "description": "Title for practice reminder screen"
     },
-    "practiceReminderDescription": "You've learned {count} new words! Now is a perfect time to practice and reinforce your learning.",
+    "practiceReminderDescription": "आपने {count} नए शब्द सीखे हैं! अभ्यास करने और अपने सीखने को मजबूत करने का यह सही समय है।",
     "@practiceReminderDescription": {
         "description": "Description for practice reminder screen with dynamic word count",
         "placeholders": {
@@ -216,19 +216,19 @@
             }
         }
     },
-    "startPractice": "Start Practice",
+    "startPractice": "अभ्यास शुरू करें",
     "@startPractice": {
         "description": "Text for start practice button"
     },
-    "continueLearning": "Continue Learning",
+    "continueLearning": "सीखना जारी रखें",
     "@continueLearning": {
         "description": "Text for continue learning button"
     },
-    "streakMilestoneTitle": "Streak Milestone!",
+    "streakMilestoneTitle": "लगातार सीखने का लक्ष्य पूरा!",
     "@streakMilestoneTitle": {
         "description": "Title shown on streak milestone celebration"
     },
-    "streakDaysCount": "{count} days",
+    "streakDaysCount": "{count} दिन",
     "@streakDaysCount": {
         "description": "Text showing number of streak days",
         "placeholders": {
@@ -237,7 +237,7 @@
             }
         }
     },
-    "streakCongratulationsMessage": "Congratulations! You've been learning consistently for {count} days. Keep up the great work!",
+    "streakCongratulationsMessage": "बधाई हो! आप {count} दिनों से लगातार सीख रहे हैं। इसी तरह जारी रखें!",
     "@streakCongratulationsMessage": {
         "description": "Congratulatory message for streak milestone",
         "placeholders": {
@@ -246,11 +246,11 @@
             }
         }
     },
-    "streakCongratulationsMessageSingular": "Congratulations! You've started your learning journey today. Keep it up!",
+    "streakCongratulationsMessageSingular": "बधाई हो! आपने आज अपना सीखने का सफर शुरू किया है। इसी तरह जारी रखें!",
     "@streakCongratulationsMessageSingular": {
         "description": "Congratulatory message for first day streak"
     },
-    "streakCongratulationsMessagePlural": "Congratulations! You've been learning consistently for {count} days. Keep up the great work!",
+    "streakCongratulationsMessagePlural": "बधाई हो! आप {count} दिनों से लगातार सीख रहे हैं। इसी तरह जारी रखें!",
     "@streakCongratulationsMessagePlural": {
         "description": "Congratulatory message for multiple day streak",
         "placeholders": {
@@ -259,35 +259,35 @@
             }
         }
     },
-    "keepGoing": "Keep Going!",
+    "keepGoing": "जारी रखें!",
     "@keepGoing": {
         "description": "Text for button to dismiss streak milestone celebration"
     },
-    "streakCongratulationsSingular": "Congratulations! You've started your learning journey today. Keep it up!",
+    "streakCongratulationsSingular": "बधाई हो! आपने आज अपना सीखने का सफर शुरू किया है। इसी तरह जारी रखें!",
     "@streakCongratulationsSingular": {
         "description": "Congratulatory message for first day streak"
     },
-    "quizResultExcellent": "Excellent!",
+    "quizResultExcellent": "उत्कृष्ट!",
     "@quizResultExcellent": {
         "description": "Quiz result feedback for high scores (80%+)"
     },
-    "quizResultGoodJob": "Good job!",
+    "quizResultGoodJob": "बहुत अच्छा!",
     "@quizResultGoodJob": {
         "description": "Quiz result feedback for good scores (60-79%)"
     },
-    "quizResultNiceTry": "Nice try!",
+    "quizResultNiceTry": "अच्छा प्रयास!",
     "@quizResultNiceTry": {
         "description": "Quiz result feedback for moderate scores (40-59%)"
     },
-    "quizResultKeepPracticing": "Keep practicing!",
+    "quizResultKeepPracticing": "अभ्यास जारी रखें!",
     "@quizResultKeepPracticing": {
         "description": "Quiz result feedback for lower scores (below 40%)"
     },
-    "quizCompleteMessage": "You've finished the vocabulary quiz.",
+    "quizCompleteMessage": "आपने शब्दावली प्रश्नोत्तरी पूरी कर ली है।",
     "@quizCompleteMessage": {
         "description": "Message shown when a quiz is completed"
     },
-    "coinsEarned": "{count} coins earned",
+    "coinsEarned": "{count} सिक्के अर्जित किए",
     "@coinsEarned": {
         "description": "Message showing how many coins were earned",
         "placeholders": {
@@ -296,7 +296,7 @@
             }
         }
     },
-    "quizResultSummary": "You answered {correct} out of {total} questions correctly.",
+    "quizResultSummary": "आपने {correct} प्रश्नों में से {total} प्रश्नों के सही उत्तर दिए।",
     "@quizResultSummary": {
         "description": "Summary of quiz performance",
         "placeholders": {
@@ -308,31 +308,31 @@
             }
         }
     },
-    "playAgain": "Play Again",
+    "playAgain": "फिर से खेलें",
     "@playAgain": {
         "description": "Text for play again button"
     },
-    "home": "Home",
+    "home": "होम",
     "@home": {
         "description": "Text for home button"
     },
-    "exitConfirmationTitle": "Are you sure you want to exit?",
+    "exitConfirmationTitle": "क्या आप वाकई बाहर निकलना चाहते हैं?",
     "@exitConfirmationTitle": {
         "description": "Title for exit confirmation dialog"
     },
-    "exitConfirmationMessage": "Your progress will not be saved.",
+    "exitConfirmationMessage": "आपकी प्रगति सहेजी नहीं जाएगी।",
     "@exitConfirmationMessage": {
         "description": "Message for exit confirmation dialog"
     },
-    "exit": "Exit",
+    "exit": "बाहर निकलें",
     "@exit": {
         "description": "Text for exit button"
     },
-    "continueAction": "Continue",
+    "continueAction": "जारी रखें",
     "@continueAction": {
         "description": "Text for continue button"
     },
-    "vocabularyQuiz": "Vocabulary Quiz",
+    "vocabularyQuiz": "शब्दावली प्रश्नोत्तरी",
     "@vocabularyQuiz": {
         "description": "Title for vocabulary quiz"
     },
@@ -348,23 +348,23 @@
             }
         }
     },
-    "selectCorrectWord": "Select the correct word to complete the sentence.",
+    "selectCorrectWord": "वाक्य को पूरा करने के लिए सही शब्द चुनें।",
     "@selectCorrectWord": {
         "description": "Instruction for vocabulary quiz"
     },
-    "next": "Next",
+    "next": "अगला",
     "@next": {
         "description": "Text for next button"
     },
-    "finish": "Finish",
+    "finish": "समाप्त करें",
     "@finish": {
         "description": "Text for finish button"
     },
-    "noQuizQuestions": "No quiz questions available",
+    "noQuizQuestions": "कोई प्रश्न उपलब्ध नहीं है",
     "@noQuizQuestions": {
         "description": "Message when no quiz questions are available"
     },
-    "errorWithMessage": "Error: {message}",
+    "errorWithMessage": "त्रुटि: {message}",
     "@errorWithMessage": {
         "description": "Error message with details",
         "placeholders": {
@@ -373,23 +373,23 @@
             }
         }
     },
-    "commitmentPactTitle": "Commitment Pact",
+    "commitmentPactTitle": "प्रतिबद्धता का वचन",
     "@commitmentPactTitle": {
         "description": "Title for the commitment pact page"
     },
-    "commitmentPactIntro": "I want to ",
+    "commitmentPactIntro": "मैं चाहता हूं ",
     "@commitmentPactIntro": {
         "description": "Introduction text for the commitment pact"
     },
-    "commitmentPactInnerNeeds": "stay connected to my inner needs",
+    "commitmentPactInnerNeeds": "अपनी आंतरिक जरूरतों से जुड़े रहना",
     "@commitmentPactInnerNeeds": {
         "description": "Text about inner needs in the commitment pact"
     },
-    "commitmentPactByLearning": " by learning",
+    "commitmentPactByLearning": " सीखकर",
     "@commitmentPactByLearning": {
         "description": "Text connecting needs and learning amount"
     },
-    "commitmentPactWordsPerDay": " {count} words per day",
+    "commitmentPactWordsPerDay": " {count} शब्द प्रतिदिन",
     "@commitmentPactWordsPerDay": {
         "description": "Text showing the number of words per day",
         "placeholders": {
@@ -398,83 +398,83 @@
             }
         }
     },
-    "commitmentPactHelpBecome": " to help me become ",
+    "commitmentPactHelpBecome": " मुझे बनने में मदद करने के लिए ",
     "@commitmentPactHelpBecome": {
         "description": "Text about helping to become something"
     },
-    "commitmentPactVocabularyMaster": "vocabulary master.",
+    "commitmentPactVocabularyMaster": "शब्दावली के मास्टर।",
     "@commitmentPactVocabularyMaster": {
         "description": "Text for vocabulary master goal"
     },
-    "commitmentPactTestChampion": "test champion.",
+    "commitmentPactTestChampion": "परीक्षा के चैंपियन।",
     "@commitmentPactTestChampion": {
         "description": "Text for test champion goal"
     },
-    "commitmentPactCareerAchiever": "career achiever.",
+    "commitmentPactCareerAchiever": "कैरियर में सफल।",
     "@commitmentPactCareerAchiever": {
         "description": "Text for career achiever goal"
     },
-    "commitmentPactLifelongLearner": "lifelong learner.",
+    "commitmentPactLifelongLearner": "जीवन भर का शिक्षार्थी।",
     "@commitmentPactLifelongLearner": {
         "description": "Text for lifelong learner goal"
     },
-    "commitmentPactTrust": "I want and trust Wordstock AI to guide me along the way and help me accomplish all my resolutions.",
+    "commitmentPactTrust": "मैं चाहता हूं और मुझे विश्वास है कि वर्डस्टॉक AI मुझे मार्गदर्शन करेगा और मेरी सभी प्रतिबद्धताओं को पूरा करने में मेरी मदद करेगा।",
     "@commitmentPactTrust": {
         "description": "Text about trusting the app"
     },
-    "commitmentPactButton": "I commit to my Goals",
+    "commitmentPactButton": "मैं अपने लक्ष्यों के प्रति प्रतिबद्ध हूं",
     "@commitmentPactButton": {
         "description": "Text for the commitment button"
     },
-    "commitmentCongratulationsTitle": "Congratulations!",
+    "commitmentCongratulationsTitle": "बधाई हो!",
     "@commitmentCongratulationsTitle": {
         "description": "Title for the commitment congratulations message"
     },
-    "commitmentCongratulationsMessage": "You've taken the first step on your vocabulary learning journey. Your commitment will help you reach your goals!",
+    "commitmentCongratulationsMessage": "आपने शब्दावली सीखने की अपनी यात्रा में पहला कदम उठाया है। आपकी प्रतिबद्धता आपको अपने लक्ष्यों को प्राप्त करने में मदद करेगी!",
     "@commitmentCongratulationsMessage": {
         "description": "Congratulations message after committing to goals"
     },
-    "nextButton": "Next",
+    "nextButton": "अगला",
     "@nextButton": {
         "description": "Text for the next button after commitment"
     },
-    "goalSelectionTitle": "What is your primary learning goal?",
+    "goalSelectionTitle": "आपका मुख्य सीखने का लक्ष्य क्या है?",
     "@goalSelectionTitle": {
         "description": "Title for the goal selection page"
     },
-    "goalSelectionDescription": "Select the goal that best describes your main learning objective.",
+    "goalSelectionDescription": "वह लक्ष्य चुनें जो आपके मुख्य सीखने के लक्ष्य का सबसे अच्छा वर्णन करता है।",
     "@goalSelectionDescription": {
         "description": "Description for the goal selection page"
     },
-    "goalMasteringWords": "📚 Mastering new words",
+    "goalMasteringWords": "📚 नए शब्दों में महारत हासिल करना",
     "@goalMasteringWords": {
         "description": "Goal option for mastering new words"
     },
-    "goalImprovingMemory": "🧠 Improving memory",
+    "goalImprovingMemory": "🧠 स्मृति में सुधार करना",
     "@goalImprovingMemory": {
         "description": "Goal option for improving memory"
     },
-    "goalSpeakingConfidence": "🗣️ Speaking with confidence",
+    "goalSpeakingConfidence": "🗣️ आत्मविश्वास से बोलना",
     "@goalSpeakingConfidence": {
         "description": "Goal option for speaking with confidence"
     },
-    "goalWritingClearly": "✍️ Writing more clearly",
+    "goalWritingClearly": "✍️ स्पष्ट रूप से लिखना",
     "@goalWritingClearly": {
         "description": "Goal option for writing more clearly"
     },
-    "goalUnderstandingContent": "🧩 Understanding content",
+    "goalUnderstandingContent": "🧩 सामग्री को समझना",
     "@goalUnderstandingContent": {
         "description": "Goal option for understanding content"
     },
-    "goalReachingLanguageGoals": "🎯 Reaching language goals",
+    "goalReachingLanguageGoals": "🎯 भाषा के लक्ष्यों को प्राप्त करना",
     "@goalReachingLanguageGoals": {
         "description": "Goal option for reaching language goals"
     },
-    "weeklyProgress": "Weekly Progress",
+    "weeklyProgress": "साप्ताहिक प्रगति",
     "@weeklyProgress": {
         "description": "Title for weekly progress section"
     },
-    "currentStreakSingular": "Current Streak: {count} day",
+    "currentStreakSingular": "वर्तमान स्ट्रीक: {count} दिन",
     "@currentStreakSingular": {
         "description": "Text showing current streak for one day",
         "placeholders": {
@@ -483,7 +483,7 @@
             }
         }
     },
-    "currentStreakPlural": "Current Streak: {count} days",
+    "currentStreakPlural": "वर्तमान स्ट्रीक: {count} दिन",
     "@currentStreakPlural": {
         "description": "Text showing current streak for multiple days",
         "placeholders": {
@@ -492,15 +492,15 @@
             }
         }
     },
-    "current": "Current",
+    "current": "वर्तमान",
     "@current": {
         "description": "Label for current streak in stats"
     },
-    "goal": "Goal",
+    "goal": "लक्ष्य",
     "@goal": {
         "description": "Label for streak goal in stats"
     },
-    "daysText": "{count} days",
+    "daysText": "{count} दिन",
     "@daysText": {
         "description": "Text showing number of days",
         "placeholders": {
@@ -509,7 +509,7 @@
             }
         }
     },
-    "percentToGoal": "{percent}% to your goal",
+    "percentToGoal": "आपके लक्ष्य का {percent}%",
     "@percentToGoal": {
         "description": "Text showing percentage progress to goal",
         "placeholders": {
@@ -518,35 +518,35 @@
             }
         }
     },
-    "streakMotivationMessage": "Keep up your streak for better learning results!",
+    "streakMotivationMessage": "बेहतर सीखने के परिणामों के लिए अपनी स्ट्रीक बनाए रखें!",
     "@streakMotivationMessage": {
         "description": "Motivational message for maintaining streak"
     },
-    "pointsProgressTitle": "Points Progress",
+    "pointsProgressTitle": "अंकों की प्रगति",
     "@pointsProgressTitle": {
         "description": "Title for the points progress bottom sheet"
     },
-    "totalPoints": "Total Points",
+    "totalPoints": "कुल अंक",
     "@totalPoints": {
         "description": "Label for total points display"
     },
-    "pointsLearningJourney": "Your Learning Journey",
+    "pointsLearningJourney": "आपकी सीखने की यात्रा",
     "@pointsLearningJourney": {
         "description": "Title for achievement levels section in points progress"
     },
-    "achievementWordExplorer": "Word Explorer",
+    "achievementWordExplorer": "शब्द अन्वेषक",
     "@achievementWordExplorer": {
         "description": "Name for beginner achievement level"
     },
-    "achievementVocabularyBuilder": "Vocabulary Builder",
+    "achievementVocabularyBuilder": "शब्दावली निर्माता",
     "@achievementVocabularyBuilder": {
         "description": "Name for intermediate achievement level"
     },
-    "achievementLanguageMaster": "Language Master",
+    "achievementLanguageMaster": "भाषा के मास्टर",
     "@achievementLanguageMaster": {
         "description": "Name for advanced achievement level"
     },
-    "pointsFormat": "{count} pts",
+    "pointsFormat": "{count} अंक",
     "@pointsFormat": {
         "description": "Format for displaying points with the pts suffix",
         "placeholders": {
@@ -556,15 +556,15 @@
             }
         }
     },
-    "pointsMotivationMessage": "Keep earning points to unlock new achievements!",
+    "pointsMotivationMessage": "नए उपलब्धियों को अनलॉक करने के लिए अंक अर्जित करना जारी रखें!",
     "@pointsMotivationMessage": {
         "description": "Motivational message shown in the points progress bottom sheet"
     },
-    "closeButton": "Close",
+    "closeButton": "बंद करें",
     "@closeButton": {
         "description": "Text for close button"
     },
-    "chatWithAITitle": "Chat about \"{word}\"",
+    "chatWithAITitle": "\"{word}\" के बारे में चैट करें",
     "@chatWithAITitle": {
         "description": "Title for the chat with AI bottom sheet",
         "placeholders": {
@@ -574,7 +574,7 @@
             }
         }
     },
-    "chatWithAIPlaceholder": "Ask a question about \"{word}\"...",
+    "chatWithAIPlaceholder": "\"{word}\" के बारे में कोई प्रश्न पूछें...",
     "@chatWithAIPlaceholder": {
         "description": "Placeholder text for the chat input field",
         "placeholders": {
@@ -584,7 +584,7 @@
             }
         }
     },
-    "chatWithAIError": "Error: {message}",
+    "chatWithAIError": "त्रुटि: {message}",
     "@chatWithAIError": {
         "description": "Error message in the chat with AI",
         "placeholders": {
@@ -594,59 +594,59 @@
             }
         }
     },
-    "practiceButtonText": "Practice",
+    "practiceButtonText": "अभ्यास करें",
     "@practiceButtonText": {
         "description": "Text shown on the practice button for subscribed users"
     },
-    "goProButtonText": "Go Pro",
+    "goProButtonText": "प्रो बनें",
     "@goProButtonText": {
         "description": "Text shown on the practice button for non-subscribed users"
     },
-    "letsGrowTogether": "Let's Grow Together! 🌱",
+    "letsGrowTogether": "आइए साथ बढ़ें! 🌱",
     "@letsGrowTogether": {
         "description": "Title for the review request dialog"
     },
-    "reviewMotivationText": "Your feedback helps us create a better learning experience. Share your thoughts and help others discover the joy of learning!",
+    "reviewMotivationText": "आपकी प्रतिक्रिया हमें एक बेहतर सीखने का अनुभव बनाने में मदद करती है। अपने विचार साझा करें और दूसरों को सीखने की खुशी खोजने में मदद करें!",
     "@reviewMotivationText": {
         "description": "Description text for the review request dialog"
     },
-    "letsGrowTogetherButton": "Let's Grow Together",
+    "letsGrowTogetherButton": "आइए साथ बढ़ें",
     "@letsGrowTogetherButton": {
         "description": "Text for the review dialog button"
     },
-    "profileTitle": "Profile",
+    "profileTitle": "प्रोफ़ाइल",
     "@profileTitle": {
         "description": "Title for the profile page"
     },
-    "favoriteWords": "Favorite Words",
+    "favoriteWords": "पसंदीदा शब्द",
     "@favoriteWords": {
         "description": "Text for favorite words menu item"
     },
-    "termsOfService": "Terms of Service",
+    "termsOfService": "सेवा की शर्तें",
     "@termsOfService": {
         "description": "Text for terms of service menu item"
     },
-    "privacyPolicy": "Privacy Policy",
+    "privacyPolicy": "गोपनीयता नीति",
     "@privacyPolicy": {
         "description": "Text for privacy policy menu item"
     },
-    "reviewUs": "Review Us",
+    "reviewUs": "हमें रेट करें",
     "@reviewUs": {
         "description": "Text for review us menu item"
     },
-    "contactSupport": "Contact Support",
+    "contactSupport": "सहायता से संपर्क करें",
     "@contactSupport": {
         "description": "Text for contact support menu item"
     },
-    "onboardingStarted": "Onboarding Started",
+    "onboardingStarted": "ऑनबोर्डिंग शुरू हुई",
     "@onboardingStarted": {
         "description": "Analytics event for onboarding start"
     },
-    "onboardingCompleted": "Onboarding Completed",
+    "onboardingCompleted": "ऑनबोर्डिंग पूर्ण हुई",
     "@onboardingCompleted": {
         "description": "Analytics event for onboarding completion"
     },
-    "onboardingPageView": "Onboarding Page View: {pageName}",
+    "onboardingPageView": "ऑनबोर्डिंग पेज दृश्य: {pageName}",
     "@onboardingPageView": {
         "description": "Analytics event for onboarding page view",
         "placeholders": {
@@ -655,7 +655,7 @@
             }
         }
     },
-    "onboardingProgress": "Progress: {progress}%",
+    "onboardingProgress": "प्रगति: {progress}%",
     "@onboardingProgress": {
         "description": "Text showing onboarding progress percentage",
         "placeholders": {
@@ -664,28 +664,28 @@
             }
         }
     },
-    "onboardingSkip": "Skip",
+    "onboardingSkip": "छोड़ें",
     "@onboardingSkip": {
         "description": "Text for skip button in onboarding"
     },
-    "onboardingBack": "Back",
+    "onboardingBack": "वापस",
     "@onboardingBack": {
         "description": "Text for back button in onboarding"
     },
-    "onboardingStar": "Star",
+    "onboardingStar": "तारा",
     "@onboardingStar": {
         "description": "Accessibility label for star icon in onboarding"
     },
-    "onboardingNext": "Next",
+    "onboardingNext": "अगला",
     "@onboardingNext": {
         "description": "Text for next button in onboarding"
     },
-    "onboardingPrevious": "Previous",
+    "onboardingPrevious": "पिछला",
     "@onboardingPrevious": {
         "description": "Text for previous button in onboarding"
     },
-    "onboardingProgressLabel": "Progress",
+    "onboardingProgressLabel": "प्रगति",
     "@onboardingProgressLabel": {
         "description": "Label for progress indicator in onboarding"
     }
-}
+} 

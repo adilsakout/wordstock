@@ -17,6 +17,7 @@ class PushableButton extends StatefulWidget {
     this.suffixIcon,
     this.prefixIcon,
     this.spacing = 0.0,
+    this.tooltip,
   });
   final double width;
   final double height;
@@ -30,6 +31,7 @@ class PushableButton extends StatefulWidget {
   final IconData? prefixIcon;
   final double spacing;
   final double iconSize;
+  final String? tooltip;
   @override
   PushableButtonState createState() => PushableButtonState();
 }
@@ -71,7 +73,7 @@ class PushableButtonState extends State<PushableButton>
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
+    Widget button = GestureDetector(
       onTapDown: _handleTapDown,
       onTapUp: _handleTapUp,
       onTapCancel: _handleTapCancel,
@@ -145,5 +147,14 @@ class PushableButtonState extends State<PushableButton>
         ),
       ),
     );
+
+    if (widget.tooltip != null) {
+      button = Tooltip(
+        message: widget.tooltip,
+        child: button,
+      );
+    }
+
+    return button;
   }
 }
