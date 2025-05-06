@@ -2,6 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:logger/logger.dart';
 import 'package:posthog_flutter/posthog_flutter.dart';
+import 'package:wordstock/services/tracking_service.dart';
 
 /// Service class for handling PostHog analytics
 class PosthogService {
@@ -23,6 +24,15 @@ class PosthogService {
     }
 
     try {
+      // Request tracking authorization before initializing PostHog
+      final isTrackingAuthorized =
+          await TrackingService.instance.requestTrackingAuthorization();
+      if (!isTrackingAuthorized) {
+        _logger.w(
+          'PostHog will be initialized with limited functionality',
+        );
+      }
+
       final apiKey = dotenv.env['POSTHOG_API_KEY'];
       if (apiKey == null) {
         throw Exception('PostHog API key not found in .env');
@@ -37,8 +47,12 @@ class PosthogService {
         ..host = 'https://us.i.posthog.com';
       await Posthog().setup(config);
 
-      // Enable tracking
-      await Posthog().enable();
+      // Enable tracking only if authorized
+      if (isTrackingAuthorized) {
+        await Posthog().enable();
+      } else {
+        await Posthog().disable();
+      }
 
       _isInitialized = true;
       _logger.i('PostHog initialized successfully');
@@ -57,12 +71,17 @@ class PosthogService {
     String eventName, {
     Map<String, Object>? properties,
   }) async {
+    if (!_isInitialized) {
+      _logger.w('PostHog not initialized, skipping event: $eventName');
+      return;
+    }
+
     try {
       await Posthog().capture(
         eventName: eventName,
         properties: properties,
       );
-      _logger.d('Tracked event: $eventName');
+      _logger.i('Tracked event: $eventName');
     } catch (e, stackTrace) {
       _logger.e(
         'Failed to track event: $eventName',
