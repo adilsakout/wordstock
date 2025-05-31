@@ -3,6 +3,8 @@ PODS:
     - Flutter
   - app_links (0.0.2):
     - Flutter
+  - app_tracking_transparency (0.0.1):
+    - Flutter
   - audioplayers_darwin (0.0.1):
     - Flutter
   - BranchSDK (3.9.1)
@@ -117,6 +119,7 @@ PODS:
 DEPENDENCIES:
   - advanced_in_app_review (from `.symlinks/plugins/advanced_in_app_review/ios`)
   - app_links (from `.symlinks/plugins/app_links/ios`)
+  - app_tracking_transparency (from `.symlinks/plugins/app_tracking_transparency/ios`)
   - audioplayers_darwin (from `.symlinks/plugins/audioplayers_darwin/ios`)
   - connectivity_plus (from `.symlinks/plugins/connectivity_plus/ios`)
   - Flutter (from `Flutter`)
@@ -157,6 +160,8 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/advanced_in_app_review/ios"
   app_links:
     :path: ".symlinks/plugins/app_links/ios"
+  app_tracking_transparency:
+    :path: ".symlinks/plugins/app_tracking_transparency/ios"
   audioplayers_darwin:
     :path: ".symlinks/plugins/audioplayers_darwin/ios"
   connectivity_plus:
@@ -203,6 +208,7 @@ EXTERNAL SOURCES:
 SPEC CHECKSUMS:
   advanced_in_app_review: fe8fd50b8670cb3dbe67e4c26ca643f7aea8dbb8
   app_links: f3e17e4ee5e357b39d8b95290a9b2c299fca71c6
+  app_tracking_transparency: e169b653478da7bb15a6c61209015378ca73e375
   audioplayers_darwin: 877d9a4d06331c5c374595e46e16453ac7eafa40
   BranchSDK: a12f9aa63d7ba562fdff5509d4aed081f1098ec0
   connectivity_plus: bf0076dd84a130856aa636df1c71ccaff908fa1d

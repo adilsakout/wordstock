@@ -684,5 +684,24 @@
     "@onboardingPrevious": {
         "description": "Text for previous button in onboarding"
     },
-    "onboardingProgressLabel": "Progreso"
+    "onboardingProgressLabel": "Progreso",
+    "@onboardingProgressLabel": {
+        "description": "Label for progress indicator in onboarding"
+    },
+    "onboardingReviewTitle": "¿Te gusta WordStock? ⭐",
+    "@onboardingReviewTitle": {
+        "description": "Title for the onboarding review request page"
+    },
+    "onboardingReviewSubtitle": "Tu reseña nos ayuda a llegar a más amantes de las palabras y mejorar nuestra aplicación. ¡Solo toma un momento!",
+    "@onboardingReviewSubtitle": {
+        "description": "Subtitle text for the onboarding review request page"
+    },
+    "onboardingReviewButton": "⭐ Calificar WordStock",
+    "@onboardingReviewButton": {
+        "description": "Button text for the review request in onboarding"
+    },
+    "onboardingReviewSkip": "Tal vez más tarde",
+    "@onboardingReviewSkip": {
+        "description": "Skip text for the review request in onboarding"
+    }
 } 

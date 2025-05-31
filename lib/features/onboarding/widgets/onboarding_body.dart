@@ -9,6 +9,7 @@ import 'package:wordstock/features/onboarding/widgets/onboarding_pages/goal_sele
 import 'package:wordstock/features/onboarding/widgets/onboarding_pages/info_page.dart';
 import 'package:wordstock/features/onboarding/widgets/onboarding_pages/name_input_page.dart';
 import 'package:wordstock/features/onboarding/widgets/onboarding_pages/notification_permission_page.dart';
+import 'package:wordstock/features/onboarding/widgets/onboarding_pages/review_request_page.dart';
 import 'package:wordstock/features/onboarding/widgets/onboarding_pages/streak_goal_page.dart';
 import 'package:wordstock/features/onboarding/widgets/onboarding_pages/vocabulary_level_page.dart';
 import 'package:wordstock/gen/assets.gen.dart';
@@ -33,6 +34,7 @@ const onboardingPages = [
   'Topic Selection',
   'Streak Goal',
   'Commitment Pact',
+  'Review Request',
   'Customization Loading',
 ];
 
@@ -135,6 +137,7 @@ class _OnboardingBodyState extends State<OnboardingBody> {
                     const GoalSelectionPage(),
                     const StreakGoalPage(),
                     const CommitmentPactPage(),
+                    const ReviewRequestPage(),
                     CustomizationLoadingPage(
                       onComplete: _onOnboardingComplete,
                     ),

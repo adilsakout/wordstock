@@ -687,5 +687,21 @@
     "onboardingProgressLabel": "प्रगति",
     "@onboardingProgressLabel": {
         "description": "Label for progress indicator in onboarding"
+    },
+    "onboardingReviewTitle": "क्या आपको WordStock पसंद है? ⭐",
+    "@onboardingReviewTitle": {
+        "description": "Title for the onboarding review request page"
+    },
+    "onboardingReviewSubtitle": "आपकी समीक्षा हमें अधिक शब्द प्रेमियों तक पहुंचने और हमारे ऐप को बेहतर बनाने में मदद करती है। इसमें केवल एक पल लगता है!",
+    "@onboardingReviewSubtitle": {
+        "description": "Subtitle text for the onboarding review request page"
+    },
+    "onboardingReviewButton": "⭐ WordStock को रेट करें",
+    "@onboardingReviewButton": {
+        "description": "Button text for the review request in onboarding"
+    },
+    "onboardingReviewSkip": "शायद बाद में",
+    "@onboardingReviewSkip": {
+        "description": "Skip text for the review request in onboarding"
     }
 } 

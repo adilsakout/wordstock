@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:wordstock/features/onboarding/cubit/onboarding_cubit.dart';
 import 'package:wordstock/features/onboarding/widgets/selector.dart';
+import 'package:wordstock/l10n/arb/app_localizations.dart';
 import 'package:wordstock/l10n/l10n.dart';
 
 class GoalSelectionPage extends StatelessWidget {

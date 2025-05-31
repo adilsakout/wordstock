@@ -5,6 +5,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:gaimon/gaimon.dart';
 import 'package:wordstock/features/onboarding/onboarding.dart';
 import 'package:wordstock/gen/assets.gen.dart';
+import 'package:wordstock/l10n/arb/app_localizations.dart';
 import 'package:wordstock/l10n/l10n.dart';
 import 'package:wordstock/widgets/button.dart';
 
