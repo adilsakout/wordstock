@@ -1,6 +1,6 @@
 name: wordstock
 description: A Very Good Project created by Very Good CLI.
-version: 1.1.0+21
+version: 1.1.0+22
 publish_to: none
 
 environment:
@@ -55,7 +55,6 @@ dependencies:
   shimmer: ^3.0.0
   supabase_flutter: ^2.8.4
   url_launcher: ^6.3.1
-  
 
 dev_dependencies:
   bloc_test: ^9.1.7
