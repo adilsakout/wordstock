@@ -20,7 +20,7 @@ class OnboardingCubit extends Cubit<OnboardingState> {
   }
   // Define totalPages here or pass it as a parameter
 
-  static const int totalPages = 12;
+  static const int totalPages = 13;
   final PageController pageController = PageController();
   final UserRepository _userRepository;
 
@@ -140,6 +140,11 @@ class OnboardingCubit extends Cubit<OnboardingState> {
 
   void selectGoal(String goal) {
     emit(state.copyWith(selectedGoals: [...state.selectedGoals, goal]));
+  }
+
+  /// Sets the English test result percentage
+  void setEnglishTestResult(int percentage) {
+    emit(state.copyWith(englishTestResult: percentage));
   }
 
   /// Convert gender index to string representation

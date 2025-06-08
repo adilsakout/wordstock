@@ -703,5 +703,49 @@
     "onboardingReviewSkip": "शायद बाद में",
     "@onboardingReviewSkip": {
         "description": "Skip text for the review request in onboarding"
+    },
+    "onboardingEnglishTestTitle": "त्वरित अंग्रेजी मूल्यांकन 📝",
+    "@onboardingEnglishTestTitle": {
+        "description": "Title for the English test onboarding page"
+    },
+    "onboardingEnglishTestSubtitle": "आइए 10-प्रश्न परीक्षा के साथ आपके शब्दावली स्तर का आकलन करते हैं। यह हमें आपके सीखने के अनुभव को व्यक्तिगत बनाने में मदद करता है!",
+    "@onboardingEnglishTestSubtitle": {
+        "description": "Subtitle text for the English test onboarding page"
+    },
+    "onboardingEnglishTestStart": "🚀 मूल्यांकन शुरू करें",
+    "@onboardingEnglishTestStart": {
+        "description": "Button text to start the English test"
+    },
+    "onboardingEnglishTestSkip": "अभी के लिए छोड़ें",
+    "@onboardingEnglishTestSkip": {
+        "description": "Skip text for the English test"
+    },
+    "onboardingEnglishTestIcon": "अंग्रेजी परीक्षा",
+    "@onboardingEnglishTestIcon": {
+        "description": "Accessibility label for English test icon"
+    },
+    "onboardingEnglishTestExcellent": "उत्कृष्ट! 🌟",
+    "@onboardingEnglishTestExcellent": {
+        "description": "Result message for excellent performance (80%+)"
+    },
+    "onboardingEnglishTestGood": "शानदार काम! 👍",
+    "@onboardingEnglishTestGood": {
+        "description": "Result message for good performance (60-79%)"
+    },
+    "onboardingEnglishTestOkay": "अच्छी शुरुआत! 💡",
+    "@onboardingEnglishTestOkay": {
+        "description": "Result message for moderate performance (<60%)"
+    },
+    "onboardingEnglishTestScore": "आपने {correct} में से {total} अंक प्राप्त किए",
+    "@onboardingEnglishTestScore": {
+        "description": "Shows the test score with correct and total questions",
+        "placeholders": {
+            "correct": {
+                "type": "int"
+            },
+            "total": {
+                "type": "int"
+            }
+        }
     }
 } 

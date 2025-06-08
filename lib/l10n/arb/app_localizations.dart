@@ -979,6 +979,60 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Maybe Later'**
   String get onboardingReviewSkip;
+
+  /// Title for the English test onboarding page
+  ///
+  /// In en, this message translates to:
+  /// **'Quick English Assessment 📝'**
+  String get onboardingEnglishTestTitle;
+
+  /// Subtitle text for the English test onboarding page
+  ///
+  /// In en, this message translates to:
+  /// **'Let\'s gauge your vocabulary level with a quick 10-question test. This helps us personalize your learning experience!'**
+  String get onboardingEnglishTestSubtitle;
+
+  /// Button text to start the English test
+  ///
+  /// In en, this message translates to:
+  /// **'🚀 Start Assessment'**
+  String get onboardingEnglishTestStart;
+
+  /// Skip text for the English test
+  ///
+  /// In en, this message translates to:
+  /// **'Skip for Now'**
+  String get onboardingEnglishTestSkip;
+
+  /// Accessibility label for English test icon
+  ///
+  /// In en, this message translates to:
+  /// **'English Test'**
+  String get onboardingEnglishTestIcon;
+
+  /// Result message for excellent performance (80%+)
+  ///
+  /// In en, this message translates to:
+  /// **'Excellent! 🌟'**
+  String get onboardingEnglishTestExcellent;
+
+  /// Result message for good performance (60-79%)
+  ///
+  /// In en, this message translates to:
+  /// **'Great Job! 👍'**
+  String get onboardingEnglishTestGood;
+
+  /// Result message for moderate performance (<60%)
+  ///
+  /// In en, this message translates to:
+  /// **'Good Start! 💡'**
+  String get onboardingEnglishTestOkay;
+
+  /// Shows the test score with correct and total questions
+  ///
+  /// In en, this message translates to:
+  /// **'You scored {correct} out of {total}'**
+  String onboardingEnglishTestScore(int correct, int total);
 }
 
 class _AppLocalizationsDelegate

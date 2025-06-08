@@ -18,6 +18,7 @@ class OnboardingState extends Equatable {
     this.selectedTopics = const [],
     this.streakGoal = -1,
     this.timeZone = '',
+    this.englishTestResult = -1,
   });
 
   final int currentPage;
@@ -32,6 +33,7 @@ class OnboardingState extends Equatable {
   final List<int> selectedTopics;
   final int streakGoal;
   final String timeZone;
+  final int englishTestResult;
 
   /// Returns the selected age range as an enum value
   AgeRange? get ageRange =>
@@ -74,6 +76,7 @@ class OnboardingState extends Equatable {
         selectedTopics,
         streakGoal,
         timeZone,
+        englishTestResult,
       ];
 
   /// Creates a copy of the current OnboardingState with property changes
@@ -90,6 +93,7 @@ class OnboardingState extends Equatable {
     List<int>? selectedTopics,
     int? streakGoal,
     String? timeZone,
+    int? englishTestResult,
   }) {
     return OnboardingState(
       currentPage: currentPage ?? this.currentPage,
@@ -105,6 +109,7 @@ class OnboardingState extends Equatable {
       selectedTopics: selectedTopics ?? this.selectedTopics,
       streakGoal: streakGoal ?? this.streakGoal,
       timeZone: timeZone ?? this.timeZone,
+      englishTestResult: englishTestResult ?? this.englishTestResult,
     );
   }
 }

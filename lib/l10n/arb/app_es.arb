@@ -703,5 +703,49 @@
     "onboardingReviewSkip": "Tal vez más tarde",
     "@onboardingReviewSkip": {
         "description": "Skip text for the review request in onboarding"
+    },
+    "onboardingEnglishTestTitle": "Evaluación Rápida de Inglés 📝",
+    "@onboardingEnglishTestTitle": {
+        "description": "Title for the English test onboarding page"
+    },
+    "onboardingEnglishTestSubtitle": "Midamos tu nivel de vocabulario con una prueba rápida de 10 preguntas. ¡Esto nos ayuda a personalizar tu experiencia de aprendizaje!",
+    "@onboardingEnglishTestSubtitle": {
+        "description": "Subtitle text for the English test onboarding page"
+    },
+    "onboardingEnglishTestStart": "🚀 Comenzar Evaluación",
+    "@onboardingEnglishTestStart": {
+        "description": "Button text to start the English test"
+    },
+    "onboardingEnglishTestSkip": "Omitir por Ahora",
+    "@onboardingEnglishTestSkip": {
+        "description": "Skip text for the English test"
+    },
+    "onboardingEnglishTestIcon": "Prueba de Inglés",
+    "@onboardingEnglishTestIcon": {
+        "description": "Accessibility label for English test icon"
+    },
+    "onboardingEnglishTestExcellent": "¡Excelente! 🌟",
+    "@onboardingEnglishTestExcellent": {
+        "description": "Result message for excellent performance (80%+)"
+    },
+    "onboardingEnglishTestGood": "¡Gran Trabajo! 👍",
+    "@onboardingEnglishTestGood": {
+        "description": "Result message for good performance (60-79%)"
+    },
+    "onboardingEnglishTestOkay": "¡Buen Comienzo! 💡",
+    "@onboardingEnglishTestOkay": {
+        "description": "Result message for moderate performance (<60%)"
+    },
+    "onboardingEnglishTestScore": "Obtuviste {correct} de {total}",
+    "@onboardingEnglishTestScore": {
+        "description": "Shows the test score with correct and total questions",
+        "placeholders": {
+            "correct": {
+                "type": "int"
+            },
+            "total": {
+                "type": "int"
+            }
+        }
     }
 } 

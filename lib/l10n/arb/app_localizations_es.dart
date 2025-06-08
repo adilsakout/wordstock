@@ -515,4 +515,34 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get onboardingReviewSkip => 'Tal vez más tarde';
+
+  @override
+  String get onboardingEnglishTestTitle => 'Evaluación Rápida de Inglés 📝';
+
+  @override
+  String get onboardingEnglishTestSubtitle =>
+      'Midamos tu nivel de vocabulario con una prueba rápida de 10 preguntas. ¡Esto nos ayuda a personalizar tu experiencia de aprendizaje!';
+
+  @override
+  String get onboardingEnglishTestStart => '🚀 Comenzar Evaluación';
+
+  @override
+  String get onboardingEnglishTestSkip => 'Omitir por Ahora';
+
+  @override
+  String get onboardingEnglishTestIcon => 'Prueba de Inglés';
+
+  @override
+  String get onboardingEnglishTestExcellent => '¡Excelente! 🌟';
+
+  @override
+  String get onboardingEnglishTestGood => '¡Gran Trabajo! 👍';
+
+  @override
+  String get onboardingEnglishTestOkay => '¡Buen Comienzo! 💡';
+
+  @override
+  String onboardingEnglishTestScore(int correct, int total) {
+    return 'Obtuviste $correct de $total';
+  }
 }

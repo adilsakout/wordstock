@@ -4,6 +4,7 @@ import 'package:wordstock/features/onboarding/cubit/cubit.dart';
 import 'package:wordstock/features/onboarding/widgets/onboarding_pages/age_selection_page.dart';
 import 'package:wordstock/features/onboarding/widgets/onboarding_pages/commitment_pact_page.dart';
 import 'package:wordstock/features/onboarding/widgets/onboarding_pages/customization_loading_page.dart';
+import 'package:wordstock/features/onboarding/widgets/onboarding_pages/english_test_page.dart';
 import 'package:wordstock/features/onboarding/widgets/onboarding_pages/gender_selection_page.dart';
 import 'package:wordstock/features/onboarding/widgets/onboarding_pages/goal_selection_page.dart';
 import 'package:wordstock/features/onboarding/widgets/onboarding_pages/info_page.dart';
@@ -29,6 +30,7 @@ const onboardingPages = [
   'Time Commitment',
   'Notification Permission',
   'Vocabulary Level',
+  'English Test',
   'Features Overview',
   'Goal Selection',
   'Topic Selection',
@@ -134,6 +136,7 @@ class _OnboardingBodyState extends State<OnboardingBody> {
                     ),
                     const NotificationPermissionPage(),
                     const VocabularyLevelPage(),
+                    const EnglishTestPage(),
                     const GoalSelectionPage(),
                     const StreakGoalPage(),
                     const CommitmentPactPage(),
