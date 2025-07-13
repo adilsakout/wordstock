@@ -259,9 +259,10 @@ class _ReviewRequestPageState extends State<ReviewRequestPage>
                     delay: const Duration(milliseconds: 200),
                   ),
 
-              // Skip option with subtle animation
+              // Skip option with subtle animation (appears after 5 seconds)
               const SizedBox(height: 16),
 
+              // Skip button appears after 5 seconds using flutter_animate
               Semantics(
                 label: l10n.onboardingReviewSkip,
                 child: GestureDetector(
@@ -283,9 +284,10 @@ class _ReviewRequestPageState extends State<ReviewRequestPage>
                     ),
                   ),
                 ),
-              ).animate(controller: _animationController).fadeIn(
+              ).animate().fadeIn(
                     duration: const Duration(milliseconds: 600),
-                    delay: const Duration(milliseconds: 400),
+                    delay: const Duration(seconds: 5),
+                    curve: Curves.easeInOut,
                   ),
 
               const SizedBox(height: 40),
