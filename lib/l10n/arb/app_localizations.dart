@@ -1033,6 +1033,138 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'You scored {correct} out of {total}'**
   String onboardingEnglishTestScore(int correct, int total);
+
+  /// Title for the settings page
+  ///
+  /// In en, this message translates to:
+  /// **'Settings'**
+  String get settingsTitle;
+
+  /// Title for the notifications section in settings
+  ///
+  /// In en, this message translates to:
+  /// **'Notifications'**
+  String get settingsNotifications;
+
+  /// Description for the notifications section in settings
+  ///
+  /// In en, this message translates to:
+  /// **'Control when and how you receive notifications'**
+  String get settingsNotificationsDescription;
+
+  /// Master toggle for all notifications
+  ///
+  /// In en, this message translates to:
+  /// **'Enable Notifications'**
+  String get settingsEnableNotifications;
+
+  /// Description for the master notification toggle
+  ///
+  /// In en, this message translates to:
+  /// **'Turn all notifications on or off'**
+  String get settingsEnableNotificationsDescription;
+
+  /// Toggle for daily reminder notifications
+  ///
+  /// In en, this message translates to:
+  /// **'Daily Reminders'**
+  String get settingsDailyReminders;
+
+  /// Description for daily reminder notifications
+  ///
+  /// In en, this message translates to:
+  /// **'Get reminded to practice daily'**
+  String get settingsDailyRemindersDescription;
+
+  /// Toggle for practice reminder notifications
+  ///
+  /// In en, this message translates to:
+  /// **'Practice Reminders'**
+  String get settingsPracticeReminders;
+
+  /// Description for practice reminder notifications
+  ///
+  /// In en, this message translates to:
+  /// **'Get reminded when you haven\'t practiced'**
+  String get settingsPracticeRemindersDescription;
+
+  /// Toggle for new word notifications
+  ///
+  /// In en, this message translates to:
+  /// **'New Words'**
+  String get settingsNewWords;
+
+  /// Description for new word notifications
+  ///
+  /// In en, this message translates to:
+  /// **'Get notified about new vocabulary'**
+  String get settingsNewWordsDescription;
+
+  /// Toggle for streak reminder notifications
+  ///
+  /// In en, this message translates to:
+  /// **'Streak Reminders'**
+  String get settingsStreakReminders;
+
+  /// Description for streak reminder notifications
+  ///
+  /// In en, this message translates to:
+  /// **'Don\'t break your learning streak'**
+  String get settingsStreakRemindersDescription;
+
+  /// Button to reset all settings to default values
+  ///
+  /// In en, this message translates to:
+  /// **'Reset to Defaults'**
+  String get settingsResetToDefaults;
+
+  /// Title for the reset settings dialog
+  ///
+  /// In en, this message translates to:
+  /// **'Reset Settings'**
+  String get settingsResetTitle;
+
+  /// Message for the reset settings confirmation dialog
+  ///
+  /// In en, this message translates to:
+  /// **'Are you sure you want to reset all settings to their default values? This action cannot be undone.'**
+  String get settingsResetMessage;
+
+  /// Message shown while settings are being loaded
+  ///
+  /// In en, this message translates to:
+  /// **'Loading settings...'**
+  String get settingsLoadingMessage;
+
+  /// Title for settings error state
+  ///
+  /// In en, this message translates to:
+  /// **'Settings Error'**
+  String get settingsError;
+
+  /// Button to retry loading settings
+  ///
+  /// In en, this message translates to:
+  /// **'Retry'**
+  String get settingsRetry;
+
+  /// Button to recover from settings error
+  ///
+  /// In en, this message translates to:
+  /// **'Recover'**
+  String get settingsRecover;
+
+  /// Cancel button text
+  ///
+  /// In en, this message translates to:
+  /// **'Cancel'**
+  String get cancel;
+
+  /// Reset button text
+  ///
+  /// In en, this message translates to:
+  /// **'Reset'**
+  String get reset;
 }
 
 class _AppLocalizationsDelegate

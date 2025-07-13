@@ -10,11 +10,13 @@ import 'package:wordstock/features/home/cubit/learning_progress_cubit.dart';
 import 'package:wordstock/features/home/view/home_page.dart';
 import 'package:wordstock/features/onboarding/onboarding.dart';
 import 'package:wordstock/features/practice/practice.dart';
+import 'package:wordstock/features/settings/settings.dart';
 import 'package:wordstock/features/subscription/cubit/subscription_cubit.dart';
 import 'package:wordstock/features/user_data/cubit/user_data_cubit.dart';
 import 'package:wordstock/l10n/arb/app_localizations.dart';
 import 'package:wordstock/repositories/quiz_repository.dart';
 import 'package:wordstock/repositories/rc_repository.dart';
+import 'package:wordstock/repositories/settings_repository.dart';
 import 'package:wordstock/repositories/supabase_repository.dart';
 import 'package:wordstock/repositories/tts_repository.dart';
 import 'package:wordstock/repositories/user_repository.dart';
@@ -64,6 +66,11 @@ final _router = GoRouter(
       name: 'Practice',
       builder: (context, state) => const PracticePage(),
     ),
+    GoRoute(
+      path: '/settings',
+      name: 'Settings',
+      builder: (context, state) => const SettingsPage(),
+    ),
   ],
 );
 
@@ -111,6 +118,7 @@ class _AppState extends State<App> {
   final ttsRepository = TTSRepository();
   final quizRepository = QuizRepository();
   final rcRepository = RcRepository();
+  final settingsRepository = SettingsRepository();
 
   @override
   Widget build(BuildContext context) {
@@ -144,6 +152,10 @@ class _AppState extends State<App> {
         ),
         BlocProvider<SubscriptionCubit>(
           create: (context) => SubscriptionCubit(rcRepository: rcRepository),
+        ),
+        BlocProvider<SettingsCubit>(
+          create: (context) =>
+              SettingsCubit(settingsRepository: settingsRepository),
         ),
       ],
       child: PostHogWidget(

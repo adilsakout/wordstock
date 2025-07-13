@@ -7,6 +7,7 @@ import 'package:in_app_review/in_app_review.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:wordstock/features/favorite_words/favorite_words.dart';
 import 'package:wordstock/features/profile/cubit/cubit.dart';
+import 'package:wordstock/features/settings/settings.dart';
 import 'package:wordstock/l10n/l10n.dart';
 import 'package:wordstock/repositories/user_repository.dart';
 import 'package:wordstock/widgets/button.dart';
@@ -79,6 +80,21 @@ class ProfileBody extends StatelessWidget {
                   ),
                   const SizedBox(height: 32),
                   // Menu Items
+                  _buildMenuItem(
+                    context,
+                    icon: Icons.notifications_outlined,
+                    title: l10n.settingsNotifications,
+                    onTap: () {
+                      Gaimon.soft();
+                      context
+                        ..pop()
+                        ..push(SettingsPage.name);
+                    },
+                  ).animate().fadeIn().slideY(
+                        begin: 1,
+                        delay: 100.milliseconds,
+                        duration: 400.milliseconds,
+                      ),
                   _buildMenuItem(
                     context,
                     icon: Icons.favorite,

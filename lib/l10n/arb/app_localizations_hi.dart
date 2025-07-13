@@ -540,4 +540,76 @@ class AppLocalizationsHi extends AppLocalizations {
   String onboardingEnglishTestScore(int correct, int total) {
     return 'आपने $correct में से $total अंक प्राप्त किए';
   }
+
+  @override
+  String get settingsTitle => 'Settings';
+
+  @override
+  String get settingsNotifications => 'Notifications';
+
+  @override
+  String get settingsNotificationsDescription =>
+      'Control when and how you receive notifications';
+
+  @override
+  String get settingsEnableNotifications => 'Enable Notifications';
+
+  @override
+  String get settingsEnableNotificationsDescription =>
+      'Turn all notifications on or off';
+
+  @override
+  String get settingsDailyReminders => 'Daily Reminders';
+
+  @override
+  String get settingsDailyRemindersDescription =>
+      'Get reminded to practice daily';
+
+  @override
+  String get settingsPracticeReminders => 'Practice Reminders';
+
+  @override
+  String get settingsPracticeRemindersDescription =>
+      'Get reminded when you haven\'t practiced';
+
+  @override
+  String get settingsNewWords => 'New Words';
+
+  @override
+  String get settingsNewWordsDescription => 'Get notified about new vocabulary';
+
+  @override
+  String get settingsStreakReminders => 'Streak Reminders';
+
+  @override
+  String get settingsStreakRemindersDescription =>
+      'Don\'t break your learning streak';
+
+  @override
+  String get settingsResetToDefaults => 'Reset to Defaults';
+
+  @override
+  String get settingsResetTitle => 'Reset Settings';
+
+  @override
+  String get settingsResetMessage =>
+      'Are you sure you want to reset all settings to their default values? This action cannot be undone.';
+
+  @override
+  String get settingsLoadingMessage => 'Loading settings...';
+
+  @override
+  String get settingsError => 'Settings Error';
+
+  @override
+  String get settingsRetry => 'Retry';
+
+  @override
+  String get settingsRecover => 'Recover';
+
+  @override
+  String get cancel => 'Cancel';
+
+  @override
+  String get reset => 'Reset';
 }
