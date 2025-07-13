@@ -9,9 +9,10 @@ import { parse as parseCSVData } from "https://deno.land/std@0.221.0/csv/mod.ts"
 interface Notification {
   id: string;
   onesignal_id: string;
-  word: string;
-  definition: string;
+  word: string | null;
+  definition: string | null;
   user_id: string;
+  notification_type: 'daily_reminder' | 'practice_reminder' | 'new_word' | 'streak_reminder';
 }
 
 interface OneSignalCSVExportResponse {
@@ -24,7 +25,7 @@ async function fetchPendingNotifications(
 ): Promise<Notification[]> {
   const { data: pending, error } = await supabase
     .from("word_notifications")
-    .select("id, onesignal_id, word, definition, user_id")
+    .select("id, onesignal_id, word, definition, user_id, notification_type")
     .eq("sent", false)
     .lte("scheduled_at", now)
     .limit(1000);
@@ -229,6 +230,37 @@ function parseCSV(csvText: string, userId: string): string {
   return "";
 }
 
+// Function to generate notification content based on type
+function getNotificationContent(notification: Notification): { heading: string; content: string } {
+  switch (notification.notification_type) {
+    case 'daily_reminder':
+      return {
+        heading: "Daily Practice Reminder 📚",
+        content: "Time to expand your vocabulary! Start your daily practice session now."
+      };
+    case 'practice_reminder':
+      return {
+        heading: "Don't Break Your Streak! 🔥",
+        content: "You haven't practiced recently. Keep your learning momentum going!"
+      };
+    case 'new_word':
+      return {
+        heading: notification.word || "New Word",
+        content: notification.definition || "Learn a new word today!"
+      };
+    case 'streak_reminder':
+      return {
+        heading: "Streak Alert! ⚡",
+        content: "Your learning streak is at risk! Practice now to keep it alive."
+      };
+    default:
+      return {
+        heading: "WordStock Reminder",
+        content: "Time to practice your vocabulary!"
+      };
+  }
+}
+
 async function sendNotifications(
   supabase: SupabaseClient,
   userId: string,
@@ -239,6 +271,8 @@ async function sendNotifications(
   const sendPromises: Promise<unknown>[] = [];
 
   for (const notif of pending) {
+    const { heading, content } = getNotificationContent(notif);
+    
     sendPromises.push(
       fetch(
         "https://onesignal.com/api/v1/notifications",
@@ -251,8 +285,8 @@ async function sendNotifications(
           body: JSON.stringify({
             app_id: appId,
             include_external_user_ids: [userId],
-            contents: { en: notif.definition },
-            headings: { en: notif.word },
+            contents: { en: content },
+            headings: { en: heading },
           }),
         },
       ).then(async (response) => {
@@ -260,13 +294,13 @@ async function sendNotifications(
 
         if (!response.ok || result.errors) {
           console.error(
-            `❌ OneSignal error for notification ${notif.id}:`,
+            `❌ OneSignal error for notification ${notif.id} (${notif.notification_type}):`,
             result,
           );
           return;
         }
 
-        console.log(`✅ OneSignal notification sent for ID ${notif.id}`);
+        console.log(`✅ OneSignal ${notif.notification_type} notification sent for ID ${notif.id}`);
 
         const updateResult = await supabase
           .from("word_notifications")
@@ -285,7 +319,7 @@ async function sendNotifications(
         return updateResult;
       }).catch((e: unknown) => {
         console.error(
-          `❌ Failed to send to OneSignal for ID ${notif.id}:`,
+          `❌ Failed to send to OneSignal for ID ${notif.id} (${notif.notification_type}):`,
           e instanceof Error ? e.message : String(e),
         );
       }),
@@ -335,15 +369,18 @@ function groupNotificationsByUser(notifications: Notification[]): Map<string, No
   return userNotifications;
 }
 
-// Function to check user notification settings
+// Function to check user notification settings based on notification type
 async function checkUserNotificationSettings(
   supabase: SupabaseClient,
   userId: string,
+  notificationType: string,
 ): Promise<boolean> {
   try {
     const { data: user, error } = await supabase
       .from("user_profiles")
-      .select("notifications_enabled, new_word_notification_enabled")
+      .select(
+        "notifications_enabled, daily_reminder_enabled, practice_reminder_enabled, new_word_notification_enabled, streak_reminder_enabled"
+      )
       .eq("user_id", userId)
       .single();
 
@@ -352,8 +389,25 @@ async function checkUserNotificationSettings(
       return false; // Default to not sending if we can't check settings
     }
 
-    // Check if both global notifications and new word notifications are enabled
-    return (user.notifications_enabled === true) && (user.new_word_notification_enabled === true);
+    // Check if global notifications are enabled first
+    if (!user.notifications_enabled) {
+      return false;
+    }
+
+    // Check specific notification type setting
+    switch (notificationType) {
+      case 'daily_reminder':
+        return user.daily_reminder_enabled === true;
+      case 'practice_reminder':
+        return user.practice_reminder_enabled === true;
+      case 'new_word':
+        return user.new_word_notification_enabled === true;
+      case 'streak_reminder':
+        return user.streak_reminder_enabled === true;
+      default:
+        console.error(`❌ Unknown notification type: ${notificationType}`);
+        return false;
+    }
   } catch (error) {
     console.error(`❌ Error checking user settings for ${userId}:`, error);
     return false; // Default to not sending if there's an error
@@ -405,13 +459,35 @@ Deno.serve(async () => {
       processPromises.push((async () => {
         console.log(`Processing ${notifications.length} notifications for user ${userId}`);
 
-        // Check user's notification settings first
-        const notificationsEnabled = await checkUserNotificationSettings(supabase, userId);
-        if (!notificationsEnabled) {
-          console.log(
-            `⏩ Skipping notifications: User ${userId} has new word notifications disabled`,
+        // Check user's notification settings for each notification type
+        const notificationsToSend: Notification[] = [];
+        const notificationsToSkip: Notification[] = [];
+
+        for (const notification of notifications) {
+          const isEnabled = await checkUserNotificationSettings(
+            supabase, 
+            userId, 
+            notification.notification_type
           );
-          await updateNotificationsAsSent(supabase, notifications);
+          
+          if (isEnabled) {
+            notificationsToSend.push(notification);
+          } else {
+            notificationsToSkip.push(notification);
+            console.log(
+              `⏩ Skipping ${notification.notification_type} notification: User ${userId} has this type disabled`,
+            );
+          }
+        }
+
+        // Mark skipped notifications as sent
+        if (notificationsToSkip.length > 0) {
+          await updateNotificationsAsSent(supabase, notificationsToSkip);
+        }
+
+        // Send enabled notifications
+        if (notificationsToSend.length === 0) {
+          console.log(`⏩ No enabled notifications to send for user ${userId}`);
           return;
         }
 
@@ -428,7 +504,7 @@ Deno.serve(async () => {
         await sendNotifications(
           supabase,
           validUserId,
-          notifications,
+          notificationsToSend,
           ONE_SIGNAL_APP_ID,
           ONE_SIGNAL_REST_API_KEY,
         );
@@ -438,7 +514,7 @@ Deno.serve(async () => {
     // Wait for all user notifications to be processed
     await Promise.all(processPromises);
 
-    return new Response("✅ All notifications processed", { status: 200 });
+    return new Response("✅ All notification types processed", { status: 200 });
   } catch (error) {
     console.error("❌ Error processing notifications:", error);
     return new Response("Error processing notifications", { status: 500 });

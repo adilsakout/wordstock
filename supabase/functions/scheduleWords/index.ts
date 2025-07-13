@@ -1,5 +1,15 @@
 import { createClient } from "jsr:@supabase/supabase-js";
 
+// Interface for notification data before insertion
+interface NotificationData {
+  user_id: string;
+  onesignal_id: string;
+  notification_type: 'daily_reminder' | 'practice_reminder' | 'new_word' | 'streak_reminder';
+  word: string | null;
+  definition: string | null;
+  scheduled_at: string;
+}
+
 // Fisher-Yates Shuffle
 function shuffleArray<T>(array: T[]): T[] {
   const arr = [...array];
@@ -18,21 +28,32 @@ Deno.serve(async () => {
     Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!,
   );
 
-  // 1. Fetch all users with OneSignal ID and notification settings enabled
+  // 1. Fetch all users with OneSignal ID and notifications enabled
   console.log("🔍 Fetching users with OneSignal ID and notifications enabled");
   const { data: users, error: userError } = await supabase
     .from("user_profiles")
-    .select("user_id, onesignal_id, words_per_day, notifications_enabled, new_word_notification_enabled")
+    .select(`
+      user_id, 
+      onesignal_id, 
+      words_per_day, 
+      notifications_enabled, 
+      daily_reminder_enabled, 
+      practice_reminder_enabled, 
+      new_word_notification_enabled, 
+      streak_reminder_enabled,
+      daily_streak,
+      last_active_date,
+      time_zone
+    `)
     .not("onesignal_id", "is", null)
-    .eq("notifications_enabled", true)
-    .eq("new_word_notification_enabled", true);
+    .eq("notifications_enabled", true);
 
   if (userError || !users) {
     console.error("❌ Error fetching users:", userError?.message);
     return new Response("Error fetching users", { status: 500 });
   }
 
-  console.log(`📊 Found ${users.length} users with new word notifications enabled`);
+  console.log(`📊 Found ${users.length} users with notifications enabled`);
 
   // 2. Fetch 1000 words once and reuse
   console.log("📚 Fetching word pool (1000 words)");
@@ -51,57 +72,128 @@ Deno.serve(async () => {
   const now = new Date();
   const today = new Date(now);
   today.setHours(0, 0, 0, 0);
-  console.log(`📅 Scheduling words for today: ${today.toISOString()}`);
+  console.log(`📅 Scheduling notifications for today: ${today.toISOString()}`);
 
+  // Process each user for all notification types
   for (const user of users) {
-    const { user_id: userId, onesignal_id, words_per_day } = user;
+    const { 
+      user_id: userId, 
+      onesignal_id, 
+      daily_reminder_enabled,
+      practice_reminder_enabled,
+      new_word_notification_enabled,
+      streak_reminder_enabled,
+      daily_streak,
+      last_active_date    } = user;
+    
     console.log(`\n👤 Processing user ${userId}`);
-    console.log(`📝 Words per day: ${words_per_day}`);
+    
+    const allNotifications: NotificationData[] = [];
 
-    if (!words_per_day || words_per_day <= 0) {
-      console.log(`⚠️ Skipping user ${userId} - invalid words_per_day`);
-      continue;
-    }
-
-    // Shuffle once per user to get different words
-    console.log(`🎲 Shuffling words for user ${userId}`);
-    const selectedWords = shuffleArray(allWords).slice(0, words_per_day);
-    console.log(`✅ Selected ${selectedWords.length} words for user ${userId}`);
-
-    // Spread evenly through the day
-    const interval = Math.floor(1440 / words_per_day); // in minutes
-    console.log(`⏰ Interval between words: ${interval} minutes`);
-
-    const inserts = selectedWords.map((w, i) => {
-      const scheduled = new Date(today);
-      scheduled.setMinutes(i * interval + Math.floor(Math.random() * 10)); // Add slight randomness
-      console.log(
-        `📅 Word "${w.word}" scheduled for ${scheduled.toISOString()}`,
-      );
-
-      return {
+    // 1. Schedule Daily Reminder (once per day at 9 AM)
+    if (daily_reminder_enabled) {
+      console.log(`📅 Scheduling daily reminder for user ${userId}`);
+      const dailyReminderTime = new Date(today);
+      dailyReminderTime.setHours(9, 0, 0, 0); // 9 AM
+      
+      allNotifications.push({
         user_id: userId,
         onesignal_id,
-        word: w.word,
-        definition: w.definition,
+        notification_type: 'daily_reminder',
+        word: null,
+        definition: null,
+        scheduled_at: dailyReminderTime.toISOString(),
+      });
+    }
+
+    // 2. Schedule Practice Reminder (if user hasn't been active)
+    if (practice_reminder_enabled && last_active_date) {
+      const lastActive = new Date(last_active_date);
+      const hoursSinceActive = (now.getTime() - lastActive.getTime()) / (1000 * 60 * 60);
+      
+      // Schedule practice reminder if user hasn't been active for 24+ hours
+      if (hoursSinceActive >= 24) {
+        console.log(`🏃 Scheduling practice reminder for user ${userId} (${hoursSinceActive.toFixed(1)} hours inactive)`);
+        const practiceReminderTime = new Date(today);
+        practiceReminderTime.setHours(18, 0, 0, 0); // 6 PM
+        
+        allNotifications.push({
+          user_id: userId,
+          onesignal_id,
+          notification_type: 'practice_reminder',
+          word: null,
+          definition: null,
+          scheduled_at: practiceReminderTime.toISOString(),
+        });
+      }
+    }
+
+    // 3. Schedule New Word Notification (one per day at random time between 9 AM - 9 PM)
+    if (new_word_notification_enabled) {
+      console.log(`📚 Scheduling one new word notification for user ${userId}`);
+      
+      // Select one random word for this user
+      const selectedWord = shuffleArray(allWords)[0];
+      
+      // Random time between 9 AM and 9 PM
+      const startHour = 9;
+      const endHour = 21;
+      const randomHour = startHour + Math.floor(Math.random() * (endHour - startHour));
+      const randomMinute = Math.floor(Math.random() * 60);
+      
+      const scheduled = new Date(today);
+      scheduled.setHours(randomHour, randomMinute, 0, 0);
+      
+      allNotifications.push({
+        user_id: userId,
+        onesignal_id,
+        notification_type: 'new_word',
+        word: selectedWord.word,
+        definition: selectedWord.definition,
         scheduled_at: scheduled.toISOString(),
-      };
-    });
+      });
+    }
 
-    console.log(
-      `💾 Inserting ${inserts.length} scheduled words for user ${userId}`,
-    );
-    const { error: insertError } = await supabase
-      .from("word_notifications")
-      .insert(inserts);
+    // 4. Schedule Streak Reminder (if streak is at risk)
+    if (streak_reminder_enabled && daily_streak && daily_streak > 0) {
+      // Check if user needs a streak reminder (hasn't been active today)
+      const lastActive = last_active_date ? new Date(last_active_date) : null;
+      const isActiveToday = lastActive && 
+        lastActive.toDateString() === today.toDateString();
+      
+      if (!isActiveToday) {
+        console.log(`🔥 Scheduling streak reminder for user ${userId} (${daily_streak} day streak at risk)`);
+        const streakReminderTime = new Date(today);
+        streakReminderTime.setHours(20, 0, 0, 0); // 8 PM
+        
+        allNotifications.push({
+          user_id: userId,
+          onesignal_id,
+          notification_type: 'streak_reminder',
+          word: null,
+          definition: null,
+          scheduled_at: streakReminderTime.toISOString(),
+        });
+      }
+    }
 
-    if (insertError) {
-      console.error(`❌ Insert error for user ${userId}:`, insertError.message);
+    // Insert all notifications for this user
+    if (allNotifications.length > 0) {
+      console.log(`💾 Inserting ${allNotifications.length} notifications for user ${userId}`);
+      const { error: insertError } = await supabase
+        .from("word_notifications")
+        .insert(allNotifications);
+
+      if (insertError) {
+        console.error(`❌ Insert error for user ${userId}:`, insertError.message);
+      } else {
+        console.log(`✅ Successfully scheduled ${allNotifications.length} notifications for user ${userId}`);
+      }
     } else {
-      console.log(`✅ Successfully scheduled words for user ${userId}`);
+      console.log(`⏩ No notifications to schedule for user ${userId}`);
     }
   }
 
-  console.log("✨ Word scheduling completed successfully");
-  return new Response("✅ Word notifications scheduled", { status: 200 });
+  console.log("✨ All notification types scheduled successfully");
+  return new Response("✅ All notification types scheduled", { status: 200 });
 });
