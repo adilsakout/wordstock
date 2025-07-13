@@ -4,9 +4,10 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 
 /// Repository for managing user settings and preferences
 ///
-/// This repository provides a clean interface for managing all user preferences,
-/// including notification settings. It syncs between local SharedPreferences
-/// and the backend database to ensure consistency across devices.
+/// This repository provides a clean interface for managing all user
+/// preferences, including notification settings. It syncs between local
+/// SharedPreferences and the backend database to ensure consistency
+/// across devices.
 class SettingsRepository {
   /// Creates a new instance of [SettingsRepository]
   SettingsRepository() : _supabase = Supabase.instance.client;
@@ -43,8 +44,8 @@ class SettingsRepository {
   /// Get the current notification settings
   ///
   /// Returns a [NotificationSettings] object containing all notification
-  /// preferences with their current values. First tries to load from the database,
-  /// then falls back to SharedPreferences if that fails.
+  /// preferences with their current values. First tries to load from the
+  /// database, then falls back to SharedPreferences if that fails.
   Future<NotificationSettings> getNotificationSettings() async {
     try {
       final userId = _getUserId();
@@ -76,8 +77,10 @@ class SettingsRepository {
           );
         } catch (dbError) {
           // If database fails, fall back to SharedPreferences
-          print(
-              'Database load failed, falling back to SharedPreferences: $dbError');
+          debugPrint(
+            'Database load failed, falling back to SharedPreferences: '
+            '$dbError',
+          );
         }
       }
 
@@ -99,8 +102,9 @@ class SettingsRepository {
 
   /// Update notification settings
   ///
-  /// Saves the provided [NotificationSettings] to both the database and SharedPreferences.
-  /// This method handles all notification preferences at once and ensures data consistency.
+  /// Saves the provided [NotificationSettings] to both the database and
+  /// SharedPreferences. This method handles all notification preferences
+  /// at once and ensures data consistency.
   Future<void> updateNotificationSettings(NotificationSettings settings) async {
     try {
       final userId = _getUserId();
@@ -300,8 +304,10 @@ class SettingsRepository {
           return response['notifications_enabled'] as bool? ?? true;
         } catch (dbError) {
           // If database fails, fall back to SharedPreferences
-          print(
-              'Database check failed, falling back to SharedPreferences: $dbError');
+          debugPrint(
+            'Database check failed, falling back to SharedPreferences: '
+            '$dbError',
+          );
         }
       }
 
