@@ -1,4 +1,3 @@
-import "jsr:@supabase/functions-js/edge-runtime.d.ts";
 import {
   createClient,
   PostgrestSingleResponse,
@@ -336,6 +335,31 @@ function groupNotificationsByUser(notifications: Notification[]): Map<string, No
   return userNotifications;
 }
 
+// Function to check user notification settings
+async function checkUserNotificationSettings(
+  supabase: SupabaseClient,
+  userId: string,
+): Promise<boolean> {
+  try {
+    const { data: user, error } = await supabase
+      .from("user_profiles")
+      .select("notifications_enabled, new_word_notification_enabled")
+      .eq("user_id", userId)
+      .single();
+
+    if (error) {
+      console.error(`❌ Error fetching user settings for ${userId}:`, error);
+      return false; // Default to not sending if we can't check settings
+    }
+
+    // Check if both global notifications and new word notifications are enabled
+    return (user.notifications_enabled === true) && (user.new_word_notification_enabled === true);
+  } catch (error) {
+    console.error(`❌ Error checking user settings for ${userId}:`, error);
+    return false; // Default to not sending if there's an error
+  }
+}
+
 // Update main processing logic
 Deno.serve(async () => {
   const supabase: SupabaseClient = createClient(
@@ -380,6 +404,16 @@ Deno.serve(async () => {
     for (const [userId, notifications] of userNotifications) {
       processPromises.push((async () => {
         console.log(`Processing ${notifications.length} notifications for user ${userId}`);
+
+        // Check user's notification settings first
+        const notificationsEnabled = await checkUserNotificationSettings(supabase, userId);
+        if (!notificationsEnabled) {
+          console.log(
+            `⏩ Skipping notifications: User ${userId} has new word notifications disabled`,
+          );
+          await updateNotificationsAsSent(supabase, notifications);
+          return;
+        }
 
         const validUserId = parseCSV(csvText, userId);
 

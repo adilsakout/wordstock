@@ -1,15 +1,22 @@
 import 'package:flutter/foundation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 
 /// Repository for managing user settings and preferences
 ///
-/// This repository provides a clean interface
-///  for managing all user preferences,
-/// including notification settings, using SharedPreferences as the underlying
-/// storage mechanism.
+/// This repository provides a clean interface for managing all user preferences,
+/// including notification settings. It syncs between local SharedPreferences
+/// and the backend database to ensure consistency across devices.
 class SettingsRepository {
   /// Creates a new instance of [SettingsRepository]
-  SettingsRepository();
+  SettingsRepository() : _supabase = Supabase.instance.client;
+
+  final SupabaseClient _supabase;
+
+  /// Get the current user's ID from Supabase auth
+  String _getUserId() {
+    return _supabase.auth.currentUser?.id ?? '';
+  }
 
   // Keys for SharedPreferences storage
   static const String _notificationsEnabledKey = 'notifications_enabled';
@@ -36,11 +43,46 @@ class SettingsRepository {
   /// Get the current notification settings
   ///
   /// Returns a [NotificationSettings] object containing all notification
-  /// preferences with their current values.
+  /// preferences with their current values. First tries to load from the database,
+  /// then falls back to SharedPreferences if that fails.
   Future<NotificationSettings> getNotificationSettings() async {
     try {
-      final prefs = await _getPrefs();
+      final userId = _getUserId();
 
+      // Try to load from database first
+      if (userId.isNotEmpty) {
+        try {
+          final response = await _supabase
+              .from('user_profiles')
+              .select(
+                'notifications_enabled, daily_reminder_enabled, '
+                'practice_reminder_enabled, new_word_notification_enabled, '
+                'streak_reminder_enabled',
+              )
+              .eq('user_id', userId)
+              .single();
+
+          return NotificationSettings(
+            notificationsEnabled:
+                response['notifications_enabled'] as bool? ?? true,
+            dailyReminderEnabled:
+                response['daily_reminder_enabled'] as bool? ?? true,
+            practiceReminderEnabled:
+                response['practice_reminder_enabled'] as bool? ?? true,
+            newWordNotificationEnabled:
+                response['new_word_notification_enabled'] as bool? ?? true,
+            streakReminderEnabled:
+                response['streak_reminder_enabled'] as bool? ?? true,
+          );
+        } catch (dbError) {
+          // If database fails, fall back to SharedPreferences
+          print(
+              'Database load failed, falling back to SharedPreferences: $dbError');
+        }
+      }
+
+      // Fallback to SharedPreferences
+      final prefs = await _getPrefs();
       return NotificationSettings(
         notificationsEnabled: prefs.getBool(_notificationsEnabledKey) ?? true,
         dailyReminderEnabled: prefs.getBool(_dailyReminderEnabledKey) ?? true,
@@ -57,12 +99,26 @@ class SettingsRepository {
 
   /// Update notification settings
   ///
-  /// Saves the provided [NotificationSettings] to SharedPreferences.
-  /// This method handles all notification preferences at once.
+  /// Saves the provided [NotificationSettings] to both the database and SharedPreferences.
+  /// This method handles all notification preferences at once and ensures data consistency.
   Future<void> updateNotificationSettings(NotificationSettings settings) async {
     try {
-      final prefs = await _getPrefs();
+      final userId = _getUserId();
 
+      // Save to database first if user is logged in
+      if (userId.isNotEmpty) {
+        await _supabase.from('user_profiles').upsert({
+          'user_id': userId,
+          'notifications_enabled': settings.notificationsEnabled,
+          'daily_reminder_enabled': settings.dailyReminderEnabled,
+          'practice_reminder_enabled': settings.practiceReminderEnabled,
+          'new_word_notification_enabled': settings.newWordNotificationEnabled,
+          'streak_reminder_enabled': settings.streakReminderEnabled,
+        });
+      }
+
+      // Also save to SharedPreferences as backup
+      final prefs = await _getPrefs();
       await Future.wait([
         prefs.setBool(_notificationsEnabledKey, settings.notificationsEnabled),
         prefs.setBool(_dailyReminderEnabledKey, settings.dailyReminderEnabled),
@@ -90,6 +146,17 @@ class SettingsRepository {
   /// When disabled, all notifications should be turned off.
   Future<void> toggleNotifications({required bool enabled}) async {
     try {
+      final userId = _getUserId();
+
+      // Update database first if user is logged in
+      if (userId.isNotEmpty) {
+        await _supabase.from('user_profiles').upsert({
+          'user_id': userId,
+          'notifications_enabled': enabled,
+        });
+      }
+
+      // Also update SharedPreferences
       final prefs = await _getPrefs();
       await prefs.setBool(_notificationsEnabledKey, enabled);
     } catch (e) {
@@ -103,6 +170,17 @@ class SettingsRepository {
   /// by reminding them to practice at a consistent time.
   Future<void> toggleDailyReminder({required bool enabled}) async {
     try {
+      final userId = _getUserId();
+
+      // Update database first if user is logged in
+      if (userId.isNotEmpty) {
+        await _supabase.from('user_profiles').upsert({
+          'user_id': userId,
+          'daily_reminder_enabled': enabled,
+        });
+      }
+
+      // Also update SharedPreferences
       final prefs = await _getPrefs();
       await prefs.setBool(_dailyReminderEnabledKey, enabled);
     } catch (e) {
@@ -116,6 +194,17 @@ class SettingsRepository {
   /// for a certain period to encourage regular use.
   Future<void> togglePracticeReminder({required bool enabled}) async {
     try {
+      final userId = _getUserId();
+
+      // Update database first if user is logged in
+      if (userId.isNotEmpty) {
+        await _supabase.from('user_profiles').upsert({
+          'user_id': userId,
+          'practice_reminder_enabled': enabled,
+        });
+      }
+
+      // Also update SharedPreferences
       final prefs = await _getPrefs();
       await prefs.setBool(_practiceReminderEnabledKey, enabled);
     } catch (e) {
@@ -129,6 +218,17 @@ class SettingsRepository {
   /// is available for learning.
   Future<void> toggleNewWordNotification({required bool enabled}) async {
     try {
+      final userId = _getUserId();
+
+      // Update database first if user is logged in
+      if (userId.isNotEmpty) {
+        await _supabase.from('user_profiles').upsert({
+          'user_id': userId,
+          'new_word_notification_enabled': enabled,
+        });
+      }
+
+      // Also update SharedPreferences
       final prefs = await _getPrefs();
       await prefs.setBool(_newWordNotificationEnabledKey, enabled);
     } catch (e) {
@@ -142,6 +242,17 @@ class SettingsRepository {
   /// by alerting them when their streak is at risk.
   Future<void> toggleStreakReminder({required bool enabled}) async {
     try {
+      final userId = _getUserId();
+
+      // Update database first if user is logged in
+      if (userId.isNotEmpty) {
+        await _supabase.from('user_profiles').upsert({
+          'user_id': userId,
+          'streak_reminder_enabled': enabled,
+        });
+      }
+
+      // Also update SharedPreferences
       final prefs = await _getPrefs();
       await prefs.setBool(_streakReminderEnabledKey, enabled);
     } catch (e) {
@@ -173,10 +284,28 @@ class SettingsRepository {
   /// Check if notifications are enabled
   ///
   /// Quick check method to determine if notifications are globally enabled.
-  /// This is useful for other parts of the app
-  ///  that need to check notification status.
+  /// Tries to load from database first, then falls back to SharedPreferences.
   Future<bool> areNotificationsEnabled() async {
     try {
+      final userId = _getUserId();
+
+      // Try to load from database first
+      if (userId.isNotEmpty) {
+        try {
+          final response = await _supabase
+              .from('user_profiles')
+              .select('notifications_enabled')
+              .eq('user_id', userId)
+              .single();
+          return response['notifications_enabled'] as bool? ?? true;
+        } catch (dbError) {
+          // If database fails, fall back to SharedPreferences
+          print(
+              'Database check failed, falling back to SharedPreferences: $dbError');
+        }
+      }
+
+      // Fallback to SharedPreferences
       final prefs = await _getPrefs();
       return prefs.getBool(_notificationsEnabledKey) ?? true;
     } catch (e) {

@@ -1,5 +1,4 @@
-import "jsr:@supabase/functions-js/edge-runtime.d.ts";
-import { createClient } from "@supabase/supabase-js";
+import { createClient } from "jsr:@supabase/supabase-js";
 
 // Fisher-Yates Shuffle
 function shuffleArray<T>(array: T[]): T[] {
@@ -19,19 +18,21 @@ Deno.serve(async () => {
     Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!,
   );
 
-  // 1. Fetch all users with OneSignal ID
-  console.log("🔍 Fetching users with OneSignal ID");
+  // 1. Fetch all users with OneSignal ID and notification settings enabled
+  console.log("🔍 Fetching users with OneSignal ID and notifications enabled");
   const { data: users, error: userError } = await supabase
     .from("user_profiles")
-    .select("user_id, onesignal_id, words_per_day")
-    .not("onesignal_id", "is", null);
+    .select("user_id, onesignal_id, words_per_day, notifications_enabled, new_word_notification_enabled")
+    .not("onesignal_id", "is", null)
+    .eq("notifications_enabled", true)
+    .eq("new_word_notification_enabled", true);
 
   if (userError || !users) {
     console.error("❌ Error fetching users:", userError?.message);
     return new Response("Error fetching users", { status: 500 });
   }
 
-  console.log(`📊 Found ${users.length} users to process`);
+  console.log(`📊 Found ${users.length} users with new word notifications enabled`);
 
   // 2. Fetch 1000 words once and reuse
   console.log("📚 Fetching word pool (1000 words)");
