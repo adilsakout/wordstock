@@ -97,11 +97,15 @@ class QuizRepository {
         apiResponseTime,
       );
 
-      if (questions.isNotEmpty) {
+      // Apply fallback mechanism for quality vs quantity balance
+      final finalQuestions = _applyFallbackMechanism(questions, words.length);
+
+      if (finalQuestions.isNotEmpty) {
         logger.i(
-          'Successfully generated ${questions.length} questions from OpenAI',
+          'Successfully generated ${finalQuestions.length} questions '
+          'from OpenAI',
         );
-        return questions;
+        return finalQuestions;
       } else {
         throw Exception('Generated quiz contained no questions');
       }
@@ -132,9 +136,13 @@ class QuizRepository {
   String _formatWordDetails(List<Word> words) {
     return words
         .map(
-          (word) => '- Word: ${word.word}\n'
-              '  Definition: ${word.definition}\n'
-              '  Example: ${word.example ?? "N/A"}',
+          (word) => '''
+- Word: ${word.word}
+  Definition: ${word.definition}
+  Example: ${word.example ?? "N/A"}
+  Phonetic: ${word.phonetic ?? "N/A"}
+  Level: ${word.level?.name ?? "intermediate"}
+  Favorite: ${word.isFavorite ?? false ? "User favorite" : "Regular word"}''',
         )
         .join('\n');
   }
@@ -142,35 +150,103 @@ class QuizRepository {
   /// Builds the prompt for OpenAI
   String _buildPrompt(String wordDetails, int wordCount) {
     return '''
-I need to generate a vocabulary quiz with $wordCount sentence completion questions based on the following words:
 
+TASK: Create a high-quality vocabulary assessment with $wordCount sentence completion questions.
+
+VOCABULARY WORDS:
 $wordDetails
 
-For each word, create a question where the user must select the correct word to complete a sentence. 
-The format of each question should be: "[Sentence with ___ where the word should go]"
+ASSESSMENT OBJECTIVES:
+- Test genuine understanding of word meanings in context
+- Evaluate ability to distinguish between similar concepts
+- Assess contextual usage comprehension
+- Ensure appropriate cognitive challenge
 
-The sentence should demonstrate the word's proper usage and context.
-Each question should have 3 options with only one correct answer (which is the word itself).
-The other options should be plausible but incorrect alternatives that are similar in meaning or usage.
+QUESTION GENERATION GUIDELINES:
 
-The format must be exactly as follows:
+1. SENTENCE CONSTRUCTION:
+   - Use varied sentence structures (simple, compound, complex)
+   - Maintain 8th-12th grade reading level
+   - Provide sufficient context clues without making answers obvious
+   - Ensure sentences are authentic and naturally flowing
+   - Avoid overly academic or artificial language
+
+2. CONTEXT VARIETY:
+   - Academic contexts (25%): scholarly discussions, research, education
+   - Professional/workplace scenarios (25%): business, career, industry
+   - Everyday situations (25%): daily life, relationships, common experiences
+   - Literary/descriptive passages (25%): creative writing, descriptive scenes
+
+3. DISTRACTOR CREATION STRATEGY:
+   - Include words from similar semantic fields or categories
+   - Use words with overlapping but distinct meanings
+   - Ensure distractors are grammatically correct in context
+   - Make distractors plausible to someone with partial understanding
+   - Avoid synonyms that would also be correct in context
+   - Consider words that might be confused due to similar spelling/sound
+
+4. DIFFICULTY CALIBRATION:
+   - Beginner level: Simple contexts with clear contextual clues
+   - Intermediate level: Moderate complexity requiring some inference
+   - Advanced level: Complex contexts requiring nuanced understanding
+   - Ensure questions require understanding, not just recognition
+   - Balance between too easy and impossibly difficult
+
+5. QUALITY VALIDATION:
+   - Each sentence must make logical sense with only one answer
+   - Verify that context supports the correct answer uniquely
+   - Ensure distractors don't create valid alternative meanings
+   - Check for cultural bias or overly specific knowledge requirements
+   - Avoid trick questions or overly technical terminology
+
+STRICT OUTPUT FORMAT:
 {
   "questions": [
     {
       "question_id": "1",
-      "question": "The professor's ___ lecture kept the students engaged for hours.",
-      "options": ["profound", "mundane", "verbose"],
-      "correct_answer": "profound"
+      "question": "The scientist's ___ research methodology yielded groundbreaking results in the field.",
+      "options": ["meticulous", "cursory", "erratic"],
+      "correct_answer": "meticulous"
     }
   ]
 }
 
-Important requirements:
-1. Each sentence must contain a blank (___) where the target word should go
-2. The sentence should provide enough context to determine the correct word
-3. The correct answer must be the actual vocabulary word from the list
-4. The options should include the correct word and two plausible alternatives
-5. The options should not be overly obvious - they should require understanding of the word meanings
+CRITICAL REQUIREMENTS:
+1. Each sentence MUST contain exactly one blank (___)
+2. The blank must be positioned where the target word naturally fits
+3. Context must provide enough information to determine the correct answer
+4. All three options must be grammatically correct in the sentence
+5. Only ONE option should create a logically coherent sentence
+6. Generate exactly $wordCount questions, one per vocabulary word
+7. Ensure perfect JSON formatting with no syntax errors
+8. The correct answer must be the exact vocabulary word from the provided list
+
+DISTRACTOR SELECTION STRATEGIES:
+- For adjectives: Use contrasting qualities or intensities
+- For verbs: Use actions with different implications or outcomes
+- For nouns: Use items from related categories with distinct characteristics
+- For adverbs: Use words that modify actions differently
+
+CONTEXT CLUES GUIDELINES:
+- Provide enough context to distinguish between similar words
+- Include consequences, causes, or descriptions that point to the correct answer
+- Use surrounding words that create logical relationships
+- Avoid giving away the answer through direct synonyms in the context
+
+AVOID:
+- Overly obvious context clues that make other options impossible
+- Distractors that are completely unrelated to the correct answer
+- Sentences that work logically with multiple answer choices
+- Cultural references or specialized knowledge requirements
+- Grammatically awkward or forced sentence constructions
+- Using the exact definition words in the sentence context
+- Making the correct answer too obvious through process of elimination
+
+ENSURE EACH QUESTION:
+- Tests actual vocabulary knowledge, not just basic reading comprehension
+- Requires understanding of subtle differences between word meanings
+- Provides a meaningful, realistic context for word usage
+- Challenges the user appropriately without being unfair
 ''';
   }
 
@@ -280,18 +356,36 @@ Important requirements:
         final questionsJson = questionsData;
         logger.d('Found ${questionsJson.length} questions in response');
 
-        // Convert to PracticeQuizQuestion objects
-        return questionsJson.map((item) {
+        // Convert to PracticeQuizQuestion objects and validate
+        final validQuestions = <PracticeQuizQuestion>[];
+
+        for (final item in questionsJson) {
           try {
             final question =
                 PracticeQuizQuestion.fromJson(item as Map<String, dynamic>);
-            question.options.shuffle(); // Shuffle options for each question
-            return question;
+
+            // Validate question quality
+            if (_validateQuestionQuality(question)) {
+              question.options.shuffle(); // Shuffle options for each question
+              validQuestions.add(question);
+            } else {
+              logger.w('Question failed validation: ${question.question}');
+            }
           } catch (e) {
             logger.e('Error parsing question: $e\nQuestion data: $item');
-            rethrow;
+            // Continue with other questions rather than failing completely
           }
-        }).toList();
+        }
+
+        if (validQuestions.isEmpty) {
+          throw Exception('No valid questions generated from OpenAI response');
+        }
+
+        logger.i(
+          'Successfully validated ${validQuestions.length} out of '
+          '${questionsJson.length} questions',
+        );
+        return validQuestions;
       } else {
         logger.e(
           'The "questions" field is not a list: ${questionsData.runtimeType}',
@@ -304,6 +398,180 @@ Important requirements:
       logger.e('Response missing "questions" key or not a map: $parsedData');
       throw Exception('Invalid response format: missing questions field');
     }
+  }
+
+  /// Validates the quality of a generated quiz question
+  bool _validateQuestionQuality(PracticeQuizQuestion question) {
+    // Check if question contains exactly one blank
+    if (!_hasExactlyOneBlank(question.question)) {
+      logger.w('Question validation failed: incorrect number of blanks');
+      return false;
+    }
+
+    // Verify correct answer is in options
+    if (!question.options.contains(question.correctAnswer)) {
+      logger.w('Question validation failed: correct answer not in options');
+      return false;
+    }
+
+    // Ensure options are unique
+    if (question.options.toSet().length != question.options.length) {
+      logger.w('Question validation failed: duplicate options');
+      return false;
+    }
+
+    // Check if question has exactly 3 options
+    if (question.options.length != 3) {
+      logger.w('Question validation failed: incorrect number of options');
+      return false;
+    }
+
+    // Validate question length (not too short or too long)
+    if (!_isValidQuestionLength(question.question)) {
+      logger.w('Question validation failed: invalid question length');
+      return false;
+    }
+
+    // Check for obvious quality issues
+    if (_hasObviousQualityIssues(question)) {
+      logger.w('Question validation failed: quality issues detected');
+      return false;
+    }
+
+    return true;
+  }
+
+  /// Checks if question contains exactly one blank
+  bool _hasExactlyOneBlank(String question) {
+    final blankCount = '___'.allMatches(question).length;
+    return blankCount == 1;
+  }
+
+  /// Validates question length is appropriate
+  bool _isValidQuestionLength(String question) {
+    final wordCount = question.split(' ').length;
+    return wordCount >= 5 && wordCount <= 30; // Reasonable sentence length
+  }
+
+  /// Checks for obvious quality issues in the question
+  bool _hasObviousQualityIssues(PracticeQuizQuestion question) {
+    final questionLower = question.question.toLowerCase();
+    final correctAnswerLower = question.correctAnswer.toLowerCase();
+
+    // Check if the question contains the correct answer
+    // (avoiding obvious hints)
+    if (questionLower.contains(correctAnswerLower) &&
+        correctAnswerLower.length > 3) {
+      return true;
+    }
+
+    // Check if any option appears directly in the question text
+    for (final option in question.options) {
+      if (option.toLowerCase() != correctAnswerLower &&
+          questionLower.contains(option.toLowerCase()) &&
+          option.length > 3) {
+        return true;
+      }
+    }
+
+    // Check for overly short options (likely low quality)
+    if (question.options.any((option) => option.length < 2)) {
+      return true;
+    }
+
+    // Check for suspiciously similar options
+    if (_hasSuspiciouslySimilarOptions(question.options)) {
+      return true;
+    }
+
+    return false;
+  }
+
+  /// Checks if options are too similar to each other
+  bool _hasSuspiciouslySimilarOptions(List<String> options) {
+    for (var i = 0; i < options.length; i++) {
+      for (var j = i + 1; j < options.length; j++) {
+        // Check if two options are very similar
+        if (_calculateSimilarity(options[i], options[j]) > 0.8) {
+          return true;
+        }
+      }
+    }
+    return false;
+  }
+
+  /// Calculates similarity between two strings (basic implementation)
+  double _calculateSimilarity(String str1, String str2) {
+    if (str1 == str2) return 1;
+
+    final longer = str1.length > str2.length ? str1 : str2;
+    final shorter = str1.length > str2.length ? str2 : str1;
+
+    if (longer.isEmpty) return 1;
+
+    final editDistance = _calculateEditDistance(longer, shorter);
+    return (longer.length - editDistance) / longer.length;
+  }
+
+  /// Calculates edit distance between two strings
+  int _calculateEditDistance(String str1, String str2) {
+    final matrix = List.generate(
+      str1.length + 1,
+      (i) => List.generate(str2.length + 1, (j) => 0),
+    );
+
+    for (var i = 0; i <= str1.length; i++) {
+      matrix[i][0] = i;
+    }
+
+    for (var j = 0; j <= str2.length; j++) {
+      matrix[0][j] = j;
+    }
+
+    for (var i = 1; i <= str1.length; i++) {
+      for (var j = 1; j <= str2.length; j++) {
+        final cost = str1[i - 1] == str2[j - 1] ? 0 : 1;
+        matrix[i][j] = [
+          matrix[i - 1][j] + 1,
+          matrix[i][j - 1] + 1,
+          matrix[i - 1][j - 1] + cost,
+        ].reduce((a, b) => a < b ? a : b);
+      }
+    }
+
+    return matrix[str1.length][str2.length];
+  }
+
+  /// Applies fallback mechanism to ensure adequate question quantity
+  /// while maintaining quality standards
+  List<PracticeQuizQuestion> _applyFallbackMechanism(
+    List<PracticeQuizQuestion> validatedQuestions,
+    int targetQuestionCount,
+  ) {
+    // If we have enough validated questions, return them
+    if (validatedQuestions.length >= (targetQuestionCount * 0.8).round()) {
+      logger.i(
+        'Sufficient validated questions available: '
+        '${validatedQuestions.length}',
+      );
+      return validatedQuestions;
+    }
+
+    // If we have too few validated questions, log warning but return
+    // what we have
+    // This prevents complete failure due to overly strict validation
+    if (validatedQuestions.isNotEmpty) {
+      logger.w(
+        'Only ${validatedQuestions.length} out of $targetQuestionCount '
+        'questions passed validation. Returning available questions.',
+      );
+      return validatedQuestions;
+    }
+
+    // If no questions passed validation, this indicates a serious issue
+    logger
+        .e('No questions passed validation - this may indicate prompt issues');
+    return validatedQuestions; // Return empty list, let caller handle
   }
 
   /// Logs performance metrics for quiz generation
