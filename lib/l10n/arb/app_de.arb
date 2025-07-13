@@ -747,5 +747,93 @@
                 "type": "int"
             }
         }
+    },
+    "settingsTitle": "Einstellungen",
+    "@settingsTitle": {
+        "description": "Title for the settings screen"
+    },
+    "settingsNotifications": "Benachrichtigungen",
+    "@settingsNotifications": {
+        "description": "Section title for notification settings"
+    },
+    "settingsNotificationsDescription": "Steuern Sie wann und wie Sie Benachrichtigungen erhalten",
+    "@settingsNotificationsDescription": {
+        "description": "Description for notification settings section"
+    },
+    "settingsEnableNotifications": "Benachrichtigungen aktivieren",
+    "@settingsEnableNotifications": {
+        "description": "Toggle for enabling all notifications"
+    },
+    "settingsEnableNotificationsDescription": "Alle Benachrichtigungen ein- oder ausschalten",
+    "@settingsEnableNotificationsDescription": {
+        "description": "Description for enable notifications toggle"
+    },
+    "settingsDailyReminders": "Tägliche Erinnerungen",
+    "@settingsDailyReminders": {
+        "description": "Toggle for daily reminder notifications"
+    },
+    "settingsDailyRemindersDescription": "Lassen Sie sich täglich ans Üben erinnern",
+    "@settingsDailyRemindersDescription": {
+        "description": "Description for daily reminder notifications"
+    },
+    "settingsPracticeReminders": "Übungserinnerungen",
+    "@settingsPracticeReminders": {
+        "description": "Toggle for practice reminder notifications"
+    },
+    "settingsPracticeRemindersDescription": "Lassen Sie sich erinnern, wenn Sie nicht geübt haben",
+    "@settingsPracticeRemindersDescription": {
+        "description": "Description for practice reminder notifications"
+    },
+    "settingsNewWords": "Neue Wörter",
+    "@settingsNewWords": {
+        "description": "Toggle for new word notifications"
+    },
+    "settingsNewWordsDescription": "Benachrichtigungen über neue Vokabeln erhalten",
+    "@settingsNewWordsDescription": {
+        "description": "Description for new word notifications"
+    },
+    "settingsStreakReminders": "Streak-Erinnerungen",
+    "@settingsStreakReminders": {
+        "description": "Toggle for streak reminder notifications"
+    },
+    "settingsStreakRemindersDescription": "Brechen Sie nicht Ihre Lernstreak",
+    "@settingsStreakRemindersDescription": {
+        "description": "Description for streak reminder notifications"
+    },
+    "settingsResetToDefaults": "Auf Standardwerte zurücksetzen",
+    "@settingsResetToDefaults": {
+        "description": "Button to reset all settings to default values"
+    },
+    "settingsResetTitle": "Einstellungen zurücksetzen",
+    "@settingsResetTitle": {
+        "description": "Title for the reset settings dialog"
+    },
+    "settingsResetMessage": "Sind Sie sicher, dass Sie alle Einstellungen auf ihre Standardwerte zurücksetzen möchten? Diese Aktion kann nicht rückgängig gemacht werden.",
+    "@settingsResetMessage": {
+        "description": "Message for the reset settings confirmation dialog"
+    },
+    "settingsLoadingMessage": "Einstellungen werden geladen...",
+    "@settingsLoadingMessage": {
+        "description": "Message shown while settings are being loaded"
+    },
+    "settingsError": "Einstellungsfehler",
+    "@settingsError": {
+        "description": "Title for settings error state"
+    },
+    "settingsRetry": "Wiederholen",
+    "@settingsRetry": {
+        "description": "Button to retry loading settings"
+    },
+    "settingsRecover": "Wiederherstellen",
+    "@settingsRecover": {
+        "description": "Button to recover from settings error"
+    },
+    "cancel": "Abbrechen",
+    "@cancel": {
+        "description": "Cancel button text"
+    },
+    "reset": "Zurücksetzen",
+    "@reset": {
+        "description": "Reset button text"
     }
 } 

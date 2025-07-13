@@ -542,74 +542,75 @@ class AppLocalizationsHi extends AppLocalizations {
   }
 
   @override
-  String get settingsTitle => 'Settings';
+  String get settingsTitle => 'सेटिंग्स';
 
   @override
-  String get settingsNotifications => 'Notifications';
+  String get settingsNotifications => 'सूचनाएं';
 
   @override
   String get settingsNotificationsDescription =>
-      'Control when and how you receive notifications';
+      'नियंत्रित करें कि आपको कब और कैसे सूचनाएं प्राप्त हों';
 
   @override
-  String get settingsEnableNotifications => 'Enable Notifications';
+  String get settingsEnableNotifications => 'सूचनाएं सक्षम करें';
 
   @override
   String get settingsEnableNotificationsDescription =>
-      'Turn all notifications on or off';
+      'सभी सूचनाओं को चालू या बंद करें';
 
   @override
-  String get settingsDailyReminders => 'Daily Reminders';
+  String get settingsDailyReminders => 'दैनिक रिमाइंडर';
 
   @override
   String get settingsDailyRemindersDescription =>
-      'Get reminded to practice daily';
+      'रोज़ाना अभ्यास के लिए रिमाइंडर प्राप्त करें';
 
   @override
-  String get settingsPracticeReminders => 'Practice Reminders';
+  String get settingsPracticeReminders => 'अभ्यास रिमाइंडर';
 
   @override
   String get settingsPracticeRemindersDescription =>
-      'Get reminded when you haven\'t practiced';
+      'जब आपने अभ्यास नहीं किया हो तो रिमाइंडर पाएं';
 
   @override
-  String get settingsNewWords => 'New Words';
+  String get settingsNewWords => 'नए शब्द';
 
   @override
-  String get settingsNewWordsDescription => 'Get notified about new vocabulary';
+  String get settingsNewWordsDescription =>
+      'नई शब्दावली के बारे में सूचनाएं प्राप्त करें';
 
   @override
-  String get settingsStreakReminders => 'Streak Reminders';
+  String get settingsStreakReminders => 'स्ट्रीक रिमाइंडर';
 
   @override
   String get settingsStreakRemindersDescription =>
-      'Don\'t break your learning streak';
+      'अपना सीखने का स्ट्रीक न तोड़ें';
 
   @override
-  String get settingsResetToDefaults => 'Reset to Defaults';
+  String get settingsResetToDefaults => 'डिफ़ॉल्ट पर रीसेट करें';
 
   @override
-  String get settingsResetTitle => 'Reset Settings';
+  String get settingsResetTitle => 'सेटिंग्स रीसेट करें';
 
   @override
   String get settingsResetMessage =>
-      'Are you sure you want to reset all settings to their default values? This action cannot be undone.';
+      'क्या आप वाकई सभी सेटिंग्स को उनके डिफ़ॉल्ट मानों पर रीसेट करना चाहते हैं? इस कार्य को पूर्ववत नहीं किया जा सकता।';
 
   @override
-  String get settingsLoadingMessage => 'Loading settings...';
+  String get settingsLoadingMessage => 'सेटिंग्स लोड हो रही हैं...';
 
   @override
-  String get settingsError => 'Settings Error';
+  String get settingsError => 'सेटिंग्स त्रुटि';
 
   @override
-  String get settingsRetry => 'Retry';
+  String get settingsRetry => 'पुनः प्रयास करें';
 
   @override
-  String get settingsRecover => 'Recover';
+  String get settingsRecover => 'पुनर्प्राप्त करें';
 
   @override
-  String get cancel => 'Cancel';
+  String get cancel => 'रद्द करें';
 
   @override
-  String get reset => 'Reset';
+  String get reset => 'रीसेट करें';
 }

@@ -547,74 +547,75 @@ class AppLocalizationsEs extends AppLocalizations {
   }
 
   @override
-  String get settingsTitle => 'Settings';
+  String get settingsTitle => 'Configuración';
 
   @override
-  String get settingsNotifications => 'Notifications';
+  String get settingsNotifications => 'Notificaciones';
 
   @override
   String get settingsNotificationsDescription =>
-      'Control when and how you receive notifications';
+      'Controla cuándo y cómo recibir notificaciones';
 
   @override
-  String get settingsEnableNotifications => 'Enable Notifications';
+  String get settingsEnableNotifications => 'Activar notificaciones';
 
   @override
   String get settingsEnableNotificationsDescription =>
-      'Turn all notifications on or off';
+      'Activar o desactivar todas las notificaciones';
 
   @override
-  String get settingsDailyReminders => 'Daily Reminders';
+  String get settingsDailyReminders => 'Recordatorios diarios';
 
   @override
   String get settingsDailyRemindersDescription =>
-      'Get reminded to practice daily';
+      'Recibe recordatorios para practicar diariamente';
 
   @override
-  String get settingsPracticeReminders => 'Practice Reminders';
+  String get settingsPracticeReminders => 'Recordatorios de práctica';
 
   @override
   String get settingsPracticeRemindersDescription =>
-      'Get reminded when you haven\'t practiced';
+      'Recibe recordatorios cuando no hayas practicado';
 
   @override
-  String get settingsNewWords => 'New Words';
+  String get settingsNewWords => 'Nuevas palabras';
 
   @override
-  String get settingsNewWordsDescription => 'Get notified about new vocabulary';
+  String get settingsNewWordsDescription =>
+      'Recibe notificaciones sobre nuevo vocabulario';
 
   @override
-  String get settingsStreakReminders => 'Streak Reminders';
+  String get settingsStreakReminders => 'Recordatorios de racha';
 
   @override
   String get settingsStreakRemindersDescription =>
-      'Don\'t break your learning streak';
+      'No rompas tu racha de aprendizaje';
 
   @override
-  String get settingsResetToDefaults => 'Reset to Defaults';
+  String get settingsResetToDefaults => 'Restablecer valores por defecto';
 
   @override
-  String get settingsResetTitle => 'Reset Settings';
+  String get settingsResetTitle => 'Restablecer configuración';
 
   @override
   String get settingsResetMessage =>
-      'Are you sure you want to reset all settings to their default values? This action cannot be undone.';
+      '¿Estás seguro de que quieres restablecer toda la configuración a sus valores por defecto? Esta acción no se puede deshacer.';
 
   @override
-  String get settingsLoadingMessage => 'Loading settings...';
+  String get settingsLoadingMessage => 'Cargando configuración...';
 
   @override
-  String get settingsError => 'Settings Error';
+  String get settingsError => 'Error de configuración';
 
   @override
-  String get settingsRetry => 'Retry';
+  String get settingsRetry => 'Reintentar';
 
   @override
-  String get settingsRecover => 'Recover';
+  String get settingsRecover => 'Recuperar';
 
   @override
-  String get cancel => 'Cancel';
+  String get cancel => 'Cancelar';
 
   @override
-  String get reset => 'Reset';
+  String get reset => 'Restablecer';
 }

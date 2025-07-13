@@ -547,74 +547,75 @@ class AppLocalizationsDe extends AppLocalizations {
   }
 
   @override
-  String get settingsTitle => 'Settings';
+  String get settingsTitle => 'Einstellungen';
 
   @override
-  String get settingsNotifications => 'Notifications';
+  String get settingsNotifications => 'Benachrichtigungen';
 
   @override
   String get settingsNotificationsDescription =>
-      'Control when and how you receive notifications';
+      'Steuern Sie wann und wie Sie Benachrichtigungen erhalten';
 
   @override
-  String get settingsEnableNotifications => 'Enable Notifications';
+  String get settingsEnableNotifications => 'Benachrichtigungen aktivieren';
 
   @override
   String get settingsEnableNotificationsDescription =>
-      'Turn all notifications on or off';
+      'Alle Benachrichtigungen ein- oder ausschalten';
 
   @override
-  String get settingsDailyReminders => 'Daily Reminders';
+  String get settingsDailyReminders => 'Tägliche Erinnerungen';
 
   @override
   String get settingsDailyRemindersDescription =>
-      'Get reminded to practice daily';
+      'Lassen Sie sich täglich ans Üben erinnern';
 
   @override
-  String get settingsPracticeReminders => 'Practice Reminders';
+  String get settingsPracticeReminders => 'Übungserinnerungen';
 
   @override
   String get settingsPracticeRemindersDescription =>
-      'Get reminded when you haven\'t practiced';
+      'Lassen Sie sich erinnern, wenn Sie nicht geübt haben';
 
   @override
-  String get settingsNewWords => 'New Words';
+  String get settingsNewWords => 'Neue Wörter';
 
   @override
-  String get settingsNewWordsDescription => 'Get notified about new vocabulary';
+  String get settingsNewWordsDescription =>
+      'Benachrichtigungen über neue Vokabeln erhalten';
 
   @override
-  String get settingsStreakReminders => 'Streak Reminders';
+  String get settingsStreakReminders => 'Streak-Erinnerungen';
 
   @override
   String get settingsStreakRemindersDescription =>
-      'Don\'t break your learning streak';
+      'Brechen Sie nicht Ihre Lernstreak';
 
   @override
-  String get settingsResetToDefaults => 'Reset to Defaults';
+  String get settingsResetToDefaults => 'Auf Standardwerte zurücksetzen';
 
   @override
-  String get settingsResetTitle => 'Reset Settings';
+  String get settingsResetTitle => 'Einstellungen zurücksetzen';
 
   @override
   String get settingsResetMessage =>
-      'Are you sure you want to reset all settings to their default values? This action cannot be undone.';
+      'Sind Sie sicher, dass Sie alle Einstellungen auf ihre Standardwerte zurücksetzen möchten? Diese Aktion kann nicht rückgängig gemacht werden.';
 
   @override
-  String get settingsLoadingMessage => 'Loading settings...';
+  String get settingsLoadingMessage => 'Einstellungen werden geladen...';
 
   @override
-  String get settingsError => 'Settings Error';
+  String get settingsError => 'Einstellungsfehler';
 
   @override
-  String get settingsRetry => 'Retry';
+  String get settingsRetry => 'Wiederholen';
 
   @override
-  String get settingsRecover => 'Recover';
+  String get settingsRecover => 'Wiederherstellen';
 
   @override
-  String get cancel => 'Cancel';
+  String get cancel => 'Abbrechen';
 
   @override
-  String get reset => 'Reset';
+  String get reset => 'Zurücksetzen';
 }
