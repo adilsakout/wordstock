@@ -160,6 +160,7 @@ class _AppState extends State<App> {
       ],
       child: PostHogWidget(
         child: MaterialApp.router(
+          title: 'Vocabulary - word of the day',
           routerConfig: _router,
           debugShowCheckedModeBanner: false,
           theme: ThemeData(
