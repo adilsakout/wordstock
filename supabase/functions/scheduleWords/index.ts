@@ -88,6 +88,49 @@ Deno.serve(async () => {
     
     console.log(`\n👤 Processing user ${userId}`);
     
+    // 🚨 CRITICAL FIX: Check if notifications already exist for today to prevent duplicates
+    const todayStart = new Date(today);
+    todayStart.setHours(0, 0, 0, 0);
+    const todayEnd = new Date(today);
+    todayEnd.setHours(23, 59, 59, 999);
+    
+    console.log(`🔍 Checking for existing notifications for user ${userId} on ${today.toDateString()}`);
+    const { data: existingNotifications, error: checkError } = await supabase
+      .from("word_notifications")
+      .select("notification_type")
+      .eq("user_id", userId)
+      .gte("scheduled_at", todayStart.toISOString())
+      .lte("scheduled_at", todayEnd.toISOString());
+    
+    if (checkError) {
+      console.error(`❌ Error checking existing notifications for user ${userId}:`, checkError.message);
+      continue; // Skip this user but continue with others
+    }
+    
+    const existingTypes = new Set(existingNotifications?.map((n: { notification_type: string }) => n.notification_type) || []);
+    
+    if (existingTypes.size > 0) {
+      console.log(`⚠️  Found ${existingTypes.size} existing notifications for user ${userId}: [${Array.from(existingTypes).join(', ')}]`);
+      console.log(`🧹 Deleting existing notifications to prevent duplicates...`);
+      
+      // Delete existing notifications for today to prevent duplicates
+      const { error: deleteError } = await supabase
+        .from("word_notifications")
+        .delete()
+        .eq("user_id", userId)
+        .gte("scheduled_at", todayStart.toISOString())
+        .lte("scheduled_at", todayEnd.toISOString());
+        
+      if (deleteError) {
+        console.error(`❌ Error deleting existing notifications for user ${userId}:`, deleteError.message);
+        continue; // Skip this user but continue with others
+      } else {
+        console.log(`✅ Successfully deleted existing notifications for user ${userId}`);
+      }
+    } else {
+      console.log(`✅ No existing notifications found for user ${userId} - proceeding with scheduling`);
+    }
+    
     const allNotifications: NotificationData[] = [];
 
     // 1. Schedule Daily Reminder (once per day at 9 AM)
@@ -133,7 +176,7 @@ Deno.serve(async () => {
       console.log(`📚 Scheduling one new word notification for user ${userId}`);
       
       // Select one random word for this user
-      const selectedWord = shuffleArray(allWords)[0];
+      const selectedWord = shuffleArray(allWords)[0] as { word: string; definition: string };
       
       // Random time between 9 AM and 9 PM
       const startHour = 9;
@@ -177,9 +220,9 @@ Deno.serve(async () => {
       }
     }
 
-    // Insert all notifications for this user
+    // Insert all notifications for this user (duplicate-safe)
     if (allNotifications.length > 0) {
-      console.log(`💾 Inserting ${allNotifications.length} notifications for user ${userId}`);
+      console.log(`💾 Inserting ${allNotifications.length} fresh notifications for user ${userId} (duplicates prevented)`);
       const { error: insertError } = await supabase
         .from("word_notifications")
         .insert(allNotifications);
@@ -187,13 +230,14 @@ Deno.serve(async () => {
       if (insertError) {
         console.error(`❌ Insert error for user ${userId}:`, insertError.message);
       } else {
-        console.log(`✅ Successfully scheduled ${allNotifications.length} notifications for user ${userId}`);
+        const notificationTypes = allNotifications.map(n => n.notification_type).join(', ');
+        console.log(`✅ Successfully scheduled ${allNotifications.length} notifications for user ${userId}: [${notificationTypes}]`);
       }
     } else {
       console.log(`⏩ No notifications to schedule for user ${userId}`);
     }
   }
 
-  console.log("✨ All notification types scheduled successfully");
-  return new Response("✅ All notification types scheduled", { status: 200 });
+  console.log("✨ All notification types scheduled successfully with duplicate prevention");
+  return new Response("✅ All notification types scheduled (duplicates prevented)", { status: 200 });
 });
