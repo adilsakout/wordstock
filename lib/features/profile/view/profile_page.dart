@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:wordstock/features/profile/cubit/cubit.dart';
 import 'package:wordstock/features/profile/widgets/profile_body.dart';
 
 /// {@template profile_page}
@@ -16,10 +15,7 @@ class ProfilePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => ProfileCubit(),
-      child: const ProfileView(),
-    );
+    return const ProfileView();
   }
 }
 

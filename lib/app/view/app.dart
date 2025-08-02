@@ -163,6 +163,9 @@ class _AppState extends State<App> {
           create: (context) =>
               SettingsCubit(settingsRepository: settingsRepository),
         ),
+        BlocProvider<ProfileCubit>(
+          create: (context) => ProfileCubit(userRepository: userRepository),
+        ),
       ],
       child: PostHogWidget(
         child: MaterialApp.router(
