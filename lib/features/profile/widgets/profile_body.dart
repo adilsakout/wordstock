@@ -69,7 +69,9 @@ class _ProfileBodyState extends State<ProfileBody> {
   ) async {
     // Log the start of the dialog handling
     logger.d(
-        '[Profile] Opening vocabulary level dialog. Current level: $currentLevel');
+      '[Profile] Opening vocabulary level dialog. '
+      'Current level: $currentLevel',
+    );
 
     final cubit = context.read<ProfileCubit>();
     final selectedLevel =

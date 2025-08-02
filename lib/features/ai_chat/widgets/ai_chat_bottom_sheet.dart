@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -45,6 +47,9 @@ class _AIChatBottomSheetState extends State<AIChatBottomSheet> {
 
   // Flag to ensure we only initialize the chat conversation once
   bool _hasInitializedChat = false;
+
+  // Track which AI messages have completed their typing animation
+  final Set<String> _completedAnimations = {};
 
   @override
   void initState() {
@@ -111,7 +116,8 @@ class _AIChatBottomSheetState extends State<AIChatBottomSheet> {
   void _sendMessage() {
     final message = _messageController.text.trim();
     if (message.isNotEmpty) {
-      // Send message with localized vocabulary system message for user's language
+      // Send message with localized vocabulary
+      // system message for user's language
       context.read<AIChatCubit>().sendMessage(
             message,
             vocabularySystemMessage:
@@ -140,8 +146,9 @@ class _AIChatBottomSheetState extends State<AIChatBottomSheet> {
 
     return BlocConsumer<AIChatCubit, AIChatState>(
       listener: (context, state) {
-        // Auto-scroll when new messages arrive
+        // Auto-scroll when new messages arrive or loading state changes
         if (state is AIChatLoaded) {
+          // Scroll to show new messages or typing indicator
           _scrollToBottom();
         }
       },
@@ -181,15 +188,7 @@ class _AIChatBottomSheetState extends State<AIChatBottomSheet> {
                     const Divider(),
 
                     // State-dependent content area
-                    if (state is AIChatLoading)
-                      Expanded(
-                        child: Center(
-                          child: CircularProgressIndicator(
-                            color: Theme.of(context).primaryColor,
-                          ),
-                        ),
-                      )
-                    else if (state is AIChatLoaded)
+                    if (state is AIChatLoaded)
                       Expanded(
                         child: _buildChatList(context, state),
                       )
@@ -201,6 +200,11 @@ class _AIChatBottomSheetState extends State<AIChatBottomSheet> {
                             style: const TextStyle(color: Colors.red),
                           ),
                         ),
+                      )
+                    else
+                      // Initial state - show empty space while initialization
+                      Expanded(
+                        child: Container(),
                       ),
 
                     // Input field only shown when conversation is active
@@ -269,41 +273,100 @@ class _AIChatBottomSheetState extends State<AIChatBottomSheet> {
     ).animate().fadeIn(duration: 300.ms);
   }
 
-  /// Builds the scrollable chat message list
+  /// Builds the scrollable chat message list with loading indicators
   ///
   /// Features:
   /// - Smooth scrolling with proper controller management
   /// - Hides system messages from user (they're for AI context only)
+  /// - Shows typing indicator when AI is responding
   /// - Staggered animation entrance for visual polish
   /// - Proper padding and spacing for comfortable reading
   Widget _buildChatList(BuildContext context, AIChatLoaded state) {
+    // Calculate visible messages (excluding system messages)
+    final visibleMessages = state.messages
+        .where((message) => message.role != MessageRole.system)
+        .toList();
+
+    // Add 1 to item count if AI is loading (for typing indicator)
+    final itemCount = visibleMessages.length + (state.isLoading ? 1 : 0);
+
     return ListView.builder(
       controller: _scrollController,
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-      itemCount: state.messages.length,
+      itemCount: itemCount,
       itemBuilder: (context, index) {
-        final message = state.messages[index];
-
-        // Don't show system messages to users (they're for AI context)
-        if (message.role == MessageRole.system) {
-          return const SizedBox.shrink();
+        // Show typing indicator as last item when AI is loading
+        if (state.isLoading && index == visibleMessages.length) {
+          return _buildTypingIndicator(context);
         }
 
+        final message = visibleMessages[index];
         final isUser = message.role == MessageRole.user;
+
         return _buildChatBubble(
           context,
           message: message.content,
           isUser: isUser,
           animationDelay: (50 * index).ms, // Staggered entrance animations
+          isLatestAIMessage: !isUser && index == visibleMessages.length - 1,
         );
       },
     );
+  }
+
+  /// Creates an elegant typing indicator for AI responses
+  ///
+  /// Features:
+  /// - Three animated dots that pulse in sequence
+  /// - Matches AI message bubble styling for consistency
+  /// - Smooth spring animations following Apple design patterns
+  /// - Proper positioning aligned with AI messages
+  Widget _buildTypingIndicator(BuildContext context) {
+    return Align(
+      alignment: Alignment.centerLeft,
+      child: Container(
+        margin: const EdgeInsets.symmetric(vertical: 4),
+        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+        decoration: BoxDecoration(
+          color: Colors.grey.shade200,
+          borderRadius: BorderRadius.circular(16),
+        ),
+        child: Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            // Three animated dots with staggered timing
+            for (int i = 0; i < 3; i++)
+              Container(
+                width: 8,
+                height: 8,
+                margin: EdgeInsets.only(right: i < 2 ? 4 : 0),
+                decoration: BoxDecoration(
+                  color: Colors.grey.shade500,
+                  shape: BoxShape.circle,
+                ),
+              )
+                  .animate(onPlay: (controller) => controller.repeat())
+                  .fadeIn(
+                    delay: (i * 200).ms,
+                    duration: 600.ms,
+                    curve: Curves.easeInOut,
+                  )
+                  .then()
+                  .fadeOut(duration: 600.ms, curve: Curves.easeInOut),
+          ],
+        ),
+      ),
+    )
+        .animate()
+        .fadeIn(duration: 300.ms)
+        .slideY(begin: 0.3, end: 0, curve: Curves.easeOut);
   }
 
   /// Creates individual chat bubbles with modern iMessage-style design
   ///
   /// Features:
   /// - Adaptive bubble colors (primary for user, gray for AI)
+  /// - Progressive typing animation for AI responses
   /// - Proper text contrast and readability
   /// - Responsive width based on screen size
   /// - Smooth entrance animations with subtle slide effect
@@ -313,6 +376,7 @@ class _AIChatBottomSheetState extends State<AIChatBottomSheet> {
     required String message,
     required bool isUser,
     required Duration animationDelay,
+    bool isLatestAIMessage = false,
   }) {
     return Align(
       alignment: isUser ? Alignment.centerRight : Alignment.centerLeft,
@@ -326,14 +390,43 @@ class _AIChatBottomSheetState extends State<AIChatBottomSheet> {
           color: isUser ? Theme.of(context).primaryColor : Colors.grey.shade200,
           borderRadius: BorderRadius.circular(16),
         ),
-        child: Text(
-          message,
-          style: TextStyle(
-            color: isUser ? Colors.white : Colors.black87,
-          ),
-        ),
+        child: isUser
+            ? Text(
+                message,
+                style: TextStyle(
+                  color: isUser ? Colors.white : Colors.black87,
+                ),
+              )
+            : _shouldAnimateMessage(message, isLatestAIMessage)
+                ? _TypingAnimationText(
+                    key: ValueKey(message.hashCode),
+                    text: message,
+                    textStyle: const TextStyle(
+                      color: Colors.black87,
+                    ),
+                    onCharacterAdded: _scrollToBottom,
+                    onAnimationComplete: () {
+                      setState(() {
+                        _completedAnimations.add(message);
+                      });
+                    },
+                  )
+                : Text(
+                    message,
+                    style: const TextStyle(
+                      color: Colors.black87,
+                    ),
+                  ),
       ),
     ).animate(delay: animationDelay).fadeIn().slideY(begin: 0.2, end: 0);
+  }
+
+  /// Determines if an AI message should animate or show as static text
+  ///
+  /// Only animates the latest AI message that hasn't been animated yet.
+  /// This prevents re-animation when scrolling or rebuilding.
+  bool _shouldAnimateMessage(String message, bool isLatestAIMessage) {
+    return isLatestAIMessage && !_completedAnimations.contains(message);
   }
 
   /// Builds the message input area with send button
@@ -402,5 +495,197 @@ class _AIChatBottomSheetState extends State<AIChatBottomSheet> {
         ],
       ),
     ).animate().fadeIn(delay: 200.ms);
+  }
+}
+
+/// A widget that animates text appearing character
+///  by character with typing effect
+///
+/// This creates a natural, engaging typing animation that mimics how humans
+/// type messages. Features include:
+/// - Smooth character-by-character reveal at natural typing speed
+/// - Blinking cursor at the end while typing
+/// - Callback for each character to enable auto-scrolling
+/// - Apple-style smooth timing that feels organic
+class _TypingAnimationText extends StatefulWidget {
+  /// Creates a typing animation text widget
+  ///
+  /// [text] - The full text to animate
+  /// [textStyle] - Style to apply to the text
+  /// [typingSpeed] - Duration between each character (default: 30ms)
+  /// [onCharacterAdded] - Called each time a character is revealed
+  const _TypingAnimationText({
+    required this.text,
+    required this.textStyle,
+    super.key,
+    // ignore: unused_element_parameter
+    this.typingSpeed = const Duration(milliseconds: 30),
+    this.onCharacterAdded,
+    this.onAnimationComplete,
+  });
+
+  /// The complete text that will be animated character by character
+  final String text;
+
+  /// Text styling to apply to the animated text
+  final TextStyle textStyle;
+
+  /// Speed of typing animation - time between each character
+  /// Default 30ms provides natural, readable typing speed
+  final Duration typingSpeed;
+
+  /// Callback triggered each time a new character appears
+  /// Used for triggering scroll updates during animation
+  final VoidCallback? onCharacterAdded;
+
+  /// Callback triggered when the entire animation completes
+  /// Used to mark the message as animated to prevent re-animation
+  final VoidCallback? onAnimationComplete;
+
+  @override
+  State<_TypingAnimationText> createState() => _TypingAnimationTextState();
+}
+
+class _TypingAnimationTextState extends State<_TypingAnimationText>
+    with TickerProviderStateMixin {
+  // Animation controller for the blinking cursor
+  late AnimationController _cursorController;
+  late Animation<double> _cursorAnimation;
+
+  // Timer for character reveal animation
+  Timer? _typingTimer;
+
+  // Current number of characters visible
+  int _currentCharCount = 0;
+
+  // Whether typing animation is complete
+  bool _isTypingComplete = false;
+
+  @override
+  void initState() {
+    super.initState();
+
+    // Set up blinking cursor animation
+    _cursorController = AnimationController(
+      duration: const Duration(milliseconds: 530), // Natural blink rate
+      vsync: this,
+    );
+    _cursorAnimation = Tween<double>(
+      begin: 0,
+      end: 1,
+    ).animate(
+      CurvedAnimation(
+        parent: _cursorController,
+        curve: Curves.easeInOut,
+      ),
+    );
+
+    // Start cursor blinking
+    _cursorController.repeat(reverse: true);
+
+    // Start typing animation with a small delay for entrance effect
+    Future.delayed(const Duration(milliseconds: 200), _startTypingAnimation);
+  }
+
+  /// Initiates the character-by-character typing animation
+  ///
+  /// Uses a Timer to progressively reveal characters at a natural pace.
+  /// Includes special handling for spaces and punctuation for more
+  /// realistic typing rhythm.
+  void _startTypingAnimation() {
+    _typingTimer = Timer.periodic(widget.typingSpeed, (timer) {
+      if (_currentCharCount < widget.text.length) {
+        setState(() {
+          _currentCharCount++;
+        });
+
+        // Trigger callback for scroll updates
+        widget.onCharacterAdded?.call();
+
+        // Add slight variation in typing speed for more natural feel
+        final currentChar = widget.text[_currentCharCount - 1];
+        if (currentChar == ' ') {
+          // Slightly slower after spaces (more natural)
+          timer.cancel();
+          Future.delayed(
+            Duration(milliseconds: widget.typingSpeed.inMilliseconds + 15),
+            () {
+              if (mounted) _startTypingAnimation();
+            },
+          );
+        } else if (currentChar == '.' ||
+            currentChar == '!' ||
+            currentChar == '?') {
+          // Pause slightly longer after sentence endings
+          timer.cancel();
+          Future.delayed(
+            Duration(milliseconds: widget.typingSpeed.inMilliseconds + 100),
+            () {
+              if (mounted) _startTypingAnimation();
+            },
+          );
+        }
+      } else {
+        // Typing complete - stop cursor after a brief pause
+        timer.cancel();
+        setState(() {
+          _isTypingComplete = true;
+        });
+        Future.delayed(const Duration(milliseconds: 800), () {
+          if (mounted) {
+            _cursorController.stop();
+            setState(() {}); // Remove cursor
+            // Notify that animation is complete
+            widget.onAnimationComplete?.call();
+          }
+        });
+      }
+    });
+  }
+
+  @override
+  void dispose() {
+    _typingTimer?.cancel();
+    _cursorController.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    // Get the visible portion of the text
+    final visibleText = widget.text.substring(0, _currentCharCount);
+
+    return RichText(
+      text: TextSpan(
+        children: [
+          // The visible text portion
+          TextSpan(
+            text: visibleText,
+            style: widget.textStyle,
+          ),
+          // Blinking cursor (only shown while typing)
+          if (!_isTypingComplete)
+            WidgetSpan(
+              child: AnimatedBuilder(
+                animation: _cursorAnimation,
+                builder: (context, child) {
+                  return Opacity(
+                    opacity: _cursorAnimation.value,
+                    child: Container(
+                      width: 2,
+                      height: widget.textStyle.fontSize ?? 14,
+                      margin: const EdgeInsets.only(left: 1),
+                      decoration: BoxDecoration(
+                        color: widget.textStyle.color ?? Colors.black87,
+                        borderRadius: BorderRadius.circular(1),
+                      ),
+                    ),
+                  );
+                },
+              ),
+            ),
+        ],
+      ),
+    );
   }
 }

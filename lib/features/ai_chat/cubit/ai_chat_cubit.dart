@@ -31,10 +31,10 @@ class AIChatCubit extends Cubit<AIChatState> {
   /// Initiates a conversation about the specified [word]
   ///
   /// This method:
-  /// - Sets loading state while preparing the initial conversation
-  /// - Generates an initial prompt based on the word's definition and example
-  /// - Sends the prompt to OpenAI and receives the first AI response
+  /// - Shows initial conversation state with user's query visible immediately
+  /// - Displays loading indicator while AI generates response
   /// - Establishes the conversation context focused on vocabulary learning
+  /// - Provides smooth UX by showing user message before AI response
   ///
   /// Parameters:
   /// - [word]: The vocabulary word to discuss
@@ -45,14 +45,10 @@ class AIChatCubit extends Cubit<AIChatState> {
     required String systemMessage,
     required String initialPrompt,
   }) async {
-    emit(const AIChatLoading());
-
     try {
-      // Send the localized initial prompt to start the conversation
-      final response = await _sendChatRequest(initialPrompt, systemMessage);
-
-      // Initialize conversation with system context and first exchange
-      final messages = [
+      // First, show the user's initial message immediately for better UX
+      // This lets users see their query while AI is thinking
+      final initialMessages = [
         ChatMessage(
           role: MessageRole.system,
           content: systemMessage,
@@ -61,17 +57,34 @@ class AIChatCubit extends Cubit<AIChatState> {
           role: MessageRole.user,
           content: initialPrompt,
         ),
-        ChatMessage(
-          role: MessageRole.assistant,
-          content: response,
-        ),
       ];
+
+      // Emit loaded state with user message visible and AI loading
+      emit(
+        AIChatLoaded(
+          word: word,
+          messages: initialMessages,
+          isLoading: true, // Show typing indicator for AI response
+        ),
+      );
+
+      // Now send the prompt to AI and get response
+      final response = await _sendChatRequest(initialPrompt, systemMessage);
+
+      // Add AI response to conversation and update state
+      final messagesWithResponse = List<ChatMessage>.from(initialMessages)
+        ..add(
+          ChatMessage(
+            role: MessageRole.assistant,
+            content: response,
+          ),
+        );
 
       emit(
         AIChatLoaded(
           word: word,
-          messages: messages,
-          isLoading: false,
+          messages: messagesWithResponse,
+          isLoading: false, // Hide typing indicator
         ),
       );
     } catch (e) {
