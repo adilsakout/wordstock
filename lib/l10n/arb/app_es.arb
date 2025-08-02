@@ -594,6 +594,42 @@
             }
         }
     },
+    "aiAssistantSystemMessage": "Soy un experto en aprendizaje de vocabulario que ayuda a los estudiantes a dominar nuevas palabras a través de explicaciones completas y atractivas. Proporciono definiciones claras, ejemplos prácticos, técnicas de memoria y contexto cultural. Hago que el aprendizaje de vocabulario sea agradable y memorable conectando las palabras con situaciones de la vida real y ofreciendo múltiples enfoques de aprendizaje.",
+    "@aiAssistantSystemMessage": {
+        "description": "System message describing the AI assistant's role and scope"
+    },
+    "aiVocabularySystemMessage": "Eres un experto en aprendizaje de vocabulario que ayuda a un estudiante a aprender la palabra '{word}'. Proporciona explicaciones completas y educativas que incluyan: 1) Definición clara y simple 2) Etimología u origen de la palabra cuando sea útil 3) Múltiples oraciones de ejemplo mostrando diferentes contextos 4) Sinónimos y antónimos 5) Colocaciones y frases comunes 6) Consejos de uso y errores comunes a evitar 7) Técnicas de memoria o mnemotécnicos cuando sea posible 8) Guía de pronunciación si es relevante. Haz tus explicaciones atractivas, prácticas y adaptadas para ayudar al estudiante a entender y recordar verdaderamente la palabra. Si preguntan sobre temas no relacionados, redirige cortésmente: '¡Estoy aquí para ayudarte a dominar el vocabulario! Enfoquémonos en entender las palabras y mejorar tus habilidades lingüísticas.'",
+    "@aiVocabularySystemMessage": {
+        "description": "System message for vocabulary-focused AI conversation",
+        "placeholders": {
+            "word": {
+                "type": "String",
+                "example": "eloquent"
+            }
+        }
+    },
+    "aiInitialPrompt": "Estoy aprendiendo la palabra '{word}' y quiero entenderla realmente. El diccionario dice que significa '{definition}' y aquí hay un ejemplo: '{example}'. ¿Podrías ayudarme a dominar esta palabra explicándola claramente y proporcionando ejemplos prácticos, sinónimos, patrones de uso comunes y consejos para recordarla? Quiero sentirme seguro usando esta palabra en conversaciones reales y al escribir.",
+    "@aiInitialPrompt": {
+        "description": "Initial prompt template for starting AI conversation about a word",
+        "placeholders": {
+            "word": {
+                "type": "String",
+                "example": "eloquent"
+            },
+            "definition": {
+                "type": "String",
+                "example": "fluent or persuasive in speaking or writing"
+            },
+            "example": {
+                "type": "String",
+                "example": "She was an eloquent speaker"
+            }
+        }
+    },
+    "aiVocabularyOnlyResponse": "¡Estoy aquí para ayudarte a dominar el vocabulario! Enfoquémonos en entender las palabras y mejorar tus habilidades lingüísticas. ¿Te gustaría explorar más sobre el significado de esta palabra, ver más ejemplos o aprender sobre palabras relacionadas?",
+    "@aiVocabularyOnlyResponse": {
+        "description": "Response when AI is asked about non-vocabulary topics"
+    },
     "practiceButtonText": "Practicar",
     "@practiceButtonText": {
         "description": "Text shown on the practice button for subscribed users"

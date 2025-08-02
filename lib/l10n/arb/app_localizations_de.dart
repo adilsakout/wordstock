@@ -436,6 +436,24 @@ class AppLocalizationsDe extends AppLocalizations {
   }
 
   @override
+  String get aiAssistantSystemMessage =>
+      'Ich bin ein Experte für Vokabellernen, der Lernenden hilft, neue Wörter durch umfassende, ansprechende Erklärungen zu meistern. Ich biete klare Definitionen, praktische Beispiele, Gedächtnistechniken und kulturellen Kontext. Ich mache das Vokabellernen angenehm und einprägsam, indem ich Wörter mit realen Situationen verknüpfe und verschiedene Lernansätze anbiete.';
+
+  @override
+  String aiVocabularySystemMessage(String word) {
+    return 'Du bist ein Experte für Vokabellernen, der einem Schüler das Wort \'$word\' beibringt. Biete umfassende, lehrreiche Erklärungen, die Folgendes beinhalten: 1) Klare, einfache Definition 2) Etymologie oder Wortherkunft, wenn hilfreich 3) Mehrere Beispielsätze in verschiedenen Kontexten 4) Synonyme und Antonyme 5) Häufige Kollokationen und Phrasen 6) Verwendungstipps und häufige Fehler, die vermieden werden sollten 7) Gedächtnistechniken oder Eselsbrücken, wenn möglich 8) Aussprachehilfe, wenn relevant. Gestalte deine Erklärungen ansprechend, praktisch und so, dass der Schüler das Wort wirklich versteht und sich daran erinnert. Bei themenfremden Fragen leite höflich um: \'Ich bin hier, um dir beim Vokabellernen zu helfen! Lass uns auf das Verstehen von Wörtern und die Verbesserung deiner Sprachkenntnisse konzentrieren.\'';
+  }
+
+  @override
+  String aiInitialPrompt(String word, String definition, String example) {
+    return 'Ich lerne das Wort \'$word\' und möchte es wirklich verstehen. Das Wörterbuch sagt, es bedeutet \'$definition\' und hier ist ein Beispiel: \'$example\'. Könntest du mir helfen, dieses Wort zu meistern, indem du es klar erklärst und praktische Beispiele, Synonyme, häufige Verwendungsmuster und Tipps zum Merken gibst? Ich möchte mich sicher fühlen, dieses Wort in echten Gesprächen und beim Schreiben zu verwenden.';
+  }
+
+  @override
+  String get aiVocabularyOnlyResponse =>
+      'Ich bin hier, um dir beim Vokabellernen zu helfen! Lass uns auf das Verstehen von Wörtern und die Verbesserung deiner Sprachkenntnisse konzentrieren. Möchtest du mehr über die Bedeutung dieses Wortes erfahren, weitere Beispiele sehen oder verwandte Wörter lernen?';
+
+  @override
   String get practiceButtonText => 'Üben';
 
   @override

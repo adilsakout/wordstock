@@ -8,8 +8,8 @@ import 'package:gaimon/gaimon.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:screenshot/screenshot.dart';
 import 'package:share_plus/share_plus.dart';
+import 'package:wordstock/features/ai_chat/ai_chat.dart';
 import 'package:wordstock/features/home/cubit/home_cubit.dart';
-import 'package:wordstock/features/home/widgets/chat_ai_button.dart';
 import 'package:wordstock/features/home/widgets/shareable_word_card.dart';
 import 'package:wordstock/model/word.dart';
 import 'package:wordstock/widgets/button.dart';
@@ -229,7 +229,7 @@ class _WordCardState extends State<WordCard>
                     onTap: () =>
                         context.read<HomeCubit>().speakWord(widget.word.word),
                   ),
-                  ChatAIButton(word: widget.word),
+                  AIChatButton(word: widget.word),
                 ],
               ),
             ),

@@ -594,6 +594,42 @@
             }
         }
     },
+    "aiAssistantSystemMessage": "我是一位詞彙學習專家，幫助學習者通過全面、吸引人的解釋來掌握新單詞。我提供清晰的定義、實用的例子、記憶技巧和文化背景。我通過將單詞與現實情境聯繫並提供多種學習方法，使詞彙學習變得愉快且難忘。",
+    "@aiAssistantSystemMessage": {
+        "description": "System message describing the AI assistant's role and scope"
+    },
+    "aiVocabularySystemMessage": "你是一位詞彙學習專家，正在幫助學生學習單詞'{word}'。請提供全面、教育性的解釋，包括：1) 清晰、簡單的定義 2) 有幫助時的詞源或單詞起源 3) 顯示不同語境的多個例句 4) 同義詞和反義詞 5) 常用的搭配和片語 6) 使用技巧和常見錯誤的避免方法 7) 可能時的記憶技巧或記憶法 8) 相關時的發音指導。請使你的解釋具有吸引力、實用性，並針對學生真正理解和記住單詞而量身定制。如果被問及不相關的話題，請禮貌地引導：'我在這裡幫助你掌握詞彙！讓我們專注於理解單詞和提高你的語言技能。'",
+    "@aiVocabularySystemMessage": {
+        "description": "System message for vocabulary-focused AI conversation",
+        "placeholders": {
+            "word": {
+                "type": "String",
+                "example": "eloquent"
+            }
+        }
+    },
+    "aiInitialPrompt": "我正在學習單詞'{word}'，希望真正理解它。字典說它的意思是'{definition}'，這裡有一個例子：'{example}'。你能幫我清晰地解釋這個單詞，提供實用的例子、同義詞、常用的用法模式和記住的技巧，幫我掌握這個單詞嗎？我希望在真正的對話和寫作中使用這個單詞時能感到自信。",
+    "@aiInitialPrompt": {
+        "description": "Initial prompt template for starting AI conversation about a word",
+        "placeholders": {
+            "word": {
+                "type": "String",
+                "example": "eloquent"
+            },
+            "definition": {
+                "type": "String",
+                "example": "fluent or persuasive in speaking or writing"
+            },
+            "example": {
+                "type": "String",
+                "example": "She was an eloquent speaker"
+            }
+        }
+    },
+    "aiVocabularyOnlyResponse": "我在這裡幫助你掌握詞彙！讓我們專注於理解單詞和提高你的語言技能。你想進一步探索這個單詞的意義、看更多例子，或者學習相關單詞嗎？",
+    "@aiVocabularyOnlyResponse": {
+        "description": "Response when AI is asked about non-vocabulary topics"
+    },
     "practiceButtonText": "練習",
     "@practiceButtonText": {
         "description": "Text shown on the practice button for subscribed users"

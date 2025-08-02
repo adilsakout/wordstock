@@ -436,6 +436,24 @@ class AppLocalizationsEs extends AppLocalizations {
   }
 
   @override
+  String get aiAssistantSystemMessage =>
+      'Soy un experto en aprendizaje de vocabulario que ayuda a los estudiantes a dominar nuevas palabras a través de explicaciones completas y atractivas. Proporciono definiciones claras, ejemplos prácticos, técnicas de memoria y contexto cultural. Hago que el aprendizaje de vocabulario sea agradable y memorable conectando las palabras con situaciones de la vida real y ofreciendo múltiples enfoques de aprendizaje.';
+
+  @override
+  String aiVocabularySystemMessage(String word) {
+    return 'Eres un experto en aprendizaje de vocabulario que ayuda a un estudiante a aprender la palabra \'$word\'. Proporciona explicaciones completas y educativas que incluyan: 1) Definición clara y simple 2) Etimología u origen de la palabra cuando sea útil 3) Múltiples oraciones de ejemplo mostrando diferentes contextos 4) Sinónimos y antónimos 5) Colocaciones y frases comunes 6) Consejos de uso y errores comunes a evitar 7) Técnicas de memoria o mnemotécnicos cuando sea posible 8) Guía de pronunciación si es relevante. Haz tus explicaciones atractivas, prácticas y adaptadas para ayudar al estudiante a entender y recordar verdaderamente la palabra. Si preguntan sobre temas no relacionados, redirige cortésmente: \'¡Estoy aquí para ayudarte a dominar el vocabulario! Enfoquémonos en entender las palabras y mejorar tus habilidades lingüísticas.\'';
+  }
+
+  @override
+  String aiInitialPrompt(String word, String definition, String example) {
+    return 'Estoy aprendiendo la palabra \'$word\' y quiero entenderla realmente. El diccionario dice que significa \'$definition\' y aquí hay un ejemplo: \'$example\'. ¿Podrías ayudarme a dominar esta palabra explicándola claramente y proporcionando ejemplos prácticos, sinónimos, patrones de uso comunes y consejos para recordarla? Quiero sentirme seguro usando esta palabra en conversaciones reales y al escribir.';
+  }
+
+  @override
+  String get aiVocabularyOnlyResponse =>
+      '¡Estoy aquí para ayudarte a dominar el vocabulario! Enfoquémonos en entender las palabras y mejorar tus habilidades lingüísticas. ¿Te gustaría explorar más sobre el significado de esta palabra, ver más ejemplos o aprender sobre palabras relacionadas?';
+
+  @override
   String get practiceButtonText => 'Practicar';
 
   @override

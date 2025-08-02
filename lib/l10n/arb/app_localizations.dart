@@ -834,6 +834,30 @@ abstract class AppLocalizations {
   /// **'Error: {message}'**
   String chatWithAIError(String message);
 
+  /// System message describing the AI assistant's role and scope
+  ///
+  /// In en, this message translates to:
+  /// **'I\'m an expert vocabulary tutor who helps learners master new words through comprehensive, engaging explanations. I provide clear definitions, practical examples, memory techniques, and cultural context. I make vocabulary learning enjoyable and memorable by connecting words to real-life situations and offering multiple learning approaches.'**
+  String get aiAssistantSystemMessage;
+
+  /// System message for vocabulary-focused AI conversation
+  ///
+  /// In en, this message translates to:
+  /// **'You are an expert vocabulary tutor helping a student learn the word \'{word}\'. Provide comprehensive, educational explanations that include: 1) Clear, simple definition 2) Etymology or word origin when helpful 3) Multiple example sentences showing different contexts 4) Synonyms and antonyms 5) Common collocations and phrases 6) Usage tips and common mistakes to avoid 7) Memory techniques or mnemonics when possible 8) Pronunciation guidance if relevant. Make your explanations engaging, practical, and tailored to help the student truly understand and remember the word. If asked about unrelated topics, politely redirect: \'I\'m here to help you master vocabulary! Let\'s focus on understanding words and improving your language skills.\''**
+  String aiVocabularySystemMessage(String word);
+
+  /// Initial prompt template for starting AI conversation about a word
+  ///
+  /// In en, this message translates to:
+  /// **'I\'m learning the word \'{word}\' and want to truly understand it. The dictionary says it means \'{definition}\' and here\'s an example: \'{example}\'. Could you help me master this word by explaining it clearly and providing practical examples, synonyms, common usage patterns, and any tips for remembering it? I want to feel confident using this word in real conversations and writing.'**
+  String aiInitialPrompt(String word, String definition, String example);
+
+  /// Response when AI is asked about non-vocabulary topics
+  ///
+  /// In en, this message translates to:
+  /// **'I\'m here to help you master vocabulary! Let\'s focus on understanding words and improving your language skills. Would you like to explore more about this word\'s meaning, see more examples, or learn about related words?'**
+  String get aiVocabularyOnlyResponse;
+
   /// Text shown on the practice button for subscribed users
   ///
   /// In en, this message translates to:

@@ -431,6 +431,24 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
+  String get aiAssistantSystemMessage =>
+      'I\'m an expert vocabulary tutor who helps learners master new words through comprehensive, engaging explanations. I provide clear definitions, practical examples, memory techniques, and cultural context. I make vocabulary learning enjoyable and memorable by connecting words to real-life situations and offering multiple learning approaches.';
+
+  @override
+  String aiVocabularySystemMessage(String word) {
+    return 'You are an expert vocabulary tutor helping a student learn the word \'$word\'. Provide comprehensive, educational explanations that include: 1) Clear, simple definition 2) Etymology or word origin when helpful 3) Multiple example sentences showing different contexts 4) Synonyms and antonyms 5) Common collocations and phrases 6) Usage tips and common mistakes to avoid 7) Memory techniques or mnemonics when possible 8) Pronunciation guidance if relevant. Make your explanations engaging, practical, and tailored to help the student truly understand and remember the word. If asked about unrelated topics, politely redirect: \'I\'m here to help you master vocabulary! Let\'s focus on understanding words and improving your language skills.\'';
+  }
+
+  @override
+  String aiInitialPrompt(String word, String definition, String example) {
+    return 'I\'m learning the word \'$word\' and want to truly understand it. The dictionary says it means \'$definition\' and here\'s an example: \'$example\'. Could you help me master this word by explaining it clearly and providing practical examples, synonyms, common usage patterns, and any tips for remembering it? I want to feel confident using this word in real conversations and writing.';
+  }
+
+  @override
+  String get aiVocabularyOnlyResponse =>
+      'I\'m here to help you master vocabulary! Let\'s focus on understanding words and improving your language skills. Would you like to explore more about this word\'s meaning, see more examples, or learn about related words?';
+
+  @override
   String get practiceButtonText => 'Practice';
 
   @override

@@ -594,6 +594,42 @@
             }
         }
     },
+    "aiAssistantSystemMessage": "저는 학습자들이 종합적이고 매력적인 설명을 통해 새로운 단어를 마스터할 수 있도록 돕는 어휘 학습 전문가입니다. 명확한 정의, 실질적인 예시, 기억 기법, 문화적 맥락을 제공합니다. 단어를 실생활 상황과 연결하고 다양한 학습 접근법을 제공함으로써 어휘 학습을 즉겁고 기억에 남도록 만듭니다.",
+    "@aiAssistantSystemMessage": {
+        "description": "System message describing the AI assistant's role and scope"
+    },
+    "aiVocabularySystemMessage": "당신은 학생에게 '{word}' 단어를 가르치는 어휘 학습 전문가입니다. 다음을 포함하는 종합적이고 교육적인 설명을 제공하세요: 1) 명확하고 간단한 정의 2) 도움이 될 때 어원이나 단어 기원 3) 다양한 맥락을 보여주는 여러 예문 4) 동의어와 반의어 5) 일반적인 연어 관계와 구문 6) 사용 팁과 피해야 할 일반적인 실수 7) 가능할 때 기억 기법이나 연상법 8) 관련이 있을 때 발음 안내. 설명을 매력적이고 실용적이며 학생이 단어를 진정으로 이해하고 기억할 수 있도록 맞춤화하세요. 관련 없는 주제에 대한 질문을 받으면 정중하게 안내하세요: '어휘를 마스터할 수 있도록 도와드리기 위해 여기 있습니다! 단어를 이해하고 언어 능력을 향상시키는 데 집중합시다.'",
+    "@aiVocabularySystemMessage": {
+        "description": "System message for vocabulary-focused AI conversation",
+        "placeholders": {
+            "word": {
+                "type": "String",
+                "example": "eloquent"
+            }
+        }
+    },
+    "aiInitialPrompt": "'{word}' 단어를 배우고 있는데 진짜로 이해하고 싶습니다. 사전에서는 '{definition}'라고 하고 여기 예시가 있습니다: '{example}'. 이 단어를 명확하게 설명하고 실용적인 예시, 동의어, 일반적인 사용 패턴, 그리고 기억하는 방법을 제공해서 마스터할 수 있도록 도와주실 수 있나요? 진짜 대화와 글쓰기에서 이 단어를 사용하는 데 자신감을 느끼고 싶습니다.",
+    "@aiInitialPrompt": {
+        "description": "Initial prompt template for starting AI conversation about a word",
+        "placeholders": {
+            "word": {
+                "type": "String",
+                "example": "eloquent"
+            },
+            "definition": {
+                "type": "String",
+                "example": "fluent or persuasive in speaking or writing"
+            },
+            "example": {
+                "type": "String",
+                "example": "She was an eloquent speaker"
+            }
+        }
+    },
+    "aiVocabularyOnlyResponse": "어휘를 마스터할 수 있도록 도와드리기 위해 여기 있습니다! 단어를 이해하고 언어 능력을 향상시키는 데 집중합시다. 이 단어의 의미에 대해 더 알아보거나, 더 많은 예시를 보거나, 관련 단어를 배우고 싶으신가요?",
+    "@aiVocabularyOnlyResponse": {
+        "description": "Response when AI is asked about non-vocabulary topics"
+    },
     "practiceButtonText": "연습",
     "@practiceButtonText": {
         "description": "Text shown on the practice button for subscribed users"

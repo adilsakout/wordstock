@@ -439,6 +439,24 @@ class AppLocalizationsFr extends AppLocalizations {
   }
 
   @override
+  String get aiAssistantSystemMessage =>
+      'Je suis un expert en apprentissage du vocabulaire qui aide les apprenants à maîtriser de nouveaux mots grâce à des explications complètes et engageantes. Je fournis des définitions claires, des exemples pratiques, des techniques de mémorisation et du contexte culturel. Je rends l\'apprentissage du vocabulaire agréable et mémorable en reliant les mots aux situations réelles et en offrant plusieurs approches d\'apprentissage.';
+
+  @override
+  String aiVocabularySystemMessage(String word) {
+    return 'Tu es un expert en apprentissage du vocabulaire qui aide un étudiant à apprendre le mot \'$word\'. Fournis des explications complètes et éducatives qui incluent : 1) Définition claire et simple 2) Étymologie ou origine du mot si utile 3) Multiples phrases d\'exemple montrant différents contextes 4) Synonymes et antonymes 5) Collocations et expressions courantes 6) Conseils d\'usage et erreurs communes à éviter 7) Techniques de mémorisation ou mnémotechniques si possible 8) Guide de prononciation si pertinent. Rends tes explications engageantes, pratiques et adaptées pour aider l\'étudiant à vraiment comprendre et retenir le mot. Si on te pose des questions hors sujet, redirige poliment : \'Je suis là pour t\'aider à maîtriser le vocabulaire ! Concentrons-nous sur la compréhension des mots et l\'amélioration de tes compétences linguistiques.\'';
+  }
+
+  @override
+  String aiInitialPrompt(String word, String definition, String example) {
+    return 'J\'apprends le mot \'$word\' et je veux vraiment le comprendre. Le dictionnaire dit qu\'il signifie \'$definition\' et voici un exemple : \'$example\'. Pourrais-tu m\'aider à maîtriser ce mot en l\'expliquant clairement et en fournissant des exemples pratiques, des synonymes, des modèles d\'usage courants et des conseils pour le retenir ? Je veux me sentir confiant en utilisant ce mot dans de vraies conversations et en écrivant.';
+  }
+
+  @override
+  String get aiVocabularyOnlyResponse =>
+      'Je suis là pour t\'aider à maîtriser le vocabulaire ! Concentrons-nous sur la compréhension des mots et l\'amélioration de tes compétences linguistiques. Aimerais-tu explorer davantage la signification de ce mot, voir plus d\'exemples ou apprendre des mots connexes ?';
+
+  @override
   String get practiceButtonText => 'Pratiquer';
 
   @override
