@@ -78,10 +78,11 @@ class _ProfileBodyState extends State<ProfileBody> {
 
   /// Handle success state by showing feedback
   void _handleVocabularyLevelUpdated(VocabularyLevel updatedLevel) {
+    final l10n = context.l10n;
     final levelConfig = VocabularyLevels.getByLevel(updatedLevel);
     _navigationService.showSuccessSnackBar(
       context,
-      message: 'Vocabulary level updated to ${levelConfig.displayName}',
+      message: l10n.vocabularyLevelUpdated(levelConfig.displayName),
     );
   }
 
@@ -132,7 +133,7 @@ class _ProfileBodyState extends State<ProfileBody> {
   /// Build the header section with back button and title
   Widget _buildHeader(BuildContext context, AppLocalizations l10n) {
     return Padding(
-      padding: const EdgeInsets.only(left: 20, top: 20),
+      padding: const EdgeInsets.only(left: 20, top: 20, bottom: 10),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
@@ -193,7 +194,7 @@ class _ProfileBodyState extends State<ProfileBody> {
             ),
             const SizedBox(height: 16),
             Text(
-              'Something went wrong',
+              l10n.somethingWentWrong,
               style: TextStyle(
                 fontSize: 18,
                 fontWeight: FontWeight.w600,
@@ -213,7 +214,7 @@ class _ProfileBodyState extends State<ProfileBody> {
             PushableButton(
               width: 120,
               height: 50,
-              text: 'Retry',
+              text: l10n.retry,
               buttonColor: const Color(0xffF9C835),
               shadowColor: const Color(0xffCDB054),
               onTap: () => context.read<ProfileCubit>().loadProfile(),
@@ -243,9 +244,9 @@ class _ProfileBodyState extends State<ProfileBody> {
       ),
       children: [
         // Quick Actions Section
-        const Text(
-          'Quick Actions',
-          style: TextStyle(
+        Text(
+          l10n.quickActions,
+          style: const TextStyle(
             fontSize: 18,
             fontWeight: FontWeight.w700,
             color: Color(0xFF1D1D1F),
@@ -285,7 +286,7 @@ class _ProfileBodyState extends State<ProfileBody> {
         _buildMenuItem(
           context,
           icon: Icons.school,
-          title: 'Vocabulary Level',
+          title: l10n.vocabularyLevel,
           onTap: isUpdating ? null : _onVocabularyLevelTap,
           isLoading: isUpdating,
         ).animate().fadeIn(
@@ -296,9 +297,9 @@ class _ProfileBodyState extends State<ProfileBody> {
         const SizedBox(height: 24),
 
         // Support Section
-        const Text(
-          'Support & Info',
-          style: TextStyle(
+        Text(
+          l10n.supportAndInfo,
+          style: const TextStyle(
             fontSize: 18,
             fontWeight: FontWeight.w700,
             color: Color(0xFF1D1D1F),
@@ -330,7 +331,7 @@ class _ProfileBodyState extends State<ProfileBody> {
         _buildMenuItem(
           context,
           icon: Icons.copy,
-          title: 'Copy User ID',
+          title: l10n.copyUserID,
           onTap: () async {
             Gaimon.soft();
             final userId = UserRepository().getUserId();
@@ -338,7 +339,7 @@ class _ProfileBodyState extends State<ProfileBody> {
             if (context.mounted) {
               _navigationService.showSuccessSnackBar(
                 context,
-                message: 'User ID copied to clipboard',
+                message: l10n.userIDCopied,
               );
             }
           },
@@ -363,9 +364,9 @@ class _ProfileBodyState extends State<ProfileBody> {
         const SizedBox(height: 24),
 
         // Legal Section
-        const Text(
-          'Legal',
-          style: TextStyle(
+        Text(
+          l10n.legal,
+          style: const TextStyle(
             fontSize: 18,
             fontWeight: FontWeight.w700,
             color: Color(0xFF1D1D1F),

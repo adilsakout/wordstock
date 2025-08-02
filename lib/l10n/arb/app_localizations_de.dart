@@ -618,4 +618,43 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get reset => 'Zurücksetzen';
+
+  @override
+  String vocabularyLevelUpdated(String levelName) {
+    return 'Wortschatz-Level wurde auf $levelName aktualisiert';
+  }
+
+  @override
+  String get somethingWentWrong => 'Etwas ist schief gelaufen';
+
+  @override
+  String get retry => 'Wiederholen';
+
+  @override
+  String get quickActions => 'Schnelle Aktionen';
+
+  @override
+  String get vocabularyLevel => 'Wortschatz-Level';
+
+  @override
+  String get supportAndInfo => 'Support & Info';
+
+  @override
+  String get copyUserID => 'Benutzer-ID kopieren';
+
+  @override
+  String get userIDCopied => 'Benutzer-ID in die Zwischenablage kopiert';
+
+  @override
+  String get legal => 'Rechtliches';
+
+  @override
+  String get vocabularyLevelDialogTitle => 'Was ist dein Wortschatz-Level?';
+
+  @override
+  String get vocabularyLevelDialogDescription =>
+      'Wähle das Level, das deinen aktuellen Wortschatz am besten beschreibt.';
+
+  @override
+  String get saveButton => 'Speichern';
 }

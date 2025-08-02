@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:wordstock/core/constants/vocabulary_levels.dart';
 import 'package:wordstock/features/onboarding/widgets/selector.dart';
+import 'package:wordstock/l10n/l10n.dart';
 import 'package:wordstock/model/user_profile.dart';
 import 'package:wordstock/widgets/button.dart';
 
@@ -129,6 +130,8 @@ class _VocabularyLevelBottomSheetState
 
   @override
   Widget build(BuildContext context) {
+    final l10n = context.l10n;
+
     return Container(
       margin: const EdgeInsets.all(20),
       decoration: BoxDecoration(
@@ -159,10 +162,10 @@ class _VocabularyLevelBottomSheetState
             const SizedBox(height: 20),
 
             // Title
-            const Text(
-              'What is your Vocabulary Level?',
+            Text(
+              l10n.vocabularyLevelDialogTitle,
               textAlign: TextAlign.center,
-              style: TextStyle(
+              style: const TextStyle(
                 fontSize: 24,
                 fontWeight: FontWeight.w700,
                 color: Color(0xFF1D1D1F),
@@ -172,7 +175,7 @@ class _VocabularyLevelBottomSheetState
 
             // Subtitle
             Text(
-              'Select the level that best describes your current vocabulary.',
+              l10n.vocabularyLevelDialogDescription,
               textAlign: TextAlign.center,
               style: TextStyle(
                 fontSize: 16,
@@ -204,7 +207,7 @@ class _VocabularyLevelBottomSheetState
                   child: PushableButton(
                     width: double.infinity,
                     height: 50,
-                    text: 'Cancel',
+                    text: l10n.cancel,
                     textColor: Colors.black87,
                     buttonColor: Colors.grey[200]!,
                     shadowColor: Colors.grey[400]!,
@@ -216,7 +219,7 @@ class _VocabularyLevelBottomSheetState
                   child: PushableButton(
                     width: double.infinity,
                     height: 50,
-                    text: 'Save',
+                    text: l10n.saveButton,
                     buttonColor: const Color(0xffF9C835),
                     shadowColor: const Color(0xffCDB054),
                     onTap: () => Navigator.of(context).pop(selectedLevel),

@@ -835,5 +835,58 @@
     "reset": "Reset",
     "@reset": {
         "description": "Reset button text"
+    },
+    "vocabularyLevelUpdated": "Vocabulary level updated to {levelName}",
+    "@vocabularyLevelUpdated": {
+        "description": "Success message when vocabulary level is updated",
+        "placeholders": {
+            "levelName": {
+                "type": "String"
+            }
+        }
+    },
+    "somethingWentWrong": "Something went wrong",
+    "@somethingWentWrong": {
+        "description": "Generic error message"
+    },
+    "retry": "Retry",
+    "@retry": {
+        "description": "Text for retry button"
+    },
+    "quickActions": "Quick Actions",
+    "@quickActions": {
+        "description": "Section title for quick actions in profile"
+    },
+    "vocabularyLevel": "Vocabulary Level",
+    "@vocabularyLevel": {
+        "description": "Menu item for vocabulary level settings"
+    },
+    "supportAndInfo": "Support & Info",
+    "@supportAndInfo": {
+        "description": "Section title for support and info in profile"
+    },
+    "copyUserID": "Copy User ID",
+    "@copyUserID": {
+        "description": "Menu item to copy user ID"
+    },
+    "userIDCopied": "User ID copied to clipboard",
+    "@userIDCopied": {
+        "description": "Success message when user ID is copied"
+    },
+    "legal": "Legal",
+    "@legal": {
+        "description": "Section title for legal information in profile"
+    },
+    "vocabularyLevelDialogTitle": "What is your Vocabulary Level?",
+    "@vocabularyLevelDialogTitle": {
+        "description": "Title for vocabulary level selection dialog"
+    },
+    "vocabularyLevelDialogDescription": "Select the level that best describes your current vocabulary.",
+    "@vocabularyLevelDialogDescription": {
+        "description": "Description for vocabulary level selection dialog"
+    },
+    "saveButton": "Save",
+    "@saveButton": {
+        "description": "Text for save button"
     }
 }

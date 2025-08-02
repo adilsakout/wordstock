@@ -612,4 +612,43 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get reset => 'Reset';
+
+  @override
+  String vocabularyLevelUpdated(String levelName) {
+    return 'Vocabulary level updated to $levelName';
+  }
+
+  @override
+  String get somethingWentWrong => 'Something went wrong';
+
+  @override
+  String get retry => 'Retry';
+
+  @override
+  String get quickActions => 'Quick Actions';
+
+  @override
+  String get vocabularyLevel => 'Vocabulary Level';
+
+  @override
+  String get supportAndInfo => 'Support & Info';
+
+  @override
+  String get copyUserID => 'Copy User ID';
+
+  @override
+  String get userIDCopied => 'User ID copied to clipboard';
+
+  @override
+  String get legal => 'Legal';
+
+  @override
+  String get vocabularyLevelDialogTitle => 'What is your Vocabulary Level?';
+
+  @override
+  String get vocabularyLevelDialogDescription =>
+      'Select the level that best describes your current vocabulary.';
+
+  @override
+  String get saveButton => 'Save';
 }

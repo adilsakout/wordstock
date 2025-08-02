@@ -835,5 +835,58 @@
     "reset": "रीसेट करें",
     "@reset": {
         "description": "Reset button text"
+    },
+    "vocabularyLevelUpdated": "शब्दावली स्तर को {levelName} में अपडेट किया गया",
+    "@vocabularyLevelUpdated": {
+        "description": "Success message when vocabulary level is updated",
+        "placeholders": {
+            "levelName": {
+                "type": "String"
+            }
+        }
+    },
+    "somethingWentWrong": "कुछ गलत हुआ",
+    "@somethingWentWrong": {
+        "description": "Generic error message"
+    },
+    "retry": "पुनः प्रयास करें",
+    "@retry": {
+        "description": "Text for retry button"
+    },
+    "quickActions": "त्वरित कार्य",
+    "@quickActions": {
+        "description": "Section title for quick actions in profile"
+    },
+    "vocabularyLevel": "शब्दावली स्तर",
+    "@vocabularyLevel": {
+        "description": "Menu item for vocabulary level settings"
+    },
+    "supportAndInfo": "सहायता और जानकारी",
+    "@supportAndInfo": {
+        "description": "Section title for support and info in profile"
+    },
+    "copyUserID": "उपयोगकर्ता ID कॉपी करें",
+    "@copyUserID": {
+        "description": "Menu item to copy user ID"
+    },
+    "userIDCopied": "उपयोगकर्ता ID क्लिपबोर्ड पर कॉपी की गई",
+    "@userIDCopied": {
+        "description": "Success message when user ID is copied"
+    },
+    "legal": "कानूनी",
+    "@legal": {
+        "description": "Section title for legal information in profile"
+    },
+    "vocabularyLevelDialogTitle": "आपका शब्दावली स्तर क्या है?",
+    "@vocabularyLevelDialogTitle": {
+        "description": "Title for vocabulary level selection dialog"
+    },
+    "vocabularyLevelDialogDescription": "वह स्तर चुनें जो आपकी वर्तमान शब्दावली का सबसे अच्छा वर्णन करता है।",
+    "@vocabularyLevelDialogDescription": {
+        "description": "Description for vocabulary level selection dialog"
+    },
+    "saveButton": "सेव करें",
+    "@saveButton": {
+        "description": "Text for save button"
     }
 } 

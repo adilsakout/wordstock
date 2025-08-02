@@ -835,5 +835,58 @@
     "reset": "Zurücksetzen",
     "@reset": {
         "description": "Reset button text"
+    },
+    "vocabularyLevelUpdated": "Wortschatz-Level wurde auf {levelName} aktualisiert",
+    "@vocabularyLevelUpdated": {
+        "description": "Success message when vocabulary level is updated",
+        "placeholders": {
+            "levelName": {
+                "type": "String"
+            }
+        }
+    },
+    "somethingWentWrong": "Etwas ist schief gelaufen",
+    "@somethingWentWrong": {
+        "description": "Generic error message"
+    },
+    "retry": "Wiederholen",
+    "@retry": {
+        "description": "Text for retry button"
+    },
+    "quickActions": "Schnelle Aktionen",
+    "@quickActions": {
+        "description": "Section title for quick actions in profile"
+    },
+    "vocabularyLevel": "Wortschatz-Level",
+    "@vocabularyLevel": {
+        "description": "Menu item for vocabulary level settings"
+    },
+    "supportAndInfo": "Support & Info",
+    "@supportAndInfo": {
+        "description": "Section title for support and info in profile"
+    },
+    "copyUserID": "Benutzer-ID kopieren",
+    "@copyUserID": {
+        "description": "Menu item to copy user ID"
+    },
+    "userIDCopied": "Benutzer-ID in die Zwischenablage kopiert",
+    "@userIDCopied": {
+        "description": "Success message when user ID is copied"
+    },
+    "legal": "Rechtliches",
+    "@legal": {
+        "description": "Section title for legal information in profile"
+    },
+    "vocabularyLevelDialogTitle": "Was ist dein Wortschatz-Level?",
+    "@vocabularyLevelDialogTitle": {
+        "description": "Title for vocabulary level selection dialog"
+    },
+    "vocabularyLevelDialogDescription": "Wähle das Level, das deinen aktuellen Wortschatz am besten beschreibt.",
+    "@vocabularyLevelDialogDescription": {
+        "description": "Description for vocabulary level selection dialog"
+    },
+    "saveButton": "Speichern",
+    "@saveButton": {
+        "description": "Text for save button"
     }
 } 

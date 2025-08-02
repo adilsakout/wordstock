@@ -835,5 +835,58 @@
     "reset": "Réinitialiser",
     "@reset": {
         "description": "Reset button text"
+    },
+    "vocabularyLevelUpdated": "Niveau de vocabulaire mis à jour vers {levelName}",
+    "@vocabularyLevelUpdated": {
+        "description": "Success message when vocabulary level is updated",
+        "placeholders": {
+            "levelName": {
+                "type": "String"
+            }
+        }
+    },
+    "somethingWentWrong": "Quelque chose s'est mal passé",
+    "@somethingWentWrong": {
+        "description": "Generic error message"
+    },
+    "retry": "Réessayer",
+    "@retry": {
+        "description": "Text for retry button"
+    },
+    "quickActions": "Actions rapides",
+    "@quickActions": {
+        "description": "Section title for quick actions in profile"
+    },
+    "vocabularyLevel": "Niveau de vocabulaire",
+    "@vocabularyLevel": {
+        "description": "Menu item for vocabulary level settings"
+    },
+    "supportAndInfo": "Support et informations",
+    "@supportAndInfo": {
+        "description": "Section title for support and info in profile"
+    },
+    "copyUserID": "Copier l'ID utilisateur",
+    "@copyUserID": {
+        "description": "Menu item to copy user ID"
+    },
+    "userIDCopied": "ID utilisateur copié dans le presse-papiers",
+    "@userIDCopied": {
+        "description": "Success message when user ID is copied"
+    },
+    "legal": "Légal",
+    "@legal": {
+        "description": "Section title for legal information in profile"
+    },
+    "vocabularyLevelDialogTitle": "Quel est votre niveau de vocabulaire ?",
+    "@vocabularyLevelDialogTitle": {
+        "description": "Title for vocabulary level selection dialog"
+    },
+    "vocabularyLevelDialogDescription": "Sélectionnez le niveau qui décrit le mieux votre vocabulaire actuel.",
+    "@vocabularyLevelDialogDescription": {
+        "description": "Description for vocabulary level selection dialog"
+    },
+    "saveButton": "Enregistrer",
+    "@saveButton": {
+        "description": "Text for save button"
     }
 } 

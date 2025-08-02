@@ -621,4 +621,44 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get reset => 'Réinitialiser';
+
+  @override
+  String vocabularyLevelUpdated(String levelName) {
+    return 'Niveau de vocabulaire mis à jour vers $levelName';
+  }
+
+  @override
+  String get somethingWentWrong => 'Quelque chose s\'est mal passé';
+
+  @override
+  String get retry => 'Réessayer';
+
+  @override
+  String get quickActions => 'Actions rapides';
+
+  @override
+  String get vocabularyLevel => 'Niveau de vocabulaire';
+
+  @override
+  String get supportAndInfo => 'Support et informations';
+
+  @override
+  String get copyUserID => 'Copier l\'ID utilisateur';
+
+  @override
+  String get userIDCopied => 'ID utilisateur copié dans le presse-papiers';
+
+  @override
+  String get legal => 'Légal';
+
+  @override
+  String get vocabularyLevelDialogTitle =>
+      'Quel est votre niveau de vocabulaire ?';
+
+  @override
+  String get vocabularyLevelDialogDescription =>
+      'Sélectionnez le niveau qui décrit le mieux votre vocabulaire actuel.';
+
+  @override
+  String get saveButton => 'Enregistrer';
 }

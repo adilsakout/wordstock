@@ -1165,6 +1165,78 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Reset'**
   String get reset;
+
+  /// Success message when vocabulary level is updated
+  ///
+  /// In en, this message translates to:
+  /// **'Vocabulary level updated to {levelName}'**
+  String vocabularyLevelUpdated(String levelName);
+
+  /// Generic error message
+  ///
+  /// In en, this message translates to:
+  /// **'Something went wrong'**
+  String get somethingWentWrong;
+
+  /// Text for retry button
+  ///
+  /// In en, this message translates to:
+  /// **'Retry'**
+  String get retry;
+
+  /// Section title for quick actions in profile
+  ///
+  /// In en, this message translates to:
+  /// **'Quick Actions'**
+  String get quickActions;
+
+  /// Menu item for vocabulary level settings
+  ///
+  /// In en, this message translates to:
+  /// **'Vocabulary Level'**
+  String get vocabularyLevel;
+
+  /// Section title for support and info in profile
+  ///
+  /// In en, this message translates to:
+  /// **'Support & Info'**
+  String get supportAndInfo;
+
+  /// Menu item to copy user ID
+  ///
+  /// In en, this message translates to:
+  /// **'Copy User ID'**
+  String get copyUserID;
+
+  /// Success message when user ID is copied
+  ///
+  /// In en, this message translates to:
+  /// **'User ID copied to clipboard'**
+  String get userIDCopied;
+
+  /// Section title for legal information in profile
+  ///
+  /// In en, this message translates to:
+  /// **'Legal'**
+  String get legal;
+
+  /// Title for vocabulary level selection dialog
+  ///
+  /// In en, this message translates to:
+  /// **'What is your Vocabulary Level?'**
+  String get vocabularyLevelDialogTitle;
+
+  /// Description for vocabulary level selection dialog
+  ///
+  /// In en, this message translates to:
+  /// **'Select the level that best describes your current vocabulary.'**
+  String get vocabularyLevelDialogDescription;
+
+  /// Text for save button
+  ///
+  /// In en, this message translates to:
+  /// **'Save'**
+  String get saveButton;
 }
 
 class _AppLocalizationsDelegate

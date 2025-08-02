@@ -613,4 +613,43 @@ class AppLocalizationsHi extends AppLocalizations {
 
   @override
   String get reset => 'रीसेट करें';
+
+  @override
+  String vocabularyLevelUpdated(String levelName) {
+    return 'शब्दावली स्तर को $levelName में अपडेट किया गया';
+  }
+
+  @override
+  String get somethingWentWrong => 'कुछ गलत हुआ';
+
+  @override
+  String get retry => 'पुनः प्रयास करें';
+
+  @override
+  String get quickActions => 'त्वरित कार्य';
+
+  @override
+  String get vocabularyLevel => 'शब्दावली स्तर';
+
+  @override
+  String get supportAndInfo => 'सहायता और जानकारी';
+
+  @override
+  String get copyUserID => 'उपयोगकर्ता ID कॉपी करें';
+
+  @override
+  String get userIDCopied => 'उपयोगकर्ता ID क्लिपबोर्ड पर कॉपी की गई';
+
+  @override
+  String get legal => 'कानूनी';
+
+  @override
+  String get vocabularyLevelDialogTitle => 'आपका शब्दावली स्तर क्या है?';
+
+  @override
+  String get vocabularyLevelDialogDescription =>
+      'वह स्तर चुनें जो आपकी वर्तमान शब्दावली का सबसे अच्छा वर्णन करता है।';
+
+  @override
+  String get saveButton => 'सेव करें';
 }
