@@ -81,7 +81,6 @@ class PracticeReminderPage extends StatelessWidget {
               ),
           const SizedBox(height: 48),
           PushableButton(
-            width: 220,
             height: 50,
             text: l10n.startPractice,
             spacing: 10,
@@ -96,7 +95,6 @@ class PracticeReminderPage extends StatelessWidget {
           PushableButton(
             text: l10n.continueLearning,
             onTap: onContinue,
-            width: 220,
             height: 56,
             buttonColor: const Color(0xff1CB0F6),
             shadowColor: const Color(0xff1899D6),

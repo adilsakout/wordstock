@@ -4,10 +4,10 @@ import 'package:wordstock/repositories/audio_player_repository.dart';
 
 class PushableButton extends StatefulWidget {
   const PushableButton({
-    required this.width,
     required this.height,
     required this.text,
     required this.onTap,
+    this.width,
     super.key,
     this.buttonColor = const Color(0xFF77D728),
     this.shadowColor = const Color(0xFF49A100),
@@ -19,7 +19,7 @@ class PushableButton extends StatefulWidget {
     this.spacing = 0.0,
     this.tooltip,
   });
-  final double width;
+  final double? width;
   final double height;
   final String text;
   final VoidCallback onTap;
