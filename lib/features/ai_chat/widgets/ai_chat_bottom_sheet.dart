@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:markdown_widget/markdown_widget.dart';
 import 'package:wordstock/features/ai_chat/cubit/ai_chat_cubit.dart';
 import 'package:wordstock/l10n/l10n.dart';
 import 'package:wordstock/model/word.dart';
@@ -255,6 +256,8 @@ class _AIChatBottomSheetState extends State<AIChatBottomSheet> {
                   const SizedBox(width: 8),
                   Text(
                     l10n.chatWithAITitle(widget.word.word),
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
                     style: Theme.of(context).textTheme.titleMedium?.copyWith(
                           fontWeight: FontWeight.bold,
                         ),
@@ -398,12 +401,9 @@ class _AIChatBottomSheetState extends State<AIChatBottomSheet> {
                 ),
               )
             : _shouldAnimateMessage(message, isLatestAIMessage)
-                ? _TypingAnimationText(
+                ? _MarkdownTypingAnimationText(
                     key: ValueKey(message.hashCode),
                     text: message,
-                    textStyle: const TextStyle(
-                      color: Colors.black87,
-                    ),
                     onCharacterAdded: _scrollToBottom,
                     onAnimationComplete: () {
                       setState(() {
@@ -411,10 +411,26 @@ class _AIChatBottomSheetState extends State<AIChatBottomSheet> {
                       });
                     },
                   )
-                : Text(
-                    message,
-                    style: const TextStyle(
-                      color: Colors.black87,
+                : MarkdownWidget(
+                    data: message,
+                    shrinkWrap: true,
+                    config: MarkdownConfig(
+                      configs: [
+                        const PConfig(
+                          textStyle: TextStyle(
+                            color: Colors.black87,
+                            fontSize: 14,
+                          ),
+                        ),
+                        CodeConfig(
+                          style: TextStyle(
+                            backgroundColor: Colors.grey.shade300,
+                            fontFamily: 'monospace',
+                            fontSize: 13,
+                          ),
+                        ),
+                        // BlockquoteConfig - will configure later
+                      ],
                     ),
                   ),
       ),
@@ -498,25 +514,24 @@ class _AIChatBottomSheetState extends State<AIChatBottomSheet> {
   }
 }
 
-/// A widget that animates text appearing character
-///  by character with typing effect
+/// A widget that animates markdown text appearing character by character
 ///
-/// This creates a natural, engaging typing animation that mimics how humans
-/// type messages. Features include:
+/// This creates a natural, engaging typing animation for markdown content.
+/// Features include:
 /// - Smooth character-by-character reveal at natural typing speed
+/// - Full markdown rendering with proper formatting
 /// - Blinking cursor at the end while typing
 /// - Callback for each character to enable auto-scrolling
 /// - Apple-style smooth timing that feels organic
-class _TypingAnimationText extends StatefulWidget {
-  /// Creates a typing animation text widget
+class _MarkdownTypingAnimationText extends StatefulWidget {
+  /// Creates a markdown typing animation text widget
   ///
-  /// [text] - The full text to animate
-  /// [textStyle] - Style to apply to the text
+  /// [text] - The full markdown text to animate
   /// [typingSpeed] - Duration between each character (default: 30ms)
   /// [onCharacterAdded] - Called each time a character is revealed
-  const _TypingAnimationText({
+  /// [onAnimationComplete] - Called when animation completes
+  const _MarkdownTypingAnimationText({
     required this.text,
-    required this.textStyle,
     super.key,
     // ignore: unused_element_parameter
     this.typingSpeed = const Duration(milliseconds: 30),
@@ -524,11 +539,8 @@ class _TypingAnimationText extends StatefulWidget {
     this.onAnimationComplete,
   });
 
-  /// The complete text that will be animated character by character
+  /// The complete markdown text that will be animated character by character
   final String text;
-
-  /// Text styling to apply to the animated text
-  final TextStyle textStyle;
 
   /// Speed of typing animation - time between each character
   /// Default 30ms provides natural, readable typing speed
@@ -543,11 +555,12 @@ class _TypingAnimationText extends StatefulWidget {
   final VoidCallback? onAnimationComplete;
 
   @override
-  State<_TypingAnimationText> createState() => _TypingAnimationTextState();
+  State<_MarkdownTypingAnimationText> createState() =>
+      _MarkdownTypingAnimationTextState();
 }
 
-class _TypingAnimationTextState extends State<_TypingAnimationText>
-    with TickerProviderStateMixin {
+class _MarkdownTypingAnimationTextState
+    extends State<_MarkdownTypingAnimationText> with TickerProviderStateMixin {
   // Animation controller for the blinking cursor
   late AnimationController _cursorController;
   late Animation<double> _cursorAnimation;
@@ -565,7 +578,7 @@ class _TypingAnimationTextState extends State<_TypingAnimationText>
   void initState() {
     super.initState();
 
-    // Set up blinking cursor animation
+    // Set up simple cursor blinking for markdown
     _cursorController = AnimationController(
       duration: const Duration(milliseconds: 530), // Natural blink rate
       vsync: this,
@@ -652,40 +665,61 @@ class _TypingAnimationTextState extends State<_TypingAnimationText>
 
   @override
   Widget build(BuildContext context) {
-    // Get the visible portion of the text
+    // Get the visible portion of the markdown text
     final visibleText = widget.text.substring(0, _currentCharCount);
 
-    return RichText(
-      text: TextSpan(
-        children: [
-          // The visible text portion
-          TextSpan(
-            text: visibleText,
-            style: widget.textStyle,
-          ),
-          // Blinking cursor (only shown while typing)
-          if (!_isTypingComplete)
-            WidgetSpan(
-              child: AnimatedBuilder(
-                animation: _cursorAnimation,
-                builder: (context, child) {
-                  return Opacity(
-                    opacity: _cursorAnimation.value,
-                    child: Container(
-                      width: 2,
-                      height: widget.textStyle.fontSize ?? 14,
-                      margin: const EdgeInsets.only(left: 1),
-                      decoration: BoxDecoration(
-                        color: widget.textStyle.color ?? Colors.black87,
-                        borderRadius: BorderRadius.circular(1),
-                      ),
-                    ),
-                  );
-                },
+    return AnimatedBuilder(
+      animation: _cursorAnimation,
+      builder: (context, child) {
+        // Add blinking cursor if still typing
+        final textWithCursor = !_isTypingComplete
+            ? '$visibleText${_cursorAnimation.value > 0.5 ? '|' : ''}'
+            : visibleText;
+
+        return MarkdownWidget(
+          data: textWithCursor,
+          shrinkWrap: true,
+          config: MarkdownConfig(
+            configs: [
+              const PConfig(
+                textStyle: TextStyle(
+                  color: Colors.black87,
+                  fontSize: 14,
+                ),
               ),
-            ),
-        ],
-      ),
+              CodeConfig(
+                style: TextStyle(
+                  backgroundColor: Colors.grey.shade300,
+                  fontFamily: 'monospace',
+                  fontSize: 13,
+                ),
+              ),
+              // BlockquoteConfig - will configure later
+              const H1Config(
+                style: TextStyle(
+                  color: Colors.black87,
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              const H2Config(
+                style: TextStyle(
+                  color: Colors.black87,
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              const H3Config(
+                style: TextStyle(
+                  color: Colors.black87,
+                  fontSize: 16,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ],
+          ),
+        );
+      },
     );
   }
 }
