@@ -5,6 +5,7 @@ import 'package:gaimon/gaimon.dart';
 import 'package:go_router/go_router.dart';
 import 'package:in_app_review/in_app_review.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:wordstock/bootstrap.dart';
 import 'package:wordstock/core/constants/vocabulary_levels.dart';
 import 'package:wordstock/core/services/navigation_service.dart';
 import 'package:wordstock/features/profile/cubit/cubit.dart';
@@ -61,9 +62,15 @@ class _ProfileBodyState extends State<ProfileBody> {
 
   /// Handle vocabulary level selection from dialog
   /// Delegates to ProfileCubit for business logic
+  /// Handles the display and result of the vocabulary level selection dialog.
+  /// Logs the process for debugging and traceability.
   Future<void> _handleVocabularyLevelDialog(
     VocabularyLevel currentLevel,
   ) async {
+    // Log the start of the dialog handling
+    logger.d(
+        '[Profile] Opening vocabulary level dialog. Current level: $currentLevel');
+
     final cubit = context.read<ProfileCubit>();
     final selectedLevel =
         await _navigationService.showVocabularyLevelBottomSheet(
@@ -71,8 +78,17 @@ class _ProfileBodyState extends State<ProfileBody> {
       currentLevel: currentLevel,
     );
 
+    // Always reset dialog state after interaction to allow reopening
+    if (mounted) {
+      cubit.resetDialogState();
+    }
+
+    // Log the result of the dialog
     if (selectedLevel != null && mounted) {
+      logger.i('[Profile] User selected new vocabulary level: $selectedLevel');
       await cubit.updateVocabularyLevel(selectedLevel);
+    } else {
+      logger.d('[Profile] Vocabulary level dialog dismissed or not mounted.');
     }
   }
 

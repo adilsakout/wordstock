@@ -151,6 +151,15 @@ class ProfileCubit extends Cubit<ProfileState> {
     }
   }
 
+  /// Reset dialog state and return to loaded state
+  /// This allows the dialog to be shown again after cancellation
+  void resetDialogState() {
+    if (_currentProfile != null) {
+      emit(ProfileLoaded(userProfile: _currentProfile!));
+      log('Dialog state reset', name: 'ProfileCubit');
+    }
+  }
+
   /// Refresh profile data
   /// Force reload the profile from the server
   Future<void> refreshProfile() async {
