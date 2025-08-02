@@ -1,0 +1,892 @@
+{
+    "@@locale": "ko",
+    "welcomeTitle": "Wordstock에 오신 것을 환영합니다",
+    "@welcomeTitle": {
+        "description": "Text shown in the Welcome Page"
+    },
+    "welcomeDescription": "Wordstock은 새로운 단어를 학습하는 데 도움을 주는 도구입니다.",
+    "@welcomeDescription": {
+        "description": "Text shown in the Welcome Page"
+    },
+    "infoTitle": "맞춤 단어 목록 만들기",
+    "@infoTitle": {
+        "description": "Text shown in the Info Page"
+    },
+    "infoDescription": "Wordstock은 새로운 단어를 학습하는 데 도움을 주는 도구입니다.",
+    "@infoDescription": {
+        "description": "Text shown in the Info Page"
+    },
+    "getStarted": "시작하기",
+    "@getStarted": {
+        "description": "Text for get started button"
+    },
+    "continueText": "계속",
+    "@continueText": {
+        "description": "Text for continue button"
+    },
+    "makeYoursTitle": "WordStock을 개인화해 보세요",
+    "@makeYoursTitle": {
+        "description": "Title for personalization page"
+    },
+    "makeYoursWithNameTitle": "WordStock을 개인화해 보세요, {name}님",
+    "@makeYoursWithNameTitle": {
+        "description": "Title for personalization page with user's name",
+        "placeholders": {
+            "name": {
+                "type": "String"
+            }
+        }
+    },
+    "personalizeDescription": "학습 경험을 개인화하기 위한 마지막 몇 가지 질문입니다.",
+    "@personalizeDescription": {
+        "description": "Description for personalization pages"
+    },
+    "favoriteWordsTitle": "즐겨찾는 단어",
+    "@favoriteWordsTitle": {
+        "description": "Title for favorite words screen"
+    },
+    "tryAgain": "다시 시도",
+    "@tryAgain": {
+        "description": "Text for try again button"
+    },
+    "noFavoritesTitle": "아직 즐겨찾는 단어가 없습니다",
+    "@noFavoritesTitle": {
+        "description": "Title shown when no favorite words exist"
+    },
+    "noFavoritesDescription": "단어를 즐겨찾기에 추가해 보세요",
+    "@noFavoritesDescription": {
+        "description": "Description shown when no favorite words exist"
+    },
+    "timeCommitmentTitle": "하루에 얼마나 많은 시간을 학습에 투자하실 건가요?",
+    "@timeCommitmentTitle": {
+        "description": "Title shown on the time commitment selection page"
+    },
+    "timeCommitmentDescription": "매일 학습에 투자할 수 있는 시간을 선택하세요.",
+    "@timeCommitmentDescription": {
+        "description": "Description text for time commitment selection"
+    },
+    "fiveMinutes": "⚡️ 하루 5분",
+    "@fiveMinutes": {
+        "description": "5 minutes time commitment option"
+    },
+    "tenMinutes": "⏱️ 하루 10분",
+    "@tenMinutes": {
+        "description": "10 minutes time commitment option"
+    },
+    "fifteenMinutes": "⏳ 하루 15분",
+    "@fifteenMinutes": {
+        "description": "15 minutes time commitment option"
+    },
+    "thirtyMinutes": "🕰️ 하루 30분",
+    "@thirtyMinutes": {
+        "description": "30 minutes time commitment option"
+    },
+    "topicSelectionTitle": "어떤 주제에 관심이 있으신가요?",
+    "@topicSelectionTitle": {
+        "description": "Title shown on the topic selection page"
+    },
+    "topicSelectionDescription": "가장 관심 있는 학습 주제를 선택하세요.",
+    "@topicSelectionDescription": {
+        "description": "Description text for topic selection"
+    },
+    "topicSociety": "👥 사회",
+    "@topicSociety": {
+        "description": "Society topic option"
+    },
+    "topicForeignLanguages": "🌏 외국어",
+    "@topicForeignLanguages": {
+        "description": "Foreign languages topic option"
+    },
+    "topicHumanBody": "💪 인체",
+    "@topicHumanBody": {
+        "description": "Human body topic option"
+    },
+    "topicEmotions": "😃 감정",
+    "@topicEmotions": {
+        "description": "Emotions topic option"
+    },
+    "topicOther": "🔍 기타",
+    "@topicOther": {
+        "description": "Other topics option"
+    },
+    "customizationLoadingTitleWithName": "잠시만 기다려 주세요, {name}님! Wordstock 경험을 개인화하고 있습니다.",
+    "@customizationLoadingTitleWithName": {
+        "description": "Loading title with user's name on customization loading page",
+        "placeholders": {
+            "name": {
+                "type": "String"
+            }
+        }
+    },
+    "customizationLoadingTitle": "잠시만 기다려 주세요! Wordstock 경험을 개인화하고 있습니다.",
+    "@customizationLoadingTitle": {
+        "description": "Loading title on customization loading page"
+    },
+    "customizationCompleteTitleWithName": "완료되었습니다, {name}님! Wordstock 경험이 준비되었습니다!",
+    "@customizationCompleteTitleWithName": {
+        "description": "Complete title with user's name on customization loading page",
+        "placeholders": {
+            "name": {
+                "type": "String"
+            }
+        }
+    },
+    "customizationCompleteTitle": "완료되었습니다! Wordstock 경험이 준비되었습니다!",
+    "@customizationCompleteTitle": {
+        "description": "Complete title on customization loading page"
+    },
+    "craftingExperienceTitle": "귀하의",
+    "@craftingExperienceTitle": {
+        "description": "First part of the title on customization loading page"
+    },
+    "learningExperienceSubtitle": "학습 경험을 만들고 있습니다...",
+    "@learningExperienceSubtitle": {
+        "description": "Second part of the title on customization loading page"
+    },
+    "profileSetupTitle": "프로필 설정 중",
+    "@profileSetupTitle": {
+        "description": "Title for the first step in customization loading"
+    },
+    "forgetWordsQuestion": "여러 번 복습해도 새로운 단어를 자주 잊어버리시나요?",
+    "@forgetWordsQuestion": {
+        "description": "Question about forgetting words in the customization process"
+    },
+    "learningPreferencesTitle": "학습 선호도 조정 중",
+    "@learningPreferencesTitle": {
+        "description": "Title for the second step in customization loading"
+    },
+    "readingConversationQuestion": "읽을 때는 단어를 이해하지만 대화에서는 사용할 수 없을 때 좌절감을 느끼시나요?",
+    "@readingConversationQuestion": {
+        "description": "Question about reading vs conversation in the customization process"
+    },
+    "growthAreasTitle": "성장 영역 분석 중",
+    "@growthAreasTitle": {
+        "description": "Title for the third step in customization loading"
+    },
+    "progressFrustrationQuestion": "노력하고 있지만 여전히 충분히 빠른 진전을 보이지 못한다고 느끼시나요?",
+    "@progressFrustrationQuestion": {
+        "description": "Question about progress frustration in the customization process"
+    },
+    "buttonYes": "예",
+    "@buttonYes": {
+        "description": "Text for Yes button"
+    },
+    "buttonNo": "아니오",
+    "@buttonNo": {
+        "description": "Text for No button"
+    },
+    "toMoveForwardSpecify": "계속하려면 지정해 주세요",
+    "@toMoveForwardSpecify": {
+        "description": "Instruction text in the customization step"
+    },
+    "startLearning": "학습 시작",
+    "@startLearning": {
+        "description": "Text for start learning button"
+    },
+    "analyzingPreferences": "선호도 분석 중...",
+    "@analyzingPreferences": {
+        "description": "Text for analyzing preferences step"
+    },
+    "selectingWords": "레벨에 따른 단어 선택 중...",
+    "@selectingWords": {
+        "description": "Text for selecting words step"
+    },
+    "personalizingPath": "학습 경로 개인화 중...",
+    "@personalizingPath": {
+        "description": "Text for personalizing learning path step"
+    },
+    "creatingWordList": "맞춤 단어 목록 생성 중...",
+    "@creatingWordList": {
+        "description": "Text for creating word list step"
+    },
+    "finalizingExperience": "경험 마무리 중...",
+    "@finalizingExperience": {
+        "description": "Text for finalizing experience step"
+    },
+    "practiceReminderTitle": "훌륭한 진전이에요!",
+    "@practiceReminderTitle": {
+        "description": "Title for practice reminder screen"
+    },
+    "practiceReminderDescription": "{count}개의 새로운 단어를 배우셨어요! 지금이 연습하고 학습을 강화할 완벽한 시간입니다.",
+    "@practiceReminderDescription": {
+        "description": "Description for practice reminder screen with dynamic word count",
+        "placeholders": {
+            "count": {
+                "type": "int"
+            }
+        }
+    },
+    "startPractice": "연습 시작",
+    "@startPractice": {
+        "description": "Text for start practice button"
+    },
+    "continueLearning": "학습 계속하기",
+    "@continueLearning": {
+        "description": "Text for continue learning button"
+    },
+    "streakMilestoneTitle": "연속 학습 기록!",
+    "@streakMilestoneTitle": {
+        "description": "Title shown on streak milestone celebration"
+    },
+    "streakDaysCount": "{count}일",
+    "@streakDaysCount": {
+        "description": "Text showing number of streak days",
+        "placeholders": {
+            "count": {
+                "type": "int"
+            }
+        }
+    },
+    "streakCongratulationsMessage": "축하합니다! {count}일 동안 꾸준히 학습하셨습니다. 계속 잘하고 계세요!",
+    "@streakCongratulationsMessage": {
+        "description": "Congratulatory message for streak milestone",
+        "placeholders": {
+            "count": {
+                "type": "int"
+            }
+        }
+    },
+    "streakCongratulationsMessageSingular": "축하합니다! 오늘 학습 여정을 시작하셨네요. 계속 하세요!",
+    "@streakCongratulationsMessageSingular": {
+        "description": "Congratulatory message for first day streak"
+    },
+    "streakCongratulationsMessagePlural": "축하합니다! {count}일 동안 꾸준히 학습하셨습니다. 계속 잘하고 계세요!",
+    "@streakCongratulationsMessagePlural": {
+        "description": "Congratulatory message for multiple day streak",
+        "placeholders": {
+            "count": {
+                "type": "int"
+            }
+        }
+    },
+    "keepGoing": "계속 하세요!",
+    "@keepGoing": {
+        "description": "Text for button to dismiss streak milestone celebration"
+    },
+    "streakCongratulationsSingular": "축하합니다! 오늘 학습 여정을 시작하셨네요. 계속 하세요!",
+    "@streakCongratulationsSingular": {
+        "description": "Congratulatory message for first day streak"
+    },
+    "quizResultExcellent": "훌륭해요!",
+    "@quizResultExcellent": {
+        "description": "Quiz result feedback for high scores (80%+)"
+    },
+    "quizResultGoodJob": "잘했어요!",
+    "@quizResultGoodJob": {
+        "description": "Quiz result feedback for good scores (60-79%)"
+    },
+    "quizResultNiceTry": "좋은 시도예요!",
+    "@quizResultNiceTry": {
+        "description": "Quiz result feedback for moderate scores (40-59%)"
+    },
+    "quizResultKeepPracticing": "계속 연습하세요!",
+    "@quizResultKeepPracticing": {
+        "description": "Quiz result feedback for lower scores (below 40%)"
+    },
+    "quizCompleteMessage": "단어 퀴즈를 완료하셨습니다.",
+    "@quizCompleteMessage": {
+        "description": "Message shown when a quiz is completed"
+    },
+    "coinsEarned": "{count}개의 코인을 획득했습니다",
+    "@coinsEarned": {
+        "description": "Message showing how many coins were earned",
+        "placeholders": {
+            "count": {
+                "type": "int"
+            }
+        }
+    },
+    "quizResultSummary": "총 {total}문제 중 {correct}문제를 맞히셨습니다.",
+    "@quizResultSummary": {
+        "description": "Summary of quiz performance",
+        "placeholders": {
+            "correct": {
+                "type": "int"
+            },
+            "total": {
+                "type": "int"
+            }
+        }
+    },
+    "playAgain": "다시 하기",
+    "@playAgain": {
+        "description": "Text for play again button"
+    },
+    "home": "홈",
+    "@home": {
+        "description": "Text for home button"
+    },
+    "exitConfirmationTitle": "정말 종료하시겠습니까?",
+    "@exitConfirmationTitle": {
+        "description": "Title for exit confirmation dialog"
+    },
+    "exitConfirmationMessage": "진행 상황이 저장되지 않습니다.",
+    "@exitConfirmationMessage": {
+        "description": "Message for exit confirmation dialog"
+    },
+    "exit": "종료",
+    "@exit": {
+        "description": "Text for exit button"
+    },
+    "continueAction": "계속",
+    "@continueAction": {
+        "description": "Text for continue button"
+    },
+    "vocabularyQuiz": "단어 퀴즈",
+    "@vocabularyQuiz": {
+        "description": "Title for vocabulary quiz"
+    },
+    "questionCounter": "{current}/{total}",
+    "@questionCounter": {
+        "description": "Question counter format",
+        "placeholders": {
+            "current": {
+                "type": "int"
+            },
+            "total": {
+                "type": "int"
+            }
+        }
+    },
+    "selectCorrectWord": "문장을 완성할 올바른 단어를 선택하세요.",
+    "@selectCorrectWord": {
+        "description": "Instruction for vocabulary quiz"
+    },
+    "next": "다음",
+    "@next": {
+        "description": "Text for next button"
+    },
+    "finish": "완료",
+    "@finish": {
+        "description": "Text for finish button"
+    },
+    "noQuizQuestions": "사용 가능한 퀴즈 문제가 없습니다",
+    "@noQuizQuestions": {
+        "description": "Message when no quiz questions are available"
+    },
+    "errorWithMessage": "오류: {message}",
+    "@errorWithMessage": {
+        "description": "Error message with details",
+        "placeholders": {
+            "message": {
+                "type": "String"
+            }
+        }
+    },
+    "commitmentPactTitle": "학습 다짐",
+    "@commitmentPactTitle": {
+        "description": "Title for the commitment pact page"
+    },
+    "commitmentPactIntro": "저는 ",
+    "@commitmentPactIntro": {
+        "description": "Introduction text for the commitment pact"
+    },
+    "commitmentPactInnerNeeds": "내면의 필요와 연결되고 싶습니다",
+    "@commitmentPactInnerNeeds": {
+        "description": "Text about inner needs in the commitment pact"
+    },
+    "commitmentPactByLearning": ". 매일",
+    "@commitmentPactByLearning": {
+        "description": "Text connecting needs and learning amount"
+    },
+    "commitmentPactWordsPerDay": " {count}개의 단어를 학습하여",
+    "@commitmentPactWordsPerDay": {
+        "description": "Text showing the number of words per day",
+        "placeholders": {
+            "count": {
+                "type": "int"
+            }
+        }
+    },
+    "commitmentPactHelpBecome": " ",
+    "@commitmentPactHelpBecome": {
+        "description": "Text about helping to become something"
+    },
+    "commitmentPactVocabularyMaster": "단어 달인이 되고 싶습니다.",
+    "@commitmentPactVocabularyMaster": {
+        "description": "Text for vocabulary master goal"
+    },
+    "commitmentPactTestChampion": "시험 챔피언이 되고 싶습니다.",
+    "@commitmentPactTestChampion": {
+        "description": "Text for test champion goal"
+    },
+    "commitmentPactCareerAchiever": "경력 성취자가 되고 싶습니다.",
+    "@commitmentPactCareerAchiever": {
+        "description": "Text for career achiever goal"
+    },
+    "commitmentPactLifelongLearner": "평생 학습자가 되고 싶습니다.",
+    "@commitmentPactLifelongLearner": {
+        "description": "Text for lifelong learner goal"
+    },
+    "commitmentPactTrust": "저는 Wordstock AI가 저를 안내하고 모든 목표를 달성하는 데 도움을 줄 것이라고 믿고 원합니다.",
+    "@commitmentPactTrust": {
+        "description": "Text about trusting the app"
+    },
+    "commitmentPactButton": "목표 달성을 다짐합니다",
+    "@commitmentPactButton": {
+        "description": "Text for the commitment button"
+    },
+    "commitmentCongratulationsTitle": "축하합니다!",
+    "@commitmentCongratulationsTitle": {
+        "description": "Title for the commitment congratulations message"
+    },
+    "commitmentCongratulationsMessage": "단어 학습 여정의 첫 걸음을 내디뎠습니다. 귀하의 다짐이 목표 달성에 도움이 될 것입니다!",
+    "@commitmentCongratulationsMessage": {
+        "description": "Congratulations message after committing to goals"
+    },
+    "nextButton": "다음",
+    "@nextButton": {
+        "description": "Text for the next button after commitment"
+    },
+    "goalSelectionTitle": "주요 학습 목표는 무엇인가요?",
+    "@goalSelectionTitle": {
+        "description": "Title for the goal selection page"
+    },
+    "goalSelectionDescription": "주요 학습 목표를 가장 잘 설명하는 항목을 선택하세요.",
+    "@goalSelectionDescription": {
+        "description": "Description for the goal selection page"
+    },
+    "goalMasteringWords": "📚 새로운 단어 마스터하기",
+    "@goalMasteringWords": {
+        "description": "Goal option for mastering new words"
+    },
+    "goalImprovingMemory": "🧠 기억력 향상",
+    "@goalImprovingMemory": {
+        "description": "Goal option for improving memory"
+    },
+    "goalSpeakingConfidence": "🗣️ 자신 있게 말하기",
+    "@goalSpeakingConfidence": {
+        "description": "Goal option for speaking with confidence"
+    },
+    "goalWritingClearly": "✍️ 더 명확하게 쓰기",
+    "@goalWritingClearly": {
+        "description": "Goal option for writing more clearly"
+    },
+    "goalUnderstandingContent": "🧩 내용 이해하기",
+    "@goalUnderstandingContent": {
+        "description": "Goal option for understanding content"
+    },
+    "goalReachingLanguageGoals": "🎯 언어 목표 달성",
+    "@goalReachingLanguageGoals": {
+        "description": "Goal option for reaching language goals"
+    },
+    "weeklyProgress": "주간 진도",
+    "@weeklyProgress": {
+        "description": "Title for weekly progress section"
+    },
+    "currentStreakSingular": "현재 연속 기록: {count}일",
+    "@currentStreakSingular": {
+        "description": "Text showing current streak for one day",
+        "placeholders": {
+            "count": {
+                "type": "int"
+            }
+        }
+    },
+    "currentStreakPlural": "현재 연속 기록: {count}일",
+    "@currentStreakPlural": {
+        "description": "Text showing current streak for multiple days",
+        "placeholders": {
+            "count": {
+                "type": "int"
+            }
+        }
+    },
+    "current": "현재",
+    "@current": {
+        "description": "Label for current streak in stats"
+    },
+    "goal": "목표",
+    "@goal": {
+        "description": "Label for streak goal in stats"
+    },
+    "daysText": "{count}일",
+    "@daysText": {
+        "description": "Text showing number of days",
+        "placeholders": {
+            "count": {
+                "type": "int"
+            }
+        }
+    },
+    "percentToGoal": "목표까지 {percent}%",
+    "@percentToGoal": {
+        "description": "Text showing percentage progress to goal",
+        "placeholders": {
+            "percent": {
+                "type": "int"
+            }
+        }
+    },
+    "streakMotivationMessage": "더 나은 학습 결과를 위해 연속 기록을 유지하세요!",
+    "@streakMotivationMessage": {
+        "description": "Motivational message for maintaining streak"
+    },
+    "pointsProgressTitle": "포인트 진행률",
+    "@pointsProgressTitle": {
+        "description": "Title for the points progress bottom sheet"
+    },
+    "totalPoints": "총 포인트",
+    "@totalPoints": {
+        "description": "Label for total points display"
+    },
+    "pointsLearningJourney": "학습 여정",
+    "@pointsLearningJourney": {
+        "description": "Title for achievement levels section in points progress"
+    },
+    "achievementWordExplorer": "단어 탐험가",
+    "@achievementWordExplorer": {
+        "description": "Name for beginner achievement level"
+    },
+    "achievementVocabularyBuilder": "단어 구축자",
+    "@achievementVocabularyBuilder": {
+        "description": "Name for intermediate achievement level"
+    },
+    "achievementLanguageMaster": "언어 마스터",
+    "@achievementLanguageMaster": {
+        "description": "Name for advanced achievement level"
+    },
+    "pointsFormat": "{count}점",
+    "@pointsFormat": {
+        "description": "Format for displaying points with the pts suffix",
+        "placeholders": {
+            "count": {
+                "type": "int",
+                "example": "100"
+            }
+        }
+    },
+    "pointsMotivationMessage": "새로운 성취를 잠금 해제하기 위해 계속 포인트를 획득하세요!",
+    "@pointsMotivationMessage": {
+        "description": "Motivational message shown in the points progress bottom sheet"
+    },
+    "closeButton": "닫기",
+    "@closeButton": {
+        "description": "Text for close button"
+    },
+    "chatWithAITitle": "\"{word}\"에 대해 AI와 채팅",
+    "@chatWithAITitle": {
+        "description": "Title for the chat with AI bottom sheet",
+        "placeholders": {
+            "word": {
+                "type": "String",
+                "example": "Eloquent"
+            }
+        }
+    },
+    "chatWithAIPlaceholder": "\"{word}\"에 대해 질문하세요...",
+    "@chatWithAIPlaceholder": {
+        "description": "Placeholder text for the chat input field",
+        "placeholders": {
+            "word": {
+                "type": "String",
+                "example": "Eloquent"
+            }
+        }
+    },
+    "chatWithAIError": "오류: {message}",
+    "@chatWithAIError": {
+        "description": "Error message in the chat with AI",
+        "placeholders": {
+            "message": {
+                "type": "String",
+                "example": "Failed to connect"
+            }
+        }
+    },
+    "practiceButtonText": "연습",
+    "@practiceButtonText": {
+        "description": "Text shown on the practice button for subscribed users"
+    },
+    "goProButtonText": "프로 버전으로 업그레이드",
+    "@goProButtonText": {
+        "description": "Text shown on the practice button for non-subscribed users"
+    },
+    "letsGrowTogether": "함께 성장해요! 🌱",
+    "@letsGrowTogether": {
+        "description": "Title for the review request dialog"
+    },
+    "reviewMotivationText": "귀하의 피드백은 더 나은 학습 경험을 만드는 데 도움이 됩니다. 생각을 공유하고 다른 사람들이 학습의 즐거움을 발견할 수 있도록 도와주세요!",
+    "@reviewMotivationText": {
+        "description": "Description text for the review request dialog"
+    },
+    "letsGrowTogetherButton": "함께 성장하기",
+    "@letsGrowTogetherButton": {
+        "description": "Text for the review dialog button"
+    },
+    "profileTitle": "프로필",
+    "@profileTitle": {
+        "description": "Title for the profile page"
+    },
+    "favoriteWords": "즐겨찾는 단어",
+    "@favoriteWords": {
+        "description": "Text for favorite words menu item"
+    },
+    "termsOfService": "서비스 약관",
+    "@termsOfService": {
+        "description": "Text for terms of service menu item"
+    },
+    "privacyPolicy": "개인정보 보호정책",
+    "@privacyPolicy": {
+        "description": "Text for privacy policy menu item"
+    },
+    "reviewUs": "리뷰 작성",
+    "@reviewUs": {
+        "description": "Text for review us menu item"
+    },
+    "contactSupport": "고객 지원 문의",
+    "@contactSupport": {
+        "description": "Text for contact support menu item"
+    },
+    "onboardingStarted": "온보딩 시작됨",
+    "@onboardingStarted": {
+        "description": "Analytics event for onboarding start"
+    },
+    "onboardingCompleted": "온보딩 완료됨",
+    "@onboardingCompleted": {
+        "description": "Analytics event for onboarding completion"
+    },
+    "onboardingPageView": "온보딩 페이지 조회: {pageName}",
+    "@onboardingPageView": {
+        "description": "Analytics event for onboarding page view",
+        "placeholders": {
+            "pageName": {
+                "type": "String"
+            }
+        }
+    },
+    "onboardingProgress": "진행률: {progress}%",
+    "@onboardingProgress": {
+        "description": "Text showing onboarding progress percentage",
+        "placeholders": {
+            "progress": {
+                "type": "int"
+            }
+        }
+    },
+    "onboardingSkip": "건너뛰기",
+    "@onboardingSkip": {
+        "description": "Text for skip button in onboarding"
+    },
+    "onboardingBack": "뒤로",
+    "@onboardingBack": {
+        "description": "Text for back button in onboarding"
+    },
+    "onboardingStar": "별",
+    "@onboardingStar": {
+        "description": "Accessibility label for star icon in onboarding"
+    },
+    "onboardingNext": "다음",
+    "@onboardingNext": {
+        "description": "Text for next button in onboarding"
+    },
+    "onboardingPrevious": "이전",
+    "@onboardingPrevious": {
+        "description": "Text for previous button in onboarding"
+    },
+    "onboardingProgressLabel": "진행률",
+    "@onboardingProgressLabel": {
+        "description": "Label for progress indicator in onboarding"
+    },
+    "onboardingReviewTitle": "WordStock이 마음에 드시나요? ⭐",
+    "@onboardingReviewTitle": {
+        "description": "Title for the onboarding review request page"
+    },
+    "onboardingReviewSubtitle": "귀하의 리뷰는 더 많은 단어 애호가들에게 다가가고 앱을 개선하는 데 도움이 됩니다. 잠깐이면 됩니다!",
+    "@onboardingReviewSubtitle": {
+        "description": "Subtitle text for the onboarding review request page"
+    },
+    "onboardingReviewButton": "⭐ WordStock 평가하기",
+    "@onboardingReviewButton": {
+        "description": "Button text for the review request in onboarding"
+    },
+    "onboardingReviewSkip": "나중에 하기",
+    "@onboardingReviewSkip": {
+        "description": "Skip text for the review request in onboarding"
+    },
+    "onboardingEnglishTestTitle": "빠른 영어 평가 📝",
+    "@onboardingEnglishTestTitle": {
+        "description": "Title for the English test onboarding page"
+    },
+    "onboardingEnglishTestSubtitle": "10문제의 빠른 테스트로 어휘 수준을 측정해 보겠습니다. 이를 통해 학습 경험을 개인화할 수 있습니다!",
+    "@onboardingEnglishTestSubtitle": {
+        "description": "Subtitle text for the English test onboarding page"
+    },
+    "onboardingEnglishTestStart": "🚀 평가 시작",
+    "@onboardingEnglishTestStart": {
+        "description": "Button text to start the English test"
+    },
+    "onboardingEnglishTestSkip": "지금은 건너뛰기",
+    "@onboardingEnglishTestSkip": {
+        "description": "Skip text for the English test"
+    },
+    "onboardingEnglishTestIcon": "영어 테스트",
+    "@onboardingEnglishTestIcon": {
+        "description": "Accessibility label for English test icon"
+    },
+    "onboardingEnglishTestExcellent": "훌륭해요! 🌟",
+    "@onboardingEnglishTestExcellent": {
+        "description": "Result message for excellent performance (80%+)"
+    },
+    "onboardingEnglishTestGood": "잘하셨어요! 👍",
+    "@onboardingEnglishTestGood": {
+        "description": "Result message for good performance (60-79%)"
+    },
+    "onboardingEnglishTestOkay": "좋은 시작이에요! 💡",
+    "@onboardingEnglishTestOkay": {
+        "description": "Result message for moderate performance (<60%)"
+    },
+    "onboardingEnglishTestScore": "{total}문제 중 {correct}문제를 맞히셨습니다",
+    "@onboardingEnglishTestScore": {
+        "description": "Shows the test score with correct and total questions",
+        "placeholders": {
+            "correct": {
+                "type": "int"
+            },
+            "total": {
+                "type": "int"
+            }
+        }
+    },
+    "settingsTitle": "설정",
+    "@settingsTitle": {
+        "description": "Title for the settings page"
+    },
+    "settingsNotifications": "알림",
+    "@settingsNotifications": {
+        "description": "Title for the notifications section in settings"
+    },
+    "settingsNotificationsDescription": "알림을 언제 어떻게 받을지 제어하세요",
+    "@settingsNotificationsDescription": {
+        "description": "Description for the notifications section in settings"
+    },
+    "settingsEnableNotifications": "알림 활성화",
+    "@settingsEnableNotifications": {
+        "description": "Master toggle for all notifications"
+    },
+    "settingsEnableNotificationsDescription": "모든 알림을 켜거나 끄기",
+    "@settingsEnableNotificationsDescription": {
+        "description": "Description for the master notification toggle"
+    },
+    "settingsDailyReminders": "일일 알림",
+    "@settingsDailyReminders": {
+        "description": "Toggle for daily reminder notifications"
+    },
+    "settingsDailyRemindersDescription": "매일 연습하라는 알림 받기",
+    "@settingsDailyRemindersDescription": {
+        "description": "Description for daily reminder notifications"
+    },
+    "settingsPracticeReminders": "연습 알림",
+    "@settingsPracticeReminders": {
+        "description": "Toggle for practice reminder notifications"
+    },
+    "settingsPracticeRemindersDescription": "연습하지 않았을 때 알림 받기",
+    "@settingsPracticeRemindersDescription": {
+        "description": "Description for practice reminder notifications"
+    },
+    "settingsNewWords": "새로운 단어",
+    "@settingsNewWords": {
+        "description": "Toggle for new word notifications"
+    },
+    "settingsNewWordsDescription": "새로운 어휘에 대한 알림 받기",
+    "@settingsNewWordsDescription": {
+        "description": "Description for new word notifications"
+    },
+    "settingsStreakReminders": "연속 기록 알림",
+    "@settingsStreakReminders": {
+        "description": "Toggle for streak reminder notifications"
+    },
+    "settingsStreakRemindersDescription": "학습 연속 기록을 놓치지 마세요",
+    "@settingsStreakRemindersDescription": {
+        "description": "Description for streak reminder notifications"
+    },
+    "settingsResetToDefaults": "기본값으로 재설정",
+    "@settingsResetToDefaults": {
+        "description": "Button to reset all settings to default values"
+    },
+    "settingsResetTitle": "설정 재설정",
+    "@settingsResetTitle": {
+        "description": "Title for the reset settings dialog"
+    },
+    "settingsResetMessage": "모든 설정을 기본값으로 재설정하시겠습니까? 이 작업은 되돌릴 수 없습니다.",
+    "@settingsResetMessage": {
+        "description": "Message for the reset settings confirmation dialog"
+    },
+    "settingsLoadingMessage": "설정 로딩 중...",
+    "@settingsLoadingMessage": {
+        "description": "Message shown while settings are being loaded"
+    },
+    "settingsError": "설정 오류",
+    "@settingsError": {
+        "description": "Title for settings error state"
+    },
+    "settingsRetry": "다시 시도",
+    "@settingsRetry": {
+        "description": "Button to retry loading settings"
+    },
+    "settingsRecover": "복구",
+    "@settingsRecover": {
+        "description": "Button to recover from settings error"
+    },
+    "cancel": "취소",
+    "@cancel": {
+        "description": "Cancel button text"
+    },
+    "reset": "재설정",
+    "@reset": {
+        "description": "Reset button text"
+    },
+    "vocabularyLevelUpdated": "어휘 수준이 {levelName}(으)로 업데이트되었습니다",
+    "@vocabularyLevelUpdated": {
+        "description": "Success message when vocabulary level is updated",
+        "placeholders": {
+            "levelName": {
+                "type": "String"
+            }
+        }
+    },
+    "somethingWentWrong": "문제가 발생했습니다",
+    "@somethingWentWrong": {
+        "description": "Generic error message"
+    },
+    "retry": "다시 시도",
+    "@retry": {
+        "description": "Text for retry button"
+    },
+    "quickActions": "빠른 작업",
+    "@quickActions": {
+        "description": "Section title for quick actions in profile"
+    },
+    "vocabularyLevel": "어휘 수준",
+    "@vocabularyLevel": {
+        "description": "Menu item for vocabulary level settings"
+    },
+    "supportAndInfo": "지원 및 정보",
+    "@supportAndInfo": {
+        "description": "Section title for support and info in profile"
+    },
+    "copyUserID": "사용자 ID 복사",
+    "@copyUserID": {
+        "description": "Menu item to copy user ID"
+    },
+    "userIDCopied": "사용자 ID가 클립보드에 복사되었습니다",
+    "@userIDCopied": {
+        "description": "Success message when user ID is copied"
+    },
+    "legal": "법적 고지",
+    "@legal": {
+        "description": "Section title for legal information in profile"
+    },
+    "vocabularyLevelDialogTitle": "어휘 수준이 어떻게 되시나요?",
+    "@vocabularyLevelDialogTitle": {
+        "description": "Title for vocabulary level selection dialog"
+    },
+    "vocabularyLevelDialogDescription": "현재 어휘 수준을 가장 잘 설명하는 레벨을 선택하세요.",
+    "@vocabularyLevelDialogDescription": {
+        "description": "Description for vocabulary level selection dialog"
+    },
+    "saveButton": "저장",
+    "@saveButton": {
+        "description": "Text for save button"
+    }
+}

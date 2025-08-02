@@ -1,0 +1,892 @@
+{
+    "@@locale": "zh",
+    "welcomeTitle": "歡迎使用 Wordstock",
+    "@welcomeTitle": {
+        "description": "Text shown in the Welcome Page"
+    },
+    "welcomeDescription": "Wordstock 是一個幫助您學習新單字的工具。",
+    "@welcomeDescription": {
+        "description": "Text shown in the Welcome Page"
+    },
+    "infoTitle": "建立自訂單字清單",
+    "@infoTitle": {
+        "description": "Text shown in the Info Page"
+    },
+    "infoDescription": "Wordstock 是一個幫助您學習新單字的工具。",
+    "@infoDescription": {
+        "description": "Text shown in the Info Page"
+    },
+    "getStarted": "開始使用",
+    "@getStarted": {
+        "description": "Text for get started button"
+    },
+    "continueText": "繼續",
+    "@continueText": {
+        "description": "Text for continue button"
+    },
+    "makeYoursTitle": "讓我們個人化您的 WordStock",
+    "@makeYoursTitle": {
+        "description": "Title for personalization page"
+    },
+    "makeYoursWithNameTitle": "讓我們個人化您的 WordStock，{name}",
+    "@makeYoursWithNameTitle": {
+        "description": "Title for personalization page with user's name",
+        "placeholders": {
+            "name": {
+                "type": "String"
+            }
+        }
+    },
+    "personalizeDescription": "最後幾個問題，幫助我們個人化您的學習體驗。",
+    "@personalizeDescription": {
+        "description": "Description for personalization pages"
+    },
+    "favoriteWordsTitle": "您的最愛單字",
+    "@favoriteWordsTitle": {
+        "description": "Title for favorite words screen"
+    },
+    "tryAgain": "重試",
+    "@tryAgain": {
+        "description": "Text for try again button"
+    },
+    "noFavoritesTitle": "尚無最愛單字",
+    "@noFavoritesTitle": {
+        "description": "Title shown when no favorite words exist"
+    },
+    "noFavoritesDescription": "開始將單字加入您的最愛",
+    "@noFavoritesDescription": {
+        "description": "Description shown when no favorite words exist"
+    },
+    "timeCommitmentTitle": "您每天會花多少時間學習？",
+    "@timeCommitmentTitle": {
+        "description": "Title shown on the time commitment selection page"
+    },
+    "timeCommitmentDescription": "選擇您每天可以投入學習的時間。",
+    "@timeCommitmentDescription": {
+        "description": "Description text for time commitment selection"
+    },
+    "fiveMinutes": "⚡️ 每天 5 分鐘",
+    "@fiveMinutes": {
+        "description": "5 minutes time commitment option"
+    },
+    "tenMinutes": "⏱️ 每天 10 分鐘",
+    "@tenMinutes": {
+        "description": "10 minutes time commitment option"
+    },
+    "fifteenMinutes": "⏳ 每天 15 分鐘",
+    "@fifteenMinutes": {
+        "description": "15 minutes time commitment option"
+    },
+    "thirtyMinutes": "🕰️ 每天 30 分鐘",
+    "@thirtyMinutes": {
+        "description": "30 minutes time commitment option"
+    },
+    "topicSelectionTitle": "您對哪些主題感興趣？",
+    "@topicSelectionTitle": {
+        "description": "Title shown on the topic selection page"
+    },
+    "topicSelectionDescription": "選擇您最感興趣的學習主題。",
+    "@topicSelectionDescription": {
+        "description": "Description text for topic selection"
+    },
+    "topicSociety": "👥 社會",
+    "@topicSociety": {
+        "description": "Society topic option"
+    },
+    "topicForeignLanguages": "🌏 外語",
+    "@topicForeignLanguages": {
+        "description": "Foreign languages topic option"
+    },
+    "topicHumanBody": "💪 人體",
+    "@topicHumanBody": {
+        "description": "Human body topic option"
+    },
+    "topicEmotions": "😃 情感",
+    "@topicEmotions": {
+        "description": "Emotions topic option"
+    },
+    "topicOther": "🔍 其他",
+    "@topicOther": {
+        "description": "Other topics option"
+    },
+    "customizationLoadingTitleWithName": "請稍等，{name}！我們正在個人化您的 Wordstock 體驗。",
+    "@customizationLoadingTitleWithName": {
+        "description": "Loading title with user's name on customization loading page",
+        "placeholders": {
+            "name": {
+                "type": "String"
+            }
+        }
+    },
+    "customizationLoadingTitle": "請稍等！我們正在個人化您的 Wordstock 體驗。",
+    "@customizationLoadingTitle": {
+        "description": "Loading title on customization loading page"
+    },
+    "customizationCompleteTitleWithName": "完成了，{name}！您的 Wordstock 體驗已準備就緒！",
+    "@customizationCompleteTitleWithName": {
+        "description": "Complete title with user's name on customization loading page",
+        "placeholders": {
+            "name": {
+                "type": "String"
+            }
+        }
+    },
+    "customizationCompleteTitle": "完成了！您的 Wordstock 體驗已準備就緒！",
+    "@customizationCompleteTitle": {
+        "description": "Complete title on customization loading page"
+    },
+    "craftingExperienceTitle": "我們正在為您打造",
+    "@craftingExperienceTitle": {
+        "description": "First part of the title on customization loading page"
+    },
+    "learningExperienceSubtitle": "學習體驗...",
+    "@learningExperienceSubtitle": {
+        "description": "Second part of the title on customization loading page"
+    },
+    "profileSetupTitle": "設定您的個人檔案",
+    "@profileSetupTitle": {
+        "description": "Title for the first step in customization loading"
+    },
+    "forgetWordsQuestion": "您是否經常在複習數次後仍忘記新單字？",
+    "@forgetWordsQuestion": {
+        "description": "Question about forgetting words in the customization process"
+    },
+    "learningPreferencesTitle": "調整您的學習偏好",
+    "@learningPreferencesTitle": {
+        "description": "Title for the second step in customization loading"
+    },
+    "readingConversationQuestion": "您是否在閱讀時理解某個單字，但在對話中卻無法使用時感到沮喪？",
+    "@readingConversationQuestion": {
+        "description": "Question about reading vs conversation in the customization process"
+    },
+    "growthAreasTitle": "分析您的成長領域",
+    "@growthAreasTitle": {
+        "description": "Title for the third step in customization loading"
+    },
+    "progressFrustrationQuestion": "您是否努力學習但仍覺得進步不夠快？",
+    "@progressFrustrationQuestion": {
+        "description": "Question about progress frustration in the customization process"
+    },
+    "buttonYes": "是",
+    "@buttonYes": {
+        "description": "Text for Yes button"
+    },
+    "buttonNo": "否",
+    "@buttonNo": {
+        "description": "Text for No button"
+    },
+    "toMoveForwardSpecify": "要繼續，請指定",
+    "@toMoveForwardSpecify": {
+        "description": "Instruction text in the customization step"
+    },
+    "startLearning": "開始學習",
+    "@startLearning": {
+        "description": "Text for start learning button"
+    },
+    "analyzingPreferences": "分析您的偏好...",
+    "@analyzingPreferences": {
+        "description": "Text for analyzing preferences step"
+    },
+    "selectingWords": "根據您的程度選擇單字...",
+    "@selectingWords": {
+        "description": "Text for selecting words step"
+    },
+    "personalizingPath": "個人化您的學習路徑...",
+    "@personalizingPath": {
+        "description": "Text for personalizing learning path step"
+    },
+    "creatingWordList": "建立您的自訂單字清單...",
+    "@creatingWordList": {
+        "description": "Text for creating word list step"
+    },
+    "finalizingExperience": "完成您的體驗...",
+    "@finalizingExperience": {
+        "description": "Text for finalizing experience step"
+    },
+    "practiceReminderTitle": "很棒的進步！",
+    "@practiceReminderTitle": {
+        "description": "Title for practice reminder screen"
+    },
+    "practiceReminderDescription": "您已學會 {count} 個新單字！現在是練習和鞏固學習的絕佳時機。",
+    "@practiceReminderDescription": {
+        "description": "Description for practice reminder screen with dynamic word count",
+        "placeholders": {
+            "count": {
+                "type": "int"
+            }
+        }
+    },
+    "startPractice": "開始練習",
+    "@startPractice": {
+        "description": "Text for start practice button"
+    },
+    "continueLearning": "繼續學習",
+    "@continueLearning": {
+        "description": "Text for continue learning button"
+    },
+    "streakMilestoneTitle": "連續學習里程碑！",
+    "@streakMilestoneTitle": {
+        "description": "Title shown on streak milestone celebration"
+    },
+    "streakDaysCount": "{count} 天",
+    "@streakDaysCount": {
+        "description": "Text showing number of streak days",
+        "placeholders": {
+            "count": {
+                "type": "int"
+            }
+        }
+    },
+    "streakCongratulationsMessage": "恭喜！您已連續學習 {count} 天。繼續保持！",
+    "@streakCongratulationsMessage": {
+        "description": "Congratulatory message for streak milestone",
+        "placeholders": {
+            "count": {
+                "type": "int"
+            }
+        }
+    },
+    "streakCongratulationsMessageSingular": "恭喜！您今天開始了學習之旅。繼續加油！",
+    "@streakCongratulationsMessageSingular": {
+        "description": "Congratulatory message for first day streak"
+    },
+    "streakCongratulationsMessagePlural": "恭喜！您已連續學習 {count} 天。繼續保持！",
+    "@streakCongratulationsMessagePlural": {
+        "description": "Congratulatory message for multiple day streak",
+        "placeholders": {
+            "count": {
+                "type": "int"
+            }
+        }
+    },
+    "keepGoing": "繼續加油！",
+    "@keepGoing": {
+        "description": "Text for button to dismiss streak milestone celebration"
+    },
+    "streakCongratulationsSingular": "恭喜！您今天開始了學習之旅。繼續加油！",
+    "@streakCongratulationsSingular": {
+        "description": "Congratulatory message for first day streak"
+    },
+    "quizResultExcellent": "優秀！",
+    "@quizResultExcellent": {
+        "description": "Quiz result feedback for high scores (80%+)"
+    },
+    "quizResultGoodJob": "做得好！",
+    "@quizResultGoodJob": {
+        "description": "Quiz result feedback for good scores (60-79%)"
+    },
+    "quizResultNiceTry": "不錯的嘗試！",
+    "@quizResultNiceTry": {
+        "description": "Quiz result feedback for moderate scores (40-59%)"
+    },
+    "quizResultKeepPracticing": "繼續練習！",
+    "@quizResultKeepPracticing": {
+        "description": "Quiz result feedback for lower scores (below 40%)"
+    },
+    "quizCompleteMessage": "您已完成單字測驗。",
+    "@quizCompleteMessage": {
+        "description": "Message shown when a quiz is completed"
+    },
+    "coinsEarned": "獲得 {count} 個金幣",
+    "@coinsEarned": {
+        "description": "Message showing how many coins were earned",
+        "placeholders": {
+            "count": {
+                "type": "int"
+            }
+        }
+    },
+    "quizResultSummary": "您在 {total} 題中答對了 {correct} 題。",
+    "@quizResultSummary": {
+        "description": "Summary of quiz performance",
+        "placeholders": {
+            "correct": {
+                "type": "int"
+            },
+            "total": {
+                "type": "int"
+            }
+        }
+    },
+    "playAgain": "再玩一次",
+    "@playAgain": {
+        "description": "Text for play again button"
+    },
+    "home": "首頁",
+    "@home": {
+        "description": "Text for home button"
+    },
+    "exitConfirmationTitle": "您確定要退出嗎？",
+    "@exitConfirmationTitle": {
+        "description": "Title for exit confirmation dialog"
+    },
+    "exitConfirmationMessage": "您的進度將不會被儲存。",
+    "@exitConfirmationMessage": {
+        "description": "Message for exit confirmation dialog"
+    },
+    "exit": "退出",
+    "@exit": {
+        "description": "Text for exit button"
+    },
+    "continueAction": "繼續",
+    "@continueAction": {
+        "description": "Text for continue button"
+    },
+    "vocabularyQuiz": "單字測驗",
+    "@vocabularyQuiz": {
+        "description": "Title for vocabulary quiz"
+    },
+    "questionCounter": "{current}/{total}",
+    "@questionCounter": {
+        "description": "Question counter format",
+        "placeholders": {
+            "current": {
+                "type": "int"
+            },
+            "total": {
+                "type": "int"
+            }
+        }
+    },
+    "selectCorrectWord": "選擇正確的單字來完成句子。",
+    "@selectCorrectWord": {
+        "description": "Instruction for vocabulary quiz"
+    },
+    "next": "下一個",
+    "@next": {
+        "description": "Text for next button"
+    },
+    "finish": "完成",
+    "@finish": {
+        "description": "Text for finish button"
+    },
+    "noQuizQuestions": "沒有可用的測驗題目",
+    "@noQuizQuestions": {
+        "description": "Message when no quiz questions are available"
+    },
+    "errorWithMessage": "錯誤：{message}",
+    "@errorWithMessage": {
+        "description": "Error message with details",
+        "placeholders": {
+            "message": {
+                "type": "String"
+            }
+        }
+    },
+    "commitmentPactTitle": "學習承諾",
+    "@commitmentPactTitle": {
+        "description": "Title for the commitment pact page"
+    },
+    "commitmentPactIntro": "我想要",
+    "@commitmentPactIntro": {
+        "description": "Introduction text for the commitment pact"
+    },
+    "commitmentPactInnerNeeds": "與內心需求保持連結",
+    "@commitmentPactInnerNeeds": {
+        "description": "Text about inner needs in the commitment pact"
+    },
+    "commitmentPactByLearning": "，透過每天學習",
+    "@commitmentPactByLearning": {
+        "description": "Text connecting needs and learning amount"
+    },
+    "commitmentPactWordsPerDay": " {count} 個單字",
+    "@commitmentPactWordsPerDay": {
+        "description": "Text showing the number of words per day",
+        "placeholders": {
+            "count": {
+                "type": "int"
+            }
+        }
+    },
+    "commitmentPactHelpBecome": "，幫助我成為",
+    "@commitmentPactHelpBecome": {
+        "description": "Text about helping to become something"
+    },
+    "commitmentPactVocabularyMaster": "單字達人。",
+    "@commitmentPactVocabularyMaster": {
+        "description": "Text for vocabulary master goal"
+    },
+    "commitmentPactTestChampion": "考試冠軍。",
+    "@commitmentPactTestChampion": {
+        "description": "Text for test champion goal"
+    },
+    "commitmentPactCareerAchiever": "職涯成功者。",
+    "@commitmentPactCareerAchiever": {
+        "description": "Text for career achiever goal"
+    },
+    "commitmentPactLifelongLearner": "終身學習者。",
+    "@commitmentPactLifelongLearner": {
+        "description": "Text for lifelong learner goal"
+    },
+    "commitmentPactTrust": "我願意並相信 Wordstock AI 會引導我前進，幫助我實現所有的目標。",
+    "@commitmentPactTrust": {
+        "description": "Text about trusting the app"
+    },
+    "commitmentPactButton": "我承諾達成目標",
+    "@commitmentPactButton": {
+        "description": "Text for the commitment button"
+    },
+    "commitmentCongratulationsTitle": "恭喜！",
+    "@commitmentCongratulationsTitle": {
+        "description": "Title for the commitment congratulations message"
+    },
+    "commitmentCongratulationsMessage": "您已踏出單字學習之旅的第一步。您的承諾將幫助您達成目標！",
+    "@commitmentCongratulationsMessage": {
+        "description": "Congratulations message after committing to goals"
+    },
+    "nextButton": "下一個",
+    "@nextButton": {
+        "description": "Text for the next button after commitment"
+    },
+    "goalSelectionTitle": "您的主要學習目標是什麼？",
+    "@goalSelectionTitle": {
+        "description": "Title for the goal selection page"
+    },
+    "goalSelectionDescription": "選擇最符合您主要學習目標的選項。",
+    "@goalSelectionDescription": {
+        "description": "Description for the goal selection page"
+    },
+    "goalMasteringWords": "📚 掌握新單字",
+    "@goalMasteringWords": {
+        "description": "Goal option for mastering new words"
+    },
+    "goalImprovingMemory": "🧠 改善記憶力",
+    "@goalImprovingMemory": {
+        "description": "Goal option for improving memory"
+    },
+    "goalSpeakingConfidence": "🗣️ 自信地說話",
+    "@goalSpeakingConfidence": {
+        "description": "Goal option for speaking with confidence"
+    },
+    "goalWritingClearly": "✍️ 更清楚地寫作",
+    "@goalWritingClearly": {
+        "description": "Goal option for writing more clearly"
+    },
+    "goalUnderstandingContent": "🧩 理解內容",
+    "@goalUnderstandingContent": {
+        "description": "Goal option for understanding content"
+    },
+    "goalReachingLanguageGoals": "🎯 達成語言目標",
+    "@goalReachingLanguageGoals": {
+        "description": "Goal option for reaching language goals"
+    },
+    "weeklyProgress": "每週進度",
+    "@weeklyProgress": {
+        "description": "Title for weekly progress section"
+    },
+    "currentStreakSingular": "目前連續天數：{count} 天",
+    "@currentStreakSingular": {
+        "description": "Text showing current streak for one day",
+        "placeholders": {
+            "count": {
+                "type": "int"
+            }
+        }
+    },
+    "currentStreakPlural": "目前連續天數：{count} 天",
+    "@currentStreakPlural": {
+        "description": "Text showing current streak for multiple days",
+        "placeholders": {
+            "count": {
+                "type": "int"
+            }
+        }
+    },
+    "current": "目前",
+    "@current": {
+        "description": "Label for current streak in stats"
+    },
+    "goal": "目標",
+    "@goal": {
+        "description": "Label for streak goal in stats"
+    },
+    "daysText": "{count} 天",
+    "@daysText": {
+        "description": "Text showing number of days",
+        "placeholders": {
+            "count": {
+                "type": "int"
+            }
+        }
+    },
+    "percentToGoal": "距離目標 {percent}%",
+    "@percentToGoal": {
+        "description": "Text showing percentage progress to goal",
+        "placeholders": {
+            "percent": {
+                "type": "int"
+            }
+        }
+    },
+    "streakMotivationMessage": "保持連續學習以獲得更好的學習成果！",
+    "@streakMotivationMessage": {
+        "description": "Motivational message for maintaining streak"
+    },
+    "pointsProgressTitle": "積分進度",
+    "@pointsProgressTitle": {
+        "description": "Title for the points progress bottom sheet"
+    },
+    "totalPoints": "總積分",
+    "@totalPoints": {
+        "description": "Label for total points display"
+    },
+    "pointsLearningJourney": "您的學習歷程",
+    "@pointsLearningJourney": {
+        "description": "Title for achievement levels section in points progress"
+    },
+    "achievementWordExplorer": "單字探索者",
+    "@achievementWordExplorer": {
+        "description": "Name for beginner achievement level"
+    },
+    "achievementVocabularyBuilder": "單字建構者",
+    "@achievementVocabularyBuilder": {
+        "description": "Name for intermediate achievement level"
+    },
+    "achievementLanguageMaster": "語言大師",
+    "@achievementLanguageMaster": {
+        "description": "Name for advanced achievement level"
+    },
+    "pointsFormat": "{count} 分",
+    "@pointsFormat": {
+        "description": "Format for displaying points with the pts suffix",
+        "placeholders": {
+            "count": {
+                "type": "int",
+                "example": "100"
+            }
+        }
+    },
+    "pointsMotivationMessage": "繼續賺取積分以解鎖新成就！",
+    "@pointsMotivationMessage": {
+        "description": "Motivational message shown in the points progress bottom sheet"
+    },
+    "closeButton": "關閉",
+    "@closeButton": {
+        "description": "Text for close button"
+    },
+    "chatWithAITitle": "與 AI 討論「{word}」",
+    "@chatWithAITitle": {
+        "description": "Title for the chat with AI bottom sheet",
+        "placeholders": {
+            "word": {
+                "type": "String",
+                "example": "Eloquent"
+            }
+        }
+    },
+    "chatWithAIPlaceholder": "詢問關於「{word}」的問題...",
+    "@chatWithAIPlaceholder": {
+        "description": "Placeholder text for the chat input field",
+        "placeholders": {
+            "word": {
+                "type": "String",
+                "example": "Eloquent"
+            }
+        }
+    },
+    "chatWithAIError": "錯誤：{message}",
+    "@chatWithAIError": {
+        "description": "Error message in the chat with AI",
+        "placeholders": {
+            "message": {
+                "type": "String",
+                "example": "Failed to connect"
+            }
+        }
+    },
+    "practiceButtonText": "練習",
+    "@practiceButtonText": {
+        "description": "Text shown on the practice button for subscribed users"
+    },
+    "goProButtonText": "升級專業版",
+    "@goProButtonText": {
+        "description": "Text shown on the practice button for non-subscribed users"
+    },
+    "letsGrowTogether": "讓我們一起成長！🌱",
+    "@letsGrowTogether": {
+        "description": "Title for the review request dialog"
+    },
+    "reviewMotivationText": "您的回饋幫助我們創造更好的學習體驗。分享您的想法並幫助其他人發現學習的樂趣！",
+    "@reviewMotivationText": {
+        "description": "Description text for the review request dialog"
+    },
+    "letsGrowTogetherButton": "讓我們一起成長",
+    "@letsGrowTogetherButton": {
+        "description": "Text for the review dialog button"
+    },
+    "profileTitle": "個人檔案",
+    "@profileTitle": {
+        "description": "Title for the profile page"
+    },
+    "favoriteWords": "最愛單字",
+    "@favoriteWords": {
+        "description": "Text for favorite words menu item"
+    },
+    "termsOfService": "服務條款",
+    "@termsOfService": {
+        "description": "Text for terms of service menu item"
+    },
+    "privacyPolicy": "隱私政策",
+    "@privacyPolicy": {
+        "description": "Text for privacy policy menu item"
+    },
+    "reviewUs": "評價我們",
+    "@reviewUs": {
+        "description": "Text for review us menu item"
+    },
+    "contactSupport": "聯絡客服",
+    "@contactSupport": {
+        "description": "Text for contact support menu item"
+    },
+    "onboardingStarted": "引導開始",
+    "@onboardingStarted": {
+        "description": "Analytics event for onboarding start"
+    },
+    "onboardingCompleted": "引導完成",
+    "@onboardingCompleted": {
+        "description": "Analytics event for onboarding completion"
+    },
+    "onboardingPageView": "引導頁面檢視：{pageName}",
+    "@onboardingPageView": {
+        "description": "Analytics event for onboarding page view",
+        "placeholders": {
+            "pageName": {
+                "type": "String"
+            }
+        }
+    },
+    "onboardingProgress": "進度：{progress}%",
+    "@onboardingProgress": {
+        "description": "Text showing onboarding progress percentage",
+        "placeholders": {
+            "progress": {
+                "type": "int"
+            }
+        }
+    },
+    "onboardingSkip": "跳過",
+    "@onboardingSkip": {
+        "description": "Text for skip button in onboarding"
+    },
+    "onboardingBack": "返回",
+    "@onboardingBack": {
+        "description": "Text for back button in onboarding"
+    },
+    "onboardingStar": "星星",
+    "@onboardingStar": {
+        "description": "Accessibility label for star icon in onboarding"
+    },
+    "onboardingNext": "下一個",
+    "@onboardingNext": {
+        "description": "Text for next button in onboarding"
+    },
+    "onboardingPrevious": "上一個",
+    "@onboardingPrevious": {
+        "description": "Text for previous button in onboarding"
+    },
+    "onboardingProgressLabel": "進度",
+    "@onboardingProgressLabel": {
+        "description": "Label for progress indicator in onboarding"
+    },
+    "onboardingReviewTitle": "喜歡 WordStock 嗎？⭐",
+    "@onboardingReviewTitle": {
+        "description": "Title for the onboarding review request page"
+    },
+    "onboardingReviewSubtitle": "您的評價幫助我們接觸到更多單字愛好者並改進我們的應用程式。只需要一分鐘！",
+    "@onboardingReviewSubtitle": {
+        "description": "Subtitle text for the onboarding review request page"
+    },
+    "onboardingReviewButton": "⭐ 評價 WordStock",
+    "@onboardingReviewButton": {
+        "description": "Button text for the review request in onboarding"
+    },
+    "onboardingReviewSkip": "稍後再說",
+    "@onboardingReviewSkip": {
+        "description": "Skip text for the review request in onboarding"
+    },
+    "onboardingEnglishTestTitle": "快速英語評估 📝",
+    "@onboardingEnglishTestTitle": {
+        "description": "Title for the English test onboarding page"
+    },
+    "onboardingEnglishTestSubtitle": "讓我們透過 10 道快速測驗來評估您的單字程度。這有助於我們個人化您的學習體驗！",
+    "@onboardingEnglishTestSubtitle": {
+        "description": "Subtitle text for the English test onboarding page"
+    },
+    "onboardingEnglishTestStart": "🚀 開始評估",
+    "@onboardingEnglishTestStart": {
+        "description": "Button text to start the English test"
+    },
+    "onboardingEnglishTestSkip": "暫時跳過",
+    "@onboardingEnglishTestSkip": {
+        "description": "Skip text for the English test"
+    },
+    "onboardingEnglishTestIcon": "英語測驗",
+    "@onboardingEnglishTestIcon": {
+        "description": "Accessibility label for English test icon"
+    },
+    "onboardingEnglishTestExcellent": "優秀！🌟",
+    "@onboardingEnglishTestExcellent": {
+        "description": "Result message for excellent performance (80%+)"
+    },
+    "onboardingEnglishTestGood": "做得很好！👍",
+    "@onboardingEnglishTestGood": {
+        "description": "Result message for good performance (60-79%)"
+    },
+    "onboardingEnglishTestOkay": "良好的開始！💡",
+    "@onboardingEnglishTestOkay": {
+        "description": "Result message for moderate performance (<60%)"
+    },
+    "onboardingEnglishTestScore": "您在 {total} 題中得到 {correct} 分",
+    "@onboardingEnglishTestScore": {
+        "description": "Shows the test score with correct and total questions",
+        "placeholders": {
+            "correct": {
+                "type": "int"
+            },
+            "total": {
+                "type": "int"
+            }
+        }
+    },
+    "settingsTitle": "設定",
+    "@settingsTitle": {
+        "description": "Title for the settings page"
+    },
+    "settingsNotifications": "通知",
+    "@settingsNotifications": {
+        "description": "Title for the notifications section in settings"
+    },
+    "settingsNotificationsDescription": "控制接收通知的時間和方式",
+    "@settingsNotificationsDescription": {
+        "description": "Description for the notifications section in settings"
+    },
+    "settingsEnableNotifications": "啟用通知",
+    "@settingsEnableNotifications": {
+        "description": "Master toggle for all notifications"
+    },
+    "settingsEnableNotificationsDescription": "開啟或關閉所有通知",
+    "@settingsEnableNotificationsDescription": {
+        "description": "Description for the master notification toggle"
+    },
+    "settingsDailyReminders": "每日提醒",
+    "@settingsDailyReminders": {
+        "description": "Toggle for daily reminder notifications"
+    },
+    "settingsDailyRemindersDescription": "提醒您每日練習",
+    "@settingsDailyRemindersDescription": {
+        "description": "Description for daily reminder notifications"
+    },
+    "settingsPracticeReminders": "練習提醒",
+    "@settingsPracticeReminders": {
+        "description": "Toggle for practice reminder notifications"
+    },
+    "settingsPracticeRemindersDescription": "在您沒有練習時提醒您",
+    "@settingsPracticeRemindersDescription": {
+        "description": "Description for practice reminder notifications"
+    },
+    "settingsNewWords": "新單字",
+    "@settingsNewWords": {
+        "description": "Toggle for new word notifications"
+    },
+    "settingsNewWordsDescription": "收到新單字的通知",
+    "@settingsNewWordsDescription": {
+        "description": "Description for new word notifications"
+    },
+    "settingsStreakReminders": "連續學習提醒",
+    "@settingsStreakReminders": {
+        "description": "Toggle for streak reminder notifications"
+    },
+    "settingsStreakRemindersDescription": "不要中斷您的學習連續紀錄",
+    "@settingsStreakRemindersDescription": {
+        "description": "Description for streak reminder notifications"
+    },
+    "settingsResetToDefaults": "重設為預設值",
+    "@settingsResetToDefaults": {
+        "description": "Button to reset all settings to default values"
+    },
+    "settingsResetTitle": "重設設定",
+    "@settingsResetTitle": {
+        "description": "Title for the reset settings dialog"
+    },
+    "settingsResetMessage": "您確定要將所有設定重設為預設值嗎？此操作無法復原。",
+    "@settingsResetMessage": {
+        "description": "Message for the reset settings confirmation dialog"
+    },
+    "settingsLoadingMessage": "載入設定中...",
+    "@settingsLoadingMessage": {
+        "description": "Message shown while settings are being loaded"
+    },
+    "settingsError": "設定錯誤",
+    "@settingsError": {
+        "description": "Title for settings error state"
+    },
+    "settingsRetry": "重試",
+    "@settingsRetry": {
+        "description": "Button to retry loading settings"
+    },
+    "settingsRecover": "恢復",
+    "@settingsRecover": {
+        "description": "Button to recover from settings error"
+    },
+    "cancel": "取消",
+    "@cancel": {
+        "description": "Cancel button text"
+    },
+    "reset": "重設",
+    "@reset": {
+        "description": "Reset button text"
+    },
+    "vocabularyLevelUpdated": "單字程度已更新為 {levelName}",
+    "@vocabularyLevelUpdated": {
+        "description": "Success message when vocabulary level is updated",
+        "placeholders": {
+            "levelName": {
+                "type": "String"
+            }
+        }
+    },
+    "somethingWentWrong": "發生錯誤",
+    "@somethingWentWrong": {
+        "description": "Generic error message"
+    },
+    "retry": "重試",
+    "@retry": {
+        "description": "Text for retry button"
+    },
+    "quickActions": "快速操作",
+    "@quickActions": {
+        "description": "Section title for quick actions in profile"
+    },
+    "vocabularyLevel": "單字程度",
+    "@vocabularyLevel": {
+        "description": "Menu item for vocabulary level settings"
+    },
+    "supportAndInfo": "支援與資訊",
+    "@supportAndInfo": {
+        "description": "Section title for support and info in profile"
+    },
+    "copyUserID": "複製使用者 ID",
+    "@copyUserID": {
+        "description": "Menu item to copy user ID"
+    },
+    "userIDCopied": "使用者 ID 已複製到剪貼簿",
+    "@userIDCopied": {
+        "description": "Success message when user ID is copied"
+    },
+    "legal": "法律條款",
+    "@legal": {
+        "description": "Section title for legal information in profile"
+    },
+    "vocabularyLevelDialogTitle": "您的單字程度是什麼？",
+    "@vocabularyLevelDialogTitle": {
+        "description": "Title for vocabulary level selection dialog"
+    },
+    "vocabularyLevelDialogDescription": "選擇最符合您目前單字程度的選項。",
+    "@vocabularyLevelDialogDescription": {
+        "description": "Description for vocabulary level selection dialog"
+    },
+    "saveButton": "儲存",
+    "@saveButton": {
+        "description": "Text for save button"
+    }
+}
