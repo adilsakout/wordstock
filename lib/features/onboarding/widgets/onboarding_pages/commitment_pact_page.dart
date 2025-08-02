@@ -66,43 +66,47 @@ class _CommitmentPactPageState extends State<CommitmentPactPage> {
                   ),
             ),
             const SizedBox(height: 20),
-            RichText(
-              text: TextSpan(
-                style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                      fontSize: 20,
+            Center(
+              child: RichText(
+                textAlign: TextAlign.center, // Ensures all text is centered
+                text: TextSpan(
+                  style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                        fontSize: 20,
+                      ),
+                  children: [
+                    TextSpan(text: l10n.commitmentPactIntro),
+                    TextSpan(
+                      text: l10n.commitmentPactInnerNeeds,
+                      style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 20,
+                          ),
                     ),
-                children: [
-                  TextSpan(text: l10n.commitmentPactIntro),
-                  TextSpan(
-                    text: l10n.commitmentPactInnerNeeds,
-                    style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 20,
-                        ),
-                  ),
-                  TextSpan(text: l10n.commitmentPactByLearning),
-                  TextSpan(
-                    text: l10n.commitmentPactWordsPerDay(wordsPerDay),
-                    style: Theme.of(context)
-                        .textTheme
-                        .bodyMedium
-                        ?.copyWith(fontWeight: FontWeight.bold, fontSize: 20),
-                  ),
-                  TextSpan(text: l10n.commitmentPactHelpBecome),
-                  TextSpan(
-                    text: _getLocalizedLearningGoal(l10n, selectedGoals),
-                    style: Theme.of(context)
-                        .textTheme
-                        .bodyMedium
-                        ?.copyWith(fontWeight: FontWeight.bold, fontSize: 20),
-                  ),
-                ],
+                    TextSpan(text: l10n.commitmentPactByLearning),
+                    TextSpan(
+                      text: l10n.commitmentPactWordsPerDay(wordsPerDay),
+                      style: Theme.of(context)
+                          .textTheme
+                          .bodyMedium
+                          ?.copyWith(fontWeight: FontWeight.bold, fontSize: 20),
+                    ),
+                    TextSpan(text: l10n.commitmentPactHelpBecome),
+                    TextSpan(
+                      text: _getLocalizedLearningGoal(l10n, selectedGoals),
+                      style: Theme.of(context)
+                          .textTheme
+                          .bodyMedium
+                          ?.copyWith(fontWeight: FontWeight.bold, fontSize: 20),
+                    ),
+                  ],
+                ),
               ),
             ),
             const SizedBox(height: 20),
             Text(
               l10n.commitmentPactTrust,
-              style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+              textAlign: TextAlign.center,
+              style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                     fontSize: 20,
                   ),
             ),
@@ -115,7 +119,7 @@ class _CommitmentPactPageState extends State<CommitmentPactPage> {
                   _isCommitted = true;
                 });
               },
-              width: 250,
+              width: MediaQuery.of(context).size.width,
               buttonColor: const Color(0xffF9C835),
               shadowColor: const Color(0xffCDB054),
               height: 50,
@@ -162,7 +166,7 @@ class _CommitmentPactPageState extends State<CommitmentPactPage> {
             PushableButton(
               text: l10n.continueAction,
               onTap: cubit.nextPage,
-              width: 250,
+              width: 300,
               buttonColor: const Color(0xFF58CC02),
               shadowColor: const Color(0xFF58A700),
               height: 50,

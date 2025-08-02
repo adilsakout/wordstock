@@ -479,16 +479,17 @@ class AppLocalizationsZh extends AppLocalizations {
   String get onboardingProgressLabel => '進度';
 
   @override
-  String get onboardingReviewTitle => '喜歡 WordStock 嗎？⭐';
+  String get onboardingReviewTitle => '準備好學習了嗎？幫助其他人找到我們！🌱';
 
   @override
-  String get onboardingReviewSubtitle => '您的評價幫助我們接觸到更多單字愛好者並改進我們的應用程式。只需要一分鐘！';
+  String get onboardingReviewSubtitle =>
+      '我們知道您剛開始 WordStock 的學習旅程，但您的早期支持能幫助其他語言學習者發現我們的應用程式。讓我們一起建立單字愛好者的社群！';
 
   @override
-  String get onboardingReviewButton => '⭐ 評價 WordStock';
+  String get onboardingReviewButton => '🌱 幫助我們成長';
 
   @override
-  String get onboardingReviewSkip => '稍後再說';
+  String get onboardingReviewSkip => '讓我先試用看看';
 
   @override
   String get onboardingEnglishTestTitle => '快速英語評估 📝';

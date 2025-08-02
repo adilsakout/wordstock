@@ -963,25 +963,25 @@ abstract class AppLocalizations {
   /// Title for the onboarding review request page
   ///
   /// In en, this message translates to:
-  /// **'Love WordStock? ⭐'**
+  /// **'Excited to Learn? Help Others Find Us! 🌱'**
   String get onboardingReviewTitle;
 
   /// Subtitle text for the onboarding review request page
   ///
   /// In en, this message translates to:
-  /// **'Your review helps us reach more word lovers and improve our app. It takes just a moment!'**
+  /// **'We know you\'re just starting your WordStock journey, but your early support helps other language learners discover our app. Together, we can build a community of word enthusiasts!'**
   String get onboardingReviewSubtitle;
 
   /// Button text for the review request in onboarding
   ///
   /// In en, this message translates to:
-  /// **'⭐ Rate WordStock'**
+  /// **'🌱 Help Us Grow'**
   String get onboardingReviewButton;
 
   /// Skip text for the review request in onboarding
   ///
   /// In en, this message translates to:
-  /// **'Maybe Later'**
+  /// **'Let Me Try It First'**
   String get onboardingReviewSkip;
 
   /// Title for the English test onboarding page

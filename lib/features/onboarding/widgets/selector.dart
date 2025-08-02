@@ -111,14 +111,19 @@ class SelectorState extends State<Selector>
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       mainAxisSize: MainAxisSize.min,
                       children: [
-                        Text(
-                          widget.text,
-                          style: TextStyle(
-                            color: widget.selected
-                                ? const Color(0xff1899D6)
-                                : const Color(0xff999999),
-                            fontSize: 16,
-                            fontWeight: FontWeight.bold,
+                        Expanded(
+                          child: Text(
+                            widget.text,
+                            maxLines: 2,
+                            overflow: TextOverflow.ellipsis,
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              color: widget.selected
+                                  ? const Color(0xff1899D6)
+                                  : const Color(0xff999999),
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold,
+                            ),
                           ),
                         ),
                         Container(

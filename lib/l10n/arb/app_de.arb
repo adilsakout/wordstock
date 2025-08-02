@@ -688,19 +688,19 @@
     "@onboardingProgressLabel": {
         "description": "Label for progress indicator in onboarding"
     },
-    "onboardingReviewTitle": "Lieben Sie WordStock? ⭐",
+    "onboardingReviewTitle": "Bereit zum Lernen? Helfen Sie anderen, uns zu finden! 🌱",
     "@onboardingReviewTitle": {
         "description": "Title for the onboarding review request page"
     },
-    "onboardingReviewSubtitle": "Ihre Bewertung hilft uns, mehr Wortliebhaber zu erreichen und unsere App zu verbessern. Es dauert nur einen Moment!",
+    "onboardingReviewSubtitle": "Wir wissen, dass Sie gerade erst Ihre WordStock-Reise beginnen, aber Ihre frühe Unterstützung hilft anderen Sprachlernenden, unsere App zu entdecken. Gemeinsam können wir eine Gemeinschaft von Wort-Enthusiasten aufbauen!",
     "@onboardingReviewSubtitle": {
         "description": "Subtitle text for the onboarding review request page"
     },
-    "onboardingReviewButton": "⭐ WordStock bewerten",
+    "onboardingReviewButton": "🌱 Beim Wachsen helfen",
     "@onboardingReviewButton": {
         "description": "Button text for the review request in onboarding"
     },
-    "onboardingReviewSkip": "Vielleicht später",
+    "onboardingReviewSkip": "Lassen Sie mich es zuerst ausprobieren",
     "@onboardingReviewSkip": {
         "description": "Skip text for the review request in onboarding"
     },

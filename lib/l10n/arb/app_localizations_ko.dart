@@ -487,17 +487,17 @@ class AppLocalizationsKo extends AppLocalizations {
   String get onboardingProgressLabel => '진행률';
 
   @override
-  String get onboardingReviewTitle => 'WordStock이 마음에 드시나요? ⭐';
+  String get onboardingReviewTitle => '학습 준비 완료? 다른 분들이 저희를 찾도록 도와주세요! 🌱';
 
   @override
   String get onboardingReviewSubtitle =>
-      '귀하의 리뷰는 더 많은 단어 애호가들에게 다가가고 앱을 개선하는 데 도움이 됩니다. 잠깐이면 됩니다!';
+      'WordStock 여정을 이제 막 시작하신다는 것을 알고 있지만, 초기 지원이 다른 언어 학습자들이 저희 앱을 발견하는 데 도움이 됩니다. 함께 단어 애호가들의 커뮤니티를 만들어요!';
 
   @override
-  String get onboardingReviewButton => '⭐ WordStock 평가하기';
+  String get onboardingReviewButton => '🌱 성장 도움 주기';
 
   @override
-  String get onboardingReviewSkip => '나중에 하기';
+  String get onboardingReviewSkip => '먼저 사용해보고 결정할게요';
 
   @override
   String get onboardingEnglishTestTitle => '빠른 영어 평가 📝';

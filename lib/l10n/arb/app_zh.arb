@@ -688,19 +688,19 @@
     "@onboardingProgressLabel": {
         "description": "Label for progress indicator in onboarding"
     },
-    "onboardingReviewTitle": "喜歡 WordStock 嗎？⭐",
+    "onboardingReviewTitle": "準備好學習了嗎？幫助其他人找到我們！🌱",
     "@onboardingReviewTitle": {
         "description": "Title for the onboarding review request page"
     },
-    "onboardingReviewSubtitle": "您的評價幫助我們接觸到更多單字愛好者並改進我們的應用程式。只需要一分鐘！",
+    "onboardingReviewSubtitle": "我們知道您剛開始 WordStock 的學習旅程，但您的早期支持能幫助其他語言學習者發現我們的應用程式。讓我們一起建立單字愛好者的社群！",
     "@onboardingReviewSubtitle": {
         "description": "Subtitle text for the onboarding review request page"
     },
-    "onboardingReviewButton": "⭐ 評價 WordStock",
+    "onboardingReviewButton": "🌱 幫助我們成長",
     "@onboardingReviewButton": {
         "description": "Button text for the review request in onboarding"
     },
-    "onboardingReviewSkip": "稍後再說",
+    "onboardingReviewSkip": "讓我先試用看看",
     "@onboardingReviewSkip": {
         "description": "Skip text for the review request in onboarding"
     },

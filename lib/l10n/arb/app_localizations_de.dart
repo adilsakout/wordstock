@@ -504,17 +504,18 @@ class AppLocalizationsDe extends AppLocalizations {
   String get onboardingProgressLabel => 'Fortschritt';
 
   @override
-  String get onboardingReviewTitle => 'Lieben Sie WordStock? ⭐';
+  String get onboardingReviewTitle =>
+      'Bereit zum Lernen? Helfen Sie anderen, uns zu finden! 🌱';
 
   @override
   String get onboardingReviewSubtitle =>
-      'Ihre Bewertung hilft uns, mehr Wortliebhaber zu erreichen und unsere App zu verbessern. Es dauert nur einen Moment!';
+      'Wir wissen, dass Sie gerade erst Ihre WordStock-Reise beginnen, aber Ihre frühe Unterstützung hilft anderen Sprachlernenden, unsere App zu entdecken. Gemeinsam können wir eine Gemeinschaft von Wort-Enthusiasten aufbauen!';
 
   @override
-  String get onboardingReviewButton => '⭐ WordStock bewerten';
+  String get onboardingReviewButton => '🌱 Beim Wachsen helfen';
 
   @override
-  String get onboardingReviewSkip => 'Vielleicht später';
+  String get onboardingReviewSkip => 'Lassen Sie mich es zuerst ausprobieren';
 
   @override
   String get onboardingEnglishTestTitle => 'Schnelle Englisch-Bewertung 📝';
