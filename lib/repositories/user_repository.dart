@@ -73,7 +73,8 @@ class UserRepository {
       if (timeCommitment != null) data['time_commitment'] = timeCommitment;
       if (wordsPerDay != null) data['words_per_day'] = wordsPerDay;
       if (vocabularyLevel != null) {
-        data['vocabulary_level'] = vocabularyLevel.name;
+        // Store vocabulary level as integer for better database integrity
+        data['vocabulary_level'] = _vocabularyLevelToId(vocabularyLevel);
       }
       if (selectedGoals != null) data['goals'] = selectedGoals;
       if (selectedTopics != null) data['topics'] = selectedTopics;
@@ -107,6 +108,53 @@ class UserRepository {
       log('Failed to load profile: $e', name: 'UserRepository', error: e);
       throw Exception('Failed to load profile: $e');
     }
+  }
+
+  /// Update the user's vocabulary level using integer storage
+  /// This method uses integer IDs for better database performance and integrity
+  Future<void> updateVocabularyLevel(VocabularyLevel level) async {
+    try {
+      // Convert enum to integer for database storage
+      final levelId = _vocabularyLevelToId(level);
+
+      // Validate the level ID before sending to database
+      if (!_isValidVocabularyLevelId(levelId)) {
+        throw ArgumentError('Invalid vocabulary level: $level');
+      }
+
+      await _supabase
+          .from('user_profiles')
+          .update({'vocabulary_level': levelId}).eq('user_id', _getUserId());
+
+      log(
+        'Updated vocabulary level to $levelId ($level)',
+        name: 'UserRepository',
+      );
+    } catch (e) {
+      log(
+        'Failed to update vocabulary level: $e',
+        name: 'UserRepository',
+        error: e,
+      );
+      throw Exception('Failed to update vocabulary level: $e');
+    }
+  }
+
+  /// Convert VocabularyLevel enum to database integer ID
+  int _vocabularyLevelToId(VocabularyLevel level) {
+    switch (level) {
+      case VocabularyLevel.beginner:
+        return 0;
+      case VocabularyLevel.intermediate:
+        return 1;
+      case VocabularyLevel.advanced:
+        return 2;
+    }
+  }
+
+  /// Validate if vocabulary level ID is in valid range
+  bool _isValidVocabularyLevelId(int id) {
+    return id >= 0 && id <= 2;
   }
 
   /// Update the user's OneSignal ID

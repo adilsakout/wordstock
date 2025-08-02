@@ -1,16 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:wordstock/core/constants/vocabulary_levels.dart';
 import 'package:wordstock/features/onboarding/cubit/onboarding_cubit.dart';
 import 'package:wordstock/features/onboarding/widgets/selector.dart';
 
 class VocabularyLevelPage extends StatelessWidget {
   const VocabularyLevelPage({super.key});
-
-  static const List<String> _vocabularyLevels = [
-    '🐣 Beginner',
-    '🚶‍♂️ Intermediate',
-    '🧗‍♀️ Advanced',
-  ];
 
   void _selectVocabularyLevel(BuildContext context, int level) {
     context.read<OnboardingCubit>()
@@ -45,28 +40,20 @@ class VocabularyLevelPage extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: 16),
-              Selector(
-                text: _vocabularyLevels[0],
-                selected: state.vocabularyLevel == 0,
-                onTap: () {
-                  _selectVocabularyLevel(context, 0);
-                },
-              ),
-              const SizedBox(height: 16),
-              Selector(
-                text: _vocabularyLevels[1],
-                selected: state.vocabularyLevel == 1,
-                onTap: () {
-                  _selectVocabularyLevel(context, 1);
-                },
-              ),
-              const SizedBox(height: 16),
-              Selector(
-                text: _vocabularyLevels[2],
-                selected: state.vocabularyLevel == 2,
-                onTap: () {
-                  _selectVocabularyLevel(context, 2);
-                },
+              ...List.generate(
+                VocabularyLevels.all.length,
+                (index) => Padding(
+                  padding: EdgeInsets.only(
+                    bottom: index < VocabularyLevels.all.length - 1 ? 16 : 0,
+                  ),
+                  child: Selector(
+                    text: VocabularyLevels.all[index].fullDisplayText,
+                    selected: state.vocabularyLevel == index,
+                    onTap: () {
+                      _selectVocabularyLevel(context, index);
+                    },
+                  ),
+                ),
               ),
             ],
           ),
