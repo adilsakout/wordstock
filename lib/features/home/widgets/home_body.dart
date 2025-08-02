@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:gaimon/gaimon.dart';
+import 'package:go_router/go_router.dart';
 import 'package:in_app_review/in_app_review.dart';
 import 'package:wordstock/features/home/cubit/cubit.dart';
 import 'package:wordstock/features/home/cubit/learning_progress_cubit.dart';
@@ -10,7 +11,6 @@ import 'package:wordstock/features/home/widgets/paywall_button.dart';
 import 'package:wordstock/features/home/widgets/practice_button.dart';
 import 'package:wordstock/features/home/widgets/practice_reminder_page.dart';
 import 'package:wordstock/features/home/widgets/word_card.dart';
-import 'package:wordstock/features/profile/profile.dart';
 import 'package:wordstock/features/subscription/cubit/subscription_cubit.dart';
 import 'package:wordstock/features/user_data/cubit/user_data_cubit.dart';
 import 'package:wordstock/features/user_data/widget/user_point_widget.dart';
@@ -257,13 +257,7 @@ class _HomeBodyState extends State<HomeBody>
                                   buttonColor: const Color(0xffF9C835),
                                   shadowColor: const Color(0xffCDB054),
                                   onTap: () {
-                                    showModalBottomSheet<void>(
-                                      context: context,
-                                      isDismissible: false,
-                                      isScrollControlled: true,
-                                      backgroundColor: Colors.transparent,
-                                      builder: (context) => const ProfilePage(),
-                                    );
+                                    context.push('/profile');
                                   },
                                 ),
                                 const Spacer(),

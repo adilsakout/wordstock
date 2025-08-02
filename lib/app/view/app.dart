@@ -10,6 +10,7 @@ import 'package:wordstock/features/home/cubit/learning_progress_cubit.dart';
 import 'package:wordstock/features/home/view/home_page.dart';
 import 'package:wordstock/features/onboarding/onboarding.dart';
 import 'package:wordstock/features/practice/practice.dart';
+import 'package:wordstock/features/profile/profile.dart';
 import 'package:wordstock/features/settings/settings.dart';
 import 'package:wordstock/features/subscription/cubit/subscription_cubit.dart';
 import 'package:wordstock/features/user_data/cubit/user_data_cubit.dart';
@@ -65,6 +66,11 @@ final _router = GoRouter(
       path: '/practice',
       name: 'Practice',
       builder: (context, state) => const PracticePage(),
+    ),
+    GoRoute(
+      path: '/profile',
+      name: 'Profile',
+      builder: (context, state) => const ProfilePage(),
     ),
     GoRoute(
       path: '/settings',

@@ -18,10 +18,7 @@ class ProfilePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (context) => ProfileCubit(),
-      child: const Scaffold(
-        backgroundColor: Colors.transparent,
-        body: ProfileView(),
-      ),
+      child: const ProfileView(),
     );
   }
 }
