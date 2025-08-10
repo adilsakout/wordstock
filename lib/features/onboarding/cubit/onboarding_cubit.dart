@@ -1,8 +1,12 @@
 import 'dart:async';
+import 'dart:io';
 
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:onesignal_flutter/onesignal_flutter.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:wordstock/model/onboarding_enums.dart';
 import 'package:wordstock/model/user_profile.dart';
@@ -16,19 +20,13 @@ class OnboardingCubit extends Cubit<OnboardingState> {
         super(
           const OnboardingState(currentPage: 0, progress: 0),
         ) {
-    _initializePageController();
+    //_initializePageController();
   }
   // Define totalPages here or pass it as a parameter
 
-  static const int totalPages = 13;
+  static const int totalPages = 4;
   final PageController pageController = PageController();
   final UserRepository _userRepository;
-
-  Future<void> _initializePageController() async {
-    final prefs = await SharedPreferences.getInstance();
-    final savedPage = prefs.getInt('onboarding_current_page') ?? 0;
-    pageController.jumpToPage(savedPage);
-  }
 
   void disposePageController() {
     pageController.dispose();
@@ -212,6 +210,44 @@ class OnboardingCubit extends Cubit<OnboardingState> {
     } catch (e) {
       // Handle error (could emit an error state if needed)
       debugPrint('Error saving onboarding data: $e');
+    }
+  }
+
+  /// Handles notification permission request with enhanced UX
+  Future<void> requestNotificationPermission() async {
+    if (state.isRequestingPermission) return;
+
+    emit(state.copyWith(isRequestingPermission: true));
+    try {
+      final flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
+      final status = await Permission.notification.request();
+
+      if (status.isGranted) {
+        // Add a brief delay for better UX
+        await Future<void>.delayed(const Duration(milliseconds: 300));
+        nextPage();
+      } else {
+        bool? result;
+        if (Platform.isIOS) {
+          result = await OneSignal.Notifications.requestPermission(true);
+          await Future<void>.delayed(const Duration(milliseconds: 300));
+          nextPage();
+        } else {
+          result = await flutterLocalNotificationsPlugin
+              .resolvePlatformSpecificImplementation<
+                  AndroidFlutterLocalNotificationsPlugin>()
+              ?.requestNotificationsPermission();
+        }
+
+        if ((result ?? false) == true) {
+          await Future<void>.delayed(const Duration(milliseconds: 300));
+          nextPage();
+        }
+      }
+    } catch (e) {
+      debugPrint('Error requesting notification permission: $e');
+    } finally {
+      emit(state.copyWith(isRequestingPermission: false));
     }
   }
 }

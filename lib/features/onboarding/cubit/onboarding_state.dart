@@ -19,6 +19,7 @@ class OnboardingState extends Equatable {
     this.streakGoal = -1,
     this.timeZone = '',
     this.englishTestResult = -1,
+    this.isRequestingPermission = false,
   });
 
   final int currentPage;
@@ -34,6 +35,7 @@ class OnboardingState extends Equatable {
   final int streakGoal;
   final String timeZone;
   final int englishTestResult;
+  final bool isRequestingPermission;
 
   /// Returns the selected age range as an enum value
   AgeRange? get ageRange =>
@@ -77,6 +79,7 @@ class OnboardingState extends Equatable {
         streakGoal,
         timeZone,
         englishTestResult,
+        isRequestingPermission,
       ];
 
   /// Creates a copy of the current OnboardingState with property changes
@@ -94,6 +97,7 @@ class OnboardingState extends Equatable {
     int? streakGoal,
     String? timeZone,
     int? englishTestResult,
+    bool? isRequestingPermission,
   }) {
     return OnboardingState(
       currentPage: currentPage ?? this.currentPage,
@@ -110,6 +114,8 @@ class OnboardingState extends Equatable {
       streakGoal: streakGoal ?? this.streakGoal,
       timeZone: timeZone ?? this.timeZone,
       englishTestResult: englishTestResult ?? this.englishTestResult,
+      isRequestingPermission:
+          isRequestingPermission ?? this.isRequestingPermission,
     );
   }
 }

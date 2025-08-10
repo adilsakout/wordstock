@@ -1,16 +1,11 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
-import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_local_notifications/flutter_local_notifications.dart';
-import 'package:onesignal_flutter/onesignal_flutter.dart';
-import 'package:permission_handler/permission_handler.dart';
-import 'package:wordstock/features/home/cubit/cubit.dart';
+import 'package:lottie/lottie.dart';
 import 'package:wordstock/features/onboarding/cubit/onboarding_cubit.dart';
-import 'package:wordstock/features/onboarding/widgets/wordstock_slider.dart';
 import 'package:wordstock/widgets/button.dart';
 
+/// Notification permission page with Typeform-style animations
+/// that creates an engaging permission request experience
 class NotificationPermissionPage extends StatefulWidget {
   const NotificationPermissionPage({super.key});
 
@@ -21,87 +16,82 @@ class NotificationPermissionPage extends StatefulWidget {
 
 class _NotificationPermissionPageState
     extends State<NotificationPermissionPage> {
-  Future<void> _requestNotificationPermission(BuildContext context) async {
-    final flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
-    final status = await Permission.notification.request();
-    if (status.isGranted) {
-      // Proceed to the next page if permission is granted
-      if (!context.mounted) return;
-      context.read<OnboardingCubit>().nextPage();
-    } else {
-      bool? result;
-      if (Platform.isIOS) {
-        result = await OneSignal.Notifications.requestPermission(true);
-        if (context.mounted) context.read<OnboardingCubit>().nextPage();
-      } else {
-        result = await flutterLocalNotificationsPlugin
-            .resolvePlatformSpecificImplementation<
-                AndroidFlutterLocalNotificationsPlugin>()
-            ?.requestNotificationsPermission();
-      }
-
-      if ((result ?? false) == true && context.mounted) {
-        context.read<OnboardingCubit>().nextPage();
-      }
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
+    final size = MediaQuery.of(context).size;
+    final padding = MediaQuery.of(context).padding;
     return BlocBuilder<OnboardingCubit, OnboardingState>(
       builder: (context, state) {
-        return Padding(
-          padding: const EdgeInsets.all(20),
-          child: Column(
-            children: [
-              const Text(
-                'Learn words with daily reminders',
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  fontSize: 24,
-                  fontWeight: FontWeight.bold,
-                ),
+        return Scaffold(
+          backgroundColor: Theme.of(context).colorScheme.surface,
+          body: SafeArea(
+            child: Padding(
+              padding: EdgeInsets.symmetric(
+                horizontal: size.width * 0.1,
+                vertical: size.height * 0.1,
               ),
-              const SizedBox(height: 16),
-              const Text(
-                'Allow notification to get daily reminder',
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.normal,
-                ),
-              ),
-              const SizedBox(height: 20),
-              const Spacer(),
-              const Icon(
-                Icons.notifications_active,
-                size: 100,
-                color: Color(0xff1899D6),
-              )
-                  .animate(
-                    onPlay: (controller) => controller.repeat(),
-                  )
-                  .shake(
-                    hz: 5,
-                    duration: const Duration(seconds: 1),
-                    curve: Curves.easeIn,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const Spacer(),
+                  // Lottie notification animation with sophisticated entrance
+                  SizedBox(
+                    height: 200,
+                    child: Lottie.asset(
+                      'assets/lottie/bell_notification.json',
+                      repeat: true,
+                      animate: true,
+                      fit: BoxFit.contain,
+                    ),
                   ),
-              const Spacer(),
-              WordStockSlider(
-                onChanged: (value) {
-                  context.read<OnboardingCubit>().setWordsPerDay(value);
-                },
-                currentValue: state.wordsPerDay,
+                  const Spacer(),
+
+                  // Main title with engaging animation
+                  Text(
+                    'Learn words with daily reminders',
+                    textAlign: TextAlign.center,
+                    style: Theme.of(context).textTheme.headlineMedium?.copyWith(
+                          fontWeight: FontWeight.bold,
+                          color: Theme.of(context).colorScheme.onSurface,
+                          height: 1.2,
+                        ),
+                  ),
+
+                  const SizedBox(height: 16),
+
+                  // Subtitle with gentle animation
+                  Text(
+                    'Allow notifications to get daily reminders and never miss your learning streak.',
+                    textAlign: TextAlign.center,
+                    style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                          color: Theme.of(context)
+                              .colorScheme
+                              .onSurface
+                              .withValues(alpha: 0.7),
+                          height: 1.5,
+                        ),
+                  ),
+                  const Spacer(),
+                  // Enhanced call-to-action button with sophisticated animations
+                  PushableButton(
+                    width: double.infinity,
+                    height: 56,
+                    borderRadius: 16,
+                    text: state.isRequestingPermission
+                        ? 'Requesting Permission...'
+                        : 'Enable Notifications',
+                    textColor: Theme.of(context).colorScheme.onPrimary,
+                    onTap: () {
+                      context
+                          .read<OnboardingCubit>()
+                          .requestNotificationPermission();
+                    },
+                  ),
+
+                  SizedBox(height: padding.bottom),
+                ],
               ),
-              const Spacer(),
-              PushableButton(
-                width: 300,
-                height: 60,
-                text: 'Enable Notifications and Save',
-                onTap: () => _requestNotificationPermission(context),
-              ),
-              const SizedBox(height: 40),
-            ],
+            ),
           ),
         );
       },

@@ -29,10 +29,10 @@ final _router = GoRouter(
   redirect: (context, state) async {
     if (state.uri.path == '/') {
       final prefs = await SharedPreferences.getInstance();
-      final hasCompletedOnboarding =
+      final hasCompletedOnboardingV2 =
           prefs.getBool('onboarding_completed') ?? false;
 
-      if (!hasCompletedOnboarding) {
+      if (!hasCompletedOnboardingV2) {
         return '/';
       }
       return '/home';

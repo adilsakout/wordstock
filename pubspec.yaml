@@ -76,5 +76,6 @@ flutter:
     - assets/images/
     - assets/icons/
     - assets/sounds/
+    - assets/lottie/
     - assets/secrets/service_account.json
     - .env

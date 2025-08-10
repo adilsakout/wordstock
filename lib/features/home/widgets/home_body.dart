@@ -5,6 +5,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:gaimon/gaimon.dart';
 import 'package:go_router/go_router.dart';
 import 'package:in_app_review/in_app_review.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:wordstock/features/home/cubit/cubit.dart';
 import 'package:wordstock/features/home/cubit/learning_progress_cubit.dart';
 import 'package:wordstock/features/home/widgets/paywall_button.dart';
@@ -217,18 +218,27 @@ class _HomeBodyState extends State<HomeBody>
                           );
                         },
                       ),
-                      const Positioned(
+                      Positioned(
                         top: 20,
                         left: 0,
                         right: 0,
                         child: Padding(
-                          padding: EdgeInsets.symmetric(horizontal: 20),
+                          padding: const EdgeInsets.symmetric(horizontal: 20),
                           child: Row(
                             children: [
-                              UserStreakWidget(),
-                              UserPointWidget(),
-                              Spacer(),
-                              PaywallButton(),
+                              const UserStreakWidget(),
+                              const UserPointWidget(),
+                              const Spacer(),
+                              if (kDebugMode)
+                                IconButton(
+                                  onPressed: () async {
+                                    final prefs =
+                                        await SharedPreferences.getInstance();
+                                    await prefs.clear();
+                                  },
+                                  icon: const Icon(Icons.ice_skating),
+                                ),
+                              const PaywallButton(),
                             ],
                           ),
                         ),
