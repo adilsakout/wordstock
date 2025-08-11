@@ -31,18 +31,16 @@ class _OnboardingBodyState extends State<OnboardingBody> {
       builder: (context, state) {
         final cubit = context.read<OnboardingCubit>();
 
-        return SafeArea(
-          child: PageView(
-            scrollDirection: Axis.vertical,
-            controller: cubit.pageController,
-            // physics: const NeverScrollableScrollPhysics(),
-            children: const [
-              WelcomePage(),
-              VocabularyLevelPage(),
-              NotificationPermissionPage(),
-              EnglishTestPage(),
-            ],
-          ),
+        return PageView(
+          scrollDirection: Axis.vertical,
+          controller: cubit.pageController,
+          // physics: const NeverScrollableScrollPhysics(),
+          children: const [
+            WelcomePage(),
+            VocabularyLevelPage(),
+            NotificationPermissionPage(),
+            EnglishTestPage(),
+          ],
         );
       },
     );

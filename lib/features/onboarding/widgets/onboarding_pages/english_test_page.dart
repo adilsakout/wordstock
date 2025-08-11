@@ -1,14 +1,12 @@
 import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
-import 'package:flutter_animate/flutter_animate.dart';
 import 'package:gaimon/gaimon.dart';
-import 'package:lottie/lottie.dart';
 import 'package:wordstock/core/constants/vocabulary_levels.dart';
 import 'package:wordstock/features/onboarding/cubit/cubit.dart';
-import 'package:wordstock/l10n/l10n.dart';
-import 'package:wordstock/widgets/button.dart';
-import 'package:wordstock/widgets/quiz_button.dart';
+import 'package:wordstock/features/onboarding/widgets/onboarding_pages/english_test_intro.dart';
+import 'package:wordstock/features/onboarding/widgets/onboarding_pages/english_test_question.dart';
+import 'package:wordstock/features/onboarding/widgets/onboarding_pages/english_test_result.dart';
 
 /// {@template english_test_page}
 /// Onboarding page that provides a small English vocabulary test.
@@ -225,7 +223,7 @@ class _EnglishTestPageState extends State<EnglishTestPage>
     },
   ];
 
-  /// Select 3 random questions according to user's chosen vocabulary level.
+  /// Select 5 random questions according to user's chosen vocabulary level.
   /// Falls back to intermediate if the level is not set/invalid.
   List<Map<String, dynamic>> _questionsForLevel(int levelId) {
     List<Map<String, dynamic>> fullQuestionBank;
@@ -246,13 +244,13 @@ class _EnglishTestPageState extends State<EnglishTestPage>
       fullQuestionBank = _intermediateQuestions;
     }
 
-    // Randomly select 3 questions from the bank
+    // Randomly select 5 questions from the bank
     final random = math.Random();
     final shuffledQuestions = List<Map<String, dynamic>>.from(fullQuestionBank);
     shuffledQuestions.shuffle(random);
 
-    // Return first 3 questions (or all if less than 3 available)
-    return shuffledQuestions.take(3).toList();
+    // Return first 5 questions (or all if less than 5 available)
+    return shuffledQuestions.take(5).toList();
   }
 
   @override
@@ -307,12 +305,7 @@ class _EnglishTestPageState extends State<EnglishTestPage>
       Gaimon.error();
     }
 
-    // Auto-advance after a brief delay
-    Future.delayed(const Duration(milliseconds: 1500), () {
-      if (mounted) {
-        _nextQuestion();
-      }
-    });
+    // Feedback will be shown, user will manually advance
   }
 
   /// Advances to the next question or completes the test
@@ -352,359 +345,6 @@ class _EnglishTestPageState extends State<EnglishTestPage>
     context.read<OnboardingCubit>().nextPage();
   }
 
-  /// Builds the introduction screen
-  Widget _buildIntroScreen() {
-    final l10n = context.l10n;
-
-    return Padding(
-      padding: const EdgeInsets.all(20),
-      child: Column(
-        children: [
-          const Spacer(flex: 2),
-          Semantics(
-            label: l10n.onboardingEnglishTestIcon,
-            child: Lottie.asset(
-              'assets/lottie/experiment.json',
-              repeat: true,
-              fit: BoxFit.contain,
-            ),
-          ).animate(controller: _animationController).scale(
-                begin: const Offset(0.5, 0.5),
-                end: const Offset(1, 1),
-                curve: Curves.elasticOut,
-                duration: const Duration(milliseconds: 600),
-              ),
-
-          const SizedBox(height: 20),
-
-          // Title
-          Text(
-            l10n.onboardingEnglishTestTitle,
-            textAlign: TextAlign.center,
-            style: const TextStyle(
-              fontSize: 28,
-              fontWeight: FontWeight.bold,
-              color: Colors.black,
-              height: 1.2,
-            ),
-          )
-              .animate(controller: _animationController)
-              .slideY(
-                begin: 0.3,
-                end: 0,
-                curve: Curves.easeOutCubic,
-                duration: const Duration(milliseconds: 600),
-              )
-              .fadeIn(
-                duration: const Duration(milliseconds: 600),
-              ),
-
-          const SizedBox(height: 20),
-
-          // Subtitle
-          Semantics(
-            label: l10n.onboardingEnglishTestSubtitle,
-            child: Text(
-              l10n.onboardingEnglishTestSubtitle,
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                fontSize: 16,
-                color: Colors.grey.shade700,
-                height: 1.4,
-              ),
-            ),
-          )
-              .animate(controller: _animationController)
-              .slideY(
-                begin: 0.3,
-                end: 0,
-                curve: Curves.easeOutCubic,
-                duration: const Duration(milliseconds: 600),
-                delay: const Duration(milliseconds: 100),
-              )
-              .fadeIn(
-                duration: const Duration(milliseconds: 600),
-                delay: const Duration(milliseconds: 100),
-              ),
-
-          const Spacer(flex: 3),
-
-          // Start test button
-          Semantics(
-            label: l10n.onboardingEnglishTestStart,
-            child: PushableButton(
-              width: 280,
-              height: 60,
-              borderRadius: 25,
-              text: l10n.onboardingEnglishTestStart,
-              buttonColor: const Color(0xFF1CB0F6),
-              shadowColor: const Color(0xFF1899D6),
-              onTap: _startTest,
-            ),
-          )
-              .animate(controller: _animationController)
-              .slideY(
-                begin: 0.5,
-                end: 0,
-                curve: Curves.elasticOut,
-                duration: const Duration(milliseconds: 800),
-                delay: const Duration(milliseconds: 200),
-              )
-              .fadeIn(
-                duration: const Duration(milliseconds: 600),
-                delay: const Duration(milliseconds: 200),
-              ),
-
-          // Skip option
-          const SizedBox(height: 16),
-
-          Semantics(
-            label: l10n.onboardingEnglishTestSkip,
-            child: GestureDetector(
-              onTap: _continueOnboarding,
-              child: Padding(
-                padding: const EdgeInsets.all(12),
-                child: Text(
-                  l10n.onboardingEnglishTestSkip,
-                  style: TextStyle(
-                    fontSize: 16,
-                    color: Colors.grey.shade600,
-                    decoration: TextDecoration.underline,
-                  ),
-                ),
-              ),
-            ),
-          ).animate(controller: _animationController).fadeIn(
-                duration: const Duration(milliseconds: 600),
-                delay: const Duration(milliseconds: 400),
-              ),
-
-          const SizedBox(height: 40),
-        ],
-      ),
-    );
-  }
-
-  /// Builds a question screen
-  Widget _buildQuestionScreen(int questionIndex) {
-    final question = _questions[questionIndex];
-    final questionText = question['question'] as String;
-    final options = question['options'] as List<String>;
-    final correctAnswer = question['correct'] as String;
-    final selectedAnswer = _selectedAnswers[questionIndex];
-    final isAnswered = selectedAnswer != null;
-
-    return Padding(
-      padding: const EdgeInsets.all(20),
-      child: Column(
-        children: [
-          // Progress indicator
-          Row(
-            children: [
-              Expanded(
-                child: LinearProgressIndicator(
-                  value: (questionIndex + 1) / _questions.length,
-                  backgroundColor: Colors.grey.shade300,
-                  valueColor:
-                      const AlwaysStoppedAnimation<Color>(Color(0xFF1CB0F6)),
-                ),
-              ),
-              const SizedBox(width: 16),
-              Text(
-                '${questionIndex + 1}/${_questions.length}',
-                style: const TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.w600,
-                  color: Color(0xFF1CB0F6),
-                ),
-              ),
-            ],
-          ),
-
-          const SizedBox(height: 40),
-
-          // Question text
-          Container(
-            padding: const EdgeInsets.all(24),
-            decoration: BoxDecoration(
-              color: Colors.grey.shade50,
-              borderRadius: BorderRadius.circular(16),
-              border: Border.all(color: Colors.grey.shade200),
-            ),
-            child: Text(
-              questionText,
-              textAlign: TextAlign.center,
-              style: const TextStyle(
-                fontSize: 18,
-                fontWeight: FontWeight.w500,
-                height: 1.4,
-              ),
-            ),
-          ),
-
-          const SizedBox(height: 40),
-
-          // Answer options
-          Expanded(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: options.map((option) {
-                final isSelected = selectedAnswer == option;
-                final isCorrect = option == correctAnswer;
-
-                var buttonColor = const Color(0xffF1F1F1);
-                var backgroundColor = const Color(0xffF1F1F1);
-                var shadowColor = Colors.grey.shade300;
-                const textColor = Colors.black87;
-
-                if (isAnswered) {
-                  if (isCorrect) {
-                    // Correct answer - always green
-                    buttonColor = const Color(0xff58CC02);
-                    shadowColor = const Color(0xff58A700);
-                    backgroundColor = const Color(0xffBCFFC8);
-                  } else if (isSelected) {
-                    // Selected wrong answer - red
-                    buttonColor = const Color(0xffFF4B4B);
-                    shadowColor = const Color(0xffE94E77);
-                    backgroundColor = const Color(0xffFFCCDA);
-                  }
-                } else if (isSelected) {
-                  // Selected but not yet submitted
-                  buttonColor = const Color(0xFF1CB0F6);
-                  shadowColor = const Color(0xFF1899D6);
-                }
-
-                return Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 8),
-                  child: QuizButton(
-                    width: double.infinity,
-                    height: 56,
-                    buttonColor: buttonColor,
-                    backgroundColor: backgroundColor,
-                    shadowColor: shadowColor,
-                    textColor: textColor,
-                    text: option,
-                    onTap: isAnswered ? () {} : () => _selectAnswer(option),
-                  ),
-                );
-              }).toList(),
-            ),
-          ),
-
-          const SizedBox(height: 20),
-        ],
-      ),
-    );
-  }
-
-  /// Builds the results screen
-  Widget _buildResultsScreen() {
-    final l10n = context.l10n;
-    final correctCount = _answerResults.values.where((result) => result).length;
-    final totalQuestions = _questions.length;
-    final percentage = (correctCount / totalQuestions * 100).round();
-
-    String resultMessage;
-    Color resultColor;
-    IconData resultIcon;
-
-    if (percentage >= 80) {
-      resultMessage = l10n.onboardingEnglishTestExcellent;
-      resultColor = const Color(0xff58CC02);
-      resultIcon = Icons.star;
-    } else if (percentage >= 60) {
-      resultMessage = l10n.onboardingEnglishTestGood;
-      resultColor = const Color(0xFF1CB0F6);
-      resultIcon = Icons.thumb_up;
-    } else {
-      resultMessage = l10n.onboardingEnglishTestOkay;
-      resultColor = const Color(0xffFFC800);
-      resultIcon = Icons.lightbulb;
-    }
-
-    return Padding(
-      padding: const EdgeInsets.all(20),
-      child: Column(
-        children: [
-          const Spacer(flex: 2),
-
-          // Result icon
-          Container(
-            width: 120,
-            height: 120,
-            decoration: BoxDecoration(
-              color: resultColor.withValues(alpha: 0.1),
-              shape: BoxShape.circle,
-            ),
-            child: Icon(
-              resultIcon,
-              size: 60,
-              color: resultColor,
-            ),
-          ).animate().scale(
-                begin: const Offset(0.5, 0.5),
-                end: const Offset(1, 1),
-                curve: Curves.elasticOut,
-                duration: const Duration(milliseconds: 600),
-              ),
-
-          const SizedBox(height: 30),
-
-          // Result message
-          Text(
-            resultMessage,
-            textAlign: TextAlign.center,
-            style: TextStyle(
-              fontSize: 28,
-              fontWeight: FontWeight.bold,
-              color: resultColor,
-            ),
-          ),
-
-          const SizedBox(height: 20),
-
-          // Score display
-          Text(
-            l10n.onboardingEnglishTestScore(correctCount, totalQuestions),
-            textAlign: TextAlign.center,
-            style: TextStyle(
-              fontSize: 18,
-              color: Colors.grey.shade700,
-            ),
-          ),
-
-          const SizedBox(height: 10),
-
-          // Percentage display
-          Text(
-            '$percentage%',
-            style: TextStyle(
-              fontSize: 48,
-              fontWeight: FontWeight.bold,
-              color: resultColor,
-            ),
-          ),
-
-          const Spacer(flex: 3),
-
-          // Continue button
-          PushableButton(
-            width: 280,
-            height: 60,
-            borderRadius: 25,
-            text: l10n.continueText,
-            buttonColor: resultColor,
-            shadowColor: resultColor.withValues(alpha: 0.7),
-            onTap: _continueOnboarding,
-          ),
-
-          const SizedBox(height: 40),
-        ],
-      ),
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     return PageView(
@@ -712,15 +352,33 @@ class _EnglishTestPageState extends State<EnglishTestPage>
       physics: const NeverScrollableScrollPhysics(),
       children: [
         // Introduction screen
-        _buildIntroScreen(),
+        EnglishTestIntro(
+          onStartTest: _startTest,
+          onSkip: _continueOnboarding,
+          animationController: _animationController,
+        ),
 
         // Question screens
         ..._questions.asMap().entries.map(
-              (entry) => _buildQuestionScreen(entry.key),
+              (entry) => EnglishTestQuestion(
+                question: _questions[entry.key]['question'] as String,
+                options: (_questions[entry.key]['options'] as List<dynamic>)
+                    .cast<String>(),
+                correctAnswer: _questions[entry.key]['correct'] as String,
+                selectedAnswer: _selectedAnswers[entry.key],
+                onSelectAnswer: _selectAnswer,
+                onNext: _nextQuestion,
+                currentQuestionIndex: entry.key,
+                totalQuestions: _questions.length,
+              ),
             ),
 
         // Results screen
-        _buildResultsScreen(),
+        EnglishTestResult(
+          correctCount: _answerResults.values.where((result) => result).length,
+          totalQuestions: _questions.length,
+          onContinue: _continueOnboarding,
+        ),
       ],
     );
   }

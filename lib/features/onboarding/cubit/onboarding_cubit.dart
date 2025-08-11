@@ -24,7 +24,7 @@ class OnboardingCubit extends Cubit<OnboardingState> {
   }
   // Define totalPages here or pass it as a parameter
 
-  static const int totalPages = 4;
+  static const int totalPages = 3;
   final PageController pageController = PageController();
   final UserRepository _userRepository;
 
