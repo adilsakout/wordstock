@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:wordstock/core/constants/vocabulary_levels.dart';
 import 'package:wordstock/features/onboarding/cubit/onboarding_cubit.dart';
@@ -51,7 +52,7 @@ class _VocabularyLevelPageState extends State<VocabularyLevelPage> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  // Question title with sophisticated entrance
+                  // Question title with sophisticated entrance animation
                   Text(
                     'What is your Vocabulary Level?',
                     textAlign: TextAlign.center,
@@ -60,11 +61,24 @@ class _VocabularyLevelPageState extends State<VocabularyLevelPage> {
                           color: Theme.of(context).colorScheme.onSurface,
                           height: 1.2,
                         ),
-                  ),
+                  )
+                      .animate()
+                      .fadeIn(
+                        duration: 600.ms,
+                        delay: 200.ms,
+                        curve: Curves.easeOut,
+                      )
+                      .slideY(
+                        begin: 0.3,
+                        end: 0,
+                        duration: 600.ms,
+                        delay: 200.ms,
+                        curve: Curves.easeOut,
+                      ),
 
                   const SizedBox(height: 24),
 
-                  // Subtitle with gentle animation
+                  // Subtitle with gentle fade-in animation
                   Text(
                     'Select the level that best describes your current vocabulary.',
                     textAlign: TextAlign.center,
@@ -75,7 +89,20 @@ class _VocabularyLevelPageState extends State<VocabularyLevelPage> {
                               .withValues(alpha: 0.7),
                           height: 1.5,
                         ),
-                  ),
+                  )
+                      .animate()
+                      .fadeIn(
+                        duration: 600.ms,
+                        delay: 500.ms,
+                        curve: Curves.easeOut,
+                      )
+                      .slideY(
+                        begin: 0.2,
+                        end: 0,
+                        duration: 600.ms,
+                        delay: 500.ms,
+                        curve: Curves.easeOut,
+                      ),
 
                   const SizedBox(height: 40),
 
@@ -94,7 +121,7 @@ class _VocabularyLevelPageState extends State<VocabularyLevelPage> {
                         ),
                         child: Column(
                           children: [
-                            // Enhanced selector with animation wrapper
+                            // Enhanced selector with staggered fade-in and scale animations
                             AnimatedScale(
                               scale: isSelected ? 1.02 : 1.0,
                               duration: const Duration(milliseconds: 200),
@@ -106,7 +133,27 @@ class _VocabularyLevelPageState extends State<VocabularyLevelPage> {
                                   _selectVocabularyLevel(context, index);
                                 },
                               ),
-                            ),
+                            )
+                                .animate()
+                                .fadeIn(
+                                  duration: 500.ms,
+                                  delay: (800 + (index * 150)).ms,
+                                  curve: Curves.easeOut,
+                                )
+                                .slideY(
+                                  begin: 0.3,
+                                  end: 0,
+                                  duration: 500.ms,
+                                  delay: (800 + (index * 150)).ms,
+                                  curve: Curves.easeOut,
+                                )
+                                .scale(
+                                  begin: const Offset(0.8, 0.8),
+                                  end: const Offset(1, 1),
+                                  duration: 500.ms,
+                                  delay: (800 + (index * 150)).ms,
+                                  curve: Curves.easeOut,
+                                ),
                           ],
                         ),
                       );

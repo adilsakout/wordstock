@@ -2,6 +2,7 @@ import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
 import 'package:gaimon/gaimon.dart';
+import 'package:go_router/go_router.dart';
 import 'package:wordstock/core/constants/vocabulary_levels.dart';
 import 'package:wordstock/features/onboarding/cubit/cubit.dart';
 import 'package:wordstock/features/onboarding/widgets/onboarding_pages/english_test_intro.dart';
@@ -342,7 +343,7 @@ class _EnglishTestPageState extends State<EnglishTestPage>
 
   /// Continues to the next onboarding page
   void _continueOnboarding() {
-    context.read<OnboardingCubit>().nextPage();
+    context.go('/home');
   }
 
   @override
@@ -355,7 +356,6 @@ class _EnglishTestPageState extends State<EnglishTestPage>
         EnglishTestIntro(
           onStartTest: _startTest,
           onSkip: _continueOnboarding,
-          animationController: _animationController,
         ),
 
         // Question screens

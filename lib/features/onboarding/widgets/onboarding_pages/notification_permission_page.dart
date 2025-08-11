@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lottie/lottie.dart';
 import 'package:wordstock/features/onboarding/cubit/onboarding_cubit.dart';
@@ -43,10 +44,30 @@ class _NotificationPermissionPageState
                       animate: true,
                       fit: BoxFit.contain,
                     ),
-                  ),
+                  )
+                      .animate()
+                      .fadeIn(
+                        duration: 800.ms,
+                        delay: 200.ms,
+                        curve: Curves.easeOut,
+                      )
+                      .slideY(
+                        begin: 0.3,
+                        end: 0,
+                        duration: 800.ms,
+                        delay: 200.ms,
+                        curve: Curves.easeOut,
+                      )
+                      .scale(
+                        begin: const Offset(0.5, 0.5),
+                        end: const Offset(1, 1),
+                        duration: 800.ms,
+                        delay: 200.ms,
+                        curve: Curves.elasticOut,
+                      ),
                   const Spacer(),
 
-                  // Main title with engaging animation
+                  // Main title with sophisticated fade-in animation
                   Text(
                     'Learn words with daily reminders',
                     textAlign: TextAlign.center,
@@ -55,11 +76,24 @@ class _NotificationPermissionPageState
                           color: Theme.of(context).colorScheme.onSurface,
                           height: 1.2,
                         ),
-                  ),
+                  )
+                      .animate()
+                      .fadeIn(
+                        duration: 600.ms,
+                        delay: 600.ms,
+                        curve: Curves.easeOut,
+                      )
+                      .slideY(
+                        begin: 0.2,
+                        end: 0,
+                        duration: 600.ms,
+                        delay: 600.ms,
+                        curve: Curves.easeOut,
+                      ),
 
                   const SizedBox(height: 16),
 
-                  // Subtitle with gentle animation
+                  // Subtitle with gentle fade-in animation
                   Text(
                     'Allow notifications to get daily reminders and never miss your learning streak.',
                     textAlign: TextAlign.center,
@@ -70,7 +104,20 @@ class _NotificationPermissionPageState
                               .withValues(alpha: 0.7),
                           height: 1.5,
                         ),
-                  ),
+                  )
+                      .animate()
+                      .fadeIn(
+                        duration: 600.ms,
+                        delay: 900.ms,
+                        curve: Curves.easeOut,
+                      )
+                      .slideY(
+                        begin: 0.15,
+                        end: 0,
+                        duration: 600.ms,
+                        delay: 900.ms,
+                        curve: Curves.easeOut,
+                      ),
                   const Spacer(),
                   // Enhanced call-to-action button with sophisticated animations
                   PushableButton(
@@ -86,7 +133,27 @@ class _NotificationPermissionPageState
                           .read<OnboardingCubit>()
                           .requestNotificationPermission();
                     },
-                  ),
+                  )
+                      .animate()
+                      .fadeIn(
+                        duration: 600.ms,
+                        delay: 1200.ms,
+                        curve: Curves.easeOut,
+                      )
+                      .slideY(
+                        begin: 0.2,
+                        end: 0,
+                        duration: 600.ms,
+                        delay: 1200.ms,
+                        curve: Curves.easeOut,
+                      )
+                      .scale(
+                        begin: const Offset(0.95, 0.95),
+                        end: const Offset(1, 1),
+                        duration: 600.ms,
+                        delay: 1200.ms,
+                        curve: Curves.easeOut,
+                      ),
 
                   SizedBox(height: padding.bottom),
                 ],

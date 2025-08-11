@@ -12,7 +12,6 @@ class EnglishTestIntro extends StatelessWidget {
   const EnglishTestIntro({
     required this.onStartTest,
     required this.onSkip,
-    required this.animationController,
     super.key,
   });
 
@@ -21,9 +20,6 @@ class EnglishTestIntro extends StatelessWidget {
 
   /// Callback when user wants to skip the test
   final VoidCallback onSkip;
-
-  /// Animation controller for entrance animations
-  final AnimationController animationController;
 
   @override
   Widget build(BuildContext context) {
@@ -34,6 +30,7 @@ class EnglishTestIntro extends StatelessWidget {
       child: Column(
         children: [
           const Spacer(flex: 2),
+          // Enhanced Lottie animation with sophisticated entrance
           Semantics(
             label: l10n.onboardingEnglishTestIcon,
             child: Lottie.asset(
@@ -41,16 +38,31 @@ class EnglishTestIntro extends StatelessWidget {
               repeat: true,
               fit: BoxFit.contain,
             ),
-          ).animate(controller: animationController).scale(
+          )
+              .animate()
+              .fadeIn(
+                duration: 800.ms,
+                delay: 200.ms,
+                curve: Curves.easeOut,
+              )
+              .slideY(
+                begin: 0.3,
+                end: 0,
+                duration: 800.ms,
+                delay: 200.ms,
+                curve: Curves.easeOut,
+              )
+              .scale(
                 begin: const Offset(0.5, 0.5),
                 end: const Offset(1, 1),
+                duration: 800.ms,
+                delay: 200.ms,
                 curve: Curves.elasticOut,
-                duration: const Duration(milliseconds: 600),
               ),
 
           const SizedBox(height: 20),
 
-          // Title
+          // Title with sophisticated fade-in animation
           Text(
             l10n.onboardingEnglishTestTitle,
             textAlign: TextAlign.center,
@@ -61,20 +73,23 @@ class EnglishTestIntro extends StatelessWidget {
               height: 1.2,
             ),
           )
-              .animate(controller: animationController)
-              .slideY(
-                begin: 0.3,
-                end: 0,
-                curve: Curves.easeOutCubic,
-                duration: const Duration(milliseconds: 600),
-              )
+              .animate()
               .fadeIn(
-                duration: const Duration(milliseconds: 600),
+                duration: 600.ms,
+                delay: 600.ms,
+                curve: Curves.easeOut,
+              )
+              .slideY(
+                begin: 0.2,
+                end: 0,
+                duration: 600.ms,
+                delay: 600.ms,
+                curve: Curves.easeOut,
               ),
 
           const SizedBox(height: 20),
 
-          // Subtitle
+          // Subtitle with gentle fade-in animation
           Semantics(
             label: l10n.onboardingEnglishTestSubtitle,
             child: Text(
@@ -87,22 +102,23 @@ class EnglishTestIntro extends StatelessWidget {
               ),
             ),
           )
-              .animate(controller: animationController)
-              .slideY(
-                begin: 0.3,
-                end: 0,
-                curve: Curves.easeOutCubic,
-                duration: const Duration(milliseconds: 600),
-                delay: const Duration(milliseconds: 100),
-              )
+              .animate()
               .fadeIn(
-                duration: const Duration(milliseconds: 600),
-                delay: const Duration(milliseconds: 100),
+                duration: 600.ms,
+                delay: 900.ms,
+                curve: Curves.easeOut,
+              )
+              .slideY(
+                begin: 0.15,
+                end: 0,
+                duration: 600.ms,
+                delay: 900.ms,
+                curve: Curves.easeOut,
               ),
 
           const Spacer(flex: 3),
 
-          // Start test button
+          // Start test button with sophisticated entrance animation
           Semantics(
             label: l10n.onboardingEnglishTestStart,
             child: PushableButton(
@@ -115,22 +131,28 @@ class EnglishTestIntro extends StatelessWidget {
               onTap: onStartTest,
             ),
           )
-              .animate(controller: animationController)
-              .slideY(
-                begin: 0.5,
-                end: 0,
-                curve: Curves.elasticOut,
-                duration: const Duration(milliseconds: 800),
-                delay: const Duration(milliseconds: 200),
-              )
+              .animate()
               .fadeIn(
-                duration: const Duration(milliseconds: 600),
-                delay: const Duration(milliseconds: 200),
+                duration: 600.ms,
+                delay: 1200.ms,
+                curve: Curves.easeOut,
+              )
+              .slideY(
+                begin: 0.2,
+                end: 0,
+                duration: 600.ms,
+                delay: 1200.ms,
+                curve: Curves.easeOut,
+              )
+              .scale(
+                begin: const Offset(0.95, 0.95),
+                end: const Offset(1, 1),
+                duration: 600.ms,
+                delay: 1200.ms,
+                curve: Curves.easeOut,
               ),
 
-          // Skip option
-          const SizedBox(height: 16),
-
+          // Skip option with subtle fade-in animation
           Semantics(
             label: l10n.onboardingEnglishTestSkip,
             child: GestureDetector(
@@ -147,9 +169,10 @@ class EnglishTestIntro extends StatelessWidget {
                 ),
               ),
             ),
-          ).animate(controller: animationController).fadeIn(
-                duration: const Duration(milliseconds: 600),
-                delay: const Duration(milliseconds: 400),
+          ).animate().fadeIn(
+                duration: 600.ms,
+                delay: 1500.ms,
+                curve: Curves.easeOut,
               ),
 
           const SizedBox(height: 40),
