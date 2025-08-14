@@ -14,6 +14,7 @@ class OnboardingState extends Equatable {
     this.selectedTimeCommitment = -1,
     this.wordsPerDay = 10,
     this.vocabularyLevel = -1,
+    this.tempSelectedVocabularyLevel = -1,
     this.selectedGoals = const [],
     this.selectedTopics = const [],
     this.streakGoal = -1,
@@ -30,6 +31,9 @@ class OnboardingState extends Equatable {
   final int selectedTimeCommitment;
   final int wordsPerDay;
   final int vocabularyLevel;
+
+  /// Temporary selected vocabulary level for visual feedback before confirmation
+  final int tempSelectedVocabularyLevel;
   final List<String> selectedGoals;
   final List<int> selectedTopics;
   final int streakGoal;
@@ -74,6 +78,7 @@ class OnboardingState extends Equatable {
         selectedTimeCommitment,
         wordsPerDay,
         vocabularyLevel,
+        tempSelectedVocabularyLevel,
         selectedGoals,
         selectedTopics,
         streakGoal,
@@ -92,6 +97,7 @@ class OnboardingState extends Equatable {
     int? selectedTimeCommitment,
     int? wordsPerDay,
     int? vocabularyLevel,
+    int? tempSelectedVocabularyLevel,
     List<String>? selectedGoals,
     List<int>? selectedTopics,
     int? streakGoal,
@@ -109,6 +115,8 @@ class OnboardingState extends Equatable {
           selectedTimeCommitment ?? this.selectedTimeCommitment,
       wordsPerDay: wordsPerDay ?? this.wordsPerDay,
       vocabularyLevel: vocabularyLevel ?? this.vocabularyLevel,
+      tempSelectedVocabularyLevel:
+          tempSelectedVocabularyLevel ?? this.tempSelectedVocabularyLevel,
       selectedGoals: selectedGoals ?? this.selectedGoals,
       selectedTopics: selectedTopics ?? this.selectedTopics,
       streakGoal: streakGoal ?? this.streakGoal,

@@ -7,31 +7,18 @@ import 'package:wordstock/features/onboarding/widgets/selector.dart';
 
 /// Vocabulary level selection page with Typeform-style animations
 /// that create an engaging, progressive disclosure experience
-class VocabularyLevelPage extends StatefulWidget {
+class VocabularyLevelPage extends StatelessWidget {
   const VocabularyLevelPage({super.key});
-
-  @override
-  State<VocabularyLevelPage> createState() => _VocabularyLevelPageState();
-}
-
-class _VocabularyLevelPageState extends State<VocabularyLevelPage> {
-  // Track selected level for enhanced interactions
-  int? _selectedLevel;
 
   /// Handles vocabulary level selection with enhanced animations
   void _selectVocabularyLevel(BuildContext context, int level) {
-    // Update selected level for visual feedback
-    setState(() {
-      _selectedLevel = level;
-    });
+    final cubit = context.read<OnboardingCubit>()
+      ..setTempVocabularyLevel(level);
 
     // Add a slight delay for better UX, allowing user to see selection
     Future.delayed(const Duration(milliseconds: 300), () {
-      if (mounted) {
-        context.read<OnboardingCubit>()
-          ..selectVocabularyLevel(level)
-          ..nextPage();
-      }
+      // Confirm selection and proceed to next page
+      cubit.selectVocabularyLevel(level);
     });
   }
 
@@ -112,7 +99,7 @@ class _VocabularyLevelPageState extends State<VocabularyLevelPage> {
                     (index) {
                       final config = VocabularyLevels.all[index];
                       final isSelected = state.vocabularyLevel == index ||
-                          _selectedLevel == index;
+                          state.tempSelectedVocabularyLevel == index;
 
                       return Padding(
                         padding: EdgeInsets.only(
@@ -121,7 +108,6 @@ class _VocabularyLevelPageState extends State<VocabularyLevelPage> {
                         ),
                         child: Column(
                           children: [
-                            // Enhanced selector with staggered fade-in and scale animations
                             AnimatedScale(
                               scale: isSelected ? 1.02 : 1.0,
                               duration: const Duration(milliseconds: 200),

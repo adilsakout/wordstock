@@ -100,9 +100,23 @@ class OnboardingCubit extends Cubit<OnboardingState> {
 
   int get streakGoal => state.streakGoal;
 
+  /// Sets temporary vocabulary level selection for visual feedback
+  void setTempVocabularyLevel(int level) {
+    emit(state.copyWith(tempSelectedVocabularyLevel: level));
+  }
+
+  /// Confirms vocabulary level selection and proceeds to next page
   void selectVocabularyLevel(int level) {
-    emit(state.copyWith(vocabularyLevel: level));
+    emit(state.copyWith(
+      vocabularyLevel: level,
+      tempSelectedVocabularyLevel: -1, // Reset temp selection
+    ));
     nextPage();
+  }
+
+  /// Clears temporary vocabulary level selection
+  void clearTempVocabularyLevel() {
+    emit(state.copyWith(tempSelectedVocabularyLevel: -1));
   }
 
   void selectLearningGoal(String goal) {

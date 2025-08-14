@@ -5,10 +5,6 @@ import 'package:gaimon/gaimon.dart';
 import 'package:wordstock/widgets/button.dart';
 import 'package:wordstock/widgets/quiz_button.dart';
 
-/// {@template english_test_question}
-/// Question screen for the English test onboarding page.
-/// Includes animations, sound effects, and haptic feedback for user interactions.
-/// {@endtemplate}
 class EnglishTestQuestion extends StatefulWidget {
   /// {@macro english_test_question}
   const EnglishTestQuestion({

@@ -106,7 +106,6 @@ class WelcomePage extends StatelessWidget {
                     ),
                 const Spacer(),
 
-                // Call-to-action button - simple and effective with final animation
                 PushableButton(
                   height: 56,
                   borderRadius: 16,
