@@ -53,29 +53,46 @@ final _router = GoRouter(
     GoRoute(
       path: '/home',
       name: 'Home',
-      builder: (context, state) => const HomePage(),
+      //builder: (context, state) => const HomePage(),
+      pageBuilder: (context, state) => CustomTransitionPage(
+        key: state.pageKey,
+        child: const HomePage(),
+        transitionsBuilder: (context, animation, secondaryAnimation, child) {
+          final tween = Tween<Offset>(
+            begin: const Offset(0, 1),
+            end: Offset.zero,
+          ).chain(CurveTween(curve: Curves.easeOutCubic));
+          return SlideTransition(
+            position: animation.drive(tween),
+            child: FadeTransition(
+              opacity: animation,
+              child: child,
+            ),
+          );
+        },
+      ),
       routes: [
         GoRoute(
           path: 'favorites',
           name: 'Favorites',
           builder: (context, state) => const FavoriteWordsPage(),
         ),
+        GoRoute(
+          path: '/practice',
+          name: 'Practice',
+          builder: (context, state) => const PracticePage(),
+        ),
+        GoRoute(
+          path: '/profile',
+          name: 'Profile',
+          builder: (context, state) => const ProfilePage(),
+        ),
+        GoRoute(
+          path: '/settings',
+          name: 'Settings',
+          builder: (context, state) => const SettingsPage(),
+        ),
       ],
-    ),
-    GoRoute(
-      path: '/practice',
-      name: 'Practice',
-      builder: (context, state) => const PracticePage(),
-    ),
-    GoRoute(
-      path: '/profile',
-      name: 'Profile',
-      builder: (context, state) => const ProfilePage(),
-    ),
-    GoRoute(
-      path: '/settings',
-      name: 'Settings',
-      builder: (context, state) => const SettingsPage(),
     ),
   ],
 );
