@@ -8,15 +8,21 @@ import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:onesignal_flutter/onesignal_flutter.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:wordstock/model/english_test_question.dart';
 import 'package:wordstock/model/onboarding_enums.dart';
 import 'package:wordstock/model/user_profile.dart';
+import 'package:wordstock/repositories/english_test_repository.dart';
 import 'package:wordstock/repositories/user_repository.dart';
 
 part 'onboarding_state.dart';
 
 class OnboardingCubit extends Cubit<OnboardingState> {
-  OnboardingCubit({UserRepository? userRepository})
-      : _userRepository = userRepository ?? UserRepository(),
+  OnboardingCubit({
+    UserRepository? userRepository,
+    EnglishTestRepository? englishTestRepository,
+  })  : _userRepository = userRepository ?? UserRepository(),
+        _englishTestRepository =
+            englishTestRepository ?? const EnglishTestRepository(),
         super(
           const OnboardingState(currentPage: 0, progress: 0),
         ) {
@@ -27,6 +33,7 @@ class OnboardingCubit extends Cubit<OnboardingState> {
   static const int totalPages = 3;
   final PageController pageController = PageController();
   final UserRepository _userRepository;
+  final EnglishTestRepository _englishTestRepository;
 
   void disposePageController() {
     pageController.dispose();
@@ -107,10 +114,12 @@ class OnboardingCubit extends Cubit<OnboardingState> {
 
   /// Confirms vocabulary level selection and proceeds to next page
   void selectVocabularyLevel(int level) {
-    emit(state.copyWith(
-      vocabularyLevel: level,
-      tempSelectedVocabularyLevel: -1, // Reset temp selection
-    ));
+    emit(
+      state.copyWith(
+        vocabularyLevel: level,
+        tempSelectedVocabularyLevel: -1, // Reset temp selection
+      ),
+    );
     nextPage();
   }
 
@@ -157,6 +166,84 @@ class OnboardingCubit extends Cubit<OnboardingState> {
   /// Sets the English test result percentage
   void setEnglishTestResult(int percentage) {
     emit(state.copyWith(englishTestResult: percentage));
+  }
+
+  /// Loads English test questions based on the selected vocabulary level.
+  ///
+  /// Returns a list of 5 randomized questions appropriate for the user's
+  /// chosen difficulty level. If no level is selected, defaults to
+  /// intermediate.
+  ///
+  /// Emits loading state while fetching questions and error state if loading
+  /// fails.
+  Future<List<EnglishTestQuestion>> loadEnglishTestQuestions() async {
+    try {
+      // Set loading state while fetching questions
+      emit(
+        state.copyWith(
+          isLoadingEnglishQuestions: true,
+        ),
+      );
+
+      // Use the selected vocabulary level, or default to intermediate (1)
+      // if not set
+      final levelId = state.vocabularyLevel >= 0 ? state.vocabularyLevel : 1;
+
+      // Load questions from repository
+      final questions =
+          await _englishTestRepository.getQuestionsForLevel(levelId);
+
+      // Update state with loaded questions
+      emit(
+        state.copyWith(
+          englishTestQuestions: questions,
+          isLoadingEnglishQuestions: false,
+        ),
+      );
+
+      return questions;
+    } catch (e) {
+      // Handle error and emit error state
+      emit(
+        state.copyWith(
+          isLoadingEnglishQuestions: false,
+          englishTestError: 'Failed to load English test questions: $e',
+        ),
+      );
+
+      // Re-throw for widget handling if needed
+      throw Exception('Failed to load English test questions: $e');
+    }
+  }
+
+  /// Loads all available questions for a specific vocabulary level.
+  ///
+  /// Useful for displaying the complete question bank or analytics.
+  /// Does not update the state, only returns the question set.
+  Future<EnglishTestQuestionSet> loadAllQuestionsForLevel(int levelId) async {
+    try {
+      return await _englishTestRepository.getAllQuestionsForLevel(levelId);
+    } catch (e) {
+      throw Exception('Failed to load all questions for level $levelId: $e');
+    }
+  }
+
+  /// Clears any English test related error states.
+  void clearEnglishTestError() {
+    emit(state.copyWith());
+  }
+
+  /// Resets English test data (questions, results, errors).
+  ///
+  /// Useful when restarting the test or navigating away from the test page.
+  void resetEnglishTestData() {
+    emit(
+      state.copyWith(
+        englishTestQuestions: [],
+        englishTestResult: -1,
+        isLoadingEnglishQuestions: false,
+      ),
+    );
   }
 
   /// Convert gender index to string representation

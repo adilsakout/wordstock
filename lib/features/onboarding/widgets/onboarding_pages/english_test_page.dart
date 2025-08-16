@@ -1,13 +1,12 @@
-import 'dart:math' as math;
-
 import 'package:flutter/material.dart';
+
 import 'package:gaimon/gaimon.dart';
 import 'package:go_router/go_router.dart';
-import 'package:wordstock/core/constants/vocabulary_levels.dart';
 import 'package:wordstock/features/onboarding/cubit/cubit.dart';
 import 'package:wordstock/features/onboarding/widgets/onboarding_pages/english_test_intro.dart';
 import 'package:wordstock/features/onboarding/widgets/onboarding_pages/english_test_question.dart';
 import 'package:wordstock/features/onboarding/widgets/onboarding_pages/english_test_result.dart';
+import 'package:wordstock/model/english_test_question.dart' as model;
 
 /// {@template english_test_page}
 /// Onboarding page that provides a small English vocabulary test.
@@ -43,229 +42,59 @@ class _EnglishTestPageState extends State<EnglishTestPage>
   final Map<int, String> _selectedAnswers = {};
   final Map<int, bool> _answerResults = {};
 
-  // We will lazily set this based on the user's chosen vocabulary level.
-  // Keeping the same data shape to avoid changing any downstream UI logic.
-  late List<Map<String, dynamic>> _questions;
+  // Questions loaded from the cubit/repository
+  List<model.EnglishTestQuestion> _questions = [];
 
-  // Beginner level question bank — short, concrete, high-frequency words.
-  // Keeping 10 items to maintain parity with other levels and pagination.
-  final List<Map<String, dynamic>> _beginnerQuestions = [
-    {
-      'question': 'I am ___ today.',
-      'options': ['sad', 'happy', 'late'],
-      'correct': 'happy',
-    },
-    {
-      'question': 'This bag is very ___.',
-      'options': ['heavy', 'light', 'empty'],
-      'correct': 'heavy',
-    },
-    {
-      'question': 'Please ___ the door.',
-      'options': ['open', 'eat', 'run'],
-      'correct': 'open',
-    },
-    {
-      'question': 'The opposite of small is ___.',
-      'options': ['short', 'big', 'thin'],
-      'correct': 'big',
-    },
-    {
-      'question': 'We ___ dinner at 7 pm.',
-      'options': ['sleep', 'cook', 'read'],
-      'correct': 'cook',
-    },
-    {
-      'question': 'This coffee is too ___.',
-      'options': ['hot', 'late', 'short'],
-      'correct': 'hot',
-    },
-    {
-      'question': 'I ___ English every day.',
-      'options': ['study', 'drive', 'wash'],
-      'correct': 'study',
-    },
-    {
-      'question': 'She has a ___ cat.',
-      'options': ['blue', 'small', 'slow'],
-      'correct': 'small',
-    },
-    {
-      'question': 'They ___ in a big city.',
-      'options': ['live', 'eat', 'learn'],
-      'correct': 'live',
-    },
-    {
-      'question': 'He is very ___ in class.',
-      'options': ['quiet', 'fast', 'late'],
-      'correct': 'quiet',
-    },
-  ];
-
-  // Intermediate level question bank — similar difficulty to the previous
-  // implementation, mixing synonyms and collocations.
-  final List<Map<String, dynamic>> _intermediateQuestions = [
-    {
-      'question':
-          "The professor's ___ lecture kept students engaged throughout the entire class.",
-      'options': ['eloquent', 'mundane', 'chaotic'],
-      'correct': 'eloquent',
-    },
-    {
-      'question':
-          "After years of practice, the musician's performance was absolutely ___.",
-      'options': ['mediocre', 'flawless', 'adequate'],
-      'correct': 'flawless',
-    },
-    {
-      'question':
-          'The ancient ruins were ___ by centuries of weathering and neglect.',
-      'options': ['preserved', 'deteriorated', 'enhanced'],
-      'correct': 'deteriorated',
-    },
-    {
-      'question':
-          'Her ___ approach to problem-solving impressed the entire team.',
-      'options': ['haphazard', 'methodical', 'reluctant'],
-      'correct': 'methodical',
-    },
-    {
-      'question': "The CEO's decision to expand globally was quite ___.",
-      'options': ['cautious', 'audacious', 'typical'],
-      'correct': 'audacious',
-    },
-    {
-      'question':
-          'The scientist made a ___ discovery that changed our understanding of physics.',
-      'options': ['mundane', 'groundbreaking', 'questionable'],
-      'correct': 'groundbreaking',
-    },
-    {
-      'question':
-          'The politician was known for his ___ speeches that could sway even skeptical audiences.',
-      'options': ['verbose', 'persuasive', 'tedious'],
-      'correct': 'persuasive',
-    },
-    {
-      'question':
-          "The artist's work was praised for its ___ blend of traditional and modern techniques.",
-      'options': ['jarring', 'seamless', 'obvious'],
-      'correct': 'seamless',
-    },
-    {
-      'question':
-          "The committee's decision was met with ___ criticism from environmental groups.",
-      'options': ['mild', 'vehement', 'occasional'],
-      'correct': 'vehement',
-    },
-    {
-      'question':
-          "The philosopher's ___ arguments left his opponents unable to respond effectively.",
-      'options': ['fallacious', 'cogent', 'superficial'],
-      'correct': 'cogent',
-    },
-  ];
-
-  // Advanced level question bank — higher-register vocabulary and nuance.
-  final List<Map<String, dynamic>> _advancedQuestions = [
-    {
-      'question':
-          'Her explanation was so ___ that even experts struggled to follow.',
-      'options': ['lucid', 'opaque', 'banal'],
-      'correct': 'opaque',
-    },
-    {
-      'question':
-          'The researcher offered a ___ critique of the prevailing theory.',
-      'options': ['trenchant', 'diffuse', 'facile'],
-      'correct': 'trenchant',
-    },
-    {
-      'question':
-          'The novel is celebrated for its ___ portrayal of human frailty.',
-      'options': ['cursory', 'nuanced', 'didactic'],
-      'correct': 'nuanced',
-    },
-    {
-      'question':
-          'Their argument relies on a ___ assumption that is never justified.',
-      'options': ['tenable', 'gratuitous', 'axiomatic'],
-      'correct': 'gratuitous',
-    },
-    {
-      'question': 'The solution is elegant but ultimately ___.',
-      'options': ['pragmatic', 'quixotic', 'pedestrian'],
-      'correct': 'quixotic',
-    },
-    {
-      'question': 'His tone was ___, masking a deeper frustration.',
-      'options': ['ironic', 'sanguine', 'phlegmatic'],
-      'correct': 'ironic',
-    },
-    {
-      'question': 'The committee issued a ___ rebuke after the breach.',
-      'options': ['perfunctory', 'withering', 'timorous'],
-      'correct': 'withering',
-    },
-    {
-      'question': 'Her remarks were dismissed as ___ rather than constructive.',
-      'options': ['vituperative', 'pellucid', 'salutary'],
-      'correct': 'vituperative',
-    },
-    {
-      'question': 'A ___ analysis is needed to resolve the discrepancy.',
-      'options': ['prosaic', 'granular', 'jejune'],
-      'correct': 'granular',
-    },
-    {
-      'question': 'The proposal remains ___ without empirical support.',
-      'options': ['specious', 'probative', 'fecund'],
-      'correct': 'specious',
-    },
-  ];
-
-  /// Select 5 random questions according to user's chosen vocabulary level.
-  /// Falls back to intermediate if the level is not set/invalid.
-  List<Map<String, dynamic>> _questionsForLevel(int levelId) {
-    List<Map<String, dynamic>> fullQuestionBank;
-
-    if (VocabularyLevels.isValidId(levelId)) {
-      switch (levelId) {
-        case 0: // Beginner
-          fullQuestionBank = _beginnerQuestions;
-        case 1: // Intermediate
-          fullQuestionBank = _intermediateQuestions;
-        case 2: // Advanced
-          fullQuestionBank = _advancedQuestions;
-        default:
-          fullQuestionBank = _intermediateQuestions;
-      }
-    } else {
-      // Default to intermediate for invalid levels
-      fullQuestionBank = _intermediateQuestions;
-    }
-
-    // Randomly select 5 questions from the bank
-    final random = math.Random();
-    final shuffledQuestions = List<Map<String, dynamic>>.from(fullQuestionBank);
-    shuffledQuestions.shuffle(random);
-
-    // Return first 5 questions (or all if less than 5 available)
-    return shuffledQuestions.take(5).toList();
-  }
+  // Loading and error states
+  bool _isLoadingQuestions = false;
+  String? _loadingError;
 
   @override
   void initState() {
     super.initState();
     _animationController.forward();
 
-    // Determine vocabulary level chosen earlier in onboarding and
-    // hydrate the appropriate question set. Keep state consistent.
-    final levelId = context.read<OnboardingCubit>().state.vocabularyLevel;
-    _questions = _questionsForLevel(levelId);
+    // Initialize test state
     _currentQuestionIndex = 0;
     _selectedAnswers.clear();
     _answerResults.clear();
+
+    // Load questions from cubit
+    _loadQuestions();
+  }
+
+  /// Loads English test questions from the cubit/repository
+  Future<void> _loadQuestions() async {
+    try {
+      setState(() {
+        _isLoadingQuestions = true;
+        _loadingError = null;
+      });
+
+      // Load questions through the cubit which uses the repository
+      final questions =
+          await context.read<OnboardingCubit>().loadEnglishTestQuestions();
+
+      setState(() {
+        _questions = questions;
+        _isLoadingQuestions = false;
+      });
+    } catch (e) {
+      setState(() {
+        _isLoadingQuestions = false;
+        _loadingError = e.toString();
+      });
+
+      // Show error to user
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('Failed to load test questions: $e'),
+            backgroundColor: Colors.red,
+          ),
+        );
+      }
+    }
   }
 
   @override
@@ -290,8 +119,7 @@ class _EnglishTestPageState extends State<EnglishTestPage>
       return; // Already answered this question
     }
 
-    final correctAnswer =
-        _questions[_currentQuestionIndex]['correct'] as String;
+    final correctAnswer = _questions[_currentQuestionIndex].correct;
     final isCorrect = selectedOption == correctAnswer;
 
     setState(() {
@@ -348,6 +176,65 @@ class _EnglishTestPageState extends State<EnglishTestPage>
 
   @override
   Widget build(BuildContext context) {
+    // Show loading screen while questions are being loaded
+    if (_isLoadingQuestions) {
+      return const Scaffold(
+        body: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              CircularProgressIndicator(),
+              SizedBox(height: 16),
+              Text(
+                'Loading test questions...',
+                style: TextStyle(fontSize: 16),
+              ),
+            ],
+          ),
+        ),
+      );
+    }
+
+    // Show error screen if questions failed to load
+    if (_loadingError != null) {
+      return Scaffold(
+        body: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              const Icon(
+                Icons.error_outline,
+                size: 48,
+                color: Colors.red,
+              ),
+              const SizedBox(height: 16),
+              Text(
+                'Failed to load test questions',
+                style: Theme.of(context).textTheme.headlineSmall,
+              ),
+              const SizedBox(height: 8),
+              Text(
+                _loadingError!,
+                textAlign: TextAlign.center,
+                style: Theme.of(context).textTheme.bodyMedium,
+              ),
+              const SizedBox(height: 24),
+              ElevatedButton(
+                onPressed: _loadQuestions,
+                child: const Text('Retry'),
+              ),
+              const SizedBox(height: 16),
+              TextButton(
+                onPressed: _continueOnboarding,
+                child: const Text('Skip Test'),
+              ),
+            ],
+          ),
+        ),
+      );
+    }
+
+    // Show normal test flow once questions are loaded
     return PageView(
       controller: _pageController,
       physics: const NeverScrollableScrollPhysics(),
@@ -358,20 +245,20 @@ class _EnglishTestPageState extends State<EnglishTestPage>
           onSkip: _continueOnboarding,
         ),
 
-        // Question screens
-        ..._questions.asMap().entries.map(
-              (entry) => EnglishTestQuestion(
-                question: _questions[entry.key]['question'] as String,
-                options: (_questions[entry.key]['options'] as List<dynamic>)
-                    .cast<String>(),
-                correctAnswer: _questions[entry.key]['correct'] as String,
-                selectedAnswer: _selectedAnswers[entry.key],
-                onSelectAnswer: _selectAnswer,
-                onNext: _nextQuestion,
-                currentQuestionIndex: entry.key,
-                totalQuestions: _questions.length,
+        // Question screens - only show if questions are loaded
+        if (_questions.isNotEmpty)
+          ..._questions.asMap().entries.map(
+                (entry) => EnglishTestQuestion(
+                  question: _questions[entry.key].question,
+                  options: _questions[entry.key].options,
+                  correctAnswer: _questions[entry.key].correct,
+                  selectedAnswer: _selectedAnswers[entry.key],
+                  onSelectAnswer: _selectAnswer,
+                  onNext: _nextQuestion,
+                  currentQuestionIndex: entry.key,
+                  totalQuestions: _questions.length,
+                ),
               ),
-            ),
 
         // Results screen
         EnglishTestResult(

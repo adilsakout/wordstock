@@ -1,0 +1,55 @@
+{
+  "level": "beginner",
+  "questions": [
+    {
+      "question": "I am ___ today.",
+      "options": ["sad", "happy", "late"],
+      "correct": "happy"
+    },
+    {
+      "question": "This bag is very ___.",
+      "options": ["heavy", "light", "empty"],
+      "correct": "heavy"
+    },
+    {
+      "question": "Please ___ the door.",
+      "options": ["open", "eat", "run"],
+      "correct": "open"
+    },
+    {
+      "question": "The opposite of small is ___.",
+      "options": ["short", "big", "thin"],
+      "correct": "big"
+    },
+    {
+      "question": "We ___ dinner at 7 pm.",
+      "options": ["sleep", "cook", "read"],
+      "correct": "cook"
+    },
+    {
+      "question": "This coffee is too ___.",
+      "options": ["hot", "late", "short"],
+      "correct": "hot"
+    },
+    {
+      "question": "I ___ English every day.",
+      "options": ["study", "drive", "wash"],
+      "correct": "study"
+    },
+    {
+      "question": "She has a ___ cat.",
+      "options": ["blue", "small", "slow"],
+      "correct": "small"
+    },
+    {
+      "question": "They ___ in a big city.",
+      "options": ["live", "eat", "learn"],
+      "correct": "live"
+    },
+    {
+      "question": "He is very ___ in class.",
+      "options": ["quiet", "fast", "late"],
+      "correct": "quiet"
+    }
+  ]
+}

@@ -21,6 +21,9 @@ class OnboardingState extends Equatable {
     this.timeZone = '',
     this.englishTestResult = -1,
     this.isRequestingPermission = false,
+    this.englishTestQuestions = const [],
+    this.isLoadingEnglishQuestions = false,
+    this.englishTestError,
   });
 
   final int currentPage;
@@ -32,7 +35,8 @@ class OnboardingState extends Equatable {
   final int wordsPerDay;
   final int vocabularyLevel;
 
-  /// Temporary selected vocabulary level for visual feedback before confirmation
+  /// Temporary selected vocabulary level for visual feedback before
+  /// confirmation
   final int tempSelectedVocabularyLevel;
   final List<String> selectedGoals;
   final List<int> selectedTopics;
@@ -40,6 +44,15 @@ class OnboardingState extends Equatable {
   final String timeZone;
   final int englishTestResult;
   final bool isRequestingPermission;
+
+  /// English test questions loaded from repository
+  final List<EnglishTestQuestion> englishTestQuestions;
+
+  /// Flag indicating if English test questions are currently being loaded
+  final bool isLoadingEnglishQuestions;
+
+  /// Error message if English test questions failed to load
+  final String? englishTestError;
 
   /// Returns the selected age range as an enum value
   AgeRange? get ageRange =>
@@ -69,7 +82,7 @@ class OnboardingState extends Equatable {
   String get timeCommitmentString => timeCommitment?.name ?? 'not_specified';
 
   @override
-  List<Object> get props => [
+  List<Object?> get props => [
         currentPage,
         progress,
         selectedAgeRange,
@@ -85,6 +98,9 @@ class OnboardingState extends Equatable {
         timeZone,
         englishTestResult,
         isRequestingPermission,
+        englishTestQuestions,
+        isLoadingEnglishQuestions,
+        englishTestError,
       ];
 
   /// Creates a copy of the current OnboardingState with property changes
@@ -104,6 +120,9 @@ class OnboardingState extends Equatable {
     String? timeZone,
     int? englishTestResult,
     bool? isRequestingPermission,
+    List<EnglishTestQuestion>? englishTestQuestions,
+    bool? isLoadingEnglishQuestions,
+    String? englishTestError,
   }) {
     return OnboardingState(
       currentPage: currentPage ?? this.currentPage,
@@ -124,6 +143,10 @@ class OnboardingState extends Equatable {
       englishTestResult: englishTestResult ?? this.englishTestResult,
       isRequestingPermission:
           isRequestingPermission ?? this.isRequestingPermission,
+      englishTestQuestions: englishTestQuestions ?? this.englishTestQuestions,
+      isLoadingEnglishQuestions:
+          isLoadingEnglishQuestions ?? this.isLoadingEnglishQuestions,
+      englishTestError: englishTestError ?? this.englishTestError,
     );
   }
 }

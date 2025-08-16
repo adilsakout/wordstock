@@ -1,0 +1,55 @@
+{
+  "level": "intermediate",
+  "questions": [
+    {
+      "question": "The professor's ___ lecture kept students engaged throughout the entire class.",
+      "options": ["eloquent", "mundane", "chaotic"],
+      "correct": "eloquent"
+    },
+    {
+      "question": "After years of practice, the musician's performance was absolutely ___.",
+      "options": ["mediocre", "flawless", "adequate"],
+      "correct": "flawless"
+    },
+    {
+      "question": "The ancient ruins were ___ by centuries of weathering and neglect.",
+      "options": ["preserved", "deteriorated", "enhanced"],
+      "correct": "deteriorated"
+    },
+    {
+      "question": "Her ___ approach to problem-solving impressed the entire team.",
+      "options": ["haphazard", "methodical", "reluctant"],
+      "correct": "methodical"
+    },
+    {
+      "question": "The CEO's decision to expand globally was quite ___.",
+      "options": ["cautious", "audacious", "typical"],
+      "correct": "audacious"
+    },
+    {
+      "question": "The scientist made a ___ discovery that changed our understanding of physics.",
+      "options": ["mundane", "groundbreaking", "questionable"],
+      "correct": "groundbreaking"
+    },
+    {
+      "question": "The politician was known for his ___ speeches that could sway even skeptical audiences.",
+      "options": ["verbose", "persuasive", "tedious"],
+      "correct": "persuasive"
+    },
+    {
+      "question": "The artist's work was praised for its ___ blend of traditional and modern techniques.",
+      "options": ["jarring", "seamless", "obvious"],
+      "correct": "seamless"
+    },
+    {
+      "question": "The committee's decision was met with ___ criticism from environmental groups.",
+      "options": ["mild", "vehement", "occasional"],
+      "correct": "vehement"
+    },
+    {
+      "question": "The philosopher's ___ arguments left his opponents unable to respond effectively.",
+      "options": ["fallacious", "cogent", "superficial"],
+      "correct": "cogent"
+    }
+  ]
+}

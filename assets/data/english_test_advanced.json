@@ -1,0 +1,55 @@
+{
+  "level": "advanced",
+  "questions": [
+    {
+      "question": "Her explanation was so ___ that even experts struggled to follow.",
+      "options": ["lucid", "opaque", "banal"],
+      "correct": "opaque"
+    },
+    {
+      "question": "The researcher offered a ___ critique of the prevailing theory.",
+      "options": ["trenchant", "diffuse", "facile"],
+      "correct": "trenchant"
+    },
+    {
+      "question": "The novel is celebrated for its ___ portrayal of human frailty.",
+      "options": ["cursory", "nuanced", "didactic"],
+      "correct": "nuanced"
+    },
+    {
+      "question": "Their argument relies on a ___ assumption that is never justified.",
+      "options": ["tenable", "gratuitous", "axiomatic"],
+      "correct": "gratuitous"
+    },
+    {
+      "question": "The solution is elegant but ultimately ___.",
+      "options": ["pragmatic", "quixotic", "pedestrian"],
+      "correct": "quixotic"
+    },
+    {
+      "question": "His tone was ___, masking a deeper frustration.",
+      "options": ["ironic", "sanguine", "phlegmatic"],
+      "correct": "ironic"
+    },
+    {
+      "question": "The committee issued a ___ rebuke after the breach.",
+      "options": ["perfunctory", "withering", "timorous"],
+      "correct": "withering"
+    },
+    {
+      "question": "Her remarks were dismissed as ___ rather than constructive.",
+      "options": ["vituperative", "pellucid", "salutary"],
+      "correct": "vituperative"
+    },
+    {
+      "question": "A ___ analysis is needed to resolve the discrepancy.",
+      "options": ["prosaic", "granular", "jejune"],
+      "correct": "granular"
+    },
+    {
+      "question": "The proposal remains ___ without empirical support.",
+      "options": ["specious", "probative", "fecund"],
+      "correct": "specious"
+    }
+  ]
+}
