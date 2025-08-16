@@ -133,7 +133,6 @@ class _VocabularyLevelBottomSheetState
     final l10n = context.l10n;
 
     return Container(
-      margin: const EdgeInsets.all(20),
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(20),
@@ -146,7 +145,12 @@ class _VocabularyLevelBottomSheetState
         ],
       ),
       child: Padding(
-        padding: const EdgeInsets.all(24),
+        padding: EdgeInsets.fromLTRB(
+          24,
+          24,
+          24,
+          MediaQuery.of(context).padding.bottom,
+        ),
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
@@ -159,7 +163,7 @@ class _VocabularyLevelBottomSheetState
                 borderRadius: BorderRadius.circular(2),
               ),
             ),
-            const SizedBox(height: 20),
+            const SizedBox(height: 10),
 
             // Title
             Text(
@@ -171,7 +175,7 @@ class _VocabularyLevelBottomSheetState
                 color: Color(0xFF1D1D1F),
               ),
             ),
-            const SizedBox(height: 12),
+            const SizedBox(height: 10),
 
             // Subtitle
             Text(
@@ -183,13 +187,13 @@ class _VocabularyLevelBottomSheetState
                 color: Colors.grey[600],
               ),
             ),
-            const SizedBox(height: 32),
+            const SizedBox(height: 20),
 
             // Vocabulary level selectors
             ...List.generate(
               VocabularyLevels.all.length,
               (index) => Padding(
-                padding: const EdgeInsets.only(bottom: 16),
+                padding: const EdgeInsets.only(bottom: 10),
                 child: Selector(
                   text: VocabularyLevels.all[index].fullDisplayText,
                   selected: selectedLevel == index,
@@ -197,8 +201,6 @@ class _VocabularyLevelBottomSheetState
                 ),
               ),
             ),
-
-            const SizedBox(height: 24),
 
             // Action buttons
             Row(
