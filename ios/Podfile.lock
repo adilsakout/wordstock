@@ -212,7 +212,7 @@ SPEC CHECKSUMS:
   audioplayers_darwin: 877d9a4d06331c5c374595e46e16453ac7eafa40
   BranchSDK: a12f9aa63d7ba562fdff5509d4aed081f1098ec0
   connectivity_plus: bf0076dd84a130856aa636df1c71ccaff908fa1d
-  Flutter: e0871f40cf51350855a761d2e70bf5af5b9b5de7
+  Flutter: cabc95a1d2626b1b06e7179b784ebcf0c0cde467
   flutter_branch_sdk: 08a14ddbff760434cce6d23f85a789fdfa92cfcb
   flutter_local_notifications: df98d66e515e1ca797af436137b4459b160ad8c9
   flutter_native_splash: df59bb2e1421aa0282cb2e95618af4dcb0c56c29
@@ -240,6 +240,6 @@ SPEC CHECKSUMS:
   shared_preferences_foundation: fcdcbc04712aee1108ac7fda236f363274528f78
   url_launcher_ios: 5334b05cef931de560670eeae103fd3e431ac3fe
 
-PODFILE CHECKSUM: 77e838314920b77c52c8cb1184c69d85eb010131
+PODFILE CHECKSUM: a3a411248d96f0861735eb9b67136da783bb796e
 
 COCOAPODS: 1.16.2
