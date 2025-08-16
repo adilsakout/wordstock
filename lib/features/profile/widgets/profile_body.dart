@@ -94,14 +94,20 @@ class _ProfileBodyState extends State<ProfileBody> {
     }
   }
 
-  /// Handle success state by showing feedback
+  /// Handle success state by showing feedback and refreshing home screen
   void _handleVocabularyLevelUpdated(VocabularyLevel updatedLevel) {
     final l10n = context.l10n;
     final levelConfig = VocabularyLevels.getByLevel(updatedLevel);
+
+    // Show success feedback to user
     _navigationService.showSuccessSnackBar(
       context,
       message: l10n.vocabularyLevelUpdated(levelConfig.displayName),
     );
+
+    // Refresh home screen to load words for the new vocabulary level
+    // This ensures users immediately see words appropriate to their new level
+    _navigationService.refreshHomeScreen(context);
   }
 
   /// Handle error state by showing error message

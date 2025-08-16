@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:wordstock/core/constants/vocabulary_levels.dart';
+import 'package:wordstock/features/home/cubit/home_cubit.dart';
 import 'package:wordstock/features/onboarding/widgets/selector.dart';
 import 'package:wordstock/l10n/l10n.dart';
 import 'package:wordstock/model/user_profile.dart';
@@ -95,6 +97,19 @@ class NavigationService {
         margin: const EdgeInsets.all(20),
       ),
     );
+  }
+
+  /// Refresh the home screen to load new words
+  /// This method triggers a fresh fetch of words based on
+  /// the user's current vocabulary level setting.
+  ///
+  /// Should be called after vocabulary level changes to ensure
+  /// the home screen displays words appropriate to the new level.
+  void refreshHomeScreen(BuildContext context) {
+    // Access the HomeCubit from the context and trigger word refresh
+    // This will cause the home screen to reload with words
+    // matching the user's updated vocabulary level
+    context.read<HomeCubit>().fetchWords();
   }
 }
 
