@@ -924,5 +924,21 @@
     "saveButton": "Enregistrer",
     "@saveButton": {
         "description": "Text for save button"
+    },
+    "notificationPermissionTitle": "Apprenez des mots avec des rappels quotidiens",
+    "@notificationPermissionTitle": {
+        "description": "Title for the notification permission page"
+    },
+    "notificationPermissionDescription": "Autorisez les notifications pour recevoir des rappels quotidiens et ne jamais manquer votre série d'apprentissage.",
+    "@notificationPermissionDescription": {
+        "description": "Description text for notification permission request"
+    },
+    "enableNotifications": "Activer les Notifications",
+    "@enableNotifications": {
+        "description": "Button text to enable notifications"
+    },
+    "requestingPermission": "Demande d'autorisation...",
+    "@requestingPermission": {
+        "description": "Button text while requesting permission"
     }
 } 

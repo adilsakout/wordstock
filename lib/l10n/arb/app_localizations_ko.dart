@@ -652,4 +652,17 @@ class AppLocalizationsKo extends AppLocalizations {
 
   @override
   String get saveButton => '저장';
+
+  @override
+  String get notificationPermissionTitle => '일일 알림으로 단어 학습하기';
+
+  @override
+  String get notificationPermissionDescription =>
+      '일일 알림을 받아 학습 연속 기록을 놓치지 않으려면 알림을 허용하세요.';
+
+  @override
+  String get enableNotifications => '알림 활성화';
+
+  @override
+  String get requestingPermission => '권한 요청 중...';
 }

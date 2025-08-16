@@ -924,5 +924,21 @@
     "saveButton": "सेव करें",
     "@saveButton": {
         "description": "Text for save button"
+    },
+    "notificationPermissionTitle": "दैनिक रिमाइंडर के साथ शब्द सीखें",
+    "@notificationPermissionTitle": {
+        "description": "Title for the notification permission page"
+    },
+    "notificationPermissionDescription": "दैनिक रिमाइंडर प्राप्त करने और अपनी सीखने की लकीर कभी न चूकने के लिए नोटिफिकेशन की अनुमति दें।",
+    "@notificationPermissionDescription": {
+        "description": "Description text for notification permission request"
+    },
+    "enableNotifications": "नोटिफिकेशन चालू करें",
+    "@enableNotifications": {
+        "description": "Button text to enable notifications"
+    },
+    "requestingPermission": "अनुमति मांगी जा रही है...",
+    "@requestingPermission": {
+        "description": "Button text while requesting permission"
     }
 } 

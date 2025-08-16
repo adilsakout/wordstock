@@ -924,5 +924,21 @@
     "saveButton": "Speichern",
     "@saveButton": {
         "description": "Text for save button"
+    },
+    "notificationPermissionTitle": "Lerne Wörter mit täglichen Erinnerungen",
+    "@notificationPermissionTitle": {
+        "description": "Title for the notification permission page"
+    },
+    "notificationPermissionDescription": "Erlaube Benachrichtigungen, um tägliche Erinnerungen zu erhalten und deine Lernsträhne nie zu verpassen.",
+    "@notificationPermissionDescription": {
+        "description": "Description text for notification permission request"
+    },
+    "enableNotifications": "Benachrichtigungen aktivieren",
+    "@enableNotifications": {
+        "description": "Button text to enable notifications"
+    },
+    "requestingPermission": "Berechtigung anfordern...",
+    "@requestingPermission": {
+        "description": "Button text while requesting permission"
     }
 } 

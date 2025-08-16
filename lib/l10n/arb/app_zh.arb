@@ -924,5 +924,21 @@
     "saveButton": "儲存",
     "@saveButton": {
         "description": "Text for save button"
+    },
+    "notificationPermissionTitle": "每日提醒學習單字",
+    "@notificationPermissionTitle": {
+        "description": "Title for the notification permission page"
+    },
+    "notificationPermissionDescription": "允許通知以接收每日提醒，從不錯過您的學習連續記錄。",
+    "@notificationPermissionDescription": {
+        "description": "Description text for notification permission request"
+    },
+    "enableNotifications": "啟用通知",
+    "@enableNotifications": {
+        "description": "Button text to enable notifications"
+    },
+    "requestingPermission": "正在請求權限...",
+    "@requestingPermission": {
+        "description": "Button text while requesting permission"
     }
 }

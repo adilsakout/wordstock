@@ -3,6 +3,7 @@ import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lottie/lottie.dart';
 import 'package:wordstock/features/onboarding/cubit/onboarding_cubit.dart';
+import 'package:wordstock/l10n/l10n.dart';
 import 'package:wordstock/widgets/button.dart';
 
 /// Notification permission page with Typeform-style animations
@@ -69,7 +70,7 @@ class _NotificationPermissionPageState
 
                   // Main title with sophisticated fade-in animation
                   Text(
-                    'Learn words with daily reminders',
+                    context.l10n.notificationPermissionTitle,
                     textAlign: TextAlign.center,
                     style: Theme.of(context).textTheme.headlineMedium?.copyWith(
                           fontWeight: FontWeight.bold,
@@ -95,7 +96,7 @@ class _NotificationPermissionPageState
 
                   // Subtitle with gentle fade-in animation
                   Text(
-                    'Allow notifications to get daily reminders and never miss your learning streak.',
+                    context.l10n.notificationPermissionDescription,
                     textAlign: TextAlign.center,
                     style: Theme.of(context).textTheme.bodyLarge?.copyWith(
                           color: Theme.of(context)
@@ -119,14 +120,13 @@ class _NotificationPermissionPageState
                         curve: Curves.easeOut,
                       ),
                   const Spacer(),
-                  // Enhanced call-to-action button with sophisticated animations
                   PushableButton(
                     width: double.infinity,
                     height: 56,
                     borderRadius: 16,
                     text: state.isRequestingPermission
-                        ? 'Requesting Permission...'
-                        : 'Enable Notifications',
+                        ? context.l10n.requestingPermission
+                        : context.l10n.enableNotifications,
                     textColor: Theme.of(context).colorScheme.onPrimary,
                     onTap: () {
                       context

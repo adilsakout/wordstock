@@ -670,4 +670,17 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get saveButton => 'Save';
+
+  @override
+  String get notificationPermissionTitle => 'Learn words with daily reminders';
+
+  @override
+  String get notificationPermissionDescription =>
+      'Allow notifications to get daily reminders and never miss your learning streak.';
+
+  @override
+  String get enableNotifications => 'Enable Notifications';
+
+  @override
+  String get requestingPermission => 'Requesting Permission...';
 }

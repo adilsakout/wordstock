@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:wordstock/core/constants/vocabulary_levels.dart';
 import 'package:wordstock/features/onboarding/cubit/onboarding_cubit.dart';
 import 'package:wordstock/features/onboarding/widgets/selector.dart';
+import 'package:wordstock/l10n/l10n.dart';
 
 /// Vocabulary level selection page with Typeform-style animations
 /// that create an engaging, progressive disclosure experience
@@ -41,7 +42,7 @@ class VocabularyLevelPage extends StatelessWidget {
                 children: [
                   // Question title with sophisticated entrance animation
                   Text(
-                    'What is your Vocabulary Level?',
+                    context.l10n.vocabularyLevelDialogTitle,
                     textAlign: TextAlign.center,
                     style: Theme.of(context).textTheme.headlineMedium?.copyWith(
                           fontWeight: FontWeight.bold,
@@ -67,7 +68,7 @@ class VocabularyLevelPage extends StatelessWidget {
 
                   // Subtitle with gentle fade-in animation
                   Text(
-                    'Select the level that best describes your current vocabulary.',
+                    context.l10n.vocabularyLevelDialogDescription,
                     textAlign: TextAlign.center,
                     style: Theme.of(context).textTheme.bodyLarge?.copyWith(
                           color: Theme.of(context)

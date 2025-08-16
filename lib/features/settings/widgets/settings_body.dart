@@ -475,7 +475,7 @@ class SettingsBody extends StatelessWidget {
               Switch(
                 value: value,
                 onChanged: onChanged,
-                activeColor: const Color(0xff1CB0F6),
+                activeThumbColor: const Color(0xff1CB0F6),
                 inactiveThumbColor: Colors.grey.shade400,
                 inactiveTrackColor: Colors.grey.shade200,
               ),

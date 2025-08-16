@@ -1265,6 +1265,30 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Save'**
   String get saveButton;
+
+  /// Title for the notification permission page
+  ///
+  /// In en, this message translates to:
+  /// **'Learn words with daily reminders'**
+  String get notificationPermissionTitle;
+
+  /// Description text for notification permission request
+  ///
+  /// In en, this message translates to:
+  /// **'Allow notifications to get daily reminders and never miss your learning streak.'**
+  String get notificationPermissionDescription;
+
+  /// Button text to enable notifications
+  ///
+  /// In en, this message translates to:
+  /// **'Enable Notifications'**
+  String get enableNotifications;
+
+  /// Button text while requesting permission
+  ///
+  /// In en, this message translates to:
+  /// **'Requesting Permission...'**
+  String get requestingPermission;
 }
 
 class _AppLocalizationsDelegate

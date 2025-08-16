@@ -671,4 +671,17 @@ class AppLocalizationsHi extends AppLocalizations {
 
   @override
   String get saveButton => 'सेव करें';
+
+  @override
+  String get notificationPermissionTitle => 'दैनिक रिमाइंडर के साथ शब्द सीखें';
+
+  @override
+  String get notificationPermissionDescription =>
+      'दैनिक रिमाइंडर प्राप्त करने और अपनी सीखने की लकीर कभी न चूकने के लिए नोटिफिकेशन की अनुमति दें।';
+
+  @override
+  String get enableNotifications => 'नोटिफिकेशन चालू करें';
+
+  @override
+  String get requestingPermission => 'अनुमति मांगी जा रही है...';
 }

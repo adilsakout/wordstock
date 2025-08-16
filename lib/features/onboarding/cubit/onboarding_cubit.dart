@@ -246,67 +246,15 @@ class OnboardingCubit extends Cubit<OnboardingState> {
     );
   }
 
-  /// Convert gender index to string representation
-  String _getGenderString(int genderIndex) {
-    switch (genderIndex) {
-      case 0:
-        return 'male';
-      case 1:
-        return 'female';
-      case 2:
-        return 'other';
-      case 3:
-        return 'prefer_not_to_say';
-      default:
-        return 'not_specified';
-    }
-  }
-
-  /// Convert topic index to string representation
-  String _getTopicString(int topicIndex) {
-    switch (topicIndex) {
-      case 0:
-        return 'society';
-      case 1:
-        return 'foreign_languages';
-      case 2:
-        return 'human_body';
-      case 3:
-        return 'emotions';
-      case 4:
-        return 'other';
-      default:
-        return 'not_specified';
-    }
-  }
-
-  /// Save all onboarding data to the user profile
+  /// Save only vocabulary level from onboarding data to the user profile
   Future<void> saveOnboardingData() async {
     try {
       // Convert vocabulary level index to enum
       final vocabularyLevel = VocabularyLevel.values[state.vocabularyLevel];
 
-      // Convert gender index to string
-      final genderString = _getGenderString(state.selectedGender);
-
-      // Clean up the goal string by removing emoji
-      final goalString = state.selectedGoals
-          .map((goal) => goal.replaceAll('🧠 ', ''))
-          .toList();
-
-      // Convert topic indices to strings
-      final topicStrings = state.selectedTopics.map(_getTopicString).toList();
-
+      // Save only vocabulary level to the user profile
       await _userRepository.saveOnboardingData(
-        ageRange: state.selectedAgeRange,
-        gender: genderString,
-        userName: state.userName,
-        timeCommitment: state.selectedTimeCommitment,
-        wordsPerDay: state.wordsPerDay,
         vocabularyLevel: vocabularyLevel,
-        selectedGoals: goalString,
-        selectedTopics: topicStrings,
-        streakGoal: state.streakGoal,
       );
     } catch (e) {
       // Handle error (could emit an error state if needed)

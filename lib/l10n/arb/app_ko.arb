@@ -924,5 +924,21 @@
     "saveButton": "저장",
     "@saveButton": {
         "description": "Text for save button"
+    },
+    "notificationPermissionTitle": "일일 알림으로 단어 학습하기",
+    "@notificationPermissionTitle": {
+        "description": "Title for the notification permission page"
+    },
+    "notificationPermissionDescription": "일일 알림을 받아 학습 연속 기록을 놓치지 않으려면 알림을 허용하세요.",
+    "@notificationPermissionDescription": {
+        "description": "Description text for notification permission request"
+    },
+    "enableNotifications": "알림 활성화",
+    "@enableNotifications": {
+        "description": "Button text to enable notifications"
+    },
+    "requestingPermission": "권한 요청 중...",
+    "@requestingPermission": {
+        "description": "Button text while requesting permission"
     }
 }

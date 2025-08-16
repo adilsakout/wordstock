@@ -642,4 +642,16 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get saveButton => '儲存';
+
+  @override
+  String get notificationPermissionTitle => '每日提醒學習單字';
+
+  @override
+  String get notificationPermissionDescription => '允許通知以接收每日提醒，從不錯過您的學習連續記錄。';
+
+  @override
+  String get enableNotifications => '啟用通知';
+
+  @override
+  String get requestingPermission => '正在請求權限...';
 }

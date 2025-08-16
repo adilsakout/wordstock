@@ -676,4 +676,18 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get saveButton => 'Guardar';
+
+  @override
+  String get notificationPermissionTitle =>
+      'Aprende palabras con recordatorios diarios';
+
+  @override
+  String get notificationPermissionDescription =>
+      'Permite las notificaciones para recibir recordatorios diarios y nunca perder tu racha de aprendizaje.';
+
+  @override
+  String get enableNotifications => 'Habilitar Notificaciones';
+
+  @override
+  String get requestingPermission => 'Solicitando Permiso...';
 }
