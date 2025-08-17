@@ -25,8 +25,15 @@ class WordRepository {
     return 'intermediate';
   }
 
-  /// Get user's vocabulary level from user_profiles table
-  /// Returns the string representation of the user's vocabulary level
+  /// Get user's vocabulary level from user_profiles table with level progression
+  ///
+  /// **Special Level Mapping for Learning Progression:**
+  /// - Beginner users (level 0) → see beginner words
+  /// - Intermediate users (level 1) → see **advanced** words (level progression!)
+  /// - Advanced users (level 2) → see advanced words
+  ///
+  /// This promotes vocabulary growth by challenging intermediate users
+  /// with advanced content to accelerate their learning journey.
   Future<String> _getUserVocabularyLevel() async {
     try {
       final response = await _supabase
@@ -37,32 +44,48 @@ class WordRepository {
 
       if (response != null && response['vocabulary_level'] != null) {
         final levelId = response['vocabulary_level'] as int;
+
+        // **Level progression logic: Intermediate users get advanced words**
+        if (levelId == 1) {
+          // Intermediate level
+          log('User has intermediate level (1), showing advanced words for progression');
+          return 'advanced'; // Show advanced words to challenge intermediate users
+        }
+
+        // For all other levels (beginner=0, advanced=2), use their actual level
         return _vocabularyLevelToString(levelId);
       }
 
-      // Default to intermediate if user has no vocabulary level set
-      return 'intermediate';
+      // Default to intermediate level, but show advanced words (following progression rule)
+      log('No vocabulary level found, defaulting to intermediate user → showing advanced words');
+      return 'advanced';
     } catch (e) {
       log('Error getting user vocabulary level: $e');
-      // Default to intermediate on error
-      return 'intermediate';
+      // Default to intermediate level, but show advanced words (following progression rule)
+      return 'advanced';
     }
   }
 
   // ================== Core Word Operations ================== //
 
-  /// Get words filtered by user's vocabulary level
-  /// Automatically filters words based on the user's selected vocabulary level
-  /// from their profile (beginner, intermediate, or advanced)
+  /// Get words filtered by user's vocabulary level with progression logic
+  ///
+  /// **Learning Progression System:**
+  /// - Beginner users see beginner-level words
+  /// - Intermediate users see **advanced-level words** (to accelerate learning!)
+  /// - Advanced users see advanced-level words
+  ///
+  /// This progressive approach challenges users to grow their vocabulary
+  /// by exposing intermediate learners to advanced content.
   Future<List<Word>> getWords({
     int page = 0,
     int pageSize = 20,
   }) async {
     try {
-      // Get the user's vocabulary level from their profile
+      // Get the user's vocabulary level from their profile (with progression logic)
       final userVocabularyLevel = await _getUserVocabularyLevel();
 
-      log('Filtering words for vocabulary level: $userVocabularyLevel');
+      log('Filtering words for vocabulary level: $userVocabularyLevel (progression-adjusted)');
 
       // Query words filtered by the user's vocabulary level
       final response = await _supabase
