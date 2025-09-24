@@ -1017,7 +1017,7 @@ abstract class AppLocalizations {
   /// Subtitle text for the English test onboarding page
   ///
   /// In en, this message translates to:
-  /// **'Let\'s gauge your vocabulary level with a quick 10-question test. This helps us personalize your learning experience!'**
+  /// **'Let\'s gauge your vocabulary level with a quick 5-question test. This helps us personalize your learning experience!'**
   String get onboardingEnglishTestSubtitle;
 
   /// Button text to start the English test
@@ -1289,6 +1289,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Requesting Permission...'**
   String get requestingPermission;
+
+  /// Text shown as instruction for swiping up gesture to navigate between words
+  ///
+  /// In en, this message translates to:
+  /// **'Swipe up'**
+  String get swipeUp;
 }
 
 class _AppLocalizationsDelegate

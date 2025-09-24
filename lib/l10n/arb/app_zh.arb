@@ -744,7 +744,7 @@
     "@onboardingEnglishTestTitle": {
         "description": "Title for the English test onboarding page"
     },
-    "onboardingEnglishTestSubtitle": "讓我們透過 10 道快速測驗來評估您的單字程度。這有助於我們個人化您的學習體驗！",
+    "onboardingEnglishTestSubtitle": "讓我們透過 5 道快速測驗來評估您的單字程度。這有助於我們個人化您的學習體驗！",
     "@onboardingEnglishTestSubtitle": {
         "description": "Subtitle text for the English test onboarding page"
     },
@@ -940,5 +940,9 @@
     "requestingPermission": "正在請求權限...",
     "@requestingPermission": {
         "description": "Button text while requesting permission"
+    },
+    "swipeUp": "向上滑動",
+    "@swipeUp": {
+        "description": "Text shown as instruction for swiping up gesture to navigate between words"
     }
 }

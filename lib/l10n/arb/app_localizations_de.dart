@@ -540,7 +540,7 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get onboardingEnglishTestSubtitle =>
-      'Lassen Sie uns Ihr Vokabularniveau mit einem schnellen 10-Fragen-Test einschätzen. Das hilft uns, Ihre Lernerfahrung zu personalisieren!';
+      'Lassen Sie uns Ihr Vokabularniveau mit einem schnellen 5-Fragen-Test einschätzen. Das hilft uns, Ihre Lernerfahrung zu personalisieren!';
 
   @override
   String get onboardingEnglishTestStart => '🚀 Bewertung starten';
@@ -690,4 +690,7 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get requestingPermission => 'Berechtigung anfordern...';
+
+  @override
+  String get swipeUp => 'Nach oben wischen';
 }

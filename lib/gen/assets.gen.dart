@@ -9,6 +9,42 @@
 
 import 'package:flutter/widgets.dart';
 
+class $AssetsDataGen {
+  const $AssetsDataGen();
+
+  /// File path: assets/data/english_test_advanced.json
+  String get englishTestAdvanced => 'assets/data/english_test_advanced.json';
+
+  /// File path: assets/data/english_test_beginner.json
+  String get englishTestBeginner => 'assets/data/english_test_beginner.json';
+
+  /// File path: assets/data/english_test_intermediate.json
+  String get englishTestIntermediate =>
+      'assets/data/english_test_intermediate.json';
+
+  /// File path: assets/data/word_definitions_advanced.json
+  String get wordDefinitionsAdvanced =>
+      'assets/data/word_definitions_advanced.json';
+
+  /// File path: assets/data/word_definitions_beginner.json
+  String get wordDefinitionsBeginner =>
+      'assets/data/word_definitions_beginner.json';
+
+  /// File path: assets/data/word_definitions_intermediate.json
+  String get wordDefinitionsIntermediate =>
+      'assets/data/word_definitions_intermediate.json';
+
+  /// List of all assets
+  List<String> get values => [
+    englishTestAdvanced,
+    englishTestBeginner,
+    englishTestIntermediate,
+    wordDefinitionsAdvanced,
+    wordDefinitionsBeginner,
+    wordDefinitionsIntermediate,
+  ];
+}
+
 class $AssetsIconsGen {
   const $AssetsIconsGen();
 
@@ -102,6 +138,22 @@ class $AssetsImagesGen {
   ];
 }
 
+class $AssetsLottieGen {
+  const $AssetsLottieGen();
+
+  /// File path: assets/lottie/bell_notification.json
+  String get bellNotification => 'assets/lottie/bell_notification.json';
+
+  /// File path: assets/lottie/experiment.json
+  String get experiment => 'assets/lottie/experiment.json';
+
+  /// File path: assets/lottie/welcome.json
+  String get welcome => 'assets/lottie/welcome.json';
+
+  /// List of all assets
+  List<String> get values => [bellNotification, experiment, welcome];
+}
+
 class $AssetsSecretsGen {
   const $AssetsSecretsGen();
 
@@ -138,8 +190,10 @@ class Assets {
   const Assets._();
 
   static const String aEnv = '.env';
+  static const $AssetsDataGen data = $AssetsDataGen();
   static const $AssetsIconsGen icons = $AssetsIconsGen();
   static const $AssetsImagesGen images = $AssetsImagesGen();
+  static const $AssetsLottieGen lottie = $AssetsLottieGen();
   static const $AssetsSecretsGen secrets = $AssetsSecretsGen();
   static const $AssetsSoundsGen sounds = $AssetsSoundsGen();
 

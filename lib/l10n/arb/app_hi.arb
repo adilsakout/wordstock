@@ -744,7 +744,7 @@
     "@onboardingEnglishTestTitle": {
         "description": "Title for the English test onboarding page"
     },
-    "onboardingEnglishTestSubtitle": "आइए 10-प्रश्न परीक्षा के साथ आपके शब्दावली स्तर का आकलन करते हैं। यह हमें आपके सीखने के अनुभव को व्यक्तिगत बनाने में मदद करता है!",
+    "onboardingEnglishTestSubtitle": "आइए 5-प्रश्न परीक्षा के साथ आपके शब्दावली स्तर का आकलन करते हैं। यह हमें आपके सीखने के अनुभव को व्यक्तिगत बनाने में मदद करता है!",
     "@onboardingEnglishTestSubtitle": {
         "description": "Subtitle text for the English test onboarding page"
     },
@@ -940,5 +940,9 @@
     "requestingPermission": "अनुमति मांगी जा रही है...",
     "@requestingPermission": {
         "description": "Button text while requesting permission"
+    },
+    "swipeUp": "ऊपर स्वाइप करें",
+    "@swipeUp": {
+        "description": "Text shown as instruction for swiping up gesture to navigate between words"
     }
 } 

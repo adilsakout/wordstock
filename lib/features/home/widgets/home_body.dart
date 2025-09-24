@@ -305,9 +305,9 @@ class _HomeBodyState extends State<HomeBody>
                                   width: 50,
                                   height: 50,
                                 ),
-                                const Text(
-                                  'Swipe up',
-                                  style: TextStyle(
+                                Text(
+                                  context.l10n.swipeUp,
+                                  style: const TextStyle(
                                     fontSize: 16,
                                     fontWeight: FontWeight.bold,
                                   ),

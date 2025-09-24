@@ -514,7 +514,7 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get onboardingEnglishTestSubtitle =>
-      '讓我們透過 10 道快速測驗來評估您的單字程度。這有助於我們個人化您的學習體驗！';
+      '讓我們透過 5 道快速測驗來評估您的單字程度。這有助於我們個人化您的學習體驗！';
 
   @override
   String get onboardingEnglishTestStart => '🚀 開始評估';
@@ -654,4 +654,7 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get requestingPermission => '正在請求權限...';
+
+  @override
+  String get swipeUp => '向上滑動';
 }

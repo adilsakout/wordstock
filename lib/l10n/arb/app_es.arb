@@ -744,7 +744,7 @@
     "@onboardingEnglishTestTitle": {
         "description": "Title for the English test onboarding page"
     },
-    "onboardingEnglishTestSubtitle": "Midamos tu nivel de vocabulario con una prueba rápida de 10 preguntas. ¡Esto nos ayuda a personalizar tu experiencia de aprendizaje!",
+    "onboardingEnglishTestSubtitle": "Midamos tu nivel de vocabulario con una prueba rápida de 5 preguntas. ¡Esto nos ayuda a personalizar tu experiencia de aprendizaje!",
     "@onboardingEnglishTestSubtitle": {
         "description": "Subtitle text for the English test onboarding page"
     },
@@ -940,5 +940,9 @@
     "requestingPermission": "Solicitando Permiso...",
     "@requestingPermission": {
         "description": "Button text while requesting permission"
+    },
+    "swipeUp": "Desliza hacia arriba",
+    "@swipeUp": {
+        "description": "Text shown as instruction for swiping up gesture to navigate between words"
     }
 } 

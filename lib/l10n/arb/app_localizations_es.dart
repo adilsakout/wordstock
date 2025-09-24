@@ -540,7 +540,7 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get onboardingEnglishTestSubtitle =>
-      'Midamos tu nivel de vocabulario con una prueba rápida de 10 preguntas. ¡Esto nos ayuda a personalizar tu experiencia de aprendizaje!';
+      'Midamos tu nivel de vocabulario con una prueba rápida de 5 preguntas. ¡Esto nos ayuda a personalizar tu experiencia de aprendizaje!';
 
   @override
   String get onboardingEnglishTestStart => '🚀 Comenzar Evaluación';
@@ -690,4 +690,7 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get requestingPermission => 'Solicitando Permiso...';
+
+  @override
+  String get swipeUp => 'Desliza hacia arriba';
 }

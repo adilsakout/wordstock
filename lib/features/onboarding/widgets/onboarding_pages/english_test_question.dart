@@ -2,6 +2,7 @@ import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:gaimon/gaimon.dart';
+import 'package:wordstock/repositories/word_definitions_repository.dart';
 import 'package:wordstock/widgets/button.dart';
 import 'package:wordstock/widgets/quiz_button.dart';
 
@@ -55,6 +56,10 @@ class _EnglishTestQuestionState extends State<EnglishTestQuestion>
   // Audio players for different sounds
   final AudioPlayer _correctPlayer = AudioPlayer();
   final AudioPlayer _errorPlayer = AudioPlayer();
+
+  /// Repository for loading word definitions from JSON assets
+  final WordDefinitionsRepository _definitionsRepository =
+      const WordDefinitionsRepository();
 
   @override
   void initState() {
@@ -129,65 +134,29 @@ class _EnglishTestQuestionState extends State<EnglishTestQuestion>
   }
 
   /// Get definition and encouraging message for a word
-  Map<String, String> _getWordInfo(String word) {
-    // Simple word definitions for common vocabulary test words
-    final definitions = {
-      // Beginner words
-      'happy': 'feeling joy or pleasure',
-      'heavy': 'having great weight; difficult to lift',
-      'open': 'not closed; to make accessible',
-      'big': 'large in size or amount',
-      'cook': 'to prepare food by heating',
-      'hot': 'having high temperature',
-      'study': 'to learn about something carefully',
-      'small': 'little in size',
-      'live': 'to have life; to reside somewhere',
-      'quiet': 'making little or no noise',
+  ///
+  /// Uses the [WordDefinitionsRepository] to load word definitions from
+  /// JSON asset files organized by vocabulary levels.
+  Future<Map<String, String>> _getWordInfo(String word) async {
+    try {
+      // Get definition from repository
+      final definition =
+          await _definitionsRepository.getDefinitionForWord(word);
 
-      // Intermediate words
-      'eloquent': 'fluent and persuasive in speaking',
-      'flawless': 'without any imperfections',
-      'deteriorated': 'became worse in quality',
-      'methodical': 'done according to a systematic plan',
-      'audacious': 'showing willingness to take bold risks',
-      'groundbreaking': 'pioneering; innovative',
-      'persuasive': 'good at convincing others',
-      'seamless': 'smooth and continuous',
-      'vehement': 'showing strong feeling; forceful',
-      'cogent': 'clear, logical, and convincing',
+      // Get encouraging message from repository
+      final message = _definitionsRepository.getEncouragingMessage(word);
 
-      // Advanced words
-      'opaque': 'not transparent; difficult to understand',
-      'trenchant': 'vigorous and incisive in expression',
-      'nuanced': 'characterized by subtle distinctions',
-      'gratuitous': 'uncalled for; lacking good reason',
-      'quixotic': 'unrealistic and impractical',
-      'ironic': 'using words to convey opposite meaning',
-      'withering': 'intended to make someone feel ashamed',
-      'vituperative': 'bitter and abusive in language',
-      'granular': 'existing in great detail',
-      'specious': 'superficially plausible but actually wrong',
-    };
-
-    final encouragingMessages = [
-      'Every expert was once a beginner! 🌟',
-      'Learning is a journey, not a destination! 🚀',
-      "You're expanding your vocabulary universe! 🌌",
-      'Knowledge is power - keep building yours! 💪',
-      'Every new word is a new superpower! ⚡',
-      "You're one step closer to mastery! 🎯",
-      'Great minds learn from every experience! 🧠',
-      'Your curiosity is your greatest strength! 🔍',
-      'Building vocabulary, building confidence! 💎',
-      'Learning never stops, and neither do you! 🌊',
-    ];
-
-    return {
-      'definition':
-          definitions[word.toLowerCase()] ?? 'a valuable word to learn',
-      'message':
-          encouragingMessages[word.hashCode % encouragingMessages.length],
-    };
+      return {
+        'definition': definition,
+        'message': message,
+      };
+    } catch (e) {
+      // Fallback to default values if repository fails
+      return {
+        'definition': 'a valuable word to learn',
+        'message': 'Every expert was once a beginner! 🌟',
+      };
+    }
   }
 
   @override
@@ -378,126 +347,139 @@ class _EnglishTestQuestionState extends State<EnglishTestQuestion>
   /// Builds the feedback section with encouragement and next button
   Widget _buildFeedbackSection(BuildContext context) {
     final isCorrect = widget.selectedAnswer == widget.correctAnswer;
-    final wordInfo = _getWordInfo(widget.correctAnswer);
     final bottomPadding = MediaQuery.of(context).padding.bottom;
 
-    return Container(
-      padding: EdgeInsets.only(
-        left: 16,
-        top: 16,
-        right: 16,
-        bottom: bottomPadding,
-      ),
-      decoration: BoxDecoration(
-        color: isCorrect
-            ? const Color(0xff58CC02).withValues(alpha: 0.1)
-            : const Color(0xffFF4B4B).withValues(alpha: 0.1),
-        borderRadius: BorderRadius.circular(16),
-        border: Border.all(
-          color: isCorrect
-              ? const Color(0xff58CC02).withValues(alpha: 0.3)
-              : const Color(0xffFF4B4B).withValues(alpha: 0.3),
-        ),
-      ),
-      child: Column(
-        children: [
-          // Feedback icon and message
-          Row(
-            children: [
-              Container(
-                width: 40,
-                height: 40,
-                decoration: BoxDecoration(
-                  color: isCorrect
-                      ? const Color(0xff58CC02)
-                      : const Color(0xffFF4B4B),
-                  shape: BoxShape.circle,
-                ),
-                child: Icon(
-                  isCorrect ? Icons.check : Icons.lightbulb_outline,
-                  color: Colors.white,
-                  size: 20,
-                ),
-              ),
-              const SizedBox(width: 12),
-              Expanded(
-                child: Text(
-                  isCorrect
-                      ? 'Perfect! You nailed it! 🎉'
-                      : wordInfo['message']!,
-                  style: TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.w600,
-                    color: isCorrect
-                        ? const Color(0xff58CC02)
-                        : const Color(0xffFF4B4B),
-                  ),
-                ),
-              ),
-            ],
-          ),
+    return FutureBuilder<Map<String, String>>(
+      future: _getWordInfo(widget.correctAnswer),
+      builder: (context, snapshot) {
+        // Default values while loading or on error
+        final wordInfo = snapshot.data ??
+            {
+              'definition': 'a valuable word to learn',
+              'message': 'Every expert was once a beginner! 🌟',
+            };
 
-          // Word definition and encouragement for wrong answers
-          if (!isCorrect) ...[
-            const SizedBox(height: 16),
-            Container(
-              padding: const EdgeInsets.all(16),
-              decoration: BoxDecoration(
-                color: Colors.grey.shade50,
-                borderRadius: BorderRadius.circular(12),
-                border: Border.all(color: Colors.grey.shade200),
-              ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+        return Container(
+          padding: EdgeInsets.only(
+            left: 16,
+            top: 16,
+            right: 16,
+            bottom: bottomPadding,
+          ),
+          decoration: BoxDecoration(
+            color: isCorrect
+                ? const Color(0xff58CC02).withValues(alpha: 0.1)
+                : const Color(0xffFF4B4B).withValues(alpha: 0.1),
+            borderRadius: BorderRadius.circular(16),
+            border: Border.all(
+              color: isCorrect
+                  ? const Color(0xff58CC02).withValues(alpha: 0.3)
+                  : const Color(0xffFF4B4B).withValues(alpha: 0.3),
+            ),
+          ),
+          child: Column(
+            children: [
+              // Feedback icon and message
+              Row(
                 children: [
-                  Row(
-                    children: [
-                      const Text(
-                        '💡 ',
-                        style: TextStyle(fontSize: 18),
-                      ),
-                      Text(
-                        '"${widget.correctAnswer}"',
-                        style: const TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.bold,
-                          color: Color(0xff1CB0F6),
-                        ),
-                      ),
-                    ],
+                  Container(
+                    width: 40,
+                    height: 40,
+                    decoration: BoxDecoration(
+                      color: isCorrect
+                          ? const Color(0xff58CC02)
+                          : const Color(0xffFF4B4B),
+                      shape: BoxShape.circle,
+                    ),
+                    child: Icon(
+                      isCorrect ? Icons.check : Icons.lightbulb_outline,
+                      color: Colors.white,
+                      size: 20,
+                    ),
                   ),
-                  const SizedBox(height: 8),
-                  Text(
-                    wordInfo['definition']!,
-                    style: TextStyle(
-                      fontSize: 14,
-                      color: Colors.grey.shade700,
-                      height: 1.4,
+                  const SizedBox(width: 12),
+                  Expanded(
+                    child: Text(
+                      isCorrect
+                          ? 'Perfect! You nailed it! 🎉'
+                          : wordInfo['message']!,
+                      style: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.w600,
+                        color: isCorrect
+                            ? const Color(0xff58CC02)
+                            : const Color(0xffFF4B4B),
+                      ),
                     ),
                   ),
                 ],
               ),
-            ),
-          ],
 
-          const SizedBox(height: 20),
+              // Word definition and encouragement for wrong answers
+              if (!isCorrect) ...[
+                const SizedBox(height: 16),
+                Container(
+                  padding: const EdgeInsets.all(16),
+                  decoration: BoxDecoration(
+                    color: Colors.grey.shade50,
+                    borderRadius: BorderRadius.circular(12),
+                    border: Border.all(color: Colors.grey.shade200),
+                  ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Row(
+                        children: [
+                          const Text(
+                            '💡 ',
+                            style: TextStyle(fontSize: 18),
+                          ),
+                          Text(
+                            '"${widget.correctAnswer}"',
+                            style: const TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold,
+                              color: Color(0xff1CB0F6),
+                            ),
+                          ),
+                        ],
+                      ),
+                      const SizedBox(height: 8),
+                      Text(
+                        wordInfo['definition']!,
+                        style: TextStyle(
+                          fontSize: 14,
+                          color: Colors.grey.shade700,
+                          height: 1.4,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
 
-          // Next button
-          PushableButton(
-            width: double.infinity,
-            height: 50,
-            borderRadius: 25,
-            text: widget.currentQuestionIndex == widget.totalQuestions - 1
-                ? 'See Results'
-                : 'Next Question',
-            buttonColor:
-                isCorrect ? const Color(0xff58CC02) : const Color(0xff1CB0F6),
-            shadowColor:
-                isCorrect ? const Color(0xff58A700) : const Color(0xff1899D6),
-            onTap: widget.onNext ?? () {},
+              const SizedBox(height: 20),
+
+              // Next button
+              PushableButton(
+                width: double.infinity,
+                height: 50,
+                borderRadius: 25,
+                text: widget.currentQuestionIndex == widget.totalQuestions - 1
+                    ? 'See Results'
+                    : 'Next Question',
+                buttonColor: isCorrect
+                    ? const Color(0xff58CC02)
+                    : const Color(0xff1CB0F6),
+                shadowColor: isCorrect
+                    ? const Color(0xff58A700)
+                    : const Color(0xff1899D6),
+                onTap: widget.onNext ?? () {},
+              ),
+            ],
           ),
-        ],
-      ),
+        );
+      },
     )
         .animate()
         .slideY(

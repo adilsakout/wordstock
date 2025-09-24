@@ -132,6 +132,7 @@ class _QuizResultState extends State<QuizResult>
                 // Result Message
                 Text(
                   resultMessage,
+                  textAlign: TextAlign.center,
                   style: TextStyle(
                     fontSize: 32,
                     fontWeight: FontWeight.bold,
@@ -239,6 +240,7 @@ class _QuizResultState extends State<QuizResult>
                         ),
                         child: Center(
                           child: Text(
+                            textAlign: TextAlign.center,
                             l10n.coinsEarned(pointsEarned),
                             style: const TextStyle(
                               fontSize: 16,

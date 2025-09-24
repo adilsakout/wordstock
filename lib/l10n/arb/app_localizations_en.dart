@@ -535,7 +535,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get onboardingEnglishTestSubtitle =>
-      'Let\'s gauge your vocabulary level with a quick 10-question test. This helps us personalize your learning experience!';
+      'Let\'s gauge your vocabulary level with a quick 5-question test. This helps us personalize your learning experience!';
 
   @override
   String get onboardingEnglishTestStart => '🚀 Start Assessment';
@@ -683,4 +683,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get requestingPermission => 'Requesting Permission...';
+
+  @override
+  String get swipeUp => 'Swipe up';
 }

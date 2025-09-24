@@ -522,7 +522,7 @@ class AppLocalizationsKo extends AppLocalizations {
 
   @override
   String get onboardingEnglishTestSubtitle =>
-      '10문제의 빠른 테스트로 어휘 수준을 측정해 보겠습니다. 이를 통해 학습 경험을 개인화할 수 있습니다!';
+      '5문제의 빠른 테스트로 어휘 수준을 측정해 보겠습니다. 이를 통해 학습 경험을 개인화할 수 있습니다!';
 
   @override
   String get onboardingEnglishTestStart => '🚀 평가 시작';
@@ -665,4 +665,7 @@ class AppLocalizationsKo extends AppLocalizations {
 
   @override
   String get requestingPermission => '권한 요청 중...';
+
+  @override
+  String get swipeUp => '위로 스와이프';
 }

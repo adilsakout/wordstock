@@ -1,0 +1,45 @@
+{
+  "level": "advanced",
+  "definitions": [
+    {
+      "word": "opaque",
+      "definition": "not transparent; difficult to understand"
+    },
+    {
+      "word": "trenchant",
+      "definition": "vigorous and incisive in expression"
+    },
+    {
+      "word": "nuanced",
+      "definition": "characterized by subtle distinctions"
+    },
+    {
+      "word": "gratuitous",
+      "definition": "uncalled for; lacking good reason"
+    },
+    {
+      "word": "quixotic",
+      "definition": "unrealistic and impractical"
+    },
+    {
+      "word": "ironic",
+      "definition": "using words to convey opposite meaning"
+    },
+    {
+      "word": "withering",
+      "definition": "intended to make someone feel ashamed"
+    },
+    {
+      "word": "vituperative",
+      "definition": "bitter and abusive in language"
+    },
+    {
+      "word": "granular",
+      "definition": "existing in great detail"
+    },
+    {
+      "word": "specious",
+      "definition": "superficially plausible but actually wrong"
+    }
+  ]
+}
