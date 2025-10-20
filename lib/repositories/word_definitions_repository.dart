@@ -71,10 +71,12 @@ class WordDefinitionsRepository {
 
   /// Gets all definitions for a specific vocabulary level.
   ///
-  /// Loads and caches definitions for the specified level if not already cached.
+  /// Loads and caches definitions for the specified level if not already
+  /// cached.
   /// Maps vocabulary level IDs to appropriate JSON asset files.
   ///
-  /// [levelId] - The vocabulary level ID (0=beginner, 1=intermediate, 2=advanced)
+  /// [levelId] - The vocabulary level ID (0=beginner, 1=intermediate,
+  /// 2=advanced)
   ///
   /// Returns a [WordDefinitionSet] for the specified level.
   /// Throws [Exception] if the definitions cannot be loaded.
@@ -155,7 +157,8 @@ class WordDefinitionsRepository {
     // Cache the result for future use
     _definitionCache[cacheKey] = definitionSet;
 
-    log('Loaded ${definitionSet.definitions.length} definitions for level: ${definitionSet.level}');
+    log('Loaded ${definitionSet.definitions.length} definitions for level: '
+        '${definitionSet.level}');
     return definitionSet;
   }
 

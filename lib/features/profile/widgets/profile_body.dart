@@ -33,7 +33,8 @@ class ProfileBody extends StatefulWidget {
 }
 
 /// {@template profile_menu_item}
-/// A custom menu item widget for the profile page that follows the Selector design pattern
+/// A custom menu item widget for the profile page that follows the
+/// Selector design pattern
 /// while maintaining profile-specific styling and functionality.
 ///
 /// Features:
@@ -156,7 +157,6 @@ class _ProfileMenuItemState extends State<ProfileMenuItem>
                         borderRadius: BorderRadius.circular(16),
                         border: Border.all(
                           color: const Color(0xffE5E5E7),
-                          width: 1,
                         ),
                         boxShadow: [
                           // Subtle shadow for premium feel
@@ -207,7 +207,7 @@ class _ProfileMenuItemState extends State<ProfileMenuItem>
                                               : const Color(0xffCDB054))
                                           .withValues(alpha: 0.3),
                                       blurRadius: 4,
-                                      offset: Offset(0, 2),
+                                      offset: const Offset(0, 2),
                                     ),
                                   ],
                                 ),
@@ -253,7 +253,7 @@ class _ProfileMenuItemState extends State<ProfileMenuItem>
                                   color: (widget.onTap == null
                                           ? Colors.grey[400]!
                                           : const Color(0xffF9C835))
-                                      .withOpacity(0.15),
+                                      .withValues(alpha: 0.15),
                                   borderRadius: BorderRadius.circular(8),
                                 ),
                                 child: Icon(
