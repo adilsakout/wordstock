@@ -40,6 +40,14 @@ class _UserPointWidgetState extends State<UserPointWidget>
   }
 
   @override
+  void dispose() {
+    // Dispose animation controller to prevent ticker leaks
+    // This is required when using TickerProviderStateMixin
+    _controller.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return BlocConsumer<StreakCubit, StreakState>(
       listener: (context, state) async {
