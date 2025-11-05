@@ -173,30 +173,16 @@ class _VocabularyQuizState extends State<VocabularyQuiz>
           }
 
           // Check if answer was just submitted
+          // Show next button immediately after answer is submitted
           if (state.hasSubmittedAnswer && !_showNextButton) {
-            // Delay showing the next button until animations complete
-            // Total animation time is approximately 1.5s
-            Future.delayed(const Duration(milliseconds: 1500), () {
-              if (mounted) {
-                setState(() {
-                  _showNextButton = true;
-                });
-              }
+            setState(() {
+              _showNextButton = true;
             });
           }
 
           // Setup auto-navigation to results on last question
-          if (state.isLastQuestion && state.hasSubmittedAnswer) {
-            _resultPageNavigationTimer?.cancel();
-            _resultPageNavigationTimer = Timer(
-              const Duration(milliseconds: 1500),
-              () {
-                if (mounted) {
-                  widget.onTap(); // Go to results page
-                }
-              },
-            );
-          }
+          // Removed auto-navigation delay - user must click finish button
+          // Auto-navigation removed to give user control
         }
       },
       builder: (context, state) {
