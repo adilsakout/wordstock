@@ -51,10 +51,10 @@ dependencies:
   purchases_ui_flutter: ^8.7.0
   screenshot: ^3.0.0
   sentry_flutter: ^8.14.1
-  share_plus: ^10.1.4
+  share_plus: ^10.0.0
   shared_preferences: ^2.5.2
   shimmer: ^3.0.0
-  supabase_flutter: ^2.8.4
+  supabase_flutter: ^2.10.3
   url_launcher: ^6.3.1
 
 dev_dependencies:
