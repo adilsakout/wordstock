@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
+import 'package:flutter/foundation.dart';
 import 'package:wordstock/model/word.dart';
 import 'package:wordstock/repositories/tts_repository.dart';
 import 'package:wordstock/repositories/user_repository.dart';
@@ -34,6 +35,7 @@ class HomeCubit extends Cubit<HomeState> {
     try {
       await ttsRepository.synthesizeAndPlay(word);
     } catch (e) {
+      debugPrint('Error speaking word: $e');
       emit(HomeError(errorMessage: e.toString()));
     }
   }
