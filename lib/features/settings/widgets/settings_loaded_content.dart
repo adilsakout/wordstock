@@ -166,7 +166,12 @@ class SettingsLoadedContent extends StatelessWidget {
                 ? () {} // Disabled while updating
                 : () {
                     Gaimon.soft();
-                    ResetSettingsDialog.show(context);
+                    ResetSettingsDialog.show(
+                      context,
+                      onConfirm: () {
+                        context.read<SettingsCubit>().resetToDefaults();
+                      },
+                    );
                   },
           ).animate().fadeIn(
                 duration: 200.milliseconds,

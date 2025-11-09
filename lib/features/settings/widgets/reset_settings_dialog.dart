@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:gaimon/gaimon.dart';
-import 'package:wordstock/features/settings/cubit/cubit.dart';
 import 'package:wordstock/l10n/l10n.dart';
 import 'package:wordstock/widgets/button.dart';
 
@@ -13,13 +12,24 @@ import 'package:wordstock/widgets/button.dart';
 /// {@endtemplate}
 class ResetSettingsDialog extends StatelessWidget {
   /// {@macro reset_settings_dialog}
-  const ResetSettingsDialog({super.key});
+  const ResetSettingsDialog({
+    required this.onConfirm,
+    super.key,
+  });
+
+  /// Callback when reset is confirmed
+  final VoidCallback onConfirm;
 
   /// Shows the reset settings confirmation dialog
-  static Future<void> show(BuildContext context) {
+  static Future<void> show(
+    BuildContext context, {
+    required VoidCallback onConfirm,
+  }) {
     return showDialog<void>(
       context: context,
-      builder: (dialogContext) => const ResetSettingsDialog(),
+      builder: (dialogContext) => ResetSettingsDialog(
+        onConfirm: onConfirm,
+      ),
     );
   }
 
@@ -127,9 +137,8 @@ class ResetSettingsDialog extends StatelessWidget {
                   onTap: () {
                     Gaimon.soft();
                     Navigator.of(context).pop();
-                    // Find the settings cubit from the outer context
-                    // where BlocProvider is available
-                    context.read<SettingsCubit>().resetToDefaults();
+                    // Call the callback to reset settings
+                    onConfirm();
                   },
                 ).animate().fadeIn(
                       duration: 300.milliseconds,
