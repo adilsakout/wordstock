@@ -32,9 +32,7 @@ class SettingsPage extends StatelessWidget {
       create: (context) => SettingsCubit(
         settingsRepository: SettingsRepository(),
       )..loadSettings(),
-      child: const Scaffold(
-        body: SettingsView(),
-      ),
+      child: const SettingsView(),
     );
   }
 }

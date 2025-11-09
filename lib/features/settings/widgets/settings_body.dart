@@ -5,6 +5,7 @@ import 'package:go_router/go_router.dart';
 import 'package:wordstock/features/settings/cubit/cubit.dart';
 import 'package:wordstock/l10n/l10n.dart';
 import 'package:wordstock/repositories/settings_repository.dart';
+import 'package:wordstock/widgets/button.dart';
 import 'package:wordstock/widgets/toggle_tile.dart';
 
 /// {@template settings_body}
@@ -24,17 +25,20 @@ class SettingsBody extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<SettingsCubit, SettingsState>(
       builder: (context, state) {
-        return SafeArea(
-          child: Column(
-            children: [
-              // Header with title and back button
-              _buildHeader(context),
+        return Scaffold(
+          backgroundColor: const Color(0xFFF5F7FA),
+          body: SafeArea(
+            child: Column(
+              children: [
+                // Header with title and back button
+                _buildHeader(context),
 
-              // Settings content
-              Expanded(
-                child: _buildContent(context, state),
-              ),
-            ],
+                // Settings content
+                Expanded(
+                  child: _buildContent(context, state),
+                ),
+              ],
+            ),
           ),
         );
       },
@@ -43,44 +47,45 @@ class SettingsBody extends StatelessWidget {
 
   /// Builds the header section with navigation and title
   ///
-  /// The header includes a back button and the page title
-  ///  with smooth animations
-  /// that follow the app's established design patterns.
+  /// The header includes a colorful back button and page title
+  /// that matches the app's playful, modern design language.
   Widget _buildHeader(BuildContext context) {
     final l10n = context.l10n;
 
-    return Container(
-      padding: const EdgeInsets.all(20),
+    return Padding(
+      padding: const EdgeInsets.only(left: 20, top: 20, bottom: 10),
       child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          // Back button with haptic feedback
-          IconButton(
-            onPressed: () {
-              Gaimon.soft(); // Haptic feedback for better user experience
-              context.pop();
-            },
-            icon: const Icon(
-              Icons.arrow_back,
-              size: 24,
-            ),
-          ).animate().fadeIn().slideX(
-                begin: -1,
-                duration: 400.milliseconds,
+          // Colorful back button matching app's design
+          PushableButton(
+            width: 50,
+            height: 50,
+            buttonColor: const Color(0xffF9C835),
+            shadowColor: const Color(0xffCDB054),
+            text: '',
+            suffixIcon: Icons.arrow_back_ios_new_rounded,
+            onTap: () => context.pop(),
+          ).animate().fadeIn(
+                duration: 300.milliseconds,
+                delay: 50.milliseconds,
               ),
 
-          const SizedBox(width: 16),
-
-          // Page title with modern typography
+          // Page title with bold typography
           Text(
             l10n.settingsTitle,
-            style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                  fontSize: 32,
-                  fontWeight: FontWeight.w600,
-                ),
-          ).animate().fadeIn().slideY(
-                begin: 1,
-                duration: 400.milliseconds,
+            style: const TextStyle(
+              fontSize: 24,
+              fontWeight: FontWeight.w700,
+              color: Color(0xFF1D1D1F),
+            ),
+          ).animate().fadeIn(
+                duration: 300.milliseconds,
+                delay: 100.milliseconds,
               ),
+
+          // Spacer for centered title
+          const SizedBox(width: 50),
         ],
       ),
     );
@@ -104,10 +109,12 @@ class SettingsBody extends StatelessWidget {
   /// Builds the initial state UI
   ///
   /// Shows a minimal loading indicator while
-  ///  the settings are being initialized.
+  /// the settings are being initialized.
   Widget _buildInitialState() {
     return const Center(
-      child: CircularProgressIndicator(),
+      child: CircularProgressIndicator(
+        color: Color(0xffF9C835),
+      ),
     );
   }
 
@@ -124,13 +131,15 @@ class SettingsBody extends StatelessWidget {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              const CircularProgressIndicator(),
+              const CircularProgressIndicator(
+                color: Color(0xffF9C835),
+              ),
               const SizedBox(height: 16),
               Text(
                 l10n.settingsLoadingMessage,
-                style: const TextStyle(
+                style: TextStyle(
                   fontSize: 16,
-                  color: Colors.grey,
+                  color: Colors.grey[600],
                 ),
               ),
             ],
@@ -152,148 +161,139 @@ class SettingsBody extends StatelessWidget {
   ) {
     final l10n = context.l10n;
 
-    return SingleChildScrollView(
-      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          // Notifications section header
-          _buildSectionHeader(
-            context,
-            l10n.settingsNotifications,
-            l10n.settingsNotificationsDescription,
-          ).animate().fadeIn().slideY(
-                begin: 1,
-                delay: 100.milliseconds,
-                duration: 400.milliseconds,
+    return ListView(
+      physics: const BouncingScrollPhysics(),
+      padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 20),
+      children: [
+        // Notifications section header
+        _buildSectionHeader(
+          context,
+          l10n.settingsNotifications,
+          l10n.settingsNotificationsDescription,
+        ).animate().fadeIn(
+              duration: 250.milliseconds,
+              delay: 150.milliseconds,
+            ),
+
+        const SizedBox(height: 16),
+
+        // Master notifications toggle
+        ToggleTile(
+          icon: Icons.notifications,
+          title: l10n.settingsEnableNotifications,
+          subtitle: l10n.settingsEnableNotificationsDescription,
+          value: settings.notificationsEnabled,
+          onChanged: (value) {
+            Gaimon.soft(); // Haptic feedback
+            context.read<SettingsCubit>().toggleNotifications(enabled: value);
+          },
+          isUpdating: updatingSetting == UpdatingSettingType.notifications,
+        ).animate().fadeIn(
+              duration: 200.milliseconds,
+              delay: 200.milliseconds,
+            ),
+
+        const SizedBox(height: 10),
+
+        // Individual notification toggles (disabled if master is off)
+        ToggleTile(
+          icon: Icons.schedule,
+          title: l10n.settingsDailyReminders,
+          subtitle: l10n.settingsDailyRemindersDescription,
+          value: settings.dailyReminderEnabled,
+          onChanged: settings.notificationsEnabled
+              ? (value) {
+                  Gaimon.soft();
+                  context
+                      .read<SettingsCubit>()
+                      .toggleDailyReminder(enabled: value);
+                }
+              : null,
+          isUpdating: updatingSetting == UpdatingSettingType.dailyReminder,
+        ).animate().fadeIn(
+              duration: 200.milliseconds,
+              delay: 250.milliseconds,
+            ),
+
+        const SizedBox(height: 10),
+
+        ToggleTile(
+          icon: Icons.fitness_center,
+          title: l10n.settingsPracticeReminders,
+          subtitle: l10n.settingsPracticeRemindersDescription,
+          value: settings.practiceReminderEnabled,
+          onChanged: settings.notificationsEnabled
+              ? (value) {
+                  Gaimon.soft();
+                  context
+                      .read<SettingsCubit>()
+                      .togglePracticeReminder(enabled: value);
+                }
+              : null,
+          isUpdating: updatingSetting == UpdatingSettingType.practiceReminder,
+        ).animate().fadeIn(
+              duration: 200.milliseconds,
+              delay: 300.milliseconds,
+            ),
+
+        const SizedBox(height: 10),
+
+        ToggleTile(
+          icon: Icons.library_books,
+          title: l10n.settingsNewWords,
+          subtitle: l10n.settingsNewWordsDescription,
+          value: settings.newWordNotificationEnabled,
+          onChanged: settings.notificationsEnabled
+              ? (value) {
+                  Gaimon.soft();
+                  context
+                      .read<SettingsCubit>()
+                      .toggleNewWordNotification(enabled: value);
+                }
+              : null,
+          isUpdating: updatingSetting == UpdatingSettingType.newWord,
+        ).animate().fadeIn(
+              duration: 200.milliseconds,
+              delay: 350.milliseconds,
+            ),
+
+        const SizedBox(height: 10),
+
+        ToggleTile(
+          icon: Icons.local_fire_department,
+          title: l10n.settingsStreakReminders,
+          subtitle: l10n.settingsStreakRemindersDescription,
+          value: settings.streakReminderEnabled,
+          onChanged: settings.notificationsEnabled
+              ? (value) {
+                  Gaimon.soft();
+                  context
+                      .read<SettingsCubit>()
+                      .toggleStreakReminder(enabled: value);
+                }
+              : null,
+          isUpdating: updatingSetting == UpdatingSettingType.streakReminder,
+        ).animate().fadeIn(
+              duration: 200.milliseconds,
+              delay: 400.milliseconds,
+            ),
+
+        const SizedBox(height: 24),
+
+        // Reset button
+        if (settings.notificationsEnabled ||
+            settings.dailyReminderEnabled ||
+            settings.practiceReminderEnabled ||
+            settings.newWordNotificationEnabled ||
+            settings.streakReminderEnabled)
+          _buildResetButton(context, updatingSetting != null).animate().fadeIn(
+                duration: 200.milliseconds,
+                delay: 450.milliseconds,
               ),
 
-          const SizedBox(height: 24),
-
-          // Master notifications toggle
-          ToggleTile(
-            icon: Icons.notifications,
-            title: l10n.settingsEnableNotifications,
-            subtitle: l10n.settingsEnableNotificationsDescription,
-            value: settings.notificationsEnabled,
-            onChanged: (value) {
-              Gaimon.soft(); // Haptic feedback
-              context.read<SettingsCubit>().toggleNotifications(enabled: value);
-            },
-            isUpdating: updatingSetting == UpdatingSettingType.notifications,
-          ).animate().fadeIn().slideY(
-                begin: 1,
-                delay: 200.milliseconds,
-                duration: 400.milliseconds,
-              ),
-
-          const SizedBox(height: 16),
-
-          // Individual notification toggles (disabled if master is off)
-          ToggleTile(
-            icon: Icons.schedule,
-            title: l10n.settingsDailyReminders,
-            subtitle: l10n.settingsDailyRemindersDescription,
-            value: settings.dailyReminderEnabled,
-            onChanged: settings.notificationsEnabled
-                ? (value) {
-                    Gaimon.soft();
-                    context
-                        .read<SettingsCubit>()
-                        .toggleDailyReminder(enabled: value);
-                  }
-                : null,
-            isUpdating: updatingSetting == UpdatingSettingType.dailyReminder,
-          ).animate().fadeIn().slideY(
-                begin: 1,
-                delay: 300.milliseconds,
-                duration: 400.milliseconds,
-              ),
-
-          const SizedBox(height: 16),
-
-          ToggleTile(
-            icon: Icons.fitness_center,
-            title: l10n.settingsPracticeReminders,
-            subtitle: l10n.settingsPracticeRemindersDescription,
-            value: settings.practiceReminderEnabled,
-            onChanged: settings.notificationsEnabled
-                ? (value) {
-                    Gaimon.soft();
-                    context
-                        .read<SettingsCubit>()
-                        .togglePracticeReminder(enabled: value);
-                  }
-                : null,
-            isUpdating: updatingSetting == UpdatingSettingType.practiceReminder,
-          ).animate().fadeIn().slideY(
-                begin: 1,
-                delay: 400.milliseconds,
-                duration: 400.milliseconds,
-              ),
-
-          const SizedBox(height: 16),
-
-          ToggleTile(
-            icon: Icons.library_books,
-            title: l10n.settingsNewWords,
-            subtitle: l10n.settingsNewWordsDescription,
-            value: settings.newWordNotificationEnabled,
-            onChanged: settings.notificationsEnabled
-                ? (value) {
-                    Gaimon.soft();
-                    context
-                        .read<SettingsCubit>()
-                        .toggleNewWordNotification(enabled: value);
-                  }
-                : null,
-            isUpdating: updatingSetting == UpdatingSettingType.newWord,
-          ).animate().fadeIn().slideY(
-                begin: 1,
-                delay: 500.milliseconds,
-                duration: 400.milliseconds,
-              ),
-
-          const SizedBox(height: 16),
-
-          ToggleTile(
-            icon: Icons.local_fire_department,
-            title: l10n.settingsStreakReminders,
-            subtitle: l10n.settingsStreakRemindersDescription,
-            value: settings.streakReminderEnabled,
-            onChanged: settings.notificationsEnabled
-                ? (value) {
-                    Gaimon.soft();
-                    context
-                        .read<SettingsCubit>()
-                        .toggleStreakReminder(enabled: value);
-                  }
-                : null,
-            isUpdating: updatingSetting == UpdatingSettingType.streakReminder,
-          ).animate().fadeIn().slideY(
-                begin: 1,
-                delay: 600.milliseconds,
-                duration: 400.milliseconds,
-              ),
-
-          const SizedBox(height: 40),
-
-          // Reset button
-          if (settings.notificationsEnabled ||
-              settings.dailyReminderEnabled ||
-              settings.practiceReminderEnabled ||
-              settings.newWordNotificationEnabled ||
-              settings.streakReminderEnabled)
-            _buildResetButton(context, updatingSetting != null)
-                .animate()
-                .fadeIn()
-                .slideY(
-                  begin: 1,
-                  delay: 700.milliseconds,
-                  duration: 400.milliseconds,
-                ),
-        ],
-      ),
+        // Bottom spacing for better UX
+        const SizedBox(height: 40),
+      ],
     );
   }
 
@@ -316,46 +316,46 @@ class SettingsBody extends StatelessWidget {
             Icon(
               Icons.error_outline,
               size: 64,
-              color: Colors.red.shade400,
+              color: Colors.grey[400],
             ),
             const SizedBox(height: 16),
             Text(
               l10n.settingsError,
-              style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                    color: Colors.red.shade400,
-                    fontWeight: FontWeight.w600,
-                  ),
+              style: TextStyle(
+                fontSize: 18,
+                fontWeight: FontWeight.w600,
+                color: Colors.grey[600],
+              ),
             ),
             const SizedBox(height: 8),
             Text(
               message,
               textAlign: TextAlign.center,
-              style: const TextStyle(
-                fontSize: 16,
-                color: Colors.grey,
+              style: TextStyle(
+                fontSize: 14,
+                color: Colors.grey[500],
               ),
             ),
             const SizedBox(height: 24),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                TextButton(
-                  onPressed: () {
-                    Gaimon.soft();
-                    context.read<SettingsCubit>().loadSettings();
-                  },
-                  child: Text(l10n.settingsRetry),
-                ),
-                if (previousSettings != null)
-                  TextButton(
-                    onPressed: () {
-                      Gaimon.soft();
-                      context.read<SettingsCubit>().recoverFromError();
-                    },
-                    child: Text(l10n.settingsRecover),
-                  ),
-              ],
+            PushableButton(
+              width: 120,
+              height: 50,
+              text: l10n.settingsRetry,
+              buttonColor: const Color(0xffF9C835),
+              shadowColor: const Color(0xffCDB054),
+              onTap: () => context.read<SettingsCubit>().loadSettings(),
             ),
+            if (previousSettings != null) ...[
+              const SizedBox(height: 12),
+              PushableButton(
+                width: 150,
+                height: 50,
+                text: l10n.settingsRecover,
+                buttonColor: const Color(0xff58CC02),
+                shadowColor: const Color(0xff58A700),
+                onTap: () => context.read<SettingsCubit>().recoverFromError(),
+              ),
+            ],
           ],
         ),
       ),
@@ -364,7 +364,7 @@ class SettingsBody extends StatelessWidget {
 
   /// Builds a section header with title and description
   ///
-  /// This creates a consistent header style for different sections of settings.
+  /// This creates a consistent header style matching the app's design system.
   Widget _buildSectionHeader(
     BuildContext context,
     String title,
@@ -375,17 +375,18 @@ class SettingsBody extends StatelessWidget {
       children: [
         Text(
           title,
-          style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                fontSize: 24,
-                fontWeight: FontWeight.w600,
-              ),
+          style: const TextStyle(
+            fontSize: 18,
+            fontWeight: FontWeight.w700,
+            color: Color(0xFF1D1D1F),
+          ),
         ),
-        const SizedBox(height: 8),
+        const SizedBox(height: 6),
         Text(
           description,
-          style: const TextStyle(
-            fontSize: 16,
-            color: Colors.grey,
+          style: TextStyle(
+            fontSize: 14,
+            color: Colors.grey[600],
           ),
         ),
       ],
@@ -394,28 +395,23 @@ class SettingsBody extends StatelessWidget {
 
   /// Builds the reset button for restoring default settings
   ///
-  /// This button allows users to reset all settings to their default values.
+  /// This button allows users to reset all settings to their default values
+  /// using the app's signature PushableButton design.
   Widget _buildResetButton(BuildContext context, bool isUpdating) {
     final l10n = context.l10n;
 
-    return SizedBox(
-      width: double.infinity,
-      child: OutlinedButton.icon(
-        onPressed: isUpdating
-            ? null
-            : () {
-                Gaimon.soft();
-                _showResetDialog(context);
-              },
-        icon: const Icon(Icons.restore),
-        label: Text(l10n.settingsResetToDefaults),
-        style: OutlinedButton.styleFrom(
-          padding: const EdgeInsets.symmetric(vertical: 16),
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(12),
-          ),
-        ),
-      ),
+    return PushableButton(
+      height: 56,
+      text: l10n.settingsResetToDefaults,
+      prefixIcon: Icons.restore,
+      buttonColor: const Color(0xffE94E77),
+      shadowColor: const Color(0xffA8002C),
+      onTap: isUpdating
+          ? () {}
+          : () {
+              Gaimon.soft();
+              _showResetDialog(context);
+            },
     );
   }
 
