@@ -71,11 +71,14 @@ final _router = GoRouter(
           );
         },
       ),
-    ),
-    GoRoute(
-      path: 'favorites',
-      name: 'Favorites',
-      builder: (context, state) => const FavoriteWordsPage(),
+      // Nested routes under /home
+      routes: [
+        GoRoute(
+          path: 'favorites',
+          name: 'Favorites',
+          builder: (context, state) => const FavoriteWordsPage(),
+        ),
+      ],
     ),
     GoRoute(
       path: '/practice',
