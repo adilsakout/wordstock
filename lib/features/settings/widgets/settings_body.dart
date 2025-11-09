@@ -5,6 +5,7 @@ import 'package:go_router/go_router.dart';
 import 'package:wordstock/features/settings/cubit/cubit.dart';
 import 'package:wordstock/l10n/l10n.dart';
 import 'package:wordstock/repositories/settings_repository.dart';
+import 'package:wordstock/widgets/toggle_tile.dart';
 
 /// {@template settings_body}
 /// Body of the SettingsPage.
@@ -170,8 +171,7 @@ class SettingsBody extends StatelessWidget {
           const SizedBox(height: 24),
 
           // Master notifications toggle
-          _buildNotificationToggle(
-            context,
+          ToggleTile(
             icon: Icons.notifications,
             title: l10n.settingsEnableNotifications,
             subtitle: l10n.settingsEnableNotificationsDescription,
@@ -190,8 +190,7 @@ class SettingsBody extends StatelessWidget {
           const SizedBox(height: 16),
 
           // Individual notification toggles (disabled if master is off)
-          _buildNotificationToggle(
-            context,
+          ToggleTile(
             icon: Icons.schedule,
             title: l10n.settingsDailyReminders,
             subtitle: l10n.settingsDailyRemindersDescription,
@@ -213,8 +212,7 @@ class SettingsBody extends StatelessWidget {
 
           const SizedBox(height: 16),
 
-          _buildNotificationToggle(
-            context,
+          ToggleTile(
             icon: Icons.fitness_center,
             title: l10n.settingsPracticeReminders,
             subtitle: l10n.settingsPracticeRemindersDescription,
@@ -236,8 +234,7 @@ class SettingsBody extends StatelessWidget {
 
           const SizedBox(height: 16),
 
-          _buildNotificationToggle(
-            context,
+          ToggleTile(
             icon: Icons.library_books,
             title: l10n.settingsNewWords,
             subtitle: l10n.settingsNewWordsDescription,
@@ -259,8 +256,7 @@ class SettingsBody extends StatelessWidget {
 
           const SizedBox(height: 16),
 
-          _buildNotificationToggle(
-            context,
+          ToggleTile(
             icon: Icons.local_fire_department,
             title: l10n.settingsStreakReminders,
             subtitle: l10n.settingsStreakRemindersDescription,
@@ -393,99 +389,6 @@ class SettingsBody extends StatelessWidget {
           ),
         ),
       ],
-    );
-  }
-
-  /// Builds a notification toggle with icon, title, and switch
-  ///
-  /// This creates a consistent toggle UI that follows the app's design patterns
-  /// with smooth animations and haptic feedback.
-  Widget _buildNotificationToggle(
-    BuildContext context, {
-    required IconData icon,
-    required String title,
-    required String subtitle,
-    required bool value,
-    required ValueChanged<bool>? onChanged,
-    required bool isUpdating,
-  }) {
-    final isEnabled = onChanged != null;
-    final opacity = isEnabled ? 1.0 : 0.5;
-
-    return AnimatedOpacity(
-      opacity: opacity,
-      duration: const Duration(milliseconds: 200),
-      child: Container(
-        padding: const EdgeInsets.all(16),
-        decoration: BoxDecoration(
-          color: Colors.grey.shade50,
-          borderRadius: BorderRadius.circular(12),
-          border: Border.all(
-            color: Colors.grey.shade200,
-          ),
-        ),
-        child: Row(
-          children: [
-            // Icon with consistent styling
-            Container(
-              padding: const EdgeInsets.all(8),
-              decoration: BoxDecoration(
-                color: const Color(0xff1CB0F6).withValues(alpha: 0.1),
-                borderRadius: BorderRadius.circular(8),
-              ),
-              child: Icon(
-                icon,
-                size: 24,
-                color: const Color(0xff1CB0F6),
-              ),
-            ),
-
-            const SizedBox(width: 16),
-
-            // Title and subtitle
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    title,
-                    style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                          fontSize: 18,
-                          fontWeight: FontWeight.w500,
-                        ),
-                  ),
-                  const SizedBox(height: 4),
-                  Text(
-                    subtitle,
-                    style: const TextStyle(
-                      fontSize: 14,
-                      color: Colors.grey,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-
-            // Switch with loading indicator
-            if (isUpdating)
-              const SizedBox(
-                width: 24,
-                height: 24,
-                child: CircularProgressIndicator(
-                  strokeWidth: 2,
-                ),
-              )
-            else
-              Switch(
-                value: value,
-                onChanged: onChanged,
-                activeThumbColor: const Color(0xff1CB0F6),
-                inactiveThumbColor: Colors.grey.shade400,
-                inactiveTrackColor: Colors.grey.shade200,
-              ),
-          ],
-        ),
-      ),
     );
   }
 
