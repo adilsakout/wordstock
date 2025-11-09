@@ -266,22 +266,63 @@ class SettingsRepository {
 
   // ================== Future Settings Extensions ================== //
 
-  /// Clear all settings
+  /// Clear all settings and reset to defaults
   ///
-  /// This method removes all stored settings from SharedPreferences.
-  /// Use with caution as this will reset all user preferences.
+  /// This method resets all settings to their default values (all enabled)
+  /// in both the database and SharedPreferences to ensure consistency
+  /// across devices.
   Future<void> clearAllSettings() async {
     try {
+      final userId = _getUserId();
+
+      // Create default settings (all enabled)
+      const defaultSettings = NotificationSettings(
+        notificationsEnabled: true,
+        dailyReminderEnabled: true,
+        practiceReminderEnabled: true,
+        newWordNotificationEnabled: true,
+        streakReminderEnabled: true,
+      );
+
+      // Update database to default values if user is logged in
+      if (userId.isNotEmpty) {
+        await _supabase.from('user_profiles').upsert({
+          'user_id': userId,
+          'notifications_enabled': defaultSettings.notificationsEnabled,
+          'daily_reminder_enabled': defaultSettings.dailyReminderEnabled,
+          'practice_reminder_enabled': defaultSettings.practiceReminderEnabled,
+          'new_word_notification_enabled':
+              defaultSettings.newWordNotificationEnabled,
+          'streak_reminder_enabled': defaultSettings.streakReminderEnabled,
+        });
+      }
+
+      // Reset SharedPreferences to default values
       final prefs = await _getPrefs();
       await Future.wait([
-        prefs.remove(_notificationsEnabledKey),
-        prefs.remove(_dailyReminderEnabledKey),
-        prefs.remove(_practiceReminderEnabledKey),
-        prefs.remove(_newWordNotificationEnabledKey),
-        prefs.remove(_streakReminderEnabledKey),
+        prefs.setBool(
+          _notificationsEnabledKey,
+          defaultSettings.notificationsEnabled,
+        ),
+        prefs.setBool(
+          _dailyReminderEnabledKey,
+          defaultSettings.dailyReminderEnabled,
+        ),
+        prefs.setBool(
+          _practiceReminderEnabledKey,
+          defaultSettings.practiceReminderEnabled,
+        ),
+        prefs.setBool(
+          _newWordNotificationEnabledKey,
+          defaultSettings.newWordNotificationEnabled,
+        ),
+        prefs.setBool(
+          _streakReminderEnabledKey,
+          defaultSettings.streakReminderEnabled,
+        ),
       ]);
     } catch (e) {
-      throw Exception('Failed to clear settings: $e');
+      throw Exception('Failed to reset settings to defaults: $e');
     }
   }
 
