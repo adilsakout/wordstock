@@ -307,16 +307,16 @@ s3_access_key = "env(S3_ACCESS_KEY)"
 # Configures AWS_SECRET_ACCESS_KEY for S3 bucket
 s3_secret_key = "env(S3_SECRET_KEY)"
 
-[functions.notifyUser]
-enabled = true
-verify_jwt = true
-import_map = "./functions/notifyUser/deno.json"
-# Uncomment to specify a custom file path to the entrypoint.
-# Supported file extensions are: .ts, .js, .mjs, .jsx, .tsx
-entrypoint = "./functions/notifyUser/index.ts"
-# Specifies static files to be bundled with the function. Supports glob patterns.
-# For example, if you want to serve static HTML pages in your function:
-# static_files = [ "./functions/notifyUser/*.html" ]
+# [functions.notifyUser]
+# enabled = false
+# verify_jwt = true
+# import_map = "./functions/notifyUser/deno.json"
+# # Uncomment to specify a custom file path to the entrypoint.
+# # Supported file extensions are: .ts, .js, .mjs, .jsx, .tsx
+# entrypoint = "./functions/notifyUser/index.ts"
+# # Specifies static files to be bundled with the function. Supports glob patterns.
+# # For example, if you want to serve static HTML pages in your function:
+# # static_files = [ "./functions/notifyUser/*.html" ]
 
 [functions.wordOfTheDay]
 enabled = true
@@ -350,3 +350,27 @@ entrypoint = "./functions/sendWords/index.ts"
 # Specifies static files to be bundled with the function. Supports glob patterns.
 # For example, if you want to serve static HTML pages in your function:
 # static_files = [ "./functions/sendWords/*.html" ]
+
+[functions.dailyReminder]
+enabled = true
+verify_jwt = false
+import_map = "./functions/dailyReminder/deno.json"
+entrypoint = "./functions/dailyReminder/index.ts"
+
+[functions.practiceReminder]
+enabled = true
+verify_jwt = false
+import_map = "./functions/practiceReminder/deno.json"
+entrypoint = "./functions/practiceReminder/index.ts"
+
+[functions.newWordNotification]
+enabled = true
+verify_jwt = false
+import_map = "./functions/newWordNotification/deno.json"
+entrypoint = "./functions/newWordNotification/index.ts"
+
+[functions.streakReminder]
+enabled = true
+verify_jwt = false
+import_map = "./functions/streakReminder/deno.json"
+entrypoint = "./functions/streakReminder/index.ts"
