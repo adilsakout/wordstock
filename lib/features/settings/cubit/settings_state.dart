@@ -1,5 +1,28 @@
 part of 'settings_cubit.dart';
 
+/// {@template updating_setting_type}
+/// Enum representing which specific setting is currently being updated
+///
+/// This allows the UI to show loading indicators only on the specific
+/// toggle that is being updated, providing better user feedback.
+/// {@endtemplate}
+enum UpdatingSettingType {
+  /// Master notifications toggle
+  notifications,
+
+  /// Daily reminder notifications
+  dailyReminder,
+
+  /// Practice reminder notifications
+  practiceReminder,
+
+  /// New word notifications
+  newWord,
+
+  /// Streak reminder notifications
+  streakReminder,
+}
+
 /// {@template settings_state}
 /// State for managing user settings and preferences
 ///
@@ -48,7 +71,7 @@ class SettingsLoaded extends SettingsState {
   /// {@macro settings_loaded}
   const SettingsLoaded({
     required this.notificationSettings,
-    this.isUpdating = false,
+    this.updatingSetting,
   });
 
   /// The current notification settings
@@ -57,14 +80,15 @@ class SettingsLoaded extends SettingsState {
   /// the master toggle and individual notification type settings.
   final NotificationSettings notificationSettings;
 
-  /// Whether settings are currently being updated
+  /// Which specific setting is currently being updated
   ///
-  /// This flag is used to show loading indicators during settings updates
-  /// while keeping the current settings visible to the user.
-  final bool isUpdating;
+  /// When null, no settings are being updated. When set, the UI can
+  /// show a loading indicator only on that specific toggle, providing
+  /// better user feedback.
+  final UpdatingSettingType? updatingSetting;
 
   @override
-  List<Object?> get props => [notificationSettings, isUpdating];
+  List<Object?> get props => [notificationSettings, updatingSetting];
 
   /// Creates a copy of this SettingsLoaded state with the given fields replaced
   ///
@@ -72,11 +96,13 @@ class SettingsLoaded extends SettingsState {
   /// maintaining the existing values for unchanged fields.
   SettingsLoaded copyWith({
     NotificationSettings? notificationSettings,
-    bool? isUpdating,
+    UpdatingSettingType? updatingSetting,
+    bool clearUpdating = false,
   }) {
     return SettingsLoaded(
       notificationSettings: notificationSettings ?? this.notificationSettings,
-      isUpdating: isUpdating ?? this.isUpdating,
+      updatingSetting:
+          clearUpdating ? null : (updatingSetting ?? this.updatingSetting),
     );
   }
 }

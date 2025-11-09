@@ -93,8 +93,8 @@ class SettingsBody extends StatelessWidget {
     return state.when(
       initial: _buildInitialState,
       loading: _buildLoadingState,
-      loaded: (settings, {required isUpdating}) =>
-          _buildLoadedState(context, settings, isUpdating),
+      loaded: (settings, {required updatingSetting}) =>
+          _buildLoadedState(context, settings, updatingSetting),
       error: (message, previousSettings) =>
           _buildErrorState(context, message, previousSettings),
     );
@@ -143,10 +143,11 @@ class SettingsBody extends StatelessWidget {
   ///
   /// This is the main UI that displays all notification settings with toggles.
   /// It includes smooth animations and follows the app's design patterns.
+  /// Now shows loading only on the specific toggle being updated.
   Widget _buildLoadedState(
     BuildContext context,
     NotificationSettings settings,
-    bool isUpdating,
+    UpdatingSettingType? updatingSetting,
   ) {
     final l10n = context.l10n;
 
@@ -179,7 +180,7 @@ class SettingsBody extends StatelessWidget {
               Gaimon.soft(); // Haptic feedback
               context.read<SettingsCubit>().toggleNotifications(enabled: value);
             },
-            isUpdating: isUpdating,
+            isUpdating: updatingSetting == UpdatingSettingType.notifications,
           ).animate().fadeIn().slideY(
                 begin: 1,
                 delay: 200.milliseconds,
@@ -203,7 +204,7 @@ class SettingsBody extends StatelessWidget {
                         .toggleDailyReminder(enabled: value);
                   }
                 : null,
-            isUpdating: isUpdating,
+            isUpdating: updatingSetting == UpdatingSettingType.dailyReminder,
           ).animate().fadeIn().slideY(
                 begin: 1,
                 delay: 300.milliseconds,
@@ -226,7 +227,7 @@ class SettingsBody extends StatelessWidget {
                         .togglePracticeReminder(enabled: value);
                   }
                 : null,
-            isUpdating: isUpdating,
+            isUpdating: updatingSetting == UpdatingSettingType.practiceReminder,
           ).animate().fadeIn().slideY(
                 begin: 1,
                 delay: 400.milliseconds,
@@ -249,7 +250,7 @@ class SettingsBody extends StatelessWidget {
                         .toggleNewWordNotification(enabled: value);
                   }
                 : null,
-            isUpdating: isUpdating,
+            isUpdating: updatingSetting == UpdatingSettingType.newWord,
           ).animate().fadeIn().slideY(
                 begin: 1,
                 delay: 500.milliseconds,
@@ -272,7 +273,7 @@ class SettingsBody extends StatelessWidget {
                         .toggleStreakReminder(enabled: value);
                   }
                 : null,
-            isUpdating: isUpdating,
+            isUpdating: updatingSetting == UpdatingSettingType.streakReminder,
           ).animate().fadeIn().slideY(
                 begin: 1,
                 delay: 600.milliseconds,
@@ -287,7 +288,10 @@ class SettingsBody extends StatelessWidget {
               settings.practiceReminderEnabled ||
               settings.newWordNotificationEnabled ||
               settings.streakReminderEnabled)
-            _buildResetButton(context, isUpdating).animate().fadeIn().slideY(
+            _buildResetButton(context, updatingSetting != null)
+                .animate()
+                .fadeIn()
+                .slideY(
                   begin: 1,
                   delay: 700.milliseconds,
                   duration: 400.milliseconds,
@@ -549,13 +553,14 @@ class SettingsBody extends StatelessWidget {
 ///
 /// This extension provides a more convenient way to handle different states
 /// in the UI, similar to pattern matching in other languages.
+/// Updated to track which specific setting is being updated.
 extension SettingsStateExtension on SettingsState {
   T when<T>({
     required T Function() initial,
     required T Function() loading,
     required T Function(
       NotificationSettings settings, {
-      required bool isUpdating,
+      required UpdatingSettingType? updatingSetting,
     }) loaded,
     required T Function(String message, NotificationSettings? previousSettings)
         error,
@@ -566,7 +571,10 @@ extension SettingsStateExtension on SettingsState {
       return loading();
     } else if (this is SettingsLoaded) {
       final state = this as SettingsLoaded;
-      return loaded(state.notificationSettings, isUpdating: state.isUpdating);
+      return loaded(
+        state.notificationSettings,
+        updatingSetting: state.updatingSetting,
+      );
     } else if (this is SettingsError) {
       final state = this as SettingsError;
       return error(state.errorMessage, state.previousSettings);

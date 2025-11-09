@@ -56,8 +56,12 @@ class SettingsCubit extends Cubit<SettingsState> {
     if (currentState is! SettingsLoaded) return;
 
     try {
-      // Show updating state while preserving current settings
-      emit(currentState.copyWith(isUpdating: true));
+      // Show updating state for this specific setting
+      emit(
+        currentState.copyWith(
+          updatingSetting: UpdatingSettingType.notifications,
+        ),
+      );
 
       // Update in repository
       await _settingsRepository.toggleNotifications(enabled: enabled);
@@ -67,6 +71,7 @@ class SettingsCubit extends Cubit<SettingsState> {
         notificationsEnabled: enabled,
       );
 
+      // Emit updated state with no loading indicator
       emit(
         SettingsLoaded(
           notificationSettings: updatedSettings,
@@ -91,7 +96,12 @@ class SettingsCubit extends Cubit<SettingsState> {
     if (currentState is! SettingsLoaded) return;
 
     try {
-      emit(currentState.copyWith(isUpdating: true));
+      // Show updating state for this specific setting
+      emit(
+        currentState.copyWith(
+          updatingSetting: UpdatingSettingType.dailyReminder,
+        ),
+      );
 
       await _settingsRepository.toggleDailyReminder(enabled: enabled);
 
@@ -99,6 +109,7 @@ class SettingsCubit extends Cubit<SettingsState> {
         dailyReminderEnabled: enabled,
       );
 
+      // Emit updated state with no loading indicator
       emit(
         SettingsLoaded(
           notificationSettings: updatedSettings,
@@ -123,7 +134,12 @@ class SettingsCubit extends Cubit<SettingsState> {
     if (currentState is! SettingsLoaded) return;
 
     try {
-      emit(currentState.copyWith(isUpdating: true));
+      // Show updating state for this specific setting
+      emit(
+        currentState.copyWith(
+          updatingSetting: UpdatingSettingType.practiceReminder,
+        ),
+      );
 
       await _settingsRepository.togglePracticeReminder(enabled: enabled);
 
@@ -131,6 +147,7 @@ class SettingsCubit extends Cubit<SettingsState> {
         practiceReminderEnabled: enabled,
       );
 
+      // Emit updated state with no loading indicator
       emit(
         SettingsLoaded(
           notificationSettings: updatedSettings,
@@ -155,7 +172,12 @@ class SettingsCubit extends Cubit<SettingsState> {
     if (currentState is! SettingsLoaded) return;
 
     try {
-      emit(currentState.copyWith(isUpdating: true));
+      // Show updating state for this specific setting
+      emit(
+        currentState.copyWith(
+          updatingSetting: UpdatingSettingType.newWord,
+        ),
+      );
 
       await _settingsRepository.toggleNewWordNotification(enabled: enabled);
 
@@ -163,6 +185,7 @@ class SettingsCubit extends Cubit<SettingsState> {
         newWordNotificationEnabled: enabled,
       );
 
+      // Emit updated state with no loading indicator
       emit(
         SettingsLoaded(
           notificationSettings: updatedSettings,
@@ -187,7 +210,12 @@ class SettingsCubit extends Cubit<SettingsState> {
     if (currentState is! SettingsLoaded) return;
 
     try {
-      emit(currentState.copyWith(isUpdating: true));
+      // Show updating state for this specific setting
+      emit(
+        currentState.copyWith(
+          updatingSetting: UpdatingSettingType.streakReminder,
+        ),
+      );
 
       await _settingsRepository.toggleStreakReminder(enabled: enabled);
 
@@ -195,6 +223,7 @@ class SettingsCubit extends Cubit<SettingsState> {
         streakReminderEnabled: enabled,
       );
 
+      // Emit updated state with no loading indicator
       emit(
         SettingsLoaded(
           notificationSettings: updatedSettings,
@@ -214,7 +243,8 @@ class SettingsCubit extends Cubit<SettingsState> {
   ///
   /// This method is useful when multiple settings need to be updated
   /// simultaneously, such as when restoring from a backup or applying
-  /// a settings template.
+  /// a settings template. Note: This doesn't show specific loading indicators
+  /// since multiple settings are being updated at once.
   Future<void> updateAllNotificationSettings(
     NotificationSettings settings,
   ) async {
@@ -222,7 +252,8 @@ class SettingsCubit extends Cubit<SettingsState> {
     if (currentState is! SettingsLoaded) return;
 
     try {
-      emit(currentState.copyWith(isUpdating: true));
+      // No specific setting indicator since we're updating all settings
+      emit(currentState.copyWith(clearUpdating: true));
 
       await _settingsRepository.updateNotificationSettings(settings);
 
