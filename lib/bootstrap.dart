@@ -99,8 +99,8 @@ Future<void> bootstrap(FutureOr<Widget> Function() builder) async {
     (options) {
       options
         ..dsn = kDebugMode ? '' : dotenv.env['SENTRY_DSN']
-        ..experimental.replay.sessionSampleRate = 1.0
-        ..experimental.replay.onErrorSampleRate = 1.0
+        ..experimental.replay.sessionSampleRate = 0.0
+        ..experimental.replay.onErrorSampleRate = 0.0
         ..sendDefaultPii = true;
     },
     appRunner: () async {
