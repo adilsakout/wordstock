@@ -293,63 +293,28 @@ class _QuizResultState extends State<QuizResult>
                 ),
 
                 const Spacer(),
-
-                // Action Buttons with staggered animations
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    PushableButton(
-                      width: 150,
-                      height: 56,
-                      buttonColor: const Color(0xff1CB0F6),
-                      shadowColor: const Color(0xff1899D6),
-                      text: l10n.playAgain,
-                      onTap: () {
-                        Gaimon.light();
-                        widget.onPlayAgain();
-                      },
-                    )
-                        .animate(controller: _animationController)
-                        .fadeIn(delay: 900.ms, duration: 500.ms)
-                        .slideX(
-                          delay: 900.ms,
-                          begin: -0.5,
-                          end: 0,
-                          duration: 500.ms,
-                        )
-                        .then(delay: 200.ms)
-                        .shimmer(
-                          delay: 100.ms,
-                          duration: 1200.ms,
-                          color: Colors.white.withAlpha(80),
-                        ),
-                    const SizedBox(width: 20),
-                    PushableButton(
-                      width: 150,
-                      height: 56,
-                      buttonColor: const Color(0xff58CC02),
-                      shadowColor: const Color(0xff58A700),
-                      text: l10n.home,
-                      onTap: () {
-                        Gaimon.light();
-                        context.go(HomePage.name);
-                      },
-                    )
-                        .animate(controller: _animationController)
-                        .fadeIn(delay: 1000.ms, duration: 500.ms)
-                        .slideX(
-                          delay: 1000.ms,
-                          begin: 0.5,
-                          end: 0,
-                          duration: 500.ms,
-                        )
-                        .then(delay: 300.ms)
-                        .shimmer(
-                          delay: 100.ms,
-                          duration: 1200.ms,
-                          color: Colors.white.withAlpha(80),
-                        ),
-                  ],
+                PushableButton(
+                  width: double.infinity,
+                  height: 56,
+                  buttonColor: const Color(0xff1CB0F6),
+                  shadowColor: const Color(0xff1899D6),
+                  text: l10n.playAgain,
+                  onTap: () {
+                    Gaimon.light();
+                    widget.onPlayAgain();
+                  },
+                ),
+                const SizedBox(height: 10),
+                PushableButton(
+                  width: double.infinity,
+                  height: 56,
+                  buttonColor: const Color(0xff58CC02),
+                  shadowColor: const Color(0xff58A700),
+                  text: l10n.home,
+                  onTap: () {
+                    Gaimon.light();
+                    context.go(HomePage.name);
+                  },
                 ),
               ],
             ),
