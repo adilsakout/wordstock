@@ -207,78 +207,81 @@ class _VocabularyQuizState extends State<VocabularyQuiz>
           return Column(
             children: [
               // Top Bar
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16),
-                child: Row(
-                  children: [
-                    PushableButton(
-                      width: 56,
-                      height: 56,
-                      buttonColor: const Color(0xffE94E77),
-                      shadowColor: const Color(0xff963E00),
-                      text: '',
-                      prefixIcon: Icons.close_rounded,
-                      onTap: () async {
-                        final result =
-                            await _showExitConfirmationDialog(context);
-                        if ((result ?? false) && context.mounted) {
-                          context.replace(HomePage.name);
-                        }
-                      },
-                    ),
-                    const SizedBox(width: 16),
-                    Expanded(
-                      child: Container(
+              SafeArea(
+                bottom: false,
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 16),
+                  child: Row(
+                    children: [
+                      PushableButton(
+                        width: 56,
                         height: 56,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(16),
-                          border: Border.all(
-                            color: const Color(0xffE94E77),
-                            width: 2,
+                        buttonColor: const Color(0xffE94E77),
+                        shadowColor: const Color(0xff963E00),
+                        text: '',
+                        prefixIcon: Icons.close_rounded,
+                        onTap: () async {
+                          final result =
+                              await _showExitConfirmationDialog(context);
+                          if ((result ?? false) && context.mounted) {
+                            context.replace(HomePage.name);
+                          }
+                        },
+                      ),
+                      const SizedBox(width: 16),
+                      Expanded(
+                        child: Container(
+                          height: 56,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(16),
+                            border: Border.all(
+                              color: const Color(0xffE94E77),
+                              width: 2,
+                            ),
+                          ),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              const SizedBox(width: 16),
+                              Text(
+                                l10n.vocabularyQuiz,
+                                style: const TextStyle(
+                                  color: Color(0xffE94E77),
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.w600,
+                                ),
+                              ),
+                              const SizedBox(width: 16),
+                              Container(
+                                width: 100,
+                                height: 56,
+                                decoration: const BoxDecoration(
+                                  borderRadius: BorderRadius.only(
+                                    topRight: Radius.circular(10),
+                                    bottomRight: Radius.circular(10),
+                                  ),
+                                  color: Color(0xffE94E77),
+                                ),
+                                child: Center(
+                                  child: Text(
+                                    l10n.questionCounter(
+                                      currentIndex + 1,
+                                      questions.length,
+                                    ),
+                                    style: const TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.w800,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ],
                           ),
                         ),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            const SizedBox(width: 16),
-                            Text(
-                              l10n.vocabularyQuiz,
-                              style: const TextStyle(
-                                color: Color(0xffE94E77),
-                                fontSize: 16,
-                                fontWeight: FontWeight.w600,
-                              ),
-                            ),
-                            const SizedBox(width: 16),
-                            Container(
-                              width: 100,
-                              height: 56,
-                              decoration: const BoxDecoration(
-                                borderRadius: BorderRadius.only(
-                                  topRight: Radius.circular(10),
-                                  bottomRight: Radius.circular(10),
-                                ),
-                                color: Color(0xffE94E77),
-                              ),
-                              child: Center(
-                                child: Text(
-                                  l10n.questionCounter(
-                                    currentIndex + 1,
-                                    questions.length,
-                                  ),
-                                  style: const TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.w800,
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               ),
 
@@ -326,28 +329,131 @@ class _VocabularyQuizState extends State<VocabularyQuiz>
                 ),
               ),
 
-              // Next button - only show when answer is submitted
-              //and animations are complete
-              Padding(
-                padding: const EdgeInsets.only(bottom: 16),
-                child: AnimatedOpacity(
-                  opacity: (hasSubmittedAnswer && _showNextButton) ? 1.0 : 0.0,
+              // Feedback container - slides up from bottom when answer is submitted
+              // Provides visual feedback about correct/incorrect answer
+              AnimatedSlide(
+                offset: (hasSubmittedAnswer && _showNextButton)
+                    ? Offset.zero
+                    : const Offset(0, 1),
+                duration: const Duration(milliseconds: 400),
+                curve: Curves.easeOutCubic,
+                child: AnimatedContainer(
                   duration: const Duration(milliseconds: 300),
-                  child: PushableButton(
-                    width: 150,
-                    height: 56,
-                    buttonColor: const Color(0xff1CB0F6),
-                    shadowColor: const Color(0xff1899D6),
-                    text: state.isLastQuestion ? l10n.finish : l10n.next,
-                    onTap: (hasSubmittedAnswer && _showNextButton)
-                        ? () => _goToNextQuestion(context, state)
-                        : () {}, // Empty function as fallback
-                  ).animate().fadeIn(duration: 300.ms).scale(
-                        begin: const Offset(0.9, 0.9),
-                        end: const Offset(1, 1),
-                        duration: 300.ms,
-                        curve: Curves.elasticOut,
+                  curve: Curves.easeInOut,
+                  // Determine if the current answer was correct
+                  // Use ?? false to handle case where result might not be set yet
+                  decoration: BoxDecoration(
+                    color: (state.answerResults[currentIndex] ?? false)
+                        ? const Color(0xff58CC02).withValues(alpha: 0.1)
+                        : const Color(0xffFF4B4B).withValues(alpha: 0.1),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.black.withValues(alpha: 0.1),
+                        blurRadius: 20,
+                        offset: const Offset(0, -4),
                       ),
+                    ],
+                  ),
+                  child: SafeArea(
+                    top: false,
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 24,
+                        vertical: 20,
+                      ),
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          // Feedback icon and message
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              // Icon with animation
+                              Container(
+                                width: 48,
+                                height: 48,
+                                decoration: BoxDecoration(
+                                  color: (state.answerResults[currentIndex] ??
+                                          false)
+                                      ? const Color(0xff58CC02)
+                                      : const Color(0xffFF4B4B),
+                                  shape: BoxShape.circle,
+                                ),
+                                child: Icon(
+                                  (state.answerResults[currentIndex] ?? false)
+                                      ? Icons.check_rounded
+                                      : Icons.close_rounded,
+                                  color: Colors.white,
+                                  size: 28,
+                                ),
+                              )
+                                  .animate()
+                                  .scale(
+                                    begin: Offset.zero,
+                                    end: const Offset(1, 1),
+                                    duration: 400.ms,
+                                    curve: Curves.elasticOut,
+                                  )
+                                  .fadeIn(duration: 300.ms),
+                              const SizedBox(width: 16),
+                              // Feedback message
+                              Expanded(
+                                child: Text(
+                                  (state.answerResults[currentIndex] ?? false)
+                                      ? 'Correct!'
+                                      : 'Incorrect',
+                                  style: TextStyle(
+                                    fontSize: 24,
+                                    fontWeight: FontWeight.bold,
+                                    color: (state.answerResults[currentIndex] ??
+                                            false)
+                                        ? const Color(0xff58CC02)
+                                        : const Color(0xffFF4B4B),
+                                  ),
+                                )
+                                    .animate()
+                                    .fadeIn(duration: 300.ms, delay: 100.ms)
+                                    .slideX(
+                                      begin: -0.2,
+                                      end: 0,
+                                      duration: 400.ms,
+                                      curve: Curves.easeOut,
+                                    ),
+                              ),
+                            ],
+                          ),
+                          const SizedBox(height: 24),
+                          // Next/Finish button
+                          PushableButton(
+                            width: double.infinity,
+                            height: 56,
+                            buttonColor:
+                                (state.answerResults[currentIndex] ?? false)
+                                    ? const Color(0xff58CC02)
+                                    : const Color(0xffFF4B4B),
+                            shadowColor:
+                                (state.answerResults[currentIndex] ?? false)
+                                    ? const Color(0xff58A700)
+                                    : const Color(0xffE94E77),
+                            text:
+                                state.isLastQuestion ? l10n.finish : l10n.next,
+                            onTap: (hasSubmittedAnswer && _showNextButton)
+                                ? () => _goToNextQuestion(context, state)
+                                : () {}, // Empty function as fallback
+                          )
+                              .animate()
+                              .fadeIn(duration: 300.ms, delay: 200.ms)
+                              .scale(
+                                begin: const Offset(0.95, 0.95),
+                                end: const Offset(1, 1),
+                                duration: 400.ms,
+                                delay: 200.ms,
+                                curve: Curves.easeOut,
+                              ),
+                        ],
+                      ),
+                    ),
+                  ),
                 ),
               ),
             ],

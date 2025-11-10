@@ -24,41 +24,39 @@ class _PracticeBodyState extends State<PracticeBody> {
   Widget build(BuildContext context) {
     return BlocBuilder<PracticeCubit, PracticeState>(
       builder: (context, state) {
-        return SafeArea(
-          child: PageView(
-            controller: _pageController,
-            physics: const NeverScrollableScrollPhysics(),
-            children: [
-              QuizInitial(
-                onTap: () {
-                  _pageController.animateToPage(
-                    1,
-                    duration: const Duration(milliseconds: 150),
-                    curve: Curves.easeInOut,
-                  );
-                },
-              ),
-              VocabularyQuiz(
-                onTap: () {
-                  _pageController.animateToPage(
-                    2,
-                    duration: const Duration(milliseconds: 150),
-                    curve: Curves.easeInOut,
-                  );
-                },
-              ),
-              QuizResult(
-                onPlayAgain: () {
-                  _pageController.animateToPage(
-                    0,
-                    duration: const Duration(milliseconds: 100),
-                    curve: Curves.easeInOut,
-                  );
-                  context.read<PracticeCubit>().resetQuiz();
-                },
-              ),
-            ],
-          ),
+        return PageView(
+          controller: _pageController,
+          physics: const NeverScrollableScrollPhysics(),
+          children: [
+            QuizInitial(
+              onTap: () {
+                _pageController.animateToPage(
+                  1,
+                  duration: const Duration(milliseconds: 150),
+                  curve: Curves.easeInOut,
+                );
+              },
+            ),
+            VocabularyQuiz(
+              onTap: () {
+                _pageController.animateToPage(
+                  2,
+                  duration: const Duration(milliseconds: 150),
+                  curve: Curves.easeInOut,
+                );
+              },
+            ),
+            QuizResult(
+              onPlayAgain: () {
+                _pageController.animateToPage(
+                  0,
+                  duration: const Duration(milliseconds: 100),
+                  curve: Curves.easeInOut,
+                );
+                context.read<PracticeCubit>().resetQuiz();
+              },
+            ),
+          ],
         );
       },
     );

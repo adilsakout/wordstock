@@ -111,6 +111,7 @@ class _QuestionState extends State<Question>
       child: Column(
         children: [
           Expanded(
+            flex: 2,
             child: Center(
               child: Text(
                 widget.question.question,
@@ -126,7 +127,9 @@ class _QuestionState extends State<Question>
             ),
           ),
           Expanded(
+            flex: 4,
             child: ListView.builder(
+              physics: const NeverScrollableScrollPhysics(),
               itemCount: widget.question.options.length,
               itemBuilder: (context, index) {
                 final option = widget.question.options[index];
