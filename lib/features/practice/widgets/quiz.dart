@@ -329,8 +329,6 @@ class _VocabularyQuizState extends State<VocabularyQuiz>
                 ),
               ),
 
-              // Feedback container - slides up from bottom when answer is submitted
-              // Provides visual feedback about correct/incorrect answer
               AnimatedSlide(
                 offset: (hasSubmittedAnswer && _showNextButton)
                     ? Offset.zero
@@ -340,12 +338,8 @@ class _VocabularyQuizState extends State<VocabularyQuiz>
                 child: AnimatedContainer(
                   duration: const Duration(milliseconds: 300),
                   curve: Curves.easeInOut,
-                  // Determine if the current answer was correct
-                  // Use ?? false to handle case where result might not be set yet
                   decoration: BoxDecoration(
-                    color: (state.answerResults[currentIndex] ?? false)
-                        ? const Color(0xff58CC02).withValues(alpha: 0.1)
-                        : const Color(0xffFF4B4B).withValues(alpha: 0.1),
+                    color: Colors.white,
                     boxShadow: [
                       BoxShadow(
                         color: Colors.black.withValues(alpha: 0.1),
@@ -370,8 +364,8 @@ class _VocabularyQuizState extends State<VocabularyQuiz>
                             children: [
                               // Icon with animation
                               Container(
-                                width: 48,
-                                height: 48,
+                                width: 32,
+                                height: 32,
                                 decoration: BoxDecoration(
                                   color: (state.answerResults[currentIndex] ??
                                           false)
@@ -384,7 +378,7 @@ class _VocabularyQuizState extends State<VocabularyQuiz>
                                       ? Icons.check_rounded
                                       : Icons.close_rounded,
                                   color: Colors.white,
-                                  size: 28,
+                                  size: 24,
                                 ),
                               )
                                   .animate()
@@ -400,10 +394,10 @@ class _VocabularyQuizState extends State<VocabularyQuiz>
                               Expanded(
                                 child: Text(
                                   (state.answerResults[currentIndex] ?? false)
-                                      ? 'Correct!'
-                                      : 'Incorrect',
+                                      ? "That's Correct!"
+                                      : "That's Incorrect",
                                   style: TextStyle(
-                                    fontSize: 24,
+                                    fontSize: 18,
                                     fontWeight: FontWeight.bold,
                                     color: (state.answerResults[currentIndex] ??
                                             false)
