@@ -340,6 +340,7 @@ class _VocabularyQuizState extends State<VocabularyQuiz>
                   curve: Curves.easeInOut,
                   decoration: BoxDecoration(
                     color: Colors.white,
+                    borderRadius: BorderRadius.circular(32),
                     boxShadow: [
                       BoxShadow(
                         color: Colors.black.withValues(alpha: 0.1),
