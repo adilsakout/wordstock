@@ -605,14 +605,26 @@ class _MarkdownTypingAnimationTextState
   /// Uses a Timer to progressively reveal characters at a natural pace.
   /// Includes special handling for spaces and punctuation for more
   /// realistic typing rhythm.
+  ///
+  /// All setState calls are guarded with mounted checks to prevent
+  /// errors when the widget is disposed during animation.
   void _startTypingAnimation() {
     _typingTimer = Timer.periodic(widget.typingSpeed, (timer) {
-      if (_currentCharCount < widget.text.length) {
-        setState(() {
-          _currentCharCount++;
-        });
+      // Guard against setState after dispose
+      if (!mounted) {
+        timer.cancel();
+        return;
+      }
 
-        // Trigger callback for scroll updates
+      if (_currentCharCount < widget.text.length) {
+        // Only update state if widget is still mounted
+        if (mounted) {
+          setState(() {
+            _currentCharCount++;
+          });
+        }
+
+        // Trigger callback for scroll updates (safe to call even if disposed)
         widget.onCharacterAdded?.call();
 
         // Add slight variation in typing speed for more natural feel
@@ -623,6 +635,7 @@ class _MarkdownTypingAnimationTextState
           Future.delayed(
             Duration(milliseconds: widget.typingSpeed.inMilliseconds + 15),
             () {
+              // Double-check mounted before restarting animation
               if (mounted) _startTypingAnimation();
             },
           );
@@ -634,6 +647,7 @@ class _MarkdownTypingAnimationTextState
           Future.delayed(
             Duration(milliseconds: widget.typingSpeed.inMilliseconds + 100),
             () {
+              // Double-check mounted before restarting animation
               if (mounted) _startTypingAnimation();
             },
           );
@@ -641,14 +655,22 @@ class _MarkdownTypingAnimationTextState
       } else {
         // Typing complete - stop cursor after a brief pause
         timer.cancel();
-        setState(() {
-          _isTypingComplete = true;
-        });
+
+        // Only update state if widget is still mounted
+        if (mounted) {
+          setState(() {
+            _isTypingComplete = true;
+          });
+        }
+
         Future.delayed(const Duration(milliseconds: 800), () {
+          // Guard all operations with mounted check
           if (mounted) {
             _cursorController.stop();
-            setState(() {}); // Remove cursor
-            // Notify that animation is complete
+            if (mounted) {
+              setState(() {}); // Remove cursor
+            }
+            // Notify that animation is complete (safe to call)
             widget.onAnimationComplete?.call();
           }
         });
