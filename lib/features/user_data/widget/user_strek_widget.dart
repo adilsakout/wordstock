@@ -39,7 +39,7 @@ class _UserStreakWidgetState extends State<UserStreakWidget>
       context: context,
       isScrollControlled: true,
       constraints: BoxConstraints(
-        maxHeight: MediaQuery.of(context).size.height * 0.7,
+        maxHeight: MediaQuery.of(context).size.height,
       ),
       backgroundColor: Colors.transparent,
       builder: (BuildContext context) {

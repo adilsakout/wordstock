@@ -23,9 +23,9 @@ class StreakProgressBottomSheet extends StatelessWidget {
 
     Gaimon.heavy();
 
-    // Create a list of a bbreviated day names
+    // Create a list of abbreviated day names
     //(2 characters) starting from the current day
-    final allWeekDays = ['Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa', 'Su'];
+    final allWeekDays = ['M', 'T', 'W', 'T', 'F', 'S', 'S'];
     final today =
         DateTime.now().weekday - 1; // 0-based (0 = Monday, 6 = Sunday)
 
@@ -47,276 +47,273 @@ class StreakProgressBottomSheet extends StatelessWidget {
     final tomorrowIndex = (today + 1) % 7;
     weekDays.add(allWeekDays[tomorrowIndex]);
 
-    // No need to replace day names anymore, use actual day abbreviations
     final dayLabels = weekDays;
 
-    return Wrap(
-      children: [
-        Container(
-          decoration: BoxDecoration(
-            color: Theme.of(context).colorScheme.surface,
-            borderRadius: const BorderRadius.only(
-              topLeft: Radius.circular(24),
-              topRight: Radius.circular(24),
-            ),
-            boxShadow: [
-              BoxShadow(
-                color: Colors.black.withAlpha(26),
-                blurRadius: 10,
-                offset: const Offset(0, -5),
-              ),
-            ],
-          ),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              const SizedBox(height: 12),
-              Container(
-                width: 40,
-                height: 5,
-                decoration: BoxDecoration(
-                  color: Colors.grey.withAlpha(77),
-                  borderRadius: BorderRadius.circular(10),
-                ),
-              ),
-              const SizedBox(height: 24),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 24),
-                child: Row(
-                  children: [
-                    SvgPicture.asset(
-                      Assets.icons.flame,
-                      width: 32,
-                      height: 32,
-                      colorFilter: const ColorFilter.mode(
-                        Color(0xffF97316),
-                        BlendMode.srcIn,
-                      ),
-                    ),
-                    const SizedBox(width: 12),
-                    Text(
-                      l10n.weeklyProgress,
-                      style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                            fontWeight: FontWeight.bold,
-                            color: const Color(0xffF97316),
-                          ),
-                    ),
-                  ],
-                ).animate().fadeIn(duration: 400.ms).slideX(
-                      begin: -0.2,
-                      end: 0,
-                      curve: Curves.easeOutQuad,
-                    ),
-              ),
-              const SizedBox(height: 16),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 20),
-                child: Text(
-                  currentStreak == 1
-                      ? l10n.currentStreakSingular(currentStreak)
-                      : l10n.currentStreakPlural(currentStreak),
-                  style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                        fontWeight: FontWeight.w600,
-                      ),
-                ).animate(delay: 200.ms).fadeIn(duration: 400.ms),
-              ),
-              const SizedBox(height: 30),
+    // Duolingo-style colors
+    const fireOrange = Color(0xFFFF9600);
+    const lockedGrey = Color(0xFFE5E5E5);
+    const textGrey = Color(0xFF4B4B4B);
 
-              // Week Days Visual Representation
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 20),
+    return Container(
+      decoration: BoxDecoration(
+        color: Theme.of(context).colorScheme.surface,
+        borderRadius: const BorderRadius.only(
+          topLeft: Radius.circular(32),
+          topRight: Radius.circular(32),
+        ),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.1),
+            blurRadius: 20,
+            offset: const Offset(0, -5),
+          ),
+        ],
+      ),
+      child: SafeArea(
+        top: false,
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            const SizedBox(height: 16),
+            // Drag handle
+            Container(
+              width: 48,
+              height: 6,
+              decoration: BoxDecoration(
+                color: Colors.grey.withOpacity(0.3),
+                borderRadius: BorderRadius.circular(3),
+              ),
+            ),
+            const SizedBox(height: 32),
+
+            // Hero Section: Flame + Big Number
+            Column(
+              children: [
+                SvgPicture.asset(
+                  Assets.icons.flame,
+                  width: 80,
+                  height: 80,
+                  colorFilter: const ColorFilter.mode(
+                    fireOrange,
+                    BlendMode.srcIn,
+                  ),
+                )
+                    .animate(
+                        onPlay: (controller) =>
+                            controller.repeat(reverse: true))
+                    .scale(
+                      begin: const Offset(1, 1),
+                      end: const Offset(1.1, 1.1),
+                      duration: 1000.ms,
+                      curve: Curves.easeInOut,
+                    ),
+                const SizedBox(height: 16),
+                Text(
+                  '$currentStreak',
+                  style: Theme.of(context).textTheme.displayLarge?.copyWith(
+                        fontWeight: FontWeight.w900,
+                        color: fireOrange,
+                        height: 1,
+                        fontSize: 64,
+                      ),
+                ).animate().fadeIn().scale(delay: 200.ms),
+                Text(
+                  l10n
+                      .currentStreakSingular(currentStreak)
+                      .split(' ')
+                      .last, // "Streak" or "Days"
+                  style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                        fontWeight: FontWeight.bold,
+                        color: textGrey,
+                      ),
+                ),
+              ],
+            ),
+
+            const SizedBox(height: 40),
+
+            // Calendar Week Row
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 24),
+              child: Container(
+                padding:
+                    const EdgeInsets.symmetric(vertical: 20, horizontal: 16),
+                decoration: BoxDecoration(
+                  border: Border.all(color: lockedGrey, width: 2),
+                  borderRadius: BorderRadius.circular(20),
+                ),
                 child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: List.generate(7, (index) {
-                    final isToday = index == 5; // Today is now at index 5
-                    final isTomorrow = index == 6;
-                    // For streaks, a streak day must be today or before today
-                    // (not tomorrow)
-                    // and must be within the streak count
-                    // If streak is 3, it means today + 2 previous days
-                    final isInStreakRange =
-                        !isTomorrow && (5 - index < currentStreak);
-                    final hasStreak = isToday || (index < 5 && isInStreakRange);
+                    final isToday = index == 5; // Today is at index 5
+
+                    // Logic:
+                    // A day is "completed" if it is part of the streak history.
+                    // If today is part of streak, it's completed.
+                    // If streak is 0, today is not completed.
+                    final isCompleted =
+                        (index <= 5) && (5 - index < currentStreak);
 
                     return Column(
                       children: [
+                        Text(
+                          dayLabels[index],
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 14,
+                            color: Colors.grey.shade500,
+                          ),
+                        ),
+                        const SizedBox(height: 12),
                         Container(
-                          width: 40,
-                          height: 40,
+                          width: 32,
+                          height: 32,
                           decoration: BoxDecoration(
                             shape: BoxShape.circle,
-                            color: hasStreak
-                                ? (isToday
-                                    ? const Color(0xffF97316)
-                                    : const Color(0xffFFA360))
-                                : Colors.grey.shade200,
+                            color:
+                                isCompleted ? fireOrange : Colors.transparent,
                             border: Border.all(
-                              color: isToday || isTomorrow
-                                  ? const Color(0xffF97316)
-                                  : Colors.transparent,
+                              color: isCompleted
+                                  ? fireOrange
+                                  : (isToday ? fireOrange : lockedGrey),
                               width: 2,
                             ),
                           ),
                           child: Center(
-                            child: SvgPicture.asset(
-                              Assets.icons.flame,
-                              width: 24,
-                              height: 24,
-                              colorFilter: ColorFilter.mode(
-                                hasStreak
-                                    ? (isToday
-                                        ? Colors.white
-                                        : Colors.white.withValues(alpha: 0.9))
-                                    : Colors.grey.shade400,
-                                BlendMode.srcIn,
-                              ),
-                            ),
+                            child: isCompleted
+                                ? SvgPicture.asset(
+                                    Assets.icons
+                                        .check, // Use check for completed days
+                                    width: 16,
+                                    height: 16,
+                                    colorFilter: const ColorFilter.mode(
+                                      Colors.white,
+                                      BlendMode.srcIn,
+                                    ),
+                                  )
+                                : (isToday
+                                    ? const SizedBox() // Empty ring for today if incomplete
+                                    : const SizedBox()), // Empty grey ring for others
                           ),
-                        )
-                            .animate(delay: (100 * index).ms)
-                            .fadeIn(duration: 400.ms)
-                            .scale(
-                              begin: const Offset(0.8, 0.8),
-                              end: const Offset(1, 1),
-                              duration: 400.ms,
+                        ).animate(delay: (index * 50).ms).scale(
+                              duration: 300.ms,
+                              curve: Curves.easeOutBack,
                             ),
-                        const SizedBox(height: 8),
-                        Text(
-                          dayLabels[index],
-                          style: TextStyle(
-                            fontWeight: isToday || isTomorrow
-                                ? FontWeight.w900
-                                : FontWeight.bold,
-                            fontSize: 14,
-                            color: isToday || isTomorrow
-                                ? const Color(0xffF97316)
-                                : null,
-                          ),
-                        ),
                       ],
                     );
                   }),
                 ),
               ),
+            ),
 
-              // Streak Stats
-              const SizedBox(height: 40),
-              Container(
-                margin: const EdgeInsets.symmetric(horizontal: 20),
-                padding: const EdgeInsets.all(16),
-                decoration: BoxDecoration(
-                  color: Colors.grey.shade100,
-                  borderRadius: BorderRadius.circular(12),
-                ),
-                child: Column(
-                  children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        _buildStatItem(
-                          context,
-                          l10n.current,
-                          l10n.streakDaysCount(currentStreak),
-                          const Color(0xffF97316),
-                        ),
-                        _buildStatItem(
-                          context,
-                          l10n.goal,
-                          l10n.streakDaysCount(streakGoal),
-                          Colors.blue,
-                        ),
-                      ],
+            const SizedBox(height: 32),
+
+            // Motivation Message
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 32),
+              child: Text(
+                l10n.streakMotivationMessage,
+                textAlign: TextAlign.center,
+                style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                      color: textGrey,
+                      fontWeight: FontWeight.w600,
+                      height: 1.3,
                     ),
+              ).animate(delay: 400.ms).fadeIn(),
+            ),
 
-                    // Add progress indicator
-                    const SizedBox(height: 16),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          l10n.percentToGoal(
-                            (currentStreak / streakGoal * 100).toInt(),
-                          ),
-                          style:
-                              Theme.of(context).textTheme.bodyMedium?.copyWith(
-                                    fontWeight: FontWeight.w500,
-                                  ),
-                        ),
-                        const SizedBox(height: 8),
-                        ClipRRect(
-                          borderRadius: BorderRadius.circular(4),
-                          child: LinearProgressIndicator(
-                            value: currentStreak / streakGoal,
-                            minHeight: 8,
-                            backgroundColor: Colors.grey.shade300,
-                            valueColor: const AlwaysStoppedAnimation<Color>(
-                              Color(0xffF97316),
-                            ),
-                          ),
-                        ),
-                      ],
+            const SizedBox(height: 32),
+
+            // Stats / Info
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 24),
+              child: Row(
+                children: [
+                  Expanded(
+                    child: _buildInfoCard(
+                      context,
+                      l10n.goal,
+                      '$streakGoal',
+                      Colors.blue,
+                      lockedGrey,
                     ),
-                  ],
-                ),
-              ).animate(delay: 600.ms).fadeIn(duration: 400.ms),
-
-              const SizedBox(height: 24),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 20),
-                child: Text(
-                  l10n.streakMotivationMessage,
-                  textAlign: TextAlign.center,
-                  style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                        color: Colors.black87,
-                        height: 1.4,
-                      ),
-                ).animate(delay: 600.ms).fadeIn(duration: 400.ms),
-              ),
-              const SizedBox(height: 30),
-              PushableButton(
-                text: l10n.keepGoing,
-                width: 200,
-                height: 56,
-                buttonColor: const Color(0xffF97316),
-                shadowColor: const Color(0xffE86A10),
-                onTap: () {
-                  Navigator.pop(context);
-                },
-              ).animate(delay: 800.ms).fadeIn(duration: 400.ms).slideY(
-                    begin: 0.3,
-                    end: 0,
                   ),
-              const SafeArea(child: SizedBox(height: 20)),
-            ],
-          ),
+                  const SizedBox(width: 16),
+                  Expanded(
+                    child: _buildInfoCard(
+                      context,
+                      'Best Streak', // Using hardcoded or l10n if available, keeping hardcoded fallback safe
+                      '${userProfile.longestStreak}',
+                      const Color(0xFFFF9600),
+                      lockedGrey,
+                    ),
+                  ),
+                ],
+              ),
+            ).animate(delay: 500.ms).fadeIn().slideY(begin: 0.2, end: 0),
+
+            const SizedBox(height: 40),
+
+            // Action Button
+            PushableButton(
+              text: l10n.keepGoing,
+              width: MediaQuery.of(context).size.width - 48,
+              height: 56,
+              buttonColor: fireOrange,
+              shadowColor: const Color(0xFFCC7700), // Darker orange
+              onTap: () {
+                Navigator.pop(context);
+              },
+            ).animate(delay: 600.ms).fadeIn().slideY(begin: 0.5, end: 0),
+
+            const SizedBox(height: 24),
+          ],
         ),
-      ],
+      ),
     );
   }
 
-  Widget _buildStatItem(
+  Widget _buildInfoCard(
     BuildContext context,
     String label,
     String value,
     Color color,
+    Color borderColor,
   ) {
-    return Column(
-      children: [
-        Text(
-          label,
-          style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                color: Colors.grey.shade700,
-              ),
-        ),
-        const SizedBox(height: 4),
-        Text(
-          value,
-          style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                fontWeight: FontWeight.bold,
-                color: color,
-              ),
-        ),
-      ],
+    return Container(
+      padding: const EdgeInsets.all(16),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(16),
+        border: Border.all(color: borderColor, width: 2),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.05),
+            offset: const Offset(0, 4),
+            blurRadius: 0,
+          ),
+        ],
+      ),
+      child: Column(
+        children: [
+          Text(
+            label.toUpperCase(),
+            style: Theme.of(context).textTheme.labelSmall?.copyWith(
+                  color: Colors.grey.shade500,
+                  fontWeight: FontWeight.bold,
+                  letterSpacing: 1.2,
+                ),
+          ),
+          const SizedBox(height: 8),
+          Text(
+            value,
+            style: Theme.of(context).textTheme.headlineSmall?.copyWith(
+                  fontWeight: FontWeight.w900,
+                  color: color,
+                ),
+          ),
+        ],
+      ),
     );
   }
 }
