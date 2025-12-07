@@ -36,7 +36,7 @@ class PointsProgressBottomSheet extends StatelessWidget {
         ),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.1),
+            color: Colors.black.withValues(alpha: 0.1),
             blurRadius: 20,
             offset: const Offset(0, -5),
           ),
@@ -53,7 +53,7 @@ class PointsProgressBottomSheet extends StatelessWidget {
               width: 48,
               height: 6,
               decoration: BoxDecoration(
-                color: Colors.grey.withOpacity(0.3),
+                color: Colors.grey.withValues(alpha: 0.3),
                 borderRadius: BorderRadius.circular(3),
               ),
             ),
@@ -68,8 +68,8 @@ class PointsProgressBottomSheet extends StatelessWidget {
                   height: 80,
                 )
                     .animate(
-                        onPlay: (controller) =>
-                            controller.repeat(reverse: true))
+                      onPlay: (controller) => controller.repeat(reverse: true),
+                    )
                     .scale(
                       begin: const Offset(1, 1),
                       end: const Offset(1.1, 1.1),
@@ -116,7 +116,9 @@ class PointsProgressBottomSheet extends StatelessWidget {
                   const SizedBox(height: 20),
                   Container(
                     padding: const EdgeInsets.symmetric(
-                        vertical: 24, horizontal: 20),
+                      vertical: 24,
+                      horizontal: 20,
+                    ),
                     decoration: BoxDecoration(
                       border: Border.all(color: lockedGrey, width: 2),
                       borderRadius: BorderRadius.circular(24),
@@ -210,7 +212,7 @@ class PointsProgressBottomSheet extends StatelessWidget {
                         : 0)); // Simple logic based on hardcoded steps
 
     // Determine the progress for this specific level step
-    double progress = 0.0;
+    var progress = 0.0;
     if (isAchieved) {
       progress = 1.0;
     } else if (isNext) {
@@ -240,7 +242,7 @@ class PointsProgressBottomSheet extends StatelessWidget {
                       : Container(
                           width: 4,
                           color: isAchieved || isNext
-                              ? color.withOpacity(0.3)
+                              ? color.withValues(alpha: 0.3)
                               : const Color(0xFFE5E5E5),
                         ),
                 ),
@@ -273,7 +275,7 @@ class PointsProgressBottomSheet extends StatelessWidget {
                       : Container(
                           width: 4,
                           color: isAchieved
-                              ? color.withOpacity(0.3)
+                              ? color.withValues(alpha: 0.3)
                               : const Color(0xFFE5E5E5),
                         ),
                 ),

@@ -63,7 +63,7 @@ class StreakProgressBottomSheet extends StatelessWidget {
         ),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.1),
+            color: Colors.black.withValues(alpha: 0.1),
             blurRadius: 20,
             offset: const Offset(0, -5),
           ),
@@ -80,7 +80,7 @@ class StreakProgressBottomSheet extends StatelessWidget {
               width: 48,
               height: 6,
               decoration: BoxDecoration(
-                color: Colors.grey.withOpacity(0.3),
+                color: Colors.grey.withValues(alpha: 0.3),
                 borderRadius: BorderRadius.circular(3),
               ),
             ),
@@ -99,8 +99,8 @@ class StreakProgressBottomSheet extends StatelessWidget {
                   ),
                 )
                     .animate(
-                        onPlay: (controller) =>
-                            controller.repeat(reverse: true))
+                      onPlay: (controller) => controller.repeat(reverse: true),
+                    )
                     .scale(
                       begin: const Offset(1, 1),
                       end: const Offset(1.1, 1.1),
@@ -192,8 +192,8 @@ class StreakProgressBottomSheet extends StatelessWidget {
                                     ),
                                   )
                                 : (isToday
-                                    ? const SizedBox() // Empty ring for today if incomplete
-                                    : const SizedBox()), // Empty grey ring for others
+                                    ? const SizedBox()
+                                    : const SizedBox()),
                           ),
                         ).animate(delay: (index * 50).ms).scale(
                               duration: 300.ms,
@@ -242,7 +242,7 @@ class StreakProgressBottomSheet extends StatelessWidget {
                   Expanded(
                     child: _buildInfoCard(
                       context,
-                      'Best Streak', // Using hardcoded or l10n if available, keeping hardcoded fallback safe
+                      'Best Streak',
                       '${userProfile.longestStreak}',
                       const Color(0xFFFF9600),
                       lockedGrey,
@@ -288,9 +288,8 @@ class StreakProgressBottomSheet extends StatelessWidget {
         border: Border.all(color: borderColor, width: 2),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.05),
+            color: Colors.black.withValues(alpha: 0.05),
             offset: const Offset(0, 4),
-            blurRadius: 0,
           ),
         ],
       ),
