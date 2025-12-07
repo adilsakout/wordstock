@@ -127,20 +127,20 @@ struct SmallWordWidget: View {
                         .font(.system(size: 10))
                 }
             }
-            .foregroundColor(.white.opacity(0.8))
+            .foregroundStyle(.secondary)
             .padding(.bottom, 8)
             
             // Word Area
             Text(entry.word)
                 .font(.system(size: 20, weight: .heavy, design: .rounded))
-                .foregroundColor(.white)
+                .foregroundStyle(.primary)
                 .lineLimit(1)
                 .minimumScaleFactor(0.6)
             
             if !entry.phonetic.isEmpty {
                 Text(entry.phonetic)
                     .font(.system(size: 12, weight: .medium, design: .monospaced))
-                    .foregroundColor(.white.opacity(0.8))
+                    .foregroundStyle(.secondary)
                     .lineLimit(1)
                     .padding(.bottom, 6)
             } else {
@@ -150,7 +150,7 @@ struct SmallWordWidget: View {
             // Definition
             Text(entry.definition)
                 .font(.system(size: 12, weight: .regular, design: .rounded))
-                .foregroundColor(.white.opacity(0.95))
+                .foregroundStyle(.primary.opacity(0.9))
                 .lineLimit(3)
                 .fixedSize(horizontal: false, vertical: true)
             
@@ -170,7 +170,7 @@ struct MediumWordWidget: View {
             HStack {
                 Label("Word of the Day", systemImage: "book.fill")
                     .font(.system(size: 12, weight: .semibold))
-                    .foregroundColor(.white.opacity(0.8))
+                    .foregroundStyle(.secondary)
                 
                 Spacer()
                 
@@ -187,14 +187,14 @@ struct MediumWordWidget: View {
             VStack(spacing: 4) {
                 Text(entry.word)
                     .font(.system(size: 34, weight: .black, design: .rounded))
-                    .foregroundColor(.white)
+                    .foregroundStyle(.primary)
                     .lineLimit(1)
                     .minimumScaleFactor(0.5)
                 
                 if !entry.phonetic.isEmpty {
                     Text(entry.phonetic)
                         .font(.system(size: 14, weight: .medium, design: .monospaced))
-                        .foregroundColor(.white.opacity(0.85))
+                        .foregroundStyle(.secondary)
                 }
             }
             
@@ -203,7 +203,7 @@ struct MediumWordWidget: View {
             // Definition
             Text(entry.definition)
                 .font(.system(size: 15, weight: .medium, design: .rounded))
-                .foregroundColor(.white)
+                .foregroundStyle(.primary)
                 .multilineTextAlignment(.center)
                 .lineLimit(2)
                 .fixedSize(horizontal: false, vertical: true)
@@ -225,7 +225,7 @@ struct LargeWordWidget: View {
             HStack {
                 Label("Word of the Day", systemImage: "book.fill")
                     .font(.system(size: 13, weight: .semibold))
-                    .foregroundColor(.white.opacity(0.8))
+                    .foregroundStyle(.secondary)
                 
                 Spacer()
                 
@@ -241,14 +241,14 @@ struct LargeWordWidget: View {
             VStack(spacing: 8) {
                 Text(entry.word)
                     .font(.system(size: 42, weight: .black, design: .rounded))
-                    .foregroundColor(.white)
+                    .foregroundStyle(.primary)
                     .lineLimit(1)
                     .minimumScaleFactor(0.5)
                 
                 if !entry.phonetic.isEmpty {
                     Text(entry.phonetic)
                         .font(.system(size: 16, weight: .medium, design: .monospaced))
-                        .foregroundColor(.white.opacity(0.85))
+                        .foregroundStyle(.secondary)
                 }
             }
             
@@ -257,7 +257,7 @@ struct LargeWordWidget: View {
             // Definition
             Text(entry.definition)
                 .font(.system(size: 18, weight: .medium, design: .rounded))
-                .foregroundColor(.white)
+                .foregroundStyle(.primary)
                 .multilineTextAlignment(.center)
                 .lineLimit(3)
                 .fixedSize(horizontal: false, vertical: true)
@@ -269,14 +269,14 @@ struct LargeWordWidget: View {
             if !entry.example.isEmpty {
                 VStack(spacing: 6) {
                     Rectangle()
-                        .fill(Color.white.opacity(0.3))
+                        .fill(.secondary.opacity(0.3))
                         .frame(height: 1)
                         .frame(width: 60)
                     
                     Text("\"\(entry.example)\"")
                         .font(.system(size: 15, weight: .regular, design: .serif))
                         .italic()
-                        .foregroundColor(.white.opacity(0.9))
+                        .foregroundStyle(.secondary)
                         .multilineTextAlignment(.center)
                         .lineLimit(3)
                         .fixedSize(horizontal: false, vertical: true)
@@ -287,7 +287,7 @@ struct LargeWordWidget: View {
             // Footer
             Text("Tap to open Wordstock")
                 .font(.caption2)
-                .foregroundColor(.white.opacity(0.6))
+                .foregroundStyle(.tertiary)
         }
         .padding(20)
     }
@@ -317,6 +317,8 @@ struct HomeWidget: Widget {
             return StaticConfiguration(kind: kind, provider: Provider()) { entry in
                 HomeWidgetEntryView(entry: entry)
                     .background(WidgetBackground())
+                    // Force Dark Mode for Green Background so text stays white
+                    .environment(\.colorScheme, .dark)
             }
             .configurationDisplayName("Word of the Day")
             .description("Learn a new word every day with Wordstock")
