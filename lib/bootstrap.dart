@@ -5,6 +5,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_branch_sdk/flutter_branch_sdk.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:home_widget/home_widget.dart';
 import 'package:logger/logger.dart';
 import 'package:onesignal_flutter/onesignal_flutter.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
@@ -62,6 +63,20 @@ Future<void> bootstrap(FutureOr<Widget> Function() builder) async {
 
   // Add cross-flavor configuration here
   WidgetsFlutterBinding.ensureInitialized();
+
+  // Initialize home widget with app group ID
+  // This allows the widget to share data with the main app
+  try {
+    await HomeWidget.setAppGroupId('group.app.clickwiseapps.wordstock.shared');
+    logger.i('Home widget app group configured successfully');
+  } catch (e, stackTrace) {
+    logger.e(
+      'Failed to initialize home widget',
+      error: e,
+      stackTrace: stackTrace,
+    );
+    // Continue app initialization even if widget setup fails
+  }
 
   await FlutterBranchSdk.init(
     enableLogging: kDebugMode,

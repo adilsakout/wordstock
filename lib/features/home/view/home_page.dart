@@ -18,6 +18,34 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const Scaffold(
+      // floatingActionButton: Platform.isIOS && kDebugMode
+      //     ? FloatingActionButton(
+      //         onPressed: () async {
+      //           /// clear the IOS user defaults for the widget
+      //           await HomeWidget.saveWidgetData<String>('word', null);
+      //           await HomeWidget.saveWidgetData<String>('definition', null);
+      //           await HomeWidget.saveWidgetData<String>('phonetic', null);
+      //           await HomeWidget.saveWidgetData<String>('example', null);
+      //           await HomeWidget.saveWidgetData<String>('isFavorite', null);
+
+      //           await HomeWidget.updateWidget(
+      //             iOSName: 'HomeWidget',
+      //             androidName: 'HomeWidget',
+      //           );
+
+      //           if (context.mounted) {
+      //             ScaffoldMessenger.of(context).showSnackBar(
+      //               const SnackBar(
+      //                 content:
+      //                     Text('Widget data cleared!
+      // Check your homescreen.'),
+      //               ),
+      //             );
+      //           }
+      //         },
+      //         child: const Icon(Icons.delete_outline),
+      //       )
+      //     : null,
       body: HomeView(),
     );
   }

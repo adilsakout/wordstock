@@ -23,6 +23,8 @@ PODS:
     - Flutter
   - gaimon (0.0.1):
     - Flutter
+  - home_widget (0.0.1):
+    - Flutter
   - image_gallery_saver (2.0.2):
     - Flutter
   - in_app_review (2.0.0):
@@ -83,7 +85,7 @@ PODS:
     - FlutterMacOS
   - permission_handler_apple (9.3.0):
     - Flutter
-  - PostHog (3.23.0)
+  - PostHog (3.35.1)
   - posthog_flutter (0.0.1):
     - Flutter
     - FlutterMacOS
@@ -128,6 +130,7 @@ DEPENDENCIES:
   - flutter_native_splash (from `.symlinks/plugins/flutter_native_splash/ios`)
   - flutter_timezone (from `.symlinks/plugins/flutter_timezone/ios`)
   - gaimon (from `.symlinks/plugins/gaimon/ios`)
+  - home_widget (from `.symlinks/plugins/home_widget/ios`)
   - image_gallery_saver (from `.symlinks/plugins/image_gallery_saver/ios`)
   - in_app_review (from `.symlinks/plugins/in_app_review/ios`)
   - onesignal_flutter (from `.symlinks/plugins/onesignal_flutter/ios`)
@@ -178,6 +181,8 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/flutter_timezone/ios"
   gaimon:
     :path: ".symlinks/plugins/gaimon/ios"
+  home_widget:
+    :path: ".symlinks/plugins/home_widget/ios"
   image_gallery_saver:
     :path: ".symlinks/plugins/image_gallery_saver/ios"
   in_app_review:
@@ -218,6 +223,7 @@ SPEC CHECKSUMS:
   flutter_native_splash: df59bb2e1421aa0282cb2e95618af4dcb0c56c29
   flutter_timezone: ac3da59ac941ff1c98a2e1f0293420e020120282
   gaimon: 266fec2cd27726df54a6694c14fc9e3f2a415c33
+  home_widget: 0434835a4c9a75704264feff6be17ea40e0f0d57
   image_gallery_saver: cb43cc43141711190510e92c460eb1655cd343cb
   in_app_review: a31b5257259646ea78e0e35fc914979b0031d011
   onesignal_flutter: c4442bab25faaf3a3ab77cdcd33f4507f10b05b8
@@ -225,7 +231,7 @@ SPEC CHECKSUMS:
   package_info_plus: c0502532a26c7662a62a356cebe2692ec5fe4ec4
   path_provider_foundation: 2b6b4c569c0fb62ec74538f866245ac84301af46
   permission_handler_apple: 9878588469a2b0d0fc1e048d9f43605f92e6cec2
-  PostHog: 1014bf6e16fbd72e45601eeb17d62dc8a9ce0b2e
+  PostHog: 24a9af5451f9421af38bb93fd0c06624d2f8a55c
   posthog_flutter: 6d1041c7da77eb2032c27b72df103439af64cb8c
   purchases_flutter: e4dde9cbe9baa61c0d2d6ba859bedfb8d4df8f88
   purchases_ui_flutter: 9d5d5ab31e41006107ed4f077762c36a567a704f

@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/foundation.dart';
+import 'package:home_widget/home_widget.dart';
 import 'package:wordstock/model/word.dart';
 import 'package:wordstock/repositories/tts_repository.dart';
 import 'package:wordstock/repositories/user_repository.dart';
@@ -51,8 +52,44 @@ class HomeCubit extends Cubit<HomeState> {
     try {
       final words = await wordRepository.getWords();
       emit(HomeLoaded(words: words));
+
+      // Update the home widget with the first word (word of the day)
+      if (words.isNotEmpty) {
+        await _updateHomeWidget(words.first);
+      }
     } catch (e) {
       emit(HomeError(errorMessage: e.toString()));
+    }
+  }
+
+  /// Updates the iOS/Android home widget with current word data
+  Future<void> _updateHomeWidget(Word word) async {
+    try {
+      // Save word data to shared preferences for the widget to access
+      await HomeWidget.saveWidgetData<String>('word', word.word);
+      await HomeWidget.saveWidgetData<String>('definition', word.definition);
+      await HomeWidget.saveWidgetData<String>(
+        'phonetic',
+        word.phonetic ?? '',
+      );
+      await HomeWidget.saveWidgetData<String>(
+        'example',
+        word.example ?? '',
+      );
+
+      // Save favorite status as string to avoid NSNull casting issues
+      await HomeWidget.saveWidgetData<String>(
+        'isFavorite',
+        (word.isFavorite ?? false).toString(),
+      );
+
+      // Update the widget
+      await HomeWidget.updateWidget(
+        iOSName: 'HomeWidget',
+        androidName: 'HomeWidget',
+      );
+    } catch (e) {
+      debugPrint('Error updating home widget: $e');
     }
   }
 
@@ -75,6 +112,12 @@ class HomeCubit extends Cubit<HomeState> {
           return word;
         }).toList();
         emit(HomeLoaded(words: updatedWords));
+
+        // Update widget if the favorited word is the first word
+        // (current word of the day)
+        if (updatedWords.isNotEmpty && updatedWords.first.id == wordId) {
+          await _updateHomeWidget(updatedWords.first);
+        }
       }
     } catch (e) {
       emit(HomeError(errorMessage: e.toString()));
