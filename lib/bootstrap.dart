@@ -64,8 +64,19 @@ Future<void> bootstrap(FutureOr<Widget> Function() builder) async {
   // Add cross-flavor configuration here
   WidgetsFlutterBinding.ensureInitialized();
 
-  await HomeWidget.setAppGroupId('group.app.clickwiseapps.wordstock.shared');
-  await HomeWidget.initiallyLaunchedFromHomeWidget();
+  // Initialize home widget with app group ID
+  // This allows the widget to share data with the main app
+  try {
+    await HomeWidget.setAppGroupId('group.app.clickwiseapps.wordstock.shared');
+    logger.i('Home widget app group configured successfully');
+  } catch (e, stackTrace) {
+    logger.e(
+      'Failed to initialize home widget',
+      error: e,
+      stackTrace: stackTrace,
+    );
+    // Continue app initialization even if widget setup fails
+  }
 
   await FlutterBranchSdk.init(
     enableLogging: kDebugMode,

@@ -8,10 +8,11 @@
 import WidgetKit
 import SwiftUI
 
+/// The main widget bundle that groups all widgets
+/// Currently includes the HomeWidget (Word of the Day widget)
 @main
 struct HomeWidgetBundle: WidgetBundle {
     var body: some Widget {
         HomeWidget()
-        HomeWidgetControl()
     }
 }
