@@ -39,21 +39,35 @@ struct Provider: TimelineProvider {
     private func getWordEntry() -> WordEntry {
         let sharedDefaults = UserDefaults(suiteName: "group.app.clickwiseapps.wordstock.shared")
         
-        let word = sharedDefaults?.string(forKey: "word") ?? "Welcome"
-        let definition = sharedDefaults?.string(forKey: "definition") ?? "Learn a new word every day"
+        let word = sharedDefaults?.string(forKey: "word")
+        let definition = sharedDefaults?.string(forKey: "definition") ?? ""
         let phonetic = sharedDefaults?.string(forKey: "phonetic") ?? ""
         let example = sharedDefaults?.string(forKey: "example") ?? ""
         
         let isFavoriteString = sharedDefaults?.string(forKey: "isFavorite") ?? "false"
         let isFavorite = isFavoriteString == "true"
         
+        // If no word is found, return an empty state entry
+        if word == nil || word?.isEmpty == true {
+            return WordEntry(
+                date: Date(),
+                word: "",
+                definition: "",
+                phonetic: "",
+                example: "",
+                isFavorite: false,
+                isEmpty: true
+            )
+        }
+        
         return WordEntry(
             date: Date(),
-            word: word,
+            word: word!,
             definition: definition,
             phonetic: phonetic,
             example: example,
-            isFavorite: isFavorite
+            isFavorite: isFavorite,
+            isEmpty: false
         )
     }
 }
@@ -66,6 +80,7 @@ struct WordEntry: TimelineEntry {
     let phonetic: String
     let example: String
     let isFavorite: Bool
+    var isEmpty: Bool = false
 }
 
 // MARK: - Reusable Gradient Background
@@ -115,48 +130,52 @@ struct SmallWordWidget: View {
     let entry: WordEntry
     
     var body: some View {
-        VStack(alignment: .leading, spacing: 0) {
-            // Compact Header
-            HStack {
-                Image(systemName: "book.closed.fill")
-                    .font(.system(size: 10))
-                Spacer()
-                if entry.isFavorite {
-                    Image(systemName: "heart.fill")
-                        .foregroundColor(Color(red: 1.0, green: 0.4, blue: 0.5)) // Bright Pink
+        if entry.isEmpty {
+            EmptyStateView(message: "Tap to get\nword of the day", icon: "arrow.down.circle")
+        } else {
+            VStack(alignment: .leading, spacing: 0) {
+                // Compact Header
+                HStack {
+                    Image(systemName: "book.closed.fill")
                         .font(.system(size: 10))
+                    Spacer()
+                    if entry.isFavorite {
+                        Image(systemName: "heart.fill")
+                            .foregroundColor(Color(red: 1.0, green: 0.4, blue: 0.5)) // Bright Pink
+                            .font(.system(size: 10))
+                    }
                 }
-            }
-            .foregroundStyle(.secondary)
-            .padding(.bottom, 8)
-            
-            // Word Area
-            Text(entry.word)
-                .font(.system(size: 20, weight: .heavy, design: .rounded))
-                .foregroundStyle(.primary)
-                .lineLimit(1)
-                .minimumScaleFactor(0.6)
-            
-            if !entry.phonetic.isEmpty {
-                Text(entry.phonetic)
-                    .font(.system(size: 12, weight: .medium, design: .monospaced))
-                    .foregroundStyle(.secondary)
+                .foregroundStyle(.secondary)
+                .padding(.bottom, 8)
+                
+                // Word Area
+                Text(entry.word)
+                    .font(.system(size: 20, weight: .heavy, design: .rounded))
+                    .foregroundStyle(.primary)
                     .lineLimit(1)
-                    .padding(.bottom, 6)
-            } else {
-                Spacer().frame(height: 6)
+                    .minimumScaleFactor(0.6)
+                
+                if !entry.phonetic.isEmpty {
+                    Text(entry.phonetic)
+                        .font(.system(size: 12, weight: .medium, design: .monospaced))
+                        .foregroundStyle(.secondary)
+                        .lineLimit(1)
+                        .padding(.bottom, 6)
+                } else {
+                    Spacer().frame(height: 6)
+                }
+                
+                // Definition
+                Text(entry.definition)
+                    .font(.system(size: 12, weight: .regular, design: .rounded))
+                    .foregroundStyle(.primary.opacity(0.9))
+                    .lineLimit(3)
+                    .fixedSize(horizontal: false, vertical: true)
+                
+                Spacer()
             }
-            
-            // Definition
-            Text(entry.definition)
-                .font(.system(size: 12, weight: .regular, design: .rounded))
-                .foregroundStyle(.primary.opacity(0.9))
-                .lineLimit(3)
-                .fixedSize(horizontal: false, vertical: true)
-            
-            Spacer()
+            .padding(14)
         }
-        .padding(14)
     }
 }
 
@@ -165,53 +184,57 @@ struct MediumWordWidget: View {
     let entry: WordEntry
     
     var body: some View {
-        VStack(spacing: 6) {
-            // Header
-            HStack {
-                Label("Word of the Day", systemImage: "book.fill")
-                    .font(.system(size: 12, weight: .semibold))
-                    .foregroundStyle(.secondary)
+        if entry.isEmpty {
+            EmptyStateView(message: "Tap to get word of the day", icon: "arrow.down.circle.fill")
+        } else {
+            VStack(spacing: 6) {
+                // Header
+                HStack {
+                    Label("Word of the Day", systemImage: "book.fill")
+                        .font(.system(size: 12, weight: .semibold))
+                        .foregroundStyle(.secondary)
+                    
+                    Spacer()
+                    
+                    if entry.isFavorite {
+                        Image(systemName: "heart.fill")
+                            .foregroundColor(Color(red: 1.0, green: 0.4, blue: 0.5))
+                            .font(.system(size: 12))
+                    }
+                }
                 
                 Spacer()
                 
-                if entry.isFavorite {
-                    Image(systemName: "heart.fill")
-                        .foregroundColor(Color(red: 1.0, green: 0.4, blue: 0.5))
-                        .font(.system(size: 12))
+                // Word & Phonetic
+                VStack(spacing: 4) {
+                    Text(entry.word)
+                        .font(.system(size: 34, weight: .black, design: .rounded))
+                        .foregroundStyle(.primary)
+                        .lineLimit(1)
+                        .minimumScaleFactor(0.5)
+                    
+                    if !entry.phonetic.isEmpty {
+                        Text(entry.phonetic)
+                            .font(.system(size: 14, weight: .medium, design: .monospaced))
+                            .foregroundStyle(.secondary)
+                    }
                 }
-            }
-            
-            Spacer()
-            
-            // Word & Phonetic
-            VStack(spacing: 4) {
-                Text(entry.word)
-                    .font(.system(size: 34, weight: .black, design: .rounded))
-                    .foregroundStyle(.primary)
-                    .lineLimit(1)
-                    .minimumScaleFactor(0.5)
                 
-                if !entry.phonetic.isEmpty {
-                    Text(entry.phonetic)
-                        .font(.system(size: 14, weight: .medium, design: .monospaced))
-                        .foregroundStyle(.secondary)
-                }
+                Spacer()
+                
+                // Definition
+                Text(entry.definition)
+                    .font(.system(size: 15, weight: .medium, design: .rounded))
+                    .foregroundStyle(.primary)
+                    .multilineTextAlignment(.center)
+                    .lineLimit(2)
+                    .fixedSize(horizontal: false, vertical: true)
+                    .padding(.horizontal, 4)
+                
+                Spacer()
             }
-            
-            Spacer()
-            
-            // Definition
-            Text(entry.definition)
-                .font(.system(size: 15, weight: .medium, design: .rounded))
-                .foregroundStyle(.primary)
-                .multilineTextAlignment(.center)
-                .lineLimit(2)
-                .fixedSize(horizontal: false, vertical: true)
-                .padding(.horizontal, 4)
-            
-            Spacer()
+            .padding(16)
         }
-        .padding(16)
     }
 }
 
@@ -220,76 +243,100 @@ struct LargeWordWidget: View {
     let entry: WordEntry
     
     var body: some View {
-        VStack(spacing: 0) {
-            // Header
-            HStack {
-                Label("Word of the Day", systemImage: "book.fill")
-                    .font(.system(size: 13, weight: .semibold))
-                    .foregroundStyle(.secondary)
+        if entry.isEmpty {
+            EmptyStateView(message: "Tap to start learning\nGet your word of the day", icon: "arrow.down.circle.fill")
+        } else {
+            VStack(spacing: 0) {
+                // Header
+                HStack {
+                    Label("Word of the Day", systemImage: "book.fill")
+                        .font(.system(size: 13, weight: .semibold))
+                        .foregroundStyle(.secondary)
+                    
+                    Spacer()
+                    
+                    if entry.isFavorite {
+                        Image(systemName: "heart.fill")
+                            .foregroundColor(Color(red: 1.0, green: 0.4, blue: 0.5))
+                            .font(.system(size: 14))
+                    }
+                }
+                .padding(.bottom, 20)
+                
+                // Main Content
+                VStack(spacing: 8) {
+                    Text(entry.word)
+                        .font(.system(size: 42, weight: .black, design: .rounded))
+                        .foregroundStyle(.primary)
+                        .lineLimit(1)
+                        .minimumScaleFactor(0.5)
+                    
+                    if !entry.phonetic.isEmpty {
+                        Text(entry.phonetic)
+                            .font(.system(size: 16, weight: .medium, design: .monospaced))
+                            .foregroundStyle(.secondary)
+                    }
+                }
                 
                 Spacer()
                 
-                if entry.isFavorite {
-                    Image(systemName: "heart.fill")
-                        .foregroundColor(Color(red: 1.0, green: 0.4, blue: 0.5))
-                        .font(.system(size: 14))
-                }
-            }
-            .padding(.bottom, 20)
-            
-            // Main Content
-            VStack(spacing: 8) {
-                Text(entry.word)
-                    .font(.system(size: 42, weight: .black, design: .rounded))
+                // Definition
+                Text(entry.definition)
+                    .font(.system(size: 18, weight: .medium, design: .rounded))
                     .foregroundStyle(.primary)
-                    .lineLimit(1)
-                    .minimumScaleFactor(0.5)
+                    .multilineTextAlignment(.center)
+                    .lineLimit(3)
+                    .fixedSize(horizontal: false, vertical: true)
+                    .padding(.horizontal, 10)
                 
-                if !entry.phonetic.isEmpty {
-                    Text(entry.phonetic)
-                        .font(.system(size: 16, weight: .medium, design: .monospaced))
-                        .foregroundStyle(.secondary)
+                Spacer()
+                
+                // Example Section
+                if !entry.example.isEmpty {
+                    VStack(spacing: 6) {
+                        Rectangle()
+                            .fill(.secondary.opacity(0.3))
+                            .frame(height: 1)
+                            .frame(width: 60)
+                        
+                        Text("\"\(entry.example)\"")
+                            .font(.system(size: 15, weight: .regular, design: .serif))
+                            .italic()
+                            .foregroundStyle(.secondary)
+                            .multilineTextAlignment(.center)
+                            .lineLimit(3)
+                            .fixedSize(horizontal: false, vertical: true)
+                    }
+                    .padding(.bottom, 10)
                 }
+                
+                // Footer
+                Text("Tap to open Wordstock")
+                    .font(.caption2)
+                    .foregroundStyle(.tertiary)
             }
+            .padding(20)
+        }
+    }
+}
+
+// MARK: - Empty State View
+struct EmptyStateView: View {
+    let message: String
+    let icon: String
+    
+    var body: some View {
+        VStack(spacing: 12) {
+            Image(systemName: icon)
+                .font(.system(size: 30))
+                .foregroundStyle(.secondary)
             
-            Spacer()
-            
-            // Definition
-            Text(entry.definition)
-                .font(.system(size: 18, weight: .medium, design: .rounded))
+            Text(message)
+                .font(.system(size: 16, weight: .medium, design: .rounded))
                 .foregroundStyle(.primary)
                 .multilineTextAlignment(.center)
-                .lineLimit(3)
-                .fixedSize(horizontal: false, vertical: true)
-                .padding(.horizontal, 10)
-            
-            Spacer()
-            
-            // Example Section
-            if !entry.example.isEmpty {
-                VStack(spacing: 6) {
-                    Rectangle()
-                        .fill(.secondary.opacity(0.3))
-                        .frame(height: 1)
-                        .frame(width: 60)
-                    
-                    Text("\"\(entry.example)\"")
-                        .font(.system(size: 15, weight: .regular, design: .serif))
-                        .italic()
-                        .foregroundStyle(.secondary)
-                        .multilineTextAlignment(.center)
-                        .lineLimit(3)
-                        .fixedSize(horizontal: false, vertical: true)
-                }
-                .padding(.bottom, 10)
-            }
-            
-            // Footer
-            Text("Tap to open Wordstock")
-                .font(.caption2)
-                .foregroundStyle(.tertiary)
         }
-        .padding(20)
+        .padding()
     }
 }
 
