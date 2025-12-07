@@ -5,6 +5,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_branch_sdk/flutter_branch_sdk.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:home_widget/home_widget.dart';
 import 'package:logger/logger.dart';
 import 'package:onesignal_flutter/onesignal_flutter.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
@@ -62,6 +63,8 @@ Future<void> bootstrap(FutureOr<Widget> Function() builder) async {
 
   // Add cross-flavor configuration here
   WidgetsFlutterBinding.ensureInitialized();
+
+  await HomeWidget.setAppGroupId('group.clickwiseapps.wordstock.mywidget');
 
   await FlutterBranchSdk.init(
     enableLogging: kDebugMode,
