@@ -9,8 +9,6 @@ import WidgetKit
 import SwiftUI
 
 // MARK: - Timeline Provider
-// This provider handles fetching word data from shared UserDefaults
-// and creating timeline entries for the widget
 struct Provider: TimelineProvider {
     func placeholder(in context: Context) -> WordEntry {
         WordEntry(
@@ -31,26 +29,21 @@ struct Provider: TimelineProvider {
     func getTimeline(in context: Context, completion: @escaping (Timeline<WordEntry>) -> ()) {
         let entry = getWordEntry()
         
-        // Create a timeline that updates the widget every hour
+        // Update every hour
         let nextUpdate = Calendar.current.date(byAdding: .hour, value: 1, to: Date())!
         let timeline = Timeline(entries: [entry], policy: .after(nextUpdate))
         
         completion(timeline)
     }
     
-    /// Fetches word data from shared UserDefaults (App Group)
-    /// This data is saved by the Flutter app using the home_widget package
     private func getWordEntry() -> WordEntry {
         let sharedDefaults = UserDefaults(suiteName: "group.app.clickwiseapps.wordstock.shared")
         
-        // Read word data from shared preferences
         let word = sharedDefaults?.string(forKey: "word") ?? "Welcome"
         let definition = sharedDefaults?.string(forKey: "definition") ?? "Learn a new word every day"
         let phonetic = sharedDefaults?.string(forKey: "phonetic") ?? ""
         let example = sharedDefaults?.string(forKey: "example") ?? ""
         
-        // Read favorite status as string and convert to boolean
-        // This avoids NSNull casting issues with boolean values
         let isFavoriteString = sharedDefaults?.string(forKey: "isFavorite") ?? "false"
         let isFavorite = isFavoriteString == "true"
         
@@ -66,7 +59,6 @@ struct Provider: TimelineProvider {
 }
 
 // MARK: - Word Entry
-// Represents a single timeline entry with word data
 struct WordEntry: TimelineEntry {
     let date: Date
     let word: String
@@ -79,19 +71,24 @@ struct WordEntry: TimelineEntry {
 // MARK: - Reusable Gradient Background
 struct WidgetBackground: View {
     var body: some View {
-        LinearGradient(
-            gradient: Gradient(colors: [
-                Color(red: 0.11, green: 0.69, blue: 0.96),
-                Color(red: 0.10, green: 0.60, blue: 0.84)
-            ]),
-            startPoint: .topLeading,
-            endPoint: .bottomTrailing
-        )
+        if #available(iOS 26.0, *) {
+            // Glass effect for future iOS versions
+            Rectangle().fill(.regularMaterial)
+        } else {
+            // Green background for current versions
+            LinearGradient(
+                gradient: Gradient(colors: [
+                    Color(red: 0.30, green: 0.82, blue: 0.48), // Fresh Green
+                    Color(red: 0.15, green: 0.65, blue: 0.35)  // Deep Green
+                ]),
+                startPoint: .topLeading,
+                endPoint: .bottomTrailing
+            )
+        }
     }
 }
 
 // MARK: - Widget View
-// The main view that displays the word card in the widget
 struct HomeWidgetEntryView: View {
     var entry: WordEntry
     @Environment(\.widgetFamily) var family
@@ -109,112 +106,108 @@ struct HomeWidgetEntryView: View {
                 MediumWordWidget(entry: entry)
             }
         }
-        // Add tap action to open the app
         .widgetURL(URL(string: "wordstock://home"))
     }
 }
 
-// MARK: - Small Widget (Compact view)
-// Displays just the word and definition
+// MARK: - Small Widget (Dictionary Style - Left Aligned)
 struct SmallWordWidget: View {
     let entry: WordEntry
     
     var body: some View {
-        VStack(spacing: 8) {
-            // App branding
+        VStack(alignment: .leading, spacing: 0) {
+            // Compact Header
             HStack {
-                Image(systemName: "book.fill")
-                    .foregroundColor(.white.opacity(0.9))
-                    .font(.system(size: 12))
-                Text("Word of the Day")
-                    .font(.system(size: 11, weight: .medium))
-                    .foregroundColor(.white.opacity(0.9))
+                Image(systemName: "book.closed.fill")
+                    .font(.system(size: 10))
                 Spacer()
                 if entry.isFavorite {
                     Image(systemName: "heart.fill")
-                        .foregroundColor(Color(red: 0.91, green: 0.31, blue: 0.47))
+                        .foregroundColor(Color(red: 1.0, green: 0.4, blue: 0.5)) // Bright Pink
+                        .font(.system(size: 10))
+                }
+            }
+            .foregroundColor(.white.opacity(0.8))
+            .padding(.bottom, 8)
+            
+            // Word Area
+            Text(entry.word)
+                .font(.system(size: 20, weight: .heavy, design: .rounded))
+                .foregroundColor(.white)
+                .lineLimit(1)
+                .minimumScaleFactor(0.6)
+            
+            if !entry.phonetic.isEmpty {
+                Text(entry.phonetic)
+                    .font(.system(size: 12, weight: .medium, design: .monospaced))
+                    .foregroundColor(.white.opacity(0.8))
+                    .lineLimit(1)
+                    .padding(.bottom, 6)
+            } else {
+                Spacer().frame(height: 6)
+            }
+            
+            // Definition
+            Text(entry.definition)
+                .font(.system(size: 12, weight: .regular, design: .rounded))
+                .foregroundColor(.white.opacity(0.95))
+                .lineLimit(3)
+                .fixedSize(horizontal: false, vertical: true)
+            
+            Spacer()
+        }
+        .padding(14)
+    }
+}
+
+// MARK: - Medium Widget (Hero Style - Center Aligned)
+struct MediumWordWidget: View {
+    let entry: WordEntry
+    
+    var body: some View {
+        VStack(spacing: 6) {
+            // Header
+            HStack {
+                Label("Word of the Day", systemImage: "book.fill")
+                    .font(.system(size: 12, weight: .semibold))
+                    .foregroundColor(.white.opacity(0.8))
+                
+                Spacer()
+                
+                if entry.isFavorite {
+                    Image(systemName: "heart.fill")
+                        .foregroundColor(Color(red: 1.0, green: 0.4, blue: 0.5))
                         .font(.system(size: 12))
                 }
             }
             
             Spacer()
             
-            // Word
-            Text(entry.word)
-                .font(.system(size: 24, weight: .bold))
-                .foregroundColor(.white)
-                .lineLimit(1)
-                .minimumScaleFactor(0.5)
-            
-            // Phonetic (if available)
-            if !entry.phonetic.isEmpty {
-                Text(entry.phonetic)
-                    .font(.system(size: 12, weight: .regular))
-                    .foregroundColor(.white.opacity(0.8))
+            // Word & Phonetic
+            VStack(spacing: 4) {
+                Text(entry.word)
+                    .font(.system(size: 34, weight: .black, design: .rounded))
+                    .foregroundColor(.white)
                     .lineLimit(1)
-            }
-            
-            // Definition
-            Text(entry.definition)
-                .font(.system(size: 13, weight: .regular))
-                .foregroundColor(.white.opacity(0.95))
-                .multilineTextAlignment(.center)
-                .lineLimit(3)
-                .fixedSize(horizontal: false, vertical: true)
-            
-            Spacer()
-        }
-        .padding(12)
-    }
-}
-
-// MARK: - Medium Widget (Standard view)
-// Displays word, phonetic, definition, and example
-struct MediumWordWidget: View {
-    let entry: WordEntry
-    
-    var body: some View {
-        VStack(spacing: 10) {
-            // Header with branding and favorite indicator
-            HStack {
-                Image(systemName: "book.fill")
-                    .foregroundColor(.white.opacity(0.9))
-                    .font(.system(size: 14))
-                Text("Word of the Day")
-                    .font(.system(size: 13, weight: .medium))
-                    .foregroundColor(.white.opacity(0.9))
-                Spacer()
-                if entry.isFavorite {
-                    Image(systemName: "heart.fill")
-                        .foregroundColor(Color(red: 0.91, green: 0.31, blue: 0.47))
-                        .font(.system(size: 14))
+                    .minimumScaleFactor(0.5)
+                
+                if !entry.phonetic.isEmpty {
+                    Text(entry.phonetic)
+                        .font(.system(size: 14, weight: .medium, design: .monospaced))
+                        .foregroundColor(.white.opacity(0.85))
                 }
             }
             
             Spacer()
             
-            // Word
-            Text(entry.word)
-                .font(.system(size: 32, weight: .bold))
-                .foregroundColor(.white)
-                .lineLimit(1)
-                .minimumScaleFactor(0.5)
-            
-            // Phonetic
-            if !entry.phonetic.isEmpty {
-                Text(entry.phonetic)
-                    .font(.system(size: 14, weight: .regular))
-                    .foregroundColor(.white.opacity(0.8))
-                    .lineLimit(1)
-            }
-            
             // Definition
             Text(entry.definition)
-                .font(.system(size: 15, weight: .medium))
-                .foregroundColor(.white.opacity(0.95))
+                .font(.system(size: 15, weight: .medium, design: .rounded))
+                .foregroundColor(.white)
                 .multilineTextAlignment(.center)
                 .lineLimit(2)
                 .fixedSize(horizontal: false, vertical: true)
+                .padding(.horizontal, 4)
             
             Spacer()
         }
@@ -222,73 +215,78 @@ struct MediumWordWidget: View {
     }
 }
 
-// MARK: - Large Widget (Full view)
-// Displays all information including example sentence
+// MARK: - Large Widget (Detailed Style - Center Aligned)
 struct LargeWordWidget: View {
     let entry: WordEntry
     
     var body: some View {
-        VStack(spacing: 12) {
+        VStack(spacing: 0) {
             // Header
             HStack {
-                Image(systemName: "book.fill")
-                    .foregroundColor(.white.opacity(0.9))
-                    .font(.system(size: 16))
-                Text("Word of the Day")
-                    .font(.system(size: 15, weight: .medium))
-                    .foregroundColor(.white.opacity(0.9))
+                Label("Word of the Day", systemImage: "book.fill")
+                    .font(.system(size: 13, weight: .semibold))
+                    .foregroundColor(.white.opacity(0.8))
+                
                 Spacer()
+                
                 if entry.isFavorite {
                     Image(systemName: "heart.fill")
-                        .foregroundColor(Color(red: 0.91, green: 0.31, blue: 0.47))
-                        .font(.system(size: 16))
+                        .foregroundColor(Color(red: 1.0, green: 0.4, blue: 0.5))
+                        .font(.system(size: 14))
+                }
+            }
+            .padding(.bottom, 20)
+            
+            // Main Content
+            VStack(spacing: 8) {
+                Text(entry.word)
+                    .font(.system(size: 42, weight: .black, design: .rounded))
+                    .foregroundColor(.white)
+                    .lineLimit(1)
+                    .minimumScaleFactor(0.5)
+                
+                if !entry.phonetic.isEmpty {
+                    Text(entry.phonetic)
+                        .font(.system(size: 16, weight: .medium, design: .monospaced))
+                        .foregroundColor(.white.opacity(0.85))
                 }
             }
             
             Spacer()
             
-            // Word
-            Text(entry.word)
-                .font(.system(size: 40, weight: .bold))
-                .foregroundColor(.white)
-                .lineLimit(1)
-                .minimumScaleFactor(0.5)
-            
-            // Phonetic
-            if !entry.phonetic.isEmpty {
-                Text(entry.phonetic)
-                    .font(.system(size: 16, weight: .regular))
-                    .foregroundColor(.white.opacity(0.8))
-                    .lineLimit(1)
-            }
-            
             // Definition
             Text(entry.definition)
-                .font(.system(size: 17, weight: .medium))
-                .foregroundColor(.white.opacity(0.95))
+                .font(.system(size: 18, weight: .medium, design: .rounded))
+                .foregroundColor(.white)
                 .multilineTextAlignment(.center)
                 .lineLimit(3)
                 .fixedSize(horizontal: false, vertical: true)
-                .padding(.horizontal, 8)
-            
-            // Example (if available)
-            if !entry.example.isEmpty {
-                Text("\"\(entry.example)\"")
-                    .font(.system(size: 15, weight: .regular))
-                    .foregroundColor(.white.opacity(0.85))
-                    .italic()
-                    .multilineTextAlignment(.center)
-                    .lineLimit(3)
-                    .fixedSize(horizontal: false, vertical: true)
-                    .padding(.horizontal, 12)
-                    .padding(.top, 4)
-            }
+                .padding(.horizontal, 10)
             
             Spacer()
             
-            // Footer hint
+            // Example Section
+            if !entry.example.isEmpty {
+                VStack(spacing: 6) {
+                    Rectangle()
+                        .fill(Color.white.opacity(0.3))
+                        .frame(height: 1)
+                        .frame(width: 60)
+                    
+                    Text("\"\(entry.example)\"")
+                        .font(.system(size: 15, weight: .regular, design: .serif))
+                        .italic()
+                        .foregroundColor(.white.opacity(0.9))
+                        .multilineTextAlignment(.center)
+                        .lineLimit(3)
+                        .fixedSize(horizontal: false, vertical: true)
+                }
+                .padding(.bottom, 10)
+            }
+            
+            // Footer
             Text("Tap to open Wordstock")
-                .font(.system(size: 11, weight: .regular))
+                .font(.caption2)
                 .foregroundColor(.white.opacity(0.6))
         }
         .padding(20)
@@ -300,35 +298,41 @@ struct HomeWidget: Widget {
     let kind: String = "HomeWidget"
 
     var body: some WidgetConfiguration {
-        StaticConfiguration(kind: kind, provider: Provider()) { entry in
-            HomeWidgetEntryView(entry: entry)
-                .containerBackground(for: .widget) {
-                    WidgetBackground()
-                }
+        makeConfiguration()
+    }
+    
+    private func makeConfiguration() -> some WidgetConfiguration {
+        if #available(iOS 17.0, *) {
+            return StaticConfiguration(kind: kind, provider: Provider()) { entry in
+                HomeWidgetEntryView(entry: entry)
+                    .containerBackground(for: .widget) {
+                        WidgetBackground()
+                    }
+            }
+            .configurationDisplayName("Word of the Day")
+            .description("Learn a new word every day with Wordstock")
+            .supportedFamilies([.systemSmall, .systemMedium, .systemLarge])
+            .contentMarginsDisabled()
+        } else {
+            return StaticConfiguration(kind: kind, provider: Provider()) { entry in
+                HomeWidgetEntryView(entry: entry)
+                    .background(WidgetBackground())
+            }
+            .configurationDisplayName("Word of the Day")
+            .description("Learn a new word every day with Wordstock")
+            .supportedFamilies([.systemSmall, .systemMedium, .systemLarge])
         }
-        .configurationDisplayName("Word of the Day")
-        .description("Learn a new word every day with Wordstock")
-        .supportedFamilies([.systemSmall, .systemMedium, .systemLarge])
-        .contentMarginsDisabled()
     }
 }
 
 // MARK: - Preview
-#Preview(as: .systemMedium) {
+#Preview(as: .systemSmall) {
     HomeWidget()
 } timeline: {
     WordEntry(
         date: .now,
-        word: "Ephemeral",
-        definition: "Lasting for a very short time",
-        phonetic: "/ɪˈfɛm(ə)rəl/",
-        example: "The beauty of the sunset was ephemeral, lasting only minutes.",
-        isFavorite: false
-    )
-    WordEntry(
-        date: .now,
         word: "Serendipity",
-        definition: "The occurrence of events by chance in a happy way",
+        definition: "The occurrence of events by chance in a happy or beneficial way",
         phonetic: "/ˌserənˈdɪpɪti/",
         example: "It was pure serendipity that we met at the coffee shop.",
         isFavorite: true
