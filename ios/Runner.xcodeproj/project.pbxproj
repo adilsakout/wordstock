@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 70;
+	objectVersion = 54;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -51,7 +51,7 @@
 /* Begin PBXCopyFilesBuildPhase section */
 		602BA47D2DB14BAC00A2F786 /* Embed Foundation Extensions */ = {
 			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 8;
+			buildActionMask = 2147483647;
 			dstPath = "";
 			dstSubfolderSpec = 13;
 			files = (
@@ -59,7 +59,7 @@
 				607B175E2EE5D0C800B134E9 /* HomeWidgetExtension.appex in Embed Foundation Extensions */,
 			);
 			name = "Embed Foundation Extensions";
-			runOnlyForDeploymentPostprocessing = 1;
+			runOnlyForDeploymentPostprocessing = 0;
 		};
 		9705A1C41CF9048500538489 /* Embed Frameworks */ = {
 			isa = PBXCopyFilesBuildPhase;
@@ -130,21 +130,21 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
-		602BA4872DB14BAC00A2F786 /* PBXFileSystemSynchronizedBuildFileExceptionSet */ = {
+		602BA4872DB14BAC00A2F786 /* Exceptions for "OneSignalNotificationServiceExtension" folder in "OneSignalNotificationServiceExtension" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
 				Info.plist,
 			);
 			target = 602BA4742DB14BAB00A2F786 /* OneSignalNotificationServiceExtension */;
 		};
-		607B17682EE5D0C800B134E9 /* PBXFileSystemSynchronizedBuildFileExceptionSet */ = {
+		607B17682EE5D0C800B134E9 /* Exceptions for "HomeWidget" folder in "HomeWidgetExtension" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
 				Info.plist,
 			);
 			target = 607B174C2EE5D0C600B134E9 /* HomeWidgetExtension */;
 		};
-		607B176B2EE5D0D500B134E9 /* PBXFileSystemSynchronizedBuildFileExceptionSet */ = {
+		607B176B2EE5D0D500B134E9 /* Exceptions for "HomeWidget" folder in "Runner" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
 				AppIntent.swift,
@@ -154,8 +154,31 @@
 /* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
-		602BA4762DB14BAB00A2F786 /* OneSignalNotificationServiceExtension */ = {isa = PBXFileSystemSynchronizedRootGroup; exceptions = (602BA4872DB14BAC00A2F786 /* PBXFileSystemSynchronizedBuildFileExceptionSet */, ); explicitFileTypes = {}; explicitFolders = (); path = OneSignalNotificationServiceExtension; sourceTree = "<group>"; };
-		607B17502EE5D0C600B134E9 /* HomeWidget */ = {isa = PBXFileSystemSynchronizedRootGroup; exceptions = (607B176B2EE5D0D500B134E9 /* PBXFileSystemSynchronizedBuildFileExceptionSet */, 607B17682EE5D0C800B134E9 /* PBXFileSystemSynchronizedBuildFileExceptionSet */, ); explicitFileTypes = {}; explicitFolders = (); path = HomeWidget; sourceTree = "<group>"; };
+		602BA4762DB14BAB00A2F786 /* OneSignalNotificationServiceExtension */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				602BA4872DB14BAC00A2F786 /* Exceptions for "OneSignalNotificationServiceExtension" folder in "OneSignalNotificationServiceExtension" target */,
+			);
+			explicitFileTypes = {
+			};
+			explicitFolders = (
+			);
+			path = OneSignalNotificationServiceExtension;
+			sourceTree = "<group>";
+		};
+		607B17502EE5D0C600B134E9 /* HomeWidget */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				607B176B2EE5D0D500B134E9 /* Exceptions for "HomeWidget" folder in "Runner" target */,
+				607B17682EE5D0C800B134E9 /* Exceptions for "HomeWidget" folder in "HomeWidgetExtension" target */,
+			);
+			explicitFileTypes = {
+			};
+			explicitFolders = (
+			);
+			path = HomeWidget;
+			sourceTree = "<group>";
+		};
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -486,13 +509,9 @@
 			inputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-Runner/Pods-Runner-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
-			inputPaths = (
-			);
 			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-Runner/Pods-Runner-frameworks-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -507,13 +526,9 @@
 			inputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-Runner/Pods-Runner-resources-${CONFIGURATION}-input-files.xcfilelist",
 			);
-			inputPaths = (
-			);
 			name = "[CP] Copy Pods Resources";
 			outputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-Runner/Pods-Runner-resources-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -1805,25 +1820,25 @@
 				);
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MARKETING_VERSION = 1.0;
-				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
-				MTL_FAST_MATH = YES;
-				ONLY_ACTIVE_ARCH = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = com.clickwiseapps.wordstock.OneSignalNotificationServiceExtension;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SDKROOT = iphoneos;
-				SKIP_INSTALL = YES;
-				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
-				SUPPORTS_MACCATALYST = NO;
-				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
-				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
-				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
-				SWIFT_EMIT_LOC_STRINGS = YES;
-				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-			};
-			name = "Debug-staging";
+			MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+			MTL_FAST_MATH = YES;
+			ONLY_ACTIVE_ARCH = YES;
+			PRODUCT_BUNDLE_IDENTIFIER = com.clickwiseapps.wordstock.stg.OneSignalNotificationServiceExtension;
+			PRODUCT_NAME = "$(TARGET_NAME)";
+			SDKROOT = iphoneos;
+			SKIP_INSTALL = YES;
+			SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+			SUPPORTS_MACCATALYST = NO;
+			SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+			SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
+			SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+			SWIFT_EMIT_LOC_STRINGS = YES;
+			SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			SWIFT_VERSION = 5.0;
+			TARGETED_DEVICE_FAMILY = "1,2";
 		};
+		name = "Debug-staging";
+	};
 		602BA4802DB14BAC00A2F786 /* Debug-development */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 3DADE7605C8E1F5E409F75D0 /* Pods-OneSignalNotificationServiceExtension.debug-development.xcconfig */;
@@ -1894,25 +1909,25 @@
 				);
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MARKETING_VERSION = 1.0;
-				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
-				MTL_FAST_MATH = YES;
-				ONLY_ACTIVE_ARCH = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = com.clickwiseapps.wordstock.OneSignalNotificationServiceExtension;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SDKROOT = iphoneos;
-				SKIP_INSTALL = YES;
-				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
-				SUPPORTS_MACCATALYST = NO;
-				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
-				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
-				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
-				SWIFT_EMIT_LOC_STRINGS = YES;
-				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-			};
-			name = "Debug-development";
+			MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+			MTL_FAST_MATH = YES;
+			ONLY_ACTIVE_ARCH = YES;
+			PRODUCT_BUNDLE_IDENTIFIER = com.clickwiseapps.wordstock.dev.OneSignalNotificationServiceExtension;
+			PRODUCT_NAME = "$(TARGET_NAME)";
+			SDKROOT = iphoneos;
+			SKIP_INSTALL = YES;
+			SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+			SUPPORTS_MACCATALYST = NO;
+			SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+			SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
+			SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+			SWIFT_EMIT_LOC_STRINGS = YES;
+			SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			SWIFT_VERSION = 5.0;
+			TARGETED_DEVICE_FAMILY = "1,2";
 		};
+		name = "Debug-development";
+	};
 		602BA4812DB14BAC00A2F786 /* Release-production */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = E4DB3A2ED6142D5620B8BAAD /* Pods-OneSignalNotificationServiceExtension.release-production.xcconfig */;
@@ -2056,25 +2071,25 @@
 					"@executable_path/../../Frameworks",
 				);
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
-				MARKETING_VERSION = 1.0;
-				MTL_ENABLE_DEBUG_INFO = NO;
-				MTL_FAST_MATH = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = com.clickwiseapps.wordstock.OneSignalNotificationServiceExtension;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SDKROOT = iphoneos;
-				SKIP_INSTALL = YES;
-				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
-				SUPPORTS_MACCATALYST = NO;
-				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
-				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
-				SWIFT_COMPILATION_MODE = wholemodule;
-				SWIFT_EMIT_LOC_STRINGS = YES;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				VALIDATE_PRODUCT = YES;
-			};
-			name = "Release-staging";
+			MARKETING_VERSION = 1.0;
+			MTL_ENABLE_DEBUG_INFO = NO;
+			MTL_FAST_MATH = YES;
+			PRODUCT_BUNDLE_IDENTIFIER = com.clickwiseapps.wordstock.stg.OneSignalNotificationServiceExtension;
+			PRODUCT_NAME = "$(TARGET_NAME)";
+			SDKROOT = iphoneos;
+			SKIP_INSTALL = YES;
+			SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+			SUPPORTS_MACCATALYST = NO;
+			SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+			SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
+			SWIFT_COMPILATION_MODE = wholemodule;
+			SWIFT_EMIT_LOC_STRINGS = YES;
+			SWIFT_VERSION = 5.0;
+			TARGETED_DEVICE_FAMILY = "1,2";
+			VALIDATE_PRODUCT = YES;
 		};
+		name = "Release-staging";
+	};
 		602BA4832DB14BAC00A2F786 /* Release-development */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 989FC5F20AD40394FBB96538 /* Pods-OneSignalNotificationServiceExtension.release-development.xcconfig */;
@@ -2138,25 +2153,25 @@
 					"@executable_path/../../Frameworks",
 				);
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
-				MARKETING_VERSION = 1.0;
-				MTL_ENABLE_DEBUG_INFO = NO;
-				MTL_FAST_MATH = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = com.clickwiseapps.wordstock.OneSignalNotificationServiceExtension;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SDKROOT = iphoneos;
-				SKIP_INSTALL = YES;
-				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
-				SUPPORTS_MACCATALYST = NO;
-				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
-				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
-				SWIFT_COMPILATION_MODE = wholemodule;
-				SWIFT_EMIT_LOC_STRINGS = YES;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				VALIDATE_PRODUCT = YES;
-			};
-			name = "Release-development";
+			MARKETING_VERSION = 1.0;
+			MTL_ENABLE_DEBUG_INFO = NO;
+			MTL_FAST_MATH = YES;
+			PRODUCT_BUNDLE_IDENTIFIER = com.clickwiseapps.wordstock.dev.OneSignalNotificationServiceExtension;
+			PRODUCT_NAME = "$(TARGET_NAME)";
+			SDKROOT = iphoneos;
+			SKIP_INSTALL = YES;
+			SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+			SUPPORTS_MACCATALYST = NO;
+			SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+			SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
+			SWIFT_COMPILATION_MODE = wholemodule;
+			SWIFT_EMIT_LOC_STRINGS = YES;
+			SWIFT_VERSION = 5.0;
+			TARGETED_DEVICE_FAMILY = "1,2";
+			VALIDATE_PRODUCT = YES;
 		};
+		name = "Release-development";
+	};
 		602BA4842DB14BAC00A2F786 /* Profile-production */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = A3949F0D64581B16F521E802 /* Pods-OneSignalNotificationServiceExtension.profile-production.xcconfig */;
@@ -2300,25 +2315,25 @@
 					"@executable_path/../../Frameworks",
 				);
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
-				MARKETING_VERSION = 1.0;
-				MTL_ENABLE_DEBUG_INFO = NO;
-				MTL_FAST_MATH = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = com.clickwiseapps.wordstock.OneSignalNotificationServiceExtension;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SDKROOT = iphoneos;
-				SKIP_INSTALL = YES;
-				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
-				SUPPORTS_MACCATALYST = NO;
-				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
-				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
-				SWIFT_COMPILATION_MODE = wholemodule;
-				SWIFT_EMIT_LOC_STRINGS = YES;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				VALIDATE_PRODUCT = YES;
-			};
-			name = "Profile-staging";
+			MARKETING_VERSION = 1.0;
+			MTL_ENABLE_DEBUG_INFO = NO;
+			MTL_FAST_MATH = YES;
+			PRODUCT_BUNDLE_IDENTIFIER = com.clickwiseapps.wordstock.stg.OneSignalNotificationServiceExtension;
+			PRODUCT_NAME = "$(TARGET_NAME)";
+			SDKROOT = iphoneos;
+			SKIP_INSTALL = YES;
+			SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+			SUPPORTS_MACCATALYST = NO;
+			SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+			SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
+			SWIFT_COMPILATION_MODE = wholemodule;
+			SWIFT_EMIT_LOC_STRINGS = YES;
+			SWIFT_VERSION = 5.0;
+			TARGETED_DEVICE_FAMILY = "1,2";
+			VALIDATE_PRODUCT = YES;
 		};
+		name = "Profile-staging";
+	};
 		602BA4862DB14BAC00A2F786 /* Profile-development */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = DF4D995C39AA21EBD6C720EA /* Pods-OneSignalNotificationServiceExtension.profile-development.xcconfig */;
@@ -2382,25 +2397,25 @@
 					"@executable_path/../../Frameworks",
 				);
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
-				MARKETING_VERSION = 1.0;
-				MTL_ENABLE_DEBUG_INFO = NO;
-				MTL_FAST_MATH = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = com.clickwiseapps.wordstock.OneSignalNotificationServiceExtension;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SDKROOT = iphoneos;
-				SKIP_INSTALL = YES;
-				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
-				SUPPORTS_MACCATALYST = NO;
-				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
-				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
-				SWIFT_COMPILATION_MODE = wholemodule;
-				SWIFT_EMIT_LOC_STRINGS = YES;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				VALIDATE_PRODUCT = YES;
-			};
-			name = "Profile-development";
+			MARKETING_VERSION = 1.0;
+			MTL_ENABLE_DEBUG_INFO = NO;
+			MTL_FAST_MATH = YES;
+			PRODUCT_BUNDLE_IDENTIFIER = com.clickwiseapps.wordstock.dev.OneSignalNotificationServiceExtension;
+			PRODUCT_NAME = "$(TARGET_NAME)";
+			SDKROOT = iphoneos;
+			SKIP_INSTALL = YES;
+			SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+			SUPPORTS_MACCATALYST = NO;
+			SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+			SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
+			SWIFT_COMPILATION_MODE = wholemodule;
+			SWIFT_EMIT_LOC_STRINGS = YES;
+			SWIFT_VERSION = 5.0;
+			TARGETED_DEVICE_FAMILY = "1,2";
+			VALIDATE_PRODUCT = YES;
 		};
+		name = "Profile-development";
+	};
 		607B175F2EE5D0C800B134E9 /* Debug-production */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -2554,23 +2569,23 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
-				MARKETING_VERSION = 1.0;
-				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
-				MTL_FAST_MATH = YES;
-				ONLY_ACTIVE_ARCH = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = com.clickwiseapps.wordstock.HomeWidget;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SDKROOT = iphoneos;
-				SKIP_INSTALL = YES;
-				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
-				SWIFT_EMIT_LOC_STRINGS = YES;
-				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-			};
-			name = "Debug-staging";
+			LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+			MARKETING_VERSION = 1.0;
+			MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+			MTL_FAST_MATH = YES;
+			ONLY_ACTIVE_ARCH = YES;
+			PRODUCT_BUNDLE_IDENTIFIER = com.clickwiseapps.wordstock.stg.HomeWidget;
+			PRODUCT_NAME = "$(TARGET_NAME)";
+			SDKROOT = iphoneos;
+			SKIP_INSTALL = YES;
+			SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+			SWIFT_EMIT_LOC_STRINGS = YES;
+			SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			SWIFT_VERSION = 5.0;
+			TARGETED_DEVICE_FAMILY = "1,2";
 		};
+		name = "Debug-staging";
+	};
 		607B17612EE5D0C800B134E9 /* Debug-development */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -2642,21 +2657,21 @@
 				);
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MARKETING_VERSION = 1.0;
-				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
-				MTL_FAST_MATH = YES;
-				ONLY_ACTIVE_ARCH = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = com.clickwiseapps.wordstock.HomeWidget;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SDKROOT = iphoneos;
-				SKIP_INSTALL = YES;
-				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
-				SWIFT_EMIT_LOC_STRINGS = YES;
-				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-			};
-			name = "Debug-development";
+			MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+			MTL_FAST_MATH = YES;
+			ONLY_ACTIVE_ARCH = YES;
+			PRODUCT_BUNDLE_IDENTIFIER = com.clickwiseapps.wordstock.dev.HomeWidget;
+			PRODUCT_NAME = "$(TARGET_NAME)";
+			SDKROOT = iphoneos;
+			SKIP_INSTALL = YES;
+			SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+			SWIFT_EMIT_LOC_STRINGS = YES;
+			SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			SWIFT_VERSION = 5.0;
+			TARGETED_DEVICE_FAMILY = "1,2";
 		};
+		name = "Debug-development";
+	};
 		607B17622EE5D0C800B134E9 /* Release-production */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -2797,22 +2812,22 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
-				MARKETING_VERSION = 1.0;
-				MTL_ENABLE_DEBUG_INFO = NO;
-				MTL_FAST_MATH = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = com.clickwiseapps.wordstock.HomeWidget;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SDKROOT = iphoneos;
-				SKIP_INSTALL = YES;
-				SWIFT_COMPILATION_MODE = wholemodule;
-				SWIFT_EMIT_LOC_STRINGS = YES;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				VALIDATE_PRODUCT = YES;
-			};
-			name = "Release-staging";
+			LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+			MARKETING_VERSION = 1.0;
+			MTL_ENABLE_DEBUG_INFO = NO;
+			MTL_FAST_MATH = YES;
+			PRODUCT_BUNDLE_IDENTIFIER = com.clickwiseapps.wordstock.stg.HomeWidget;
+			PRODUCT_NAME = "$(TARGET_NAME)";
+			SDKROOT = iphoneos;
+			SKIP_INSTALL = YES;
+			SWIFT_COMPILATION_MODE = wholemodule;
+			SWIFT_EMIT_LOC_STRINGS = YES;
+			SWIFT_VERSION = 5.0;
+			TARGETED_DEVICE_FAMILY = "1,2";
+			VALIDATE_PRODUCT = YES;
 		};
+		name = "Release-staging";
+	};
 		607B17642EE5D0C800B134E9 /* Release-development */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -2876,22 +2891,22 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
-				MARKETING_VERSION = 1.0;
-				MTL_ENABLE_DEBUG_INFO = NO;
-				MTL_FAST_MATH = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = com.clickwiseapps.wordstock.HomeWidget;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SDKROOT = iphoneos;
-				SKIP_INSTALL = YES;
-				SWIFT_COMPILATION_MODE = wholemodule;
-				SWIFT_EMIT_LOC_STRINGS = YES;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				VALIDATE_PRODUCT = YES;
-			};
-			name = "Release-development";
+			LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+			MARKETING_VERSION = 1.0;
+			MTL_ENABLE_DEBUG_INFO = NO;
+			MTL_FAST_MATH = YES;
+			PRODUCT_BUNDLE_IDENTIFIER = com.clickwiseapps.wordstock.dev.HomeWidget;
+			PRODUCT_NAME = "$(TARGET_NAME)";
+			SDKROOT = iphoneos;
+			SKIP_INSTALL = YES;
+			SWIFT_COMPILATION_MODE = wholemodule;
+			SWIFT_EMIT_LOC_STRINGS = YES;
+			SWIFT_VERSION = 5.0;
+			TARGETED_DEVICE_FAMILY = "1,2";
+			VALIDATE_PRODUCT = YES;
 		};
+		name = "Release-development";
+	};
 		607B17652EE5D0C800B134E9 /* Profile-production */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -3032,22 +3047,22 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
-				MARKETING_VERSION = 1.0;
-				MTL_ENABLE_DEBUG_INFO = NO;
-				MTL_FAST_MATH = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = com.clickwiseapps.wordstock.HomeWidget;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SDKROOT = iphoneos;
-				SKIP_INSTALL = YES;
-				SWIFT_COMPILATION_MODE = wholemodule;
-				SWIFT_EMIT_LOC_STRINGS = YES;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				VALIDATE_PRODUCT = YES;
-			};
-			name = "Profile-staging";
+			LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+			MARKETING_VERSION = 1.0;
+			MTL_ENABLE_DEBUG_INFO = NO;
+			MTL_FAST_MATH = YES;
+			PRODUCT_BUNDLE_IDENTIFIER = com.clickwiseapps.wordstock.stg.HomeWidget;
+			PRODUCT_NAME = "$(TARGET_NAME)";
+			SDKROOT = iphoneos;
+			SKIP_INSTALL = YES;
+			SWIFT_COMPILATION_MODE = wholemodule;
+			SWIFT_EMIT_LOC_STRINGS = YES;
+			SWIFT_VERSION = 5.0;
+			TARGETED_DEVICE_FAMILY = "1,2";
+			VALIDATE_PRODUCT = YES;
 		};
+		name = "Profile-staging";
+	};
 		607B17672EE5D0C800B134E9 /* Profile-development */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -3111,22 +3126,22 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
-				MARKETING_VERSION = 1.0;
-				MTL_ENABLE_DEBUG_INFO = NO;
-				MTL_FAST_MATH = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = com.clickwiseapps.wordstock.HomeWidget;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SDKROOT = iphoneos;
-				SKIP_INSTALL = YES;
-				SWIFT_COMPILATION_MODE = wholemodule;
-				SWIFT_EMIT_LOC_STRINGS = YES;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				VALIDATE_PRODUCT = YES;
-			};
-			name = "Profile-development";
+			LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+			MARKETING_VERSION = 1.0;
+			MTL_ENABLE_DEBUG_INFO = NO;
+			MTL_FAST_MATH = YES;
+			PRODUCT_BUNDLE_IDENTIFIER = com.clickwiseapps.wordstock.dev.HomeWidget;
+			PRODUCT_NAME = "$(TARGET_NAME)";
+			SDKROOT = iphoneos;
+			SKIP_INSTALL = YES;
+			SWIFT_COMPILATION_MODE = wholemodule;
+			SWIFT_EMIT_LOC_STRINGS = YES;
+			SWIFT_VERSION = 5.0;
+			TARGETED_DEVICE_FAMILY = "1,2";
+			VALIDATE_PRODUCT = YES;
 		};
+		name = "Profile-development";
+	};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
