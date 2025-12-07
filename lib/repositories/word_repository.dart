@@ -42,6 +42,7 @@ class WordRepository {
           .from('user_profiles')
           .select('vocabulary_level')
           .eq('user_id', _getUserId())
+          .order('shuffle_order')
           .maybeSingle();
 
       if (response != null && response['vocabulary_level'] != null) {
@@ -89,7 +90,7 @@ class WordRepository {
   /// by exposing intermediate learners to advanced content.
   Future<List<Word>> getWords({
     int page = 0,
-    int pageSize = 20,
+    int pageSize = 200,
   }) async {
     try {
       // Get the user's vocabulary level from their profile (with progression
@@ -114,6 +115,7 @@ class WordRepository {
     ''')
           .eq('level', userVocabularyLevel) // Filter by user's vocabulary level
           .eq('user_favorites.user_id', _getUserId())
+          .order('shuffle_order')
           .range(page * pageSize, (page + 1) * pageSize - 1); // Add pagination
 
       final words = response.map((json) {
@@ -137,7 +139,7 @@ class WordRepository {
   Future<List<Word>> getWordsForLevel({
     required String level,
     int page = 0,
-    int pageSize = 20,
+    int pageSize = 200,
   }) async {
     try {
       log('Filtering words for vocabulary level: $level');
@@ -157,6 +159,7 @@ class WordRepository {
     ''')
           .eq('level', level) // Filter by vocabulary level
           .eq('user_favorites.user_id', _getUserId())
+          .order('shuffle_order')
           .range(page * pageSize, (page + 1) * pageSize - 1); // Add pagination
 
       final words = response.map((json) {
@@ -205,6 +208,7 @@ class WordRepository {
           .select('word_id, words!inner(*)')
           .eq('user_id', _getUserId())
           .order('next_review_date')
+          .order('shuffle_order')
           .limit(10);
 
       return response
