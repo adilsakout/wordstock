@@ -64,7 +64,8 @@ Future<void> bootstrap(FutureOr<Widget> Function() builder) async {
   // Add cross-flavor configuration here
   WidgetsFlutterBinding.ensureInitialized();
 
-  await HomeWidget.setAppGroupId('group.clickwiseapps.wordstock.mywidget');
+  await HomeWidget.setAppGroupId('group.app.clickwiseapps.wordstock.shared');
+  await HomeWidget.initiallyLaunchedFromHomeWidget();
 
   await FlutterBranchSdk.init(
     enableLogging: kDebugMode,
