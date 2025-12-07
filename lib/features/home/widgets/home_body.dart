@@ -34,7 +34,7 @@ class HomeBody extends StatefulWidget {
 }
 
 class _HomeBodyState extends State<HomeBody>
-    with SingleTickerProviderStateMixin {
+    with SingleTickerProviderStateMixin, WidgetsBindingObserver {
   final PageController pageController = PageController();
   final InAppReview inAppReview = InAppReview.instance;
   late final AnimationController _controller;
@@ -42,6 +42,7 @@ class _HomeBodyState extends State<HomeBody>
   @override
   void initState() {
     super.initState();
+    WidgetsBinding.instance.addObserver(this);
     _controller = AnimationController(
       duration: const Duration(milliseconds: 700),
       vsync: this,
@@ -58,8 +59,18 @@ class _HomeBodyState extends State<HomeBody>
 
   @override
   void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
     _controller.dispose();
     super.dispose();
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    if (state == AppLifecycleState.resumed) {
+      // Fetch words again when app resumes to ensure widget is updated
+      // if the user opened the app from the widget
+      context.read<HomeCubit>().fetchWords();
+    }
   }
 
   @override

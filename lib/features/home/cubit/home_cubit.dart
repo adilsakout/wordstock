@@ -113,7 +113,8 @@ class HomeCubit extends Cubit<HomeState> {
         }).toList();
         emit(HomeLoaded(words: updatedWords));
 
-        // Update widget if the favorited word is the first word (current word of the day)
+        // Update widget if the favorited word is the first word
+        // (current word of the day)
         if (updatedWords.isNotEmpty && updatedWords.first.id == wordId) {
           await _updateHomeWidget(updatedWords.first);
         }
