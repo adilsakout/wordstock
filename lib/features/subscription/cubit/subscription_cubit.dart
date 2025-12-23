@@ -4,6 +4,7 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:purchases_flutter/purchases_flutter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:wordstock/repositories/rc_repository.dart';
+import 'package:wordstock/services/facebook_service.dart';
 
 part 'subscription_cubit.freezed.dart';
 part 'subscription_state.dart';
@@ -97,7 +98,19 @@ class SubscriptionCubit extends Cubit<SubscriptionState> {
   /// Shows the paywall
   Future<void> showPaywall() async {
     try {
+      // Check status before showing paywall
+      final wasSubscribed = await _rcRepository.isUserSubscribed();
+
       await _rcRepository.presentPaywall();
+
+      // Check status after showing paywall
+      final isSubscribed = await _rcRepository.isUserSubscribed();
+
+      // If user wasn't subscribed but is now, log the event
+      if (!wasSubscribed && isSubscribed) {
+        await FacebookService.instance.logSubscription();
+      }
+
       // After showing paywall, recheck subscription status
       await checkSubscription();
     } catch (e) {

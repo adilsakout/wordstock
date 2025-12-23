@@ -114,6 +114,7 @@ Future<void> bootstrap(FutureOr<Widget> Function() builder) async {
   // Initialize Facebook App Events
   try {
     await FacebookService.instance.initialize();
+    await FacebookService.instance.logAppInit();
   } catch (e, stackTrace) {
     logger.e(
       'Failed to initialize Facebook Service',

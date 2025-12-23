@@ -64,6 +64,46 @@ class FacebookService {
     }
   }
 
+  /// Logs the app activation event (Install/Launch)
+  Future<void> logAppInit() async {
+    try {
+      await _facebookAppEvents.logEvent(
+        name: 'fb_mobile_activate_app',
+      );
+      _logger.d('Logged Facebook App Init');
+    } catch (e, stackTrace) {
+      _logger.e(
+        'Failed to log Facebook App Init',
+        error: e,
+        stackTrace: stackTrace,
+      );
+    }
+  }
+
+  /// Logs a subscription event
+  Future<void> logSubscription({
+    double? price,
+    String? currency,
+  }) async {
+    try {
+      // Using standard Facebook Subscribe event
+      await _facebookAppEvents.logEvent(
+        name: 'Subscribe',
+        parameters: {
+          if (currency != null) 'fb_currency': currency,
+        },
+        valueToSum: price,
+      );
+      _logger.d('Logged Facebook Subscription');
+    } catch (e, stackTrace) {
+      _logger.e(
+        'Failed to log Facebook Subscription',
+        error: e,
+        stackTrace: stackTrace,
+      );
+    }
+  }
+
   /// Explicitly initialize if needed (usually handled by
   ///  native SDKs automatically)
   /// This can be used to set advertised ID collection or auto log app events
