@@ -11,6 +11,7 @@ import 'package:onesignal_flutter/onesignal_flutter.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
 import 'package:wordstock/repositories/rc_repository.dart';
 import 'package:wordstock/repositories/supabase_repository.dart';
+import 'package:wordstock/services/facebook_service.dart';
 import 'package:wordstock/services/posthog_service.dart';
 
 // Create a logger instance
@@ -105,6 +106,17 @@ Future<void> bootstrap(FutureOr<Widget> Function() builder) async {
   } catch (e, stackTrace) {
     logger.e(
       'Failed to initialize PostHog',
+      error: e,
+      stackTrace: stackTrace,
+    );
+  }
+
+  // Initialize Facebook App Events
+  try {
+    await FacebookService.instance.initialize();
+  } catch (e, stackTrace) {
+    logger.e(
+      'Failed to initialize Facebook Service',
       error: e,
       stackTrace: stackTrace,
     );

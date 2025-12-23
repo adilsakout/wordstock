@@ -43,5 +43,13 @@
         <meta-data 
             android:name="com.posthog.posthog.DEBUG" 
             android:value="true" />
+
+        <!-- Facebook Configuration -->
+        <meta-data 
+            android:name="com.facebook.sdk.ApplicationId" 
+            android:value="1369372834681891"/>
+        <meta-data 
+            android:name="com.facebook.sdk.ClientToken" 
+            android:value="552cbd8aecb64d4ba92d23c16bffa228"/>
     </application>
 </manifest>

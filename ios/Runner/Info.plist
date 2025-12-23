@@ -64,7 +64,19 @@
 		<string>We use tracking to provide personalized word recommendations and improve your learning experience</string>
 		<key>UIBackgroundModes</key>
 		<array>
-			<string>remote-notification</string>
+		<string>remote-notification</string>
+		</array>
+		<!-- Facebook Configuration -->
+		<key>FacebookAppID</key>
+		<string>1369372834681891</string>
+		<key>FacebookClientToken</key>
+		<string>552cbd8aecb64d4ba92d23c16bffa228</string>
+		<key>FacebookDisplayName</key>
+		<string>WordStock</string>
+		<key>LSApplicationQueriesSchemes</key>
+		<array>
+			<string>fbapi</string>
+			<string>fb-messenger-share-api</string>
 		</array>
 		<!-- PostHog Configuration -->
 		<key>com.posthog.posthog.AUTO_INIT</key>
@@ -87,6 +99,14 @@
 				</array>
 				<key>CFBundleURLName</key>
 				<string>io.Branch.Branchsters</string>
+			</dict>
+			<dict>
+				<key>CFBundleTypeRole</key>
+				<string>Editor</string>
+				<key>CFBundleURLSchemes</key>
+				<array>
+					<string>fb1369372834681891</string>
+				</array>
 			</dict>
 		</array>
 		<key>branch_key</key>
