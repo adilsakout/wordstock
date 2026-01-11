@@ -1295,6 +1295,36 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Swipe up'**
   String get swipeUp;
+
+  /// Title for theme selection in settings
+  ///
+  /// In en, this message translates to:
+  /// **'Theme'**
+  String get settingsTheme;
+
+  /// Description for theme selection
+  ///
+  /// In en, this message translates to:
+  /// **'Choose your preferred app theme'**
+  String get settingsThemeDescription;
+
+  /// Option to follow system theme setting
+  ///
+  /// In en, this message translates to:
+  /// **'System'**
+  String get settingsThemeSystem;
+
+  /// Option for light theme
+  ///
+  /// In en, this message translates to:
+  /// **'Light'**
+  String get settingsThemeLight;
+
+  /// Option for dark theme
+  ///
+  /// In en, this message translates to:
+  /// **'Dark'**
+  String get settingsThemeDark;
 }
 
 class _AppLocalizationsDelegate

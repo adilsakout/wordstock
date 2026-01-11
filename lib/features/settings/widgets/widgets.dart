@@ -5,3 +5,4 @@ export 'settings_header.dart';
 export 'settings_loaded_content.dart';
 export 'settings_loading_state.dart';
 export 'settings_section_header.dart';
+export 'theme_selector.dart';

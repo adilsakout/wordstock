@@ -60,11 +60,10 @@ class _InfoPageState extends State<InfoPage> with TickerProviderStateMixin {
                   Text(
                     widget.title,
                     textAlign: TextAlign.center,
-                    style: const TextStyle(
-                      color: Colors.black,
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
-                    ),
+                    style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                        ),
                   )
                       .animate(controller: _animationController)
                       .fadeIn(duration: 0.5.seconds),
@@ -72,7 +71,9 @@ class _InfoPageState extends State<InfoPage> with TickerProviderStateMixin {
                   Text(
                     widget.description,
                     textAlign: TextAlign.center,
-                    style: const TextStyle(color: Colors.black, fontSize: 16),
+                    style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                          fontSize: 16,
+                        ),
                   )
                       .animate(controller: _animationController)
                       .fadeIn(duration: 0.5.seconds),

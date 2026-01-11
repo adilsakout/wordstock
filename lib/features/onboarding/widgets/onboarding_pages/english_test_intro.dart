@@ -24,6 +24,8 @@ class EnglishTestIntro extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final l10n = context.l10n;
+    final theme = Theme.of(context);
+    final isDark = theme.brightness == Brightness.dark;
 
     return Padding(
       padding: const EdgeInsets.all(20),
@@ -66,10 +68,9 @@ class EnglishTestIntro extends StatelessWidget {
           Text(
             l10n.onboardingEnglishTestTitle,
             textAlign: TextAlign.center,
-            style: const TextStyle(
-              fontSize: 28,
+            style: theme.textTheme.headlineMedium?.copyWith(
               fontWeight: FontWeight.bold,
-              color: Colors.black,
+              color: theme.colorScheme.onSurface,
               height: 1.2,
             ),
           )
@@ -95,9 +96,8 @@ class EnglishTestIntro extends StatelessWidget {
             child: Text(
               l10n.onboardingEnglishTestSubtitle,
               textAlign: TextAlign.center,
-              style: TextStyle(
-                fontSize: 16,
-                color: Colors.grey.shade700,
+              style: theme.textTheme.bodyLarge?.copyWith(
+                color: theme.colorScheme.onSurface.withValues(alpha: 0.7),
                 height: 1.4,
               ),
             ),
@@ -161,9 +161,9 @@ class EnglishTestIntro extends StatelessWidget {
                 padding: const EdgeInsets.all(12),
                 child: Text(
                   l10n.onboardingEnglishTestSkip,
-                  style: TextStyle(
+                  style: theme.textTheme.bodyMedium?.copyWith(
                     fontSize: 16,
-                    color: Colors.grey.shade600,
+                    color: isDark ? Colors.grey.shade400 : Colors.grey.shade600,
                     decoration: TextDecoration.underline,
                   ),
                 ),

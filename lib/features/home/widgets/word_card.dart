@@ -110,6 +110,7 @@ class _WordCardState extends State<WordCard>
   @override
   Widget build(BuildContext context) {
     final isFavorite = widget.word.isFavorite ?? false;
+    final theme = Theme.of(context);
     return GestureDetector(
       onDoubleTap: () {
         if (!isFavorite) {
@@ -129,38 +130,37 @@ class _WordCardState extends State<WordCard>
                   children: [
                     Text(
                       widget.word.word,
-                      style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                            fontSize: 40,
-                            fontWeight: FontWeight.w600,
-                          ),
+                      style: theme.textTheme.titleLarge?.copyWith(
+                        fontSize: 40,
+                        fontWeight: FontWeight.w600,
+                      ),
                     ).animate(delay: 0.5.seconds).slideY(),
                     const SizedBox(height: 15),
                     Text(
                       widget.word.phonetic ?? '',
                       textAlign: TextAlign.center,
-                      style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                            fontFamily: 'Poppins',
-                            fontSize: 16,
-                          ),
+                      style: theme.textTheme.bodySmall?.copyWith(
+                        fontFamily: 'Poppins',
+                        fontSize: 16,
+                      ),
                     ),
                     const SizedBox(height: 10),
                     Text(
                       widget.word.definition,
                       textAlign: TextAlign.center,
-                      style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                            color: Colors.black87,
-                            fontSize: 16,
-                          ),
+                      style: theme.textTheme.bodyMedium?.copyWith(
+                        fontSize: 16,
+                      ),
                     ),
                     const SizedBox(height: 10),
                     if (widget.word.example != null)
                       Text(
                         '\u201c${widget.word.example}\u201d',
                         textAlign: TextAlign.center,
-                        style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                              fontFamily: 'Poppins',
-                              fontSize: 14,
-                            ),
+                        style: theme.textTheme.bodySmall?.copyWith(
+                          fontFamily: 'Poppins',
+                          fontSize: 14,
+                        ),
                       ),
                   ],
                 ),

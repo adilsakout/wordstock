@@ -67,6 +67,9 @@ class ToggleTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final isDark = theme.brightness == Brightness.dark;
+
     // Determine if the tile is enabled based on whether onChanged is provided
     final isEnabled = onChanged != null;
     final opacity = isEnabled ? 1.0 : 0.5;
@@ -76,8 +79,10 @@ class ToggleTile extends StatelessWidget {
     final defaultIconBgColor =
         iconBackgroundColor ?? const Color(0xff1CB0F6).withValues(alpha: 0.1);
     final defaultActiveColor = activeColor ?? const Color(0xff1CB0F6);
-    final defaultBackgroundColor = backgroundColor ?? Colors.grey.shade50;
-    final defaultBorderColor = borderColor ?? Colors.grey.shade200;
+    final defaultBackgroundColor = backgroundColor ??
+        (isDark ? theme.colorScheme.surface : Colors.grey.shade50);
+    final defaultBorderColor =
+        borderColor ?? (isDark ? theme.dividerColor : Colors.grey.shade200);
 
     return AnimatedOpacity(
       opacity: opacity,
@@ -126,9 +131,8 @@ class ToggleTile extends StatelessWidget {
                   // Subtitle in grey
                   Text(
                     subtitle,
-                    style: const TextStyle(
+                    style: theme.textTheme.bodyMedium?.copyWith(
                       fontSize: 14,
-                      color: Colors.grey,
                     ),
                   ),
                 ],
@@ -151,8 +155,10 @@ class ToggleTile extends StatelessWidget {
                 value: value,
                 onChanged: onChanged,
                 activeThumbColor: defaultActiveColor,
-                inactiveThumbColor: Colors.grey.shade400,
-                inactiveTrackColor: Colors.grey.shade200,
+                inactiveThumbColor:
+                    isDark ? Colors.grey.shade600 : Colors.grey.shade400,
+                inactiveTrackColor:
+                    isDark ? Colors.grey.shade800 : Colors.grey.shade200,
               ),
           ],
         ),

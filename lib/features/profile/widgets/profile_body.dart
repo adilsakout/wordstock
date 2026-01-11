@@ -11,6 +11,7 @@ import 'package:wordstock/core/services/navigation_service.dart';
 
 import 'package:wordstock/features/profile/cubit/cubit.dart';
 import 'package:wordstock/features/profile/widgets/profile_menu_item.dart';
+import 'package:wordstock/features/profile/widgets/theme_bottom_sheet.dart';
 import 'package:wordstock/l10n/arb/app_localizations.dart';
 import 'package:wordstock/l10n/l10n.dart';
 import 'package:wordstock/model/user_profile.dart';
@@ -124,6 +125,7 @@ class _ProfileBodyState extends State<ProfileBody> {
   @override
   Widget build(BuildContext context) {
     final l10n = context.l10n;
+    final theme = Theme.of(context);
 
     return BlocConsumer<ProfileCubit, ProfileState>(
       listener: (context, state) {
@@ -138,12 +140,16 @@ class _ProfileBodyState extends State<ProfileBody> {
       },
       builder: (context, state) {
         return Scaffold(
-          backgroundColor: const Color(0xFFF5F7FA),
+          backgroundColor: theme.colorScheme.surface,
           body: SafeArea(
             child: Column(
               children: [
                 // Header with back button and title
-                _buildHeader(context, l10n),
+                _buildHeader(
+                  context,
+                  l10n,
+                  theme,
+                ),
 
                 // Main content
                 Expanded(
@@ -158,7 +164,11 @@ class _ProfileBodyState extends State<ProfileBody> {
   }
 
   /// Build the header section with back button and title
-  Widget _buildHeader(BuildContext context, AppLocalizations l10n) {
+  Widget _buildHeader(
+    BuildContext context,
+    AppLocalizations l10n,
+    ThemeData theme,
+  ) {
     return Padding(
       padding: const EdgeInsets.only(left: 20, top: 20, bottom: 10),
       child: Row(
@@ -178,10 +188,10 @@ class _ProfileBodyState extends State<ProfileBody> {
               ),
           Text(
             l10n.profileTitle,
-            style: const TextStyle(
+            style: theme.textTheme.titleLarge?.copyWith(
               fontSize: 24,
               fontWeight: FontWeight.w700,
-              color: Color(0xFF1D1D1F),
+              color: theme.colorScheme.onSurface,
             ),
           ).animate().fadeIn(
                 duration: 300.milliseconds,
@@ -262,6 +272,7 @@ class _ProfileBodyState extends State<ProfileBody> {
     ProfileState state,
   ) {
     final isUpdating = state is ProfileUpdatingVocabularyLevel;
+    final theme = Theme.of(context);
 
     return ListView(
       physics: const BouncingScrollPhysics(),
@@ -273,10 +284,9 @@ class _ProfileBodyState extends State<ProfileBody> {
         // Quick Actions Section
         Text(
           l10n.quickActions,
-          style: const TextStyle(
+          style: theme.textTheme.titleMedium?.copyWith(
             fontSize: 18,
             fontWeight: FontWeight.w700,
-            color: Color(0xFF1D1D1F),
           ),
         ).animate().fadeIn(
               duration: 250.milliseconds,
@@ -295,6 +305,19 @@ class _ProfileBodyState extends State<ProfileBody> {
         ).animate().fadeIn(
               duration: 200.milliseconds,
               delay: 200.milliseconds,
+            ),
+
+        ProfileMenuItem(
+          icon: Icons.palette_outlined,
+          title: l10n.settingsTheme,
+          foregroundColor: const Color(0xff58CC02),
+          shadowColor: const Color(0xff58A700),
+          onTap: () {
+            showThemeBottomSheet(context);
+          },
+        ).animate().fadeIn(
+              duration: 200.milliseconds,
+              delay: 225.milliseconds,
             ),
 
         ProfileMenuItem(
@@ -327,10 +350,9 @@ class _ProfileBodyState extends State<ProfileBody> {
         // Support Section
         Text(
           l10n.supportAndInfo,
-          style: const TextStyle(
+          style: theme.textTheme.titleMedium?.copyWith(
             fontSize: 18,
             fontWeight: FontWeight.w700,
-            color: Color(0xFF1D1D1F),
           ),
         ).animate().fadeIn(
               duration: 250.milliseconds,
@@ -394,10 +416,9 @@ class _ProfileBodyState extends State<ProfileBody> {
         // Legal Section
         Text(
           l10n.legal,
-          style: const TextStyle(
+          style: theme.textTheme.titleMedium?.copyWith(
             fontSize: 18,
             fontWeight: FontWeight.w700,
-            color: Color(0xFF1D1D1F),
           ),
         ).animate().fadeIn(
               duration: 250.milliseconds,

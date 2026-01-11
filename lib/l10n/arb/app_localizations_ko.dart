@@ -668,4 +668,19 @@ class AppLocalizationsKo extends AppLocalizations {
 
   @override
   String get swipeUp => '위로 스와이프';
+
+  @override
+  String get settingsTheme => 'Theme';
+
+  @override
+  String get settingsThemeDescription => 'Choose your preferred app theme';
+
+  @override
+  String get settingsThemeSystem => 'System';
+
+  @override
+  String get settingsThemeLight => 'Light';
+
+  @override
+  String get settingsThemeDark => 'Dark';
 }
