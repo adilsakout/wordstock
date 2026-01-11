@@ -64,7 +64,7 @@
 		<string>We use tracking to provide personalized word recommendations and improve your learning experience</string>
 		<key>UIBackgroundModes</key>
 		<array>
-		<string>remote-notification</string>
+			<string>remote-notification</string>
 		</array>
 		<!-- Facebook Configuration -->
 		<key>FacebookAppID</key>

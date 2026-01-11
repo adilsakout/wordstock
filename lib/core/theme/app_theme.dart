@@ -42,7 +42,6 @@ ThemeData lightTheme() {
     colorScheme: const ColorScheme.light(
       primary: AppColors.primaryBlue,
       secondary: AppColors.primaryYellow,
-      surface: AppColors.lightSurface,
       onSurface: AppColors.lightTextPrimary,
     ),
     appBarTheme: const AppBarTheme(

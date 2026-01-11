@@ -37,8 +37,8 @@ flutter_native_splash:
   # remain optional. NOTE that if you specify the [required] color, then you cant 
   # use the [required] background_image in the next section. the reverse is true.
   # select one, they cant work together.
-  # color: "#FFFFFF"  ##====================================[REQUIRED]==========
-  #color_dark: "#042a49"
+  color: "#FFFFFF"  ##====================================[REQUIRED]==========
+  color_dark: "#1E1E1E"
   # platform-specific color. will override general color if active:
   #color_android: "#42a5f5"
   #color_dark_android: "#042a49"
@@ -50,7 +50,7 @@ flutter_native_splash:
   # general background_image for all platform (except android 12+)
   # if you specify this [required] background_image, then you should comment the 
   # [required] color in previous section. select one, they cant work together.
-  background_image:      "assets/splash/splash_pg.png" #========[REQUIRED]============
+  #background_image:      "assets/splash/splash_pg.png" #========[REQUIRED]============
   #background_image_dark: "assets/dark-background.png"
   # platform-specific background_image. will override general background_image if active:
   #background_image_android:      "assets/background-android.png"
@@ -63,8 +63,8 @@ flutter_native_splash:
   # general image for all platform (except android 12+):
   # allows you to specify an image used in the splash screen. It must be a
   # png file and should be sized for 4x pixel density.
-  image: assets/splash/splash_img.png
-  #image_dark:          assets/splash-invert.png
+  image: assets/splash/splash_img_light.png
+  image_dark:  assets/splash/splash_img_dark.png
   # platform-specific image. will override general image if active:
   #image_android:       assets/splash-android.png
   #image_dark_android:  assets/splash-invert-android.png
@@ -139,13 +139,12 @@ flutter_native_splash:
     # with background: 960×960 px (fit within circle 640px in diameter)    
     # without background: 1152×1152 px (fit within circle 768px in diameter)
     # ensure that the most important design elements of your image are placed within a circular area 
-    image: assets/splash/splash_img.png
-
-    # image_dark: assets/images/logo/logo-splash2.png  
+    image: assets/splash/splash_img_light.png
+    image_dark: assets/splash/splash_img_dark.png  
 
     # center-logo background color
     icon_background_color: "#FFFFFF"
-    # icon_background_color_dark: "#eeeeee"
+    icon_background_color_dark: "#1E1E1E"
 
     # branding:
     # The branding image dimensions must be 800x320 px.
