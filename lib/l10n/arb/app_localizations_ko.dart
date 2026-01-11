@@ -670,17 +670,17 @@ class AppLocalizationsKo extends AppLocalizations {
   String get swipeUp => '위로 스와이프';
 
   @override
-  String get settingsTheme => 'Theme';
+  String get settingsTheme => '테마';
 
   @override
-  String get settingsThemeDescription => 'Choose your preferred app theme';
+  String get settingsThemeDescription => '선호하는 앱 테마 선택';
 
   @override
-  String get settingsThemeSystem => 'System';
+  String get settingsThemeSystem => '시스템';
 
   @override
-  String get settingsThemeLight => 'Light';
+  String get settingsThemeLight => '라이트';
 
   @override
-  String get settingsThemeDark => 'Dark';
+  String get settingsThemeDark => '다크';
 }

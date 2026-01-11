@@ -944,5 +944,25 @@
     "swipeUp": "Faites glisser vers le haut",
     "@swipeUp": {
         "description": "Text shown as instruction for swiping up gesture to navigate between words"
+    },
+    "settingsTheme": "Thème",
+    "@settingsTheme": {
+        "description": "Title for theme selection in settings"
+    },
+    "settingsThemeDescription": "Choisissez votre thème préféré",
+    "@settingsThemeDescription": {
+        "description": "Description for theme selection"
+    },
+    "settingsThemeSystem": "Système",
+    "@settingsThemeSystem": {
+        "description": "Option to follow system theme setting"
+    },
+    "settingsThemeLight": "Clair",
+    "@settingsThemeLight": {
+        "description": "Option for light theme"
+    },
+    "settingsThemeDark": "Sombre",
+    "@settingsThemeDark": {
+        "description": "Option for dark theme"
     }
 } 

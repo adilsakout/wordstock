@@ -695,17 +695,18 @@ class AppLocalizationsDe extends AppLocalizations {
   String get swipeUp => 'Nach oben wischen';
 
   @override
-  String get settingsTheme => 'Theme';
+  String get settingsTheme => 'Thema';
 
   @override
-  String get settingsThemeDescription => 'Choose your preferred app theme';
+  String get settingsThemeDescription =>
+      'Wählen Sie Ihr bevorzugtes App-Design';
 
   @override
   String get settingsThemeSystem => 'System';
 
   @override
-  String get settingsThemeLight => 'Light';
+  String get settingsThemeLight => 'Hell';
 
   @override
-  String get settingsThemeDark => 'Dark';
+  String get settingsThemeDark => 'Dunkel';
 }

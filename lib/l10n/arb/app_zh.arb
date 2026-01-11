@@ -944,5 +944,25 @@
     "swipeUp": "向上滑動",
     "@swipeUp": {
         "description": "Text shown as instruction for swiping up gesture to navigate between words"
+    },
+    "settingsTheme": "主題",
+    "@settingsTheme": {
+        "description": "Title for theme selection in settings"
+    },
+    "settingsThemeDescription": "選擇您喜歡的應用程式主題",
+    "@settingsThemeDescription": {
+        "description": "Description for theme selection"
+    },
+    "settingsThemeSystem": "系統",
+    "@settingsThemeSystem": {
+        "description": "Option to follow system theme setting"
+    },
+    "settingsThemeLight": "淺色",
+    "@settingsThemeLight": {
+        "description": "Option for light theme"
+    },
+    "settingsThemeDark": "深色",
+    "@settingsThemeDark": {
+        "description": "Option for dark theme"
     }
 }

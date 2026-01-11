@@ -659,17 +659,17 @@ class AppLocalizationsZh extends AppLocalizations {
   String get swipeUp => '向上滑動';
 
   @override
-  String get settingsTheme => 'Theme';
+  String get settingsTheme => '主題';
 
   @override
-  String get settingsThemeDescription => 'Choose your preferred app theme';
+  String get settingsThemeDescription => '選擇您喜歡的應用程式主題';
 
   @override
-  String get settingsThemeSystem => 'System';
+  String get settingsThemeSystem => '系統';
 
   @override
-  String get settingsThemeLight => 'Light';
+  String get settingsThemeLight => '淺色';
 
   @override
-  String get settingsThemeDark => 'Dark';
+  String get settingsThemeDark => '深色';
 }

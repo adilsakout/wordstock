@@ -699,17 +699,17 @@ class AppLocalizationsFr extends AppLocalizations {
   String get swipeUp => 'Faites glisser vers le haut';
 
   @override
-  String get settingsTheme => 'Theme';
+  String get settingsTheme => 'Thème';
 
   @override
-  String get settingsThemeDescription => 'Choose your preferred app theme';
+  String get settingsThemeDescription => 'Choisissez votre thème préféré';
 
   @override
-  String get settingsThemeSystem => 'System';
+  String get settingsThemeSystem => 'Système';
 
   @override
-  String get settingsThemeLight => 'Light';
+  String get settingsThemeLight => 'Clair';
 
   @override
-  String get settingsThemeDark => 'Dark';
+  String get settingsThemeDark => 'Sombre';
 }

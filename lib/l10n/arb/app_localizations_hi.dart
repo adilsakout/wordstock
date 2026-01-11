@@ -689,17 +689,17 @@ class AppLocalizationsHi extends AppLocalizations {
   String get swipeUp => 'ऊपर स्वाइप करें';
 
   @override
-  String get settingsTheme => 'Theme';
+  String get settingsTheme => 'थीम';
 
   @override
-  String get settingsThemeDescription => 'Choose your preferred app theme';
+  String get settingsThemeDescription => 'अपनी पसंदीदा ऐप थीम चुनें';
 
   @override
-  String get settingsThemeSystem => 'System';
+  String get settingsThemeSystem => 'सिस्टम';
 
   @override
-  String get settingsThemeLight => 'Light';
+  String get settingsThemeLight => 'लाइट';
 
   @override
-  String get settingsThemeDark => 'Dark';
+  String get settingsThemeDark => 'डार्क';
 }

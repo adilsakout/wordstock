@@ -944,5 +944,25 @@
     "swipeUp": "위로 스와이프",
     "@swipeUp": {
         "description": "Text shown as instruction for swiping up gesture to navigate between words"
+    },
+    "settingsTheme": "테마",
+    "@settingsTheme": {
+        "description": "Title for theme selection in settings"
+    },
+    "settingsThemeDescription": "선호하는 앱 테마 선택",
+    "@settingsThemeDescription": {
+        "description": "Description for theme selection"
+    },
+    "settingsThemeSystem": "시스템",
+    "@settingsThemeSystem": {
+        "description": "Option to follow system theme setting"
+    },
+    "settingsThemeLight": "라이트",
+    "@settingsThemeLight": {
+        "description": "Option for light theme"
+    },
+    "settingsThemeDark": "다크",
+    "@settingsThemeDark": {
+        "description": "Option for dark theme"
     }
 }

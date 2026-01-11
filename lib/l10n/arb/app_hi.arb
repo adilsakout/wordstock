@@ -944,5 +944,25 @@
     "swipeUp": "ऊपर स्वाइप करें",
     "@swipeUp": {
         "description": "Text shown as instruction for swiping up gesture to navigate between words"
+    },
+    "settingsTheme": "थीम",
+    "@settingsTheme": {
+        "description": "Title for theme selection in settings"
+    },
+    "settingsThemeDescription": "अपनी पसंदीदा ऐप थीम चुनें",
+    "@settingsThemeDescription": {
+        "description": "Description for theme selection"
+    },
+    "settingsThemeSystem": "सिस्टम",
+    "@settingsThemeSystem": {
+        "description": "Option to follow system theme setting"
+    },
+    "settingsThemeLight": "लाइट",
+    "@settingsThemeLight": {
+        "description": "Option for light theme"
+    },
+    "settingsThemeDark": "डार्क",
+    "@settingsThemeDark": {
+        "description": "Option for dark theme"
     }
 } 
