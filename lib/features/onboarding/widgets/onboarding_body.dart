@@ -69,6 +69,8 @@ class _OnboardingAppBarState extends State<OnboardingAppBar> {
   @override
   Widget build(BuildContext context) {
     final l10n = context.l10n;
+    final theme = Theme.of(context);
+    final isDark = theme.brightness == Brightness.dark;
     final shouldShowAppBar = widget.currentPage > 1;
 
     return AnimatedOpacity(
@@ -100,7 +102,7 @@ class _OnboardingAppBarState extends State<OnboardingAppBar> {
               width: 45,
               height: 45,
               decoration: BoxDecoration(
-                color: Colors.grey.shade200,
+                color: isDark ? Colors.grey.shade800 : Colors.grey.shade200,
                 shape: BoxShape.circle,
               ),
               child: Icon(

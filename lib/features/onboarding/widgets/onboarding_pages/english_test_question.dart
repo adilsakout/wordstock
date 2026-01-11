@@ -162,6 +162,8 @@ class _EnglishTestQuestionState extends State<EnglishTestQuestion>
   @override
   Widget build(BuildContext context) {
     final isAnswered = widget.selectedAnswer != null;
+    final theme = Theme.of(context);
+    final isDark = theme.brightness == Brightness.dark;
 
     return SafeArea(
       bottom: false,
@@ -176,7 +178,8 @@ class _EnglishTestQuestionState extends State<EnglishTestQuestion>
                   child: LinearProgressIndicator(
                     value: (widget.currentQuestionIndex + 1) /
                         widget.totalQuestions,
-                    backgroundColor: Colors.grey.shade300,
+                    backgroundColor:
+                        isDark ? Colors.grey.shade800 : Colors.grey.shade300,
                     valueColor:
                         const AlwaysStoppedAnimation<Color>(Color(0xFF1CB0F6)),
                   ),
@@ -201,14 +204,18 @@ class _EnglishTestQuestionState extends State<EnglishTestQuestion>
             margin: const EdgeInsets.symmetric(horizontal: 16),
             padding: const EdgeInsets.all(24),
             decoration: BoxDecoration(
-              color: Colors.grey.shade50,
+              color: isDark
+                  ? theme.colorScheme.surfaceContainerHigh
+                  : Colors.grey.shade50,
               borderRadius: BorderRadius.circular(16),
-              border: Border.all(color: Colors.grey.shade200),
+              border: Border.all(
+                color: isDark ? Colors.grey.shade700 : Colors.grey.shade200,
+              ),
             ),
             child: Text(
               widget.question,
               textAlign: TextAlign.center,
-              style: const TextStyle(
+              style: theme.textTheme.titleMedium?.copyWith(
                 fontSize: 18,
                 fontWeight: FontWeight.w500,
                 height: 1.4,
@@ -231,10 +238,13 @@ class _EnglishTestQuestionState extends State<EnglishTestQuestion>
                 final isCorrect = widget.correctAnswer == option;
                 final isWrongSelection = isSelected && !isCorrect;
 
-                var buttonColor = const Color(0xffF1F1F1);
-                var backgroundColor = const Color(0xffF1F1F1);
-                var shadowColor = Colors.grey.shade300;
-                var textColor = Colors.black87;
+                var buttonColor =
+                    isDark ? Colors.grey.shade800 : const Color(0xffF1F1F1);
+                var backgroundColor =
+                    isDark ? Colors.grey.shade800 : const Color(0xffF1F1F1);
+                var shadowColor =
+                    isDark ? Colors.grey.shade900 : Colors.grey.shade300;
+                var textColor = isDark ? Colors.white : Colors.black87;
 
                 if (isAnswered) {
                   if (isSelected || isCorrect) {
@@ -243,11 +253,15 @@ class _EnglishTestQuestionState extends State<EnglishTestQuestion>
                       buttonColor = const Color(0xff58CC02); // Green
                       shadowColor = const Color(0xff58A700);
                       backgroundColor = const Color(0xffBCFFC8);
+                      textColor = Colors
+                          .black87; // Ensure text is visible on light green
                     } else if (isSelected) {
                       // Wrong answer styling
                       buttonColor = const Color(0xffFF4B4B); // Red
                       shadowColor = const Color(0xffE94E77);
                       backgroundColor = const Color(0xffFFCCDA);
+                      textColor =
+                          Colors.black87; // Ensure text is visible on light red
                     }
                   }
                 } else if (isSelected) {
@@ -348,6 +362,8 @@ class _EnglishTestQuestionState extends State<EnglishTestQuestion>
   Widget _buildFeedbackSection(BuildContext context) {
     final isCorrect = widget.selectedAnswer == widget.correctAnswer;
     final bottomPadding = MediaQuery.of(context).padding.bottom;
+    final theme = Theme.of(context);
+    final isDark = theme.brightness == Brightness.dark;
 
     return FutureBuilder<Map<String, String>>(
       future: _getWordInfo(widget.correctAnswer),
@@ -421,9 +437,14 @@ class _EnglishTestQuestionState extends State<EnglishTestQuestion>
                 Container(
                   padding: const EdgeInsets.all(16),
                   decoration: BoxDecoration(
-                    color: Colors.grey.shade50,
+                    color: isDark
+                        ? theme.colorScheme.surfaceContainerHigh
+                        : Colors.grey.shade50,
                     borderRadius: BorderRadius.circular(12),
-                    border: Border.all(color: Colors.grey.shade200),
+                    border: Border.all(
+                      color:
+                          isDark ? Colors.grey.shade700 : Colors.grey.shade200,
+                    ),
                   ),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -447,10 +468,12 @@ class _EnglishTestQuestionState extends State<EnglishTestQuestion>
                       const SizedBox(height: 8),
                       Text(
                         wordInfo['definition']!,
-                        style: TextStyle(
+                        style: theme.textTheme.bodyMedium?.copyWith(
                           fontSize: 14,
-                          color: Colors.grey.shade700,
                           height: 1.4,
+                          color: isDark
+                              ? Colors.grey.shade300
+                              : Colors.grey.shade700,
                         ),
                       ),
                     ],

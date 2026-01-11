@@ -24,21 +24,23 @@ class _NameInputPageState extends State<NameInputPage> {
       padding: const EdgeInsets.all(20),
       child: Column(
         children: [
-          const Text(
+          Text(
             'What is your name?',
-            style: TextStyle(
-              fontSize: 24,
-              fontWeight: FontWeight.bold,
-            ),
+            style: Theme.of(context).textTheme.headlineMedium?.copyWith(
+                  fontWeight: FontWeight.bold,
+                  color: Theme.of(context).colorScheme.onSurface,
+                ),
           ),
           const SizedBox(height: 16),
-          const Text(
+          Text(
             'Your name will be used to personalize your experience.',
             textAlign: TextAlign.center,
-            style: TextStyle(
-              fontSize: 16,
-              fontWeight: FontWeight.normal,
-            ),
+            style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                  color: Theme.of(context)
+                      .colorScheme
+                      .onSurface
+                      .withValues(alpha: 0.7),
+                ),
           ),
           const SizedBox(height: 16),
           TextField(

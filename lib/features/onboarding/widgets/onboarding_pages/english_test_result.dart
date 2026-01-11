@@ -92,10 +92,13 @@ class EnglishTestResult extends StatelessWidget {
           Text(
             l10n.onboardingEnglishTestScore(correctCount, totalQuestions),
             textAlign: TextAlign.center,
-            style: TextStyle(
-              fontSize: 18,
-              color: Colors.grey.shade700,
-            ),
+            style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                  fontSize: 18,
+                  color: Theme.of(context)
+                      .colorScheme
+                      .onSurface
+                      .withValues(alpha: 0.7),
+                ),
           ),
 
           const SizedBox(height: 10),

@@ -101,8 +101,8 @@ class AIChatButton extends StatelessWidget {
         height: 50,
         text: '',
         iconSize: 25,
-        buttonColor: Theme.of(context).primaryColor,
-        shadowColor: Theme.of(context).primaryColor.withValues(alpha: 0.7),
+        buttonColor: const Color(0xff1CB0F6),
+        shadowColor: const Color(0xff1899D6),
         suffixIcon: Icons.auto_awesome_rounded, // AI/magic wand icon
         onTap: () => _handleTap(context),
       ),

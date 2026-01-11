@@ -17,6 +17,7 @@ class SettingsHeader extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final l10n = context.l10n;
+    final theme = Theme.of(context);
 
     return Padding(
       padding: const EdgeInsets.only(left: 20, top: 20, bottom: 10),
@@ -40,10 +41,10 @@ class SettingsHeader extends StatelessWidget {
           // Page title with bold typography
           Text(
             l10n.settingsTitle,
-            style: const TextStyle(
+            style: theme.textTheme.titleLarge?.copyWith(
               fontSize: 24,
               fontWeight: FontWeight.w700,
-              color: Color(0xFF1D1D1F),
+              color: theme.colorScheme.onSurface,
             ),
           ).animate().fadeIn(
                 duration: 300.milliseconds,

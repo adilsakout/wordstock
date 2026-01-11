@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:posthog_flutter/posthog_flutter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:wordstock/core/theme/app_theme.dart';
 import 'package:wordstock/features/favorite_words/favorite_words.dart';
 import 'package:wordstock/features/home/cubit/home_cubit.dart';
 import 'package:wordstock/features/home/cubit/learning_progress_cubit.dart';
@@ -148,6 +149,9 @@ class _AppState extends State<App> {
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
+        BlocProvider<ThemeCubit>(
+          create: (context) => ThemeCubit()..loadTheme(),
+        ),
         BlocProvider<HomeCubit>(
           create: (context) => HomeCubit(
             wordRepository: wordRepository,
@@ -185,28 +189,29 @@ class _AppState extends State<App> {
           create: (context) => ProfileCubit(userRepository: userRepository),
         ),
       ],
-      child: PostHogWidget(
-        child: MaterialApp.router(
-          title: 'Vocabulary - word of the day',
-          routerConfig: _router,
-          debugShowCheckedModeBanner: false,
-          theme: ThemeData(
-            appBarTheme: AppBarTheme(
-              backgroundColor: Theme.of(context).colorScheme.inversePrimary,
+      child: BlocBuilder<ThemeCubit, ThemeState>(
+        builder: (context, themeState) {
+          return PostHogWidget(
+            child: MaterialApp.router(
+              title: 'Vocabulary - word of the day',
+              routerConfig: _router,
+              debugShowCheckedModeBanner: false,
+              theme: lightTheme(),
+              darkTheme: darkTheme(),
+              themeMode: themeState.themeMode,
+              builder: (context, child) => MediaQuery(
+                data: MediaQuery.of(context).copyWith(
+                  textScaler: MediaQuery.textScalerOf(
+                    context,
+                  ).clamp(minScaleFactor: 0.8, maxScaleFactor: 1.5),
+                ),
+                child: child!,
+              ),
+              localizationsDelegates: AppLocalizations.localizationsDelegates,
+              supportedLocales: AppLocalizations.supportedLocales,
             ),
-            useMaterial3: true,
-          ),
-          builder: (context, child) => MediaQuery(
-            data: MediaQuery.of(context).copyWith(
-              textScaler: MediaQuery.textScalerOf(
-                context,
-              ).clamp(minScaleFactor: 0.8, maxScaleFactor: 1.5),
-            ),
-            child: child!,
-          ),
-          localizationsDelegates: AppLocalizations.localizationsDelegates,
-          supportedLocales: AppLocalizations.supportedLocales,
-        ),
+          );
+        },
       ),
     );
   }

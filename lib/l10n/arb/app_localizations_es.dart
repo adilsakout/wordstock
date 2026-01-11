@@ -693,4 +693,19 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get swipeUp => 'Desliza hacia arriba';
+
+  @override
+  String get settingsTheme => 'Theme';
+
+  @override
+  String get settingsThemeDescription => 'Choose your preferred app theme';
+
+  @override
+  String get settingsThemeSystem => 'System';
+
+  @override
+  String get settingsThemeLight => 'Light';
+
+  @override
+  String get settingsThemeDark => 'Dark';
 }

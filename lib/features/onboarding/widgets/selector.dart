@@ -60,6 +60,23 @@ class SelectorState extends State<Selector>
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final isDark = theme.brightness == Brightness.dark;
+
+    // Define colors based on theme
+    final shadowColor = isDark ? Colors.grey[800]! : const Color(0xff999999);
+    final unselectedBgColor = isDark ? theme.colorScheme.surface : Colors.white;
+    final unselectedBorderColor =
+        isDark ? Colors.grey[700]! : const Color(0xff999999);
+    final unselectedTextColor =
+        isDark ? Colors.grey[400] : const Color(0xff999999);
+
+    final selectedBgColor = isDark
+        ? const Color(0xff1899D6).withValues(alpha: 0.2)
+        : const Color(0xffDDF4FF);
+    const selectedBorderColor = Color(0xff1899D6);
+    const selectedTextColor = Color(0xff1899D6);
+
     return GestureDetector(
       onTap: () {
         Gaimon.selection();
@@ -83,7 +100,7 @@ class SelectorState extends State<Selector>
                   child: Container(
                     height: 56 - 10,
                     decoration: BoxDecoration(
-                      color: const Color(0xff999999),
+                      color: shadowColor,
                       borderRadius: BorderRadius.circular(15),
                     ),
                   ),
@@ -97,13 +114,12 @@ class SelectorState extends State<Selector>
                     padding: const EdgeInsets.symmetric(horizontal: 10),
                     height: 56 - 10,
                     decoration: BoxDecoration(
-                      color: widget.selected
-                          ? const Color(0xffDDF4FF)
-                          : const Color(0xffFFFFFF),
+                      color:
+                          widget.selected ? selectedBgColor : unselectedBgColor,
                       border: Border.all(
                         color: widget.selected
-                            ? const Color(0xff1899D6)
-                            : const Color(0xff999999),
+                            ? selectedBorderColor
+                            : unselectedBorderColor,
                       ),
                       borderRadius: BorderRadius.circular(15),
                     ),
@@ -119,8 +135,8 @@ class SelectorState extends State<Selector>
                             textAlign: TextAlign.center,
                             style: TextStyle(
                               color: widget.selected
-                                  ? const Color(0xff1899D6)
-                                  : const Color(0xff999999),
+                                  ? selectedTextColor
+                                  : unselectedTextColor,
                               fontSize: 16,
                               fontWeight: FontWeight.bold,
                             ),
@@ -131,12 +147,12 @@ class SelectorState extends State<Selector>
                           height: 24,
                           decoration: BoxDecoration(
                             color: widget.selected
-                                ? const Color(0xff1899D6)
-                                : const Color(0xffFFFFFF),
+                                ? selectedBorderColor
+                                : unselectedBgColor,
                             border: Border.all(
                               color: widget.selected
-                                  ? const Color(0xff1899D6)
-                                  : const Color(0xff999999),
+                                  ? selectedBorderColor
+                                  : unselectedBorderColor,
                             ),
                             shape: widget.isMultipleChoice
                                 ? BoxShape.rectangle

@@ -69,10 +69,13 @@ class _ProgressBarState extends State<ProgressBar>
           builder: (context, child) {
             final currentWidth =
                 constraints.maxWidth * _progressAnimation.value;
+            final theme = Theme.of(context);
+            final isDark = theme.brightness == Brightness.dark;
+
             return Container(
               height: 26,
               decoration: BoxDecoration(
-                color: const Color(0xffE5E5E5),
+                color: isDark ? Colors.grey.shade800 : const Color(0xffE5E5E5),
                 borderRadius: BorderRadius.circular(20),
               ),
               child: Stack(

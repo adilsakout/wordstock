@@ -20,7 +20,7 @@ class SettingsBody extends StatelessWidget {
     return BlocBuilder<SettingsCubit, SettingsState>(
       builder: (context, state) {
         return Scaffold(
-          backgroundColor: const Color(0xFFF5F7FA),
+          backgroundColor: Theme.of(context).scaffoldBackgroundColor,
           body: SafeArea(
             child: Column(
               children: [
@@ -29,7 +29,7 @@ class SettingsBody extends StatelessWidget {
 
                 // Content based on current state
                 Expanded(
-                  child: _buildContent(state),
+                  child: _buildContent(context, state),
                 ),
               ],
             ),
@@ -40,12 +40,12 @@ class SettingsBody extends StatelessWidget {
   }
 
   /// Builds the appropriate content widget based on the current state
-  Widget _buildContent(SettingsState state) {
+  Widget _buildContent(BuildContext context, SettingsState state) {
     // Handle initial state
     if (state is SettingsInitial) {
-      return const Center(
+      return Center(
         child: CircularProgressIndicator(
-          color: Color(0xffF9C835),
+          color: Theme.of(context).colorScheme.primary,
         ),
       );
     }

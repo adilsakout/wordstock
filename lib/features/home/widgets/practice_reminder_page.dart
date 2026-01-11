@@ -42,6 +42,7 @@ class PracticeReminderPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final l10n = context.l10n;
+    final theme = Theme.of(context);
     final learningState =
         context.select<LearningProgressCubit, LearningProgressState>(
       (cubit) => cubit.state,
@@ -57,10 +58,10 @@ class PracticeReminderPage extends StatelessWidget {
         children: [
           Text(
             l10n.practiceReminderTitle,
-            style: const TextStyle(
+            style: theme.textTheme.titleLarge?.copyWith(
               fontSize: 28,
               fontWeight: FontWeight.bold,
-              color: Color(0xff1CB0F6),
+              color: const Color(0xff1CB0F6),
             ),
             textAlign: TextAlign.center,
           ).animate().fadeIn(
@@ -70,9 +71,8 @@ class PracticeReminderPage extends StatelessWidget {
           const SizedBox(height: 16),
           Text(
             l10n.practiceReminderDescription(wordCount),
-            style: const TextStyle(
+            style: theme.textTheme.bodyMedium?.copyWith(
               fontSize: 18,
-              color: Colors.black87,
             ),
             textAlign: TextAlign.center,
           ).animate().fadeIn(

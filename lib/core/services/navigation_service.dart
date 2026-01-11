@@ -146,10 +146,12 @@ class _VocabularyLevelBottomSheetState
   @override
   Widget build(BuildContext context) {
     final l10n = context.l10n;
+    final theme = Theme.of(context);
+    final isDark = theme.brightness == Brightness.dark;
 
     return Container(
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: theme.colorScheme.surface,
         borderRadius: BorderRadius.circular(20),
         boxShadow: [
           BoxShadow(
@@ -174,7 +176,7 @@ class _VocabularyLevelBottomSheetState
               width: 40,
               height: 4,
               decoration: BoxDecoration(
-                color: Colors.grey[300],
+                color: isDark ? Colors.grey[700] : Colors.grey[300],
                 borderRadius: BorderRadius.circular(2),
               ),
             ),
@@ -184,10 +186,9 @@ class _VocabularyLevelBottomSheetState
             Text(
               l10n.vocabularyLevelDialogTitle,
               textAlign: TextAlign.center,
-              style: const TextStyle(
+              style: theme.textTheme.titleLarge?.copyWith(
                 fontSize: 24,
                 fontWeight: FontWeight.w700,
-                color: Color(0xFF1D1D1F),
               ),
             ),
             const SizedBox(height: 10),
@@ -196,10 +197,9 @@ class _VocabularyLevelBottomSheetState
             Text(
               l10n.vocabularyLevelDialogDescription,
               textAlign: TextAlign.center,
-              style: TextStyle(
+              style: theme.textTheme.bodyMedium?.copyWith(
                 fontSize: 16,
                 fontWeight: FontWeight.w500,
-                color: Colors.grey[600],
               ),
             ),
             const SizedBox(height: 20),
@@ -225,9 +225,9 @@ class _VocabularyLevelBottomSheetState
                     width: double.infinity,
                     height: 50,
                     text: l10n.cancel,
-                    textColor: Colors.black87,
-                    buttonColor: Colors.grey[200]!,
-                    shadowColor: Colors.grey[400]!,
+                    textColor: theme.colorScheme.onSurface,
+                    buttonColor: isDark ? Colors.grey[800]! : Colors.grey[200]!,
+                    shadowColor: isDark ? Colors.grey[900]! : Colors.grey[400]!,
                     onTap: () => Navigator.of(context).pop(),
                   ),
                 ),
