@@ -1,0 +1,164 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_animate/flutter_animate.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:wordstock/features/onboarding/cubit/onboarding_cubit.dart';
+import 'package:wordstock/features/onboarding/widgets/selector.dart';
+
+/// Screen 1: Goal Identity Page
+///
+/// Asks the user "What's your goal with English?" and provides 4 selectable
+/// options. The CTA is disabled until the user makes a selection.
+/// Follows Apple Human Interface Guidelines with clean, modern design.
+class GoalIdentityPage extends StatelessWidget {
+  const GoalIdentityPage({super.key});
+
+  // Goal options with their identifiers and display text
+  static const List<Map<String, String>> _goalOptions = [
+    {'id': 'speak_confidently', 'text': 'Speak confidently'},
+    {'id': 'grow_vocabulary', 'text': 'Grow my vocabulary'},
+    {'id': 'prepare_work_exams', 'text': 'Prepare for work or exams'},
+    {'id': 'travel_without_stress', 'text': 'Travel without stress'},
+  ];
+
+  /// Handles goal selection with visual feedback and state update
+  void _selectGoal(BuildContext context, String goalId) {
+    final cubit = context.read<OnboardingCubit>()..setTempOnboardingGoal(goalId);
+
+    // Add slight delay for UX - allows user to see selection before transition
+    Future.delayed(const Duration(milliseconds: 300), () {
+      cubit.selectOnboardingGoal(goalId);
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocBuilder<OnboardingCubit, OnboardingState>(
+      builder: (context, state) {
+        final size = MediaQuery.of(context).size;
+
+        return Scaffold(
+          backgroundColor: Theme.of(context).colorScheme.surface,
+          body: SafeArea(
+            child: Padding(
+              padding: EdgeInsets.symmetric(
+                horizontal: size.width * 0.08,
+                vertical: size.height * 0.04,
+              ),
+              child: Column(
+                children: [
+                  const Spacer(),
+
+                  // Title with entrance animation
+                  Text(
+                    "What's your goal with English?",
+                    textAlign: TextAlign.center,
+                    style: Theme.of(context).textTheme.headlineMedium?.copyWith(
+                          fontWeight: FontWeight.bold,
+                          color: Theme.of(context).colorScheme.onSurface,
+                          height: 1.2,
+                        ),
+                  )
+                      .animate()
+                      .fadeIn(
+                        duration: 600.ms,
+                        delay: 200.ms,
+                        curve: Curves.easeOut,
+                      )
+                      .slideY(
+                        begin: 0.3,
+                        end: 0,
+                        duration: 600.ms,
+                        delay: 200.ms,
+                        curve: Curves.easeOut,
+                      ),
+
+                  const SizedBox(height: 16),
+
+                  // Subtitle with gentle fade-in animation
+                  Text(
+                    "Pick what matters most. We'll adapt everything.",
+                    textAlign: TextAlign.center,
+                    style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                          color: Theme.of(context)
+                              .colorScheme
+                              .onSurface
+                              .withValues(alpha: 0.7),
+                          height: 1.5,
+                        ),
+                  )
+                      .animate()
+                      .fadeIn(
+                        duration: 600.ms,
+                        delay: 500.ms,
+                        curve: Curves.easeOut,
+                      )
+                      .slideY(
+                        begin: 0.2,
+                        end: 0,
+                        duration: 600.ms,
+                        delay: 500.ms,
+                        curve: Curves.easeOut,
+                      ),
+
+                  const SizedBox(height: 40),
+
+                  // Goal options with staggered animations
+                  ...List.generate(
+                    _goalOptions.length,
+                    (index) {
+                      final goal = _goalOptions[index];
+                      final goalId = goal['id']!;
+                      final goalText = goal['text']!;
+
+                      // Check if this goal is selected (either confirmed or temp)
+                      final isSelected = state.onboardingGoal == goalId ||
+                          state.tempSelectedGoal == goalId;
+
+                      return Padding(
+                        padding: EdgeInsets.only(
+                          bottom: index < _goalOptions.length - 1 ? 16 : 0,
+                        ),
+                        child: AnimatedScale(
+                          scale: isSelected ? 1.02 : 1.0,
+                          duration: const Duration(milliseconds: 200),
+                          curve: Curves.easeOutQuad,
+                          child: Selector(
+                            text: goalText,
+                            selected: isSelected,
+                            onTap: () => _selectGoal(context, goalId),
+                          ),
+                        )
+                            .animate()
+                            .fadeIn(
+                              duration: 500.ms,
+                              delay: (800 + (index * 100)).ms,
+                              curve: Curves.easeOut,
+                            )
+                            .slideY(
+                              begin: 0.3,
+                              end: 0,
+                              duration: 500.ms,
+                              delay: (800 + (index * 100)).ms,
+                              curve: Curves.easeOut,
+                            )
+                            .scale(
+                              begin: const Offset(0.8, 0.8),
+                              end: const Offset(1, 1),
+                              duration: 500.ms,
+                              delay: (800 + (index * 100)).ms,
+                              curve: Curves.easeOut,
+                            ),
+                      );
+                    },
+                  ),
+
+                  const Spacer(flex: 2),
+                ],
+              ),
+            ),
+          ),
+        );
+      },
+    );
+  }
+}

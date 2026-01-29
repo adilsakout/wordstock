@@ -24,13 +24,17 @@ class OnboardingCubit extends Cubit<OnboardingState> {
         _englishTestRepository =
             englishTestRepository ?? const EnglishTestRepository(),
         super(
-          const OnboardingState(currentPage: 0, progress: 0),
+          OnboardingState(
+            currentPage: 0,
+            progress: 0,
+            createdAt: DateTime.now(), // Set createdAt when onboarding starts
+          ),
         ) {
     //_initializePageController();
   }
-  // Define totalPages here or pass it as a parameter
 
-  static const int totalPages = 3;
+  // Total pages for the new 7-screen onboarding flow
+  static const int totalPages = 7;
   final PageController pageController = PageController();
   final UserRepository _userRepository;
   final EnglishTestRepository _englishTestRepository;
@@ -297,6 +301,117 @@ class OnboardingCubit extends Cubit<OnboardingState> {
       debugPrint('Error requesting notification permission: $e');
     } finally {
       emit(state.copyWith(isRequestingPermission: false));
+    }
+  }
+
+  // ============================================
+  // Onboarding V2 Methods (7-Screen Flow)
+  // ============================================
+
+  /// Sets temporary goal selection for visual feedback before confirmation
+  void setTempOnboardingGoal(String goal) {
+    emit(state.copyWith(tempSelectedGoal: goal));
+  }
+
+  /// Confirms goal selection and proceeds to next page
+  void selectOnboardingGoal(String goal) {
+    emit(
+      state.copyWith(
+        onboardingGoal: goal,
+      ),
+    );
+    nextPage();
+  }
+
+  /// Clears temporary goal selection
+  void clearTempOnboardingGoal() {
+    emit(state.copyWith());
+  }
+
+  /// Sets temporary level selection for visual feedback before confirmation
+  void setTempOnboardingLevel(String level) {
+    emit(state.copyWith(tempSelectedLevel: level));
+  }
+
+  /// Confirms level selection and proceeds to next page
+  void selectOnboardingLevel(String level) {
+    emit(
+      state.copyWith(
+        onboardingLevel: level,
+      ),
+    );
+    nextPage();
+  }
+
+  /// Clears temporary level selection
+  void clearTempOnboardingLevel() {
+    emit(state.copyWith());
+  }
+
+  /// Records the micro win quiz answer
+  /// Sets microWinCompleted=true regardless of correctness
+  void answerMicroWinQuiz({required bool isCorrect}) {
+    emit(
+      state.copyWith(
+        microWinAnswered: true,
+        microWinCorrect: isCorrect,
+        microWinCompleted: true,
+      ),
+    );
+  }
+
+  /// Sets temporary daily minutes selection for visual feedback
+  void setTempDailyMinutes(int minutes) {
+    emit(state.copyWith(tempSelectedDailyMinutes: minutes));
+  }
+
+  /// Confirms daily minutes selection and proceeds to next page
+  void selectDailyMinutes(int minutes) {
+    emit(
+      state.copyWith(
+        dailyMinutes: minutes,
+      ),
+    );
+    nextPage();
+  }
+
+  /// Clears temporary daily minutes selection
+  void clearTempDailyMinutes() {
+    emit(state.copyWith());
+  }
+
+  /// Navigates to next page without any state updates
+  /// Used for screens that don't require selection (progress framing, etc.)
+  void goToNextPage() {
+    nextPage();
+  }
+
+  /// Returns the progress value for the step indicator (1-based)
+  double get stepProgress => (state.currentPage + 1) / totalPages;
+
+  /// Returns the current step number (1-based for display)
+  int get currentStep => state.currentPage + 1;
+
+  /// Checks if the CTA should be enabled based on current page requirements
+  bool get isCtaEnabled {
+    switch (state.currentPage) {
+      case 0: // Goal selection - requires selection
+        return state.onboardingGoal != null || state.tempSelectedGoal != null;
+      case 1: // Level selection - requires selection
+        return state.onboardingLevel != null || state.tempSelectedLevel != null;
+      case 2: // Quick win - requires answering quiz
+        return state.microWinAnswered;
+      case 3: // Progress framing - always enabled
+        return true;
+      case 4: // Daily habit - requires selection
+        return state.dailyMinutes != null ||
+            state.tempSelectedDailyMinutes != null;
+      case 5: // Plan reveal - always enabled
+        return true;
+      case 6: // Social proof - always enabled
+        return true;
+      default:
+        return true;
     }
   }
 }
