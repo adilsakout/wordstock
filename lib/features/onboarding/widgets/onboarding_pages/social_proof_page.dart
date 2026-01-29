@@ -22,19 +22,21 @@ class SocialProofPage extends StatelessWidget {
     await prefs.setBool('onboarding_completed', true);
 
     // Save onboarding data
-    await context.read<OnboardingCubit>().saveOnboardingData();
-
-    // Navigate to paywall and show it
     if (context.mounted) {
-      // First navigate to home
-      context.go('/home');
+      await context.read<OnboardingCubit>().saveOnboardingData();
 
-      // Then show the paywall
-      await Future.delayed(const Duration(milliseconds: 500), () {
-        if (context.mounted) {
-          context.read<SubscriptionCubit>().showPaywall();
-        }
-      });
+      // Navigate to paywall and show it
+      if (context.mounted) {
+        // First navigate to home
+        context.go('/home');
+
+        // Then show the paywall
+        await Future.delayed(const Duration(milliseconds: 500), () {
+          if (context.mounted) {
+            context.read<SubscriptionCubit>().showPaywall();
+          }
+        });
+      }
     }
   }
 

@@ -108,7 +108,8 @@ class DailyHabitPage extends StatelessWidget {
                       final text = option['text'] as String;
                       final emoji = option['emoji'] as String;
 
-                      // Check if this time is selected (either confirmed or temp)
+                      // Check if this time is selected
+                      //(either confirmed or temp)
                       final isSelected = state.dailyMinutes == minutes ||
                           state.tempSelectedDailyMinutes == minutes;
 

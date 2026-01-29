@@ -110,7 +110,8 @@ class LevelSelectionPage extends StatelessWidget {
                       final levelId = level['id']!;
                       final levelText = level['text']!;
 
-                      // Check if this level is selected (either confirmed or temp)
+                      // Check if this level is selected
+                      //(either confirmed or temp)
                       final isSelected = state.onboardingLevel == levelId ||
                           state.tempSelectedLevel == levelId;
 

@@ -22,7 +22,8 @@ class GoalIdentityPage extends StatelessWidget {
 
   /// Handles goal selection with visual feedback and state update
   void _selectGoal(BuildContext context, String goalId) {
-    final cubit = context.read<OnboardingCubit>()..setTempOnboardingGoal(goalId);
+    final cubit = context.read<OnboardingCubit>()
+      ..setTempOnboardingGoal(goalId);
 
     // Add slight delay for UX - allows user to see selection before transition
     Future.delayed(const Duration(milliseconds: 300), () {
@@ -110,7 +111,8 @@ class GoalIdentityPage extends StatelessWidget {
                       final goalId = goal['id']!;
                       final goalText = goal['text']!;
 
-                      // Check if this goal is selected (either confirmed or temp)
+                      // Check if this goal is selected
+                      //(either confirmed or temp)
                       final isSelected = state.onboardingGoal == goalId ||
                           state.tempSelectedGoal == goalId;
 
