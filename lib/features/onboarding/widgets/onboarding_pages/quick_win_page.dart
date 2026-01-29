@@ -122,234 +122,211 @@ class _QuickWinPageState extends State<QuickWinPage> {
 
         return Scaffold(
           backgroundColor: theme.colorScheme.surface,
-          body: SafeArea(
-            child: SingleChildScrollView(
-              padding: EdgeInsets.symmetric(
-                horizontal: size.width * 0.06,
-                vertical: size.height * 0.03,
-              ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  const SizedBox(height: 16),
-
-                  // Title with entrance animation
-                  Text(
-                    'Quick win',
-                    textAlign: TextAlign.center,
-                    style: theme.textTheme.headlineMedium?.copyWith(
-                      fontWeight: FontWeight.bold,
-                      color: theme.colorScheme.onSurface,
-                      height: 1.2,
+          body: SingleChildScrollView(
+            padding: EdgeInsets.symmetric(
+              horizontal: size.width * 0.06,
+            ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                const SizedBox(height: 16),
+                // Word Card
+                Container(
+                  padding: const EdgeInsets.all(24),
+                  decoration: BoxDecoration(
+                    color: isDark ? theme.colorScheme.surface : Colors.white,
+                    borderRadius: BorderRadius.circular(20),
+                    border: Border.all(
+                      color: AppColors.primaryBlue.withValues(alpha: 0.3),
+                      width: 2,
                     ),
-                  ).animate().fadeIn(duration: 600.ms, delay: 200.ms).slideY(
-                        begin: 0.3,
-                        end: 0,
-                        duration: 600.ms,
-                        delay: 200.ms,
+                    boxShadow: [
+                      BoxShadow(
+                        color: AppColors.primaryBlue.withValues(alpha: 0.1),
+                        blurRadius: 20,
+                        offset: const Offset(0, 8),
                       ),
-
-                  const SizedBox(height: 32),
-
-                  // Word Card
-                  Container(
-                    padding: const EdgeInsets.all(24),
-                    decoration: BoxDecoration(
-                      color: isDark ? theme.colorScheme.surface : Colors.white,
-                      borderRadius: BorderRadius.circular(20),
-                      border: Border.all(
-                        color: AppColors.primaryBlue.withValues(alpha: 0.3),
-                        width: 2,
+                    ],
+                  ),
+                  child: Column(
+                    children: [
+                      // Word
+                      Text(
+                        _word,
+                        style: theme.textTheme.headlineLarge?.copyWith(
+                          fontWeight: FontWeight.bold,
+                          color: AppColors.primaryBlue,
+                          letterSpacing: 1.2,
+                        ),
                       ),
-                      boxShadow: [
-                        BoxShadow(
-                          color: AppColors.primaryBlue.withValues(alpha: 0.1),
-                          blurRadius: 20,
-                          offset: const Offset(0, 8),
+                      const SizedBox(height: 12),
+                      // Definition
+                      Text(
+                        _definition,
+                        textAlign: TextAlign.center,
+                        style: theme.textTheme.bodyLarge?.copyWith(
+                          color: theme.colorScheme.onSurface
+                              .withValues(alpha: 0.8),
+                          height: 1.4,
+                          fontStyle: FontStyle.italic,
                         ),
-                      ],
-                    ),
-                    child: Column(
-                      children: [
-                        // Word
-                        Text(
-                          _word,
-                          style: theme.textTheme.headlineLarge?.copyWith(
-                            fontWeight: FontWeight.bold,
-                            color: AppColors.primaryBlue,
-                            letterSpacing: 1.2,
-                          ),
-                        ),
-                        const SizedBox(height: 12),
-                        // Definition
-                        Text(
-                          _definition,
-                          textAlign: TextAlign.center,
-                          style: theme.textTheme.bodyLarge?.copyWith(
-                            color: theme.colorScheme.onSurface
-                                .withValues(alpha: 0.8),
-                            height: 1.4,
-                            fontStyle: FontStyle.italic,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ).animate().fadeIn(duration: 600.ms, delay: 500.ms).scale(
-                        begin: const Offset(0.9, 0.9),
-                        end: const Offset(1, 1),
-                        duration: 600.ms,
-                        delay: 500.ms,
                       ),
-
-                  const SizedBox(height: 32),
-
-                  // Quiz prompt
-                  Text(
-                    'Which sentence uses it correctly?',
-                    textAlign: TextAlign.center,
-                    style: theme.textTheme.titleMedium?.copyWith(
-                      fontWeight: FontWeight.w600,
-                      color: theme.colorScheme.onSurface,
+                    ],
+                  ),
+                ).animate().fadeIn(duration: 600.ms, delay: 500.ms).scale(
+                      begin: const Offset(0.9, 0.9),
+                      end: const Offset(1, 1),
+                      duration: 600.ms,
+                      delay: 500.ms,
                     ),
-                  ).animate().fadeIn(duration: 500.ms, delay: 800.ms),
 
-                  const SizedBox(height: 20),
+                const SizedBox(height: 32),
 
-                  // Quiz options with staggered animations
-                  ...List.generate(
-                    _quizOptions.length,
-                    (index) {
-                      final option = _quizOptions[index];
+                // Quiz prompt
+                Text(
+                  'Which sentence uses it correctly?',
+                  textAlign: TextAlign.center,
+                  style: theme.textTheme.titleMedium?.copyWith(
+                    fontWeight: FontWeight.w600,
+                    color: theme.colorScheme.onSurface,
+                  ),
+                ).animate().fadeIn(duration: 500.ms, delay: 800.ms),
 
-                      return Padding(
-                        padding: EdgeInsets.only(
-                          bottom: index < _quizOptions.length - 1 ? 12 : 0,
-                        ),
-                        child: GestureDetector(
-                          onTap: () => _selectAnswer(index),
-                          child: AnimatedContainer(
-                            duration: const Duration(milliseconds: 300),
-                            padding: const EdgeInsets.all(16),
-                            decoration: BoxDecoration(
-                              color: _getOptionColor(index, theme),
-                              borderRadius: BorderRadius.circular(12),
-                              border: Border.all(
-                                color: _getOptionBorderColor(index, theme),
-                                width: 2,
-                              ),
+                const SizedBox(height: 20),
+
+                // Quiz options with staggered animations
+                ...List.generate(
+                  _quizOptions.length,
+                  (index) {
+                    final option = _quizOptions[index];
+
+                    return Padding(
+                      padding: EdgeInsets.only(
+                        bottom: index < _quizOptions.length - 1 ? 12 : 0,
+                      ),
+                      child: GestureDetector(
+                        onTap: () => _selectAnswer(index),
+                        child: AnimatedContainer(
+                          duration: const Duration(milliseconds: 300),
+                          padding: const EdgeInsets.all(16),
+                          decoration: BoxDecoration(
+                            color: _getOptionColor(index, theme),
+                            borderRadius: BorderRadius.circular(12),
+                            border: Border.all(
+                              color: _getOptionBorderColor(index, theme),
+                              width: 2,
                             ),
-                            child: Row(
-                              children: [
-                                Expanded(
-                                  child: Text(
-                                    option,
-                                    style: theme.textTheme.bodyMedium?.copyWith(
-                                      color: theme.colorScheme.onSurface,
-                                      fontWeight: _selectedAnswerIndex == index
-                                          ? FontWeight.w600
-                                          : FontWeight.normal,
-                                    ),
+                          ),
+                          child: Row(
+                            children: [
+                              Expanded(
+                                child: Text(
+                                  option,
+                                  style: theme.textTheme.bodyMedium?.copyWith(
+                                    color: theme.colorScheme.onSurface,
+                                    fontWeight: _selectedAnswerIndex == index
+                                        ? FontWeight.w600
+                                        : FontWeight.normal,
                                   ),
                                 ),
-                                // Show check or X icon after selection
-                                if (_selectedAnswerIndex != null &&
-                                    (index == _correctAnswerIndex ||
-                                        index == _selectedAnswerIndex))
-                                  Icon(
-                                    index == _correctAnswerIndex
-                                        ? Icons.check_circle
-                                        : Icons.cancel,
-                                    color: index == _correctAnswerIndex
-                                        ? AppColors.primaryGreen
-                                        : Colors.red,
-                                    size: 24,
-                                  ),
-                              ],
-                            ),
-                          ),
-                        )
-                            .animate()
-                            .fadeIn(
-                              duration: 400.ms,
-                              delay: (1000 + (index * 100)).ms,
-                            )
-                            .slideX(
-                              begin: 0.1,
-                              end: 0,
-                              duration: 400.ms,
-                              delay: (1000 + (index * 100)).ms,
-                            ),
-                      );
-                    },
-                  ),
-
-                  const SizedBox(height: 24),
-
-                  // Feedback message
-                  if (_showFeedback)
-                    Container(
-                      padding: const EdgeInsets.all(16),
-                      decoration: BoxDecoration(
-                        color: _selectedAnswerIndex == _correctAnswerIndex
-                            ? AppColors.primaryGreen.withValues(alpha: 0.1)
-                            : Colors.orange.withValues(alpha: 0.1),
-                        borderRadius: BorderRadius.circular(12),
-                        border: Border.all(
-                          color: _selectedAnswerIndex == _correctAnswerIndex
-                              ? AppColors.primaryGreen.withValues(alpha: 0.3)
-                              : Colors.orange.withValues(alpha: 0.3),
-                        ),
-                      ),
-                      child: Row(
-                        children: [
-                          Icon(
-                            _selectedAnswerIndex == _correctAnswerIndex
-                                ? Icons.celebration
-                                : Icons.lightbulb_outline,
-                            color: _selectedAnswerIndex == _correctAnswerIndex
-                                ? AppColors.primaryGreen
-                                : Colors.orange,
-                            size: 28,
-                          ),
-                          const SizedBox(width: 12),
-                          Expanded(
-                            child: Text(
-                              _selectedAnswerIndex == _correctAnswerIndex
-                                  ? 'Correct! You just learned a new word.'
-                                  : 'Nice try. The correct answer is A.',
-                              style: theme.textTheme.bodyMedium?.copyWith(
-                                fontWeight: FontWeight.w600,
-                                color:
-                                    _selectedAnswerIndex == _correctAnswerIndex
-                                        ? AppColors.primaryGreen
-                                        : Colors.orange.shade800,
                               ),
+                              // Show check or X icon after selection
+                              if (_selectedAnswerIndex != null &&
+                                  (index == _correctAnswerIndex ||
+                                      index == _selectedAnswerIndex))
+                                Icon(
+                                  index == _correctAnswerIndex
+                                      ? Icons.check_circle
+                                      : Icons.cancel,
+                                  color: index == _correctAnswerIndex
+                                      ? AppColors.primaryGreen
+                                      : Colors.red,
+                                  size: 24,
+                                ),
+                            ],
+                          ),
+                        ),
+                      )
+                          .animate()
+                          .fadeIn(
+                            duration: 400.ms,
+                            delay: (1000 + (index * 100)).ms,
+                          )
+                          .slideX(
+                            begin: 0.1,
+                            end: 0,
+                            duration: 400.ms,
+                            delay: (1000 + (index * 100)).ms,
+                          ),
+                    );
+                  },
+                ),
+
+                const SizedBox(height: 24),
+
+                // Feedback message
+                if (_showFeedback)
+                  Container(
+                    padding: const EdgeInsets.all(16),
+                    decoration: BoxDecoration(
+                      color: _selectedAnswerIndex == _correctAnswerIndex
+                          ? AppColors.primaryGreen.withValues(alpha: 0.1)
+                          : Colors.orange.withValues(alpha: 0.1),
+                      borderRadius: BorderRadius.circular(12),
+                      border: Border.all(
+                        color: _selectedAnswerIndex == _correctAnswerIndex
+                            ? AppColors.primaryGreen.withValues(alpha: 0.3)
+                            : Colors.orange.withValues(alpha: 0.3),
+                      ),
+                    ),
+                    child: Row(
+                      children: [
+                        Icon(
+                          _selectedAnswerIndex == _correctAnswerIndex
+                              ? Icons.celebration
+                              : Icons.lightbulb_outline,
+                          color: _selectedAnswerIndex == _correctAnswerIndex
+                              ? AppColors.primaryGreen
+                              : Colors.orange,
+                          size: 28,
+                        ),
+                        const SizedBox(width: 12),
+                        Expanded(
+                          child: Text(
+                            _selectedAnswerIndex == _correctAnswerIndex
+                                ? 'Correct! You just learned a new word.'
+                                : 'Nice try. The correct answer is A.',
+                            style: theme.textTheme.bodyMedium?.copyWith(
+                              fontWeight: FontWeight.w600,
+                              color: _selectedAnswerIndex == _correctAnswerIndex
+                                  ? AppColors.primaryGreen
+                                  : Colors.orange.shade800,
                             ),
                           ),
-                        ],
-                      ),
-                    )
-                        .animate()
-                        .fadeIn(duration: 400.ms)
-                        .slideY(begin: 0.2, end: 0, duration: 400.ms),
+                        ),
+                      ],
+                    ),
+                  )
+                      .animate()
+                      .fadeIn(duration: 400.ms)
+                      .slideY(begin: 0.2, end: 0, duration: 400.ms),
 
-                  const SizedBox(height: 32),
+                const SizedBox(height: 32),
 
-                  // CTA Button - only enabled after answering
-                  if (state.microWinAnswered)
-                    PushableButton(
-                      height: 56,
-                      borderRadius: 16,
-                      text: 'Next',
-                      onTap: () => context.read<OnboardingCubit>().nextPage(),
-                    )
-                        .animate()
-                        .fadeIn(duration: 500.ms)
-                        .slideY(begin: 0.2, end: 0, duration: 500.ms),
+                // CTA Button - only enabled after answering
+                if (state.microWinAnswered)
+                  PushableButton(
+                    height: 56,
+                    borderRadius: 16,
+                    text: 'Next',
+                    onTap: () => context.read<OnboardingCubit>().nextPage(),
+                  )
+                      .animate()
+                      .fadeIn(duration: 500.ms)
+                      .slideY(begin: 0.2, end: 0, duration: 500.ms),
 
-                  const SizedBox(height: 24),
-                ],
-              ),
+                const SizedBox(height: 24),
+              ],
             ),
           ),
         );

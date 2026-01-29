@@ -54,31 +54,6 @@ class SocialProofPage extends StatelessWidget {
           ),
           child: Column(
             children: [
-              const Spacer(),
-
-              // Community icon with animation
-              Container(
-                width: 100,
-                height: 100,
-                decoration: BoxDecoration(
-                  color: AppColors.primaryBlue.withValues(alpha: 0.15),
-                  shape: BoxShape.circle,
-                ),
-                child: const Icon(
-                  Icons.groups,
-                  size: 50,
-                  color: AppColors.primaryBlue,
-                ),
-              ).animate().fadeIn(duration: 600.ms, delay: 200.ms).scale(
-                    begin: const Offset(0.5, 0.5),
-                    end: const Offset(1, 1),
-                    duration: 600.ms,
-                    delay: 200.ms,
-                    curve: Curves.elasticOut,
-                  ),
-
-              const SizedBox(height: 32),
-
               // Title with entrance animation
               Text(
                 "You're not doing this alone",
@@ -92,8 +67,6 @@ class SocialProofPage extends StatelessWidget {
                   .animate()
                   .fadeIn(duration: 600.ms, delay: 500.ms)
                   .slideY(begin: 0.3, end: 0, duration: 600.ms, delay: 500.ms),
-
-              const SizedBox(height: 48),
 
               // Stats container
               Container(

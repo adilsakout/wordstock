@@ -32,12 +32,9 @@ class PlanRevealPage extends StatelessWidget {
             child: SingleChildScrollView(
               padding: EdgeInsets.symmetric(
                 horizontal: size.width * 0.06,
-                vertical: size.height * 0.03,
               ),
               child: Column(
                 children: [
-                  const SizedBox(height: 16),
-
                   // Title with entrance animation
                   Text(
                     'Your WordStock plan is ready',
@@ -53,8 +50,7 @@ class PlanRevealPage extends StatelessWidget {
                         duration: 600.ms,
                         delay: 200.ms,
                       ),
-
-                  const SizedBox(height: 32),
+                  const SizedBox(height: 16),
 
                   // Summary card showing user selections
                   Container(
@@ -104,8 +100,6 @@ class PlanRevealPage extends StatelessWidget {
                           ],
                         ),
 
-                        const SizedBox(height: 20),
-
                         // Goal row
                         _PlanDetailRow(
                           icon: Icons.flag,
@@ -114,8 +108,6 @@ class PlanRevealPage extends StatelessWidget {
                           delay: 600,
                         ),
 
-                        const SizedBox(height: 12),
-
                         // Level row
                         _PlanDetailRow(
                           icon: Icons.trending_up,
@@ -123,8 +115,6 @@ class PlanRevealPage extends StatelessWidget {
                           value: levelText,
                           delay: 750,
                         ),
-
-                        const SizedBox(height: 12),
 
                         // Daily commitment row
                         _PlanDetailRow(

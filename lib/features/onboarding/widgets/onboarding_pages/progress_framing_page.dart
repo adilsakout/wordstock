@@ -25,12 +25,9 @@ class ProgressFramingPage extends StatelessWidget {
         child: Padding(
           padding: EdgeInsets.symmetric(
             horizontal: size.width * 0.08,
-            vertical: size.height * 0.04,
           ),
           child: Column(
             children: [
-              const Spacer(),
-
               // Celebration icon with animation
               Container(
                 width: 100,
