@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:gaimon/gaimon.dart';
 import 'package:wordstock/features/onboarding/cubit/onboarding_cubit.dart';
 import 'package:wordstock/features/onboarding/widgets/selector.dart';
 import 'package:wordstock/l10n/l10n.dart';
@@ -37,6 +38,9 @@ class DailyHabitPage extends StatelessWidget {
 
   /// Handles time selection with visual feedback and state update
   void _selectTime(BuildContext context, int minutes) {
+    // Provide soft haptic feedback
+    Gaimon.soft();
+
     final cubit = context.read<OnboardingCubit>()..setTempDailyMinutes(minutes);
 
     // Add slight delay for UX - allows user to see selection before transition

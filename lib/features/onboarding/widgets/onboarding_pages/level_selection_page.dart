@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:gaimon/gaimon.dart';
 import 'package:wordstock/features/onboarding/cubit/onboarding_cubit.dart';
 import 'package:wordstock/features/onboarding/widgets/selector.dart';
 import 'package:wordstock/l10n/l10n.dart';
@@ -37,6 +38,9 @@ class LevelSelectionPage extends StatelessWidget {
 
   /// Handles level selection with visual feedback and state update
   void _selectLevel(BuildContext context, String levelId) {
+    // Provide soft haptic feedback
+    Gaimon.soft();
+
     final cubit = context.read<OnboardingCubit>()
       ..setTempOnboardingLevel(levelId);
 

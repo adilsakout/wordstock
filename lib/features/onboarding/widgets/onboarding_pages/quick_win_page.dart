@@ -1,3 +1,4 @@
+import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -23,6 +24,25 @@ class _QuickWinPageState extends State<QuickWinPage> {
   // Quiz state management
   int? _selectedAnswerIndex;
   bool _showFeedback = false;
+
+  // Audio players for feedback sounds
+  final AudioPlayer _correctPlayer = AudioPlayer();
+  final AudioPlayer _errorPlayer = AudioPlayer();
+
+  @override
+  void initState() {
+    super.initState();
+    // Pre-load the sounds
+    _correctPlayer.setSource(AssetSource('sounds/correct.wav'));
+    _errorPlayer.setSource(AssetSource('sounds/error.wav'));
+  }
+
+  @override
+  void dispose() {
+    _correctPlayer.dispose();
+    _errorPlayer.dispose();
+    super.dispose();
+  }
 
   // The word being taught
   static const String _word = 'Serendipity';
@@ -52,11 +72,17 @@ class _QuickWinPageState extends State<QuickWinPage> {
     // Determine if answer is correct
     final isCorrect = index == _correctAnswerIndex;
 
-    // Provide haptic feedback
+    // Provide haptic and audio feedback
     if (isCorrect) {
+      _correctPlayer
+        ..stop()
+        ..play(AssetSource('sounds/correct.wav'));
       Gaimon.success();
     } else {
       Gaimon.error();
+      _errorPlayer
+        ..stop()
+        ..play(AssetSource('sounds/error.wav'));
     }
 
     // Update cubit state
