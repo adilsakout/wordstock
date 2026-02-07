@@ -964,5 +964,179 @@
     "settingsThemeDark": "Dark",
     "@settingsThemeDark": {
         "description": "Option for dark theme"
+    },
+    "onboardingGoalTitle": "What's your goal with English?",
+    "@onboardingGoalTitle": {
+        "description": "Title for goal identity onboarding page"
+    },
+    "onboardingGoalSubtitle": "Pick what matters most. We'll adapt everything.",
+    "@onboardingGoalSubtitle": {
+        "description": "Subtitle for goal identity onboarding page"
+    },
+    "onboardingGoalSpeakConfidently": "Speak confidently",
+    "@onboardingGoalSpeakConfidently": {
+        "description": "Goal option for speaking confidently"
+    },
+    "onboardingGoalGrowVocabulary": "Grow my vocabulary",
+    "@onboardingGoalGrowVocabulary": {
+        "description": "Goal option for growing vocabulary"
+    },
+    "onboardingGoalPrepareWorkExams": "Prepare for work or exams",
+    "@onboardingGoalPrepareWorkExams": {
+        "description": "Goal option for work or exams preparation"
+    },
+    "onboardingGoalTravelWithoutStress": "Travel without stress",
+    "@onboardingGoalTravelWithoutStress": {
+        "description": "Goal option for stress-free travel"
+    },
+    "onboardingLevelTitle": "What's your current level?",
+    "@onboardingLevelTitle": {
+        "description": "Title for level selection onboarding page"
+    },
+    "onboardingLevelSubtitle": "Don't overthink it. You can change it anytime.",
+    "@onboardingLevelSubtitle": {
+        "description": "Subtitle for level selection onboarding page"
+    },
+    "onboardingLevelBeginner": "Beginner",
+    "@onboardingLevelBeginner": {
+        "description": "Beginner level option"
+    },
+    "onboardingLevelIntermediate": "Intermediate",
+    "@onboardingLevelIntermediate": {
+        "description": "Intermediate level option"
+    },
+    "onboardingLevelAdvanced": "Advanced",
+    "@onboardingLevelAdvanced": {
+        "description": "Advanced level option"
+    },
+    "onboardingQuickWinQuizPrompt": "Which sentence uses it correctly?",
+    "@onboardingQuickWinQuizPrompt": {
+        "description": "Quiz prompt for quick win page"
+    },
+    "onboardingQuickWinCorrect": "Correct! You just learned a new word.",
+    "@onboardingQuickWinCorrect": {
+        "description": "Feedback when user answers correctly"
+    },
+    "onboardingQuickWinIncorrect": "Nice try. The correct answer is A.",
+    "@onboardingQuickWinIncorrect": {
+        "description": "Feedback when user answers incorrectly"
+    },
+    "onboardingProgressTitle": "You're already learning.",
+    "@onboardingProgressTitle": {
+        "description": "Title for progress framing page"
+    },
+    "onboardingProgressWordLearned": "1 word learned",
+    "@onboardingProgressWordLearned": {
+        "description": "Stat showing words learned"
+    },
+    "onboardingProgressStreakStarted": "1 streak started",
+    "@onboardingProgressStreakStarted": {
+        "description": "Stat showing streak started"
+    },
+    "onboardingProgressYourProgress": "Your progress",
+    "@onboardingProgressYourProgress": {
+        "description": "Label for progress bar"
+    },
+    "onboardingProgressMotivation": "Imagine what 5 minutes a day can do.",
+    "@onboardingProgressMotivation": {
+        "description": "Motivational text on progress page"
+    },
+    "onboardingDailyHabitTitle": "How often do you want to practice?",
+    "@onboardingDailyHabitTitle": {
+        "description": "Title for daily habit page"
+    },
+    "onboardingDailyHabitSubtitle": "Consistency beats intensity.",
+    "@onboardingDailyHabitSubtitle": {
+        "description": "Subtitle for daily habit page"
+    },
+    "onboardingDailyHabit5min": "5 min/day",
+    "@onboardingDailyHabit5min": {
+        "description": "5 minute daily habit option"
+    },
+    "onboardingDailyHabit10min": "10 min/day",
+    "@onboardingDailyHabit10min": {
+        "description": "10 minute daily habit option"
+    },
+    "onboardingDailyHabit15min": "15 min/day",
+    "@onboardingDailyHabit15min": {
+        "description": "15 minute daily habit option"
+    },
+    "onboardingPlanTitle": "Your WordStock plan is ready",
+    "@onboardingPlanTitle": {
+        "description": "Title for plan reveal page"
+    },
+    "onboardingPlanYourPlan": "Your Plan",
+    "@onboardingPlanYourPlan": {
+        "description": "Header for plan summary"
+    },
+    "onboardingPlanGoalLabel": "Goal",
+    "@onboardingPlanGoalLabel": {
+        "description": "Label for goal in plan"
+    },
+    "onboardingPlanLevelLabel": "Level",
+    "@onboardingPlanLevelLabel": {
+        "description": "Label for level in plan"
+    },
+    "onboardingPlanDailyLabel": "Daily",
+    "@onboardingPlanDailyLabel": {
+        "description": "Label for daily commitment in plan"
+    },
+    "onboardingPlanDailyValue": "{minutes} min/day",
+    "@onboardingPlanDailyValue": {
+        "description": "Daily commitment value",
+        "placeholders": {
+            "minutes": {
+                "type": "int"
+            }
+        }
+    },
+    "onboardingPlanWhatYouGet": "What you'll get",
+    "@onboardingPlanWhatYouGet": {
+        "description": "Section header for benefits"
+    },
+    "onboardingPlanDailyLessons": "Daily {minutes}-minute lessons",
+    "@onboardingPlanDailyLessons": {
+        "description": "Benefit: daily lessons",
+        "placeholders": {
+            "minutes": {
+                "type": "int"
+            }
+        }
+    },
+    "onboardingPlanWordsMatchedLevel": "Words matched to your level",
+    "@onboardingPlanWordsMatchedLevel": {
+        "description": "Benefit: level-matched words"
+    },
+    "onboardingPlanSmartReviews": "Smart reviews so you don't forget",
+    "@onboardingPlanSmartReviews": {
+        "description": "Benefit: smart reviews"
+    },
+    "onboardingPlanProgressTracking": "Progress tracking & streaks",
+    "@onboardingPlanProgressTracking": {
+        "description": "Benefit: progress tracking"
+    },
+    "onboardingProofTitle": "You're not doing this alone",
+    "@onboardingProofTitle": {
+        "description": "Title for social proof page"
+    },
+    "onboardingProofLearnerCount": "42,000+",
+    "@onboardingProofLearnerCount": {
+        "description": "Number of learners"
+    },
+    "onboardingProofLearnerLabel": "learners improving their English every day",
+    "@onboardingProofLearnerLabel": {
+        "description": "Label for learner count"
+    },
+    "onboardingProofRating": "4.6 average rating",
+    "@onboardingProofRating": {
+        "description": "App Store rating"
+    },
+    "onboardingProofAppStore": "on the App Store",
+    "@onboardingProofAppStore": {
+        "description": "App Store label"
+    },
+    "onboardingContinue": "Continue",
+    "@onboardingContinue": {
+        "description": "Continue button text"
     }
 }

@@ -712,4 +712,141 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get settingsThemeDark => 'Sombre';
+
+  @override
+  String get onboardingGoalTitle => 'Quel est votre objectif avec l\'anglais ?';
+
+  @override
+  String get onboardingGoalSubtitle =>
+      'Choisissez ce qui compte le plus. Nous adapterons tout.';
+
+  @override
+  String get onboardingGoalSpeakConfidently => 'Parler avec confiance';
+
+  @override
+  String get onboardingGoalGrowVocabulary => 'Enrichir mon vocabulaire';
+
+  @override
+  String get onboardingGoalPrepareWorkExams =>
+      'Me préparer au travail ou aux examens';
+
+  @override
+  String get onboardingGoalTravelWithoutStress => 'Voyager sans stress';
+
+  @override
+  String get onboardingLevelTitle => 'Quel est votre niveau actuel ?';
+
+  @override
+  String get onboardingLevelSubtitle =>
+      'N\'y réfléchissez pas trop. Vous pouvez le changer à tout moment.';
+
+  @override
+  String get onboardingLevelBeginner => 'Débutant';
+
+  @override
+  String get onboardingLevelIntermediate => 'Intermédiaire';
+
+  @override
+  String get onboardingLevelAdvanced => 'Avancé';
+
+  @override
+  String get onboardingQuickWinQuizPrompt =>
+      'Quelle phrase l\'utilise correctement ?';
+
+  @override
+  String get onboardingQuickWinCorrect =>
+      'Correct ! Vous venez d\'apprendre un nouveau mot.';
+
+  @override
+  String get onboardingQuickWinIncorrect =>
+      'Bien essayé. La bonne réponse est A.';
+
+  @override
+  String get onboardingProgressTitle => 'Vous apprenez déjà.';
+
+  @override
+  String get onboardingProgressWordLearned => '1 mot appris';
+
+  @override
+  String get onboardingProgressStreakStarted => '1 série commencée';
+
+  @override
+  String get onboardingProgressYourProgress => 'Votre progression';
+
+  @override
+  String get onboardingProgressMotivation =>
+      'Imaginez ce que 5 minutes par jour peuvent accomplir.';
+
+  @override
+  String get onboardingDailyHabitTitle =>
+      'À quelle fréquence voulez-vous pratiquer ?';
+
+  @override
+  String get onboardingDailyHabitSubtitle => 'La régularité bat l\'intensité.';
+
+  @override
+  String get onboardingDailyHabit5min => '5 min/jour';
+
+  @override
+  String get onboardingDailyHabit10min => '10 min/jour';
+
+  @override
+  String get onboardingDailyHabit15min => '15 min/jour';
+
+  @override
+  String get onboardingPlanTitle => 'Votre plan WordStock est prêt';
+
+  @override
+  String get onboardingPlanYourPlan => 'Votre Plan';
+
+  @override
+  String get onboardingPlanGoalLabel => 'Objectif';
+
+  @override
+  String get onboardingPlanLevelLabel => 'Niveau';
+
+  @override
+  String get onboardingPlanDailyLabel => 'Quotidien';
+
+  @override
+  String onboardingPlanDailyValue(int minutes) {
+    return '$minutes min/jour';
+  }
+
+  @override
+  String get onboardingPlanWhatYouGet => 'Ce que vous obtiendrez';
+
+  @override
+  String onboardingPlanDailyLessons(int minutes) {
+    return 'Leçons quotidiennes de $minutes minutes';
+  }
+
+  @override
+  String get onboardingPlanWordsMatchedLevel => 'Mots adaptés à votre niveau';
+
+  @override
+  String get onboardingPlanSmartReviews =>
+      'Révisions intelligentes pour ne rien oublier';
+
+  @override
+  String get onboardingPlanProgressTracking => 'Suivi des progrès et séries';
+
+  @override
+  String get onboardingProofTitle => 'Vous n\'êtes pas seul';
+
+  @override
+  String get onboardingProofLearnerCount => '42 000+';
+
+  @override
+  String get onboardingProofLearnerLabel =>
+      'apprenants améliorant leur anglais chaque jour';
+
+  @override
+  String get onboardingProofRating => '4,6 note moyenne';
+
+  @override
+  String get onboardingProofAppStore => 'sur l\'App Store';
+
+  @override
+  String get onboardingContinue => 'Continuer';
 }

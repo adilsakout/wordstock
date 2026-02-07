@@ -683,4 +683,131 @@ class AppLocalizationsKo extends AppLocalizations {
 
   @override
   String get settingsThemeDark => '다크';
+
+  @override
+  String get onboardingGoalTitle => '영어로 목표가 무엇인가요?';
+
+  @override
+  String get onboardingGoalSubtitle => '가장 중요한 것을 선택하세요. 모든 것을 맞춤화해 드립니다.';
+
+  @override
+  String get onboardingGoalSpeakConfidently => '자신 있게 말하기';
+
+  @override
+  String get onboardingGoalGrowVocabulary => '어휘력 늘리기';
+
+  @override
+  String get onboardingGoalPrepareWorkExams => '업무나 시험 준비';
+
+  @override
+  String get onboardingGoalTravelWithoutStress => '스트레스 없이 여행하기';
+
+  @override
+  String get onboardingLevelTitle => '현재 레벨이 어떻게 되나요?';
+
+  @override
+  String get onboardingLevelSubtitle => '너무 고민하지 마세요. 언제든지 변경할 수 있습니다.';
+
+  @override
+  String get onboardingLevelBeginner => '초급';
+
+  @override
+  String get onboardingLevelIntermediate => '중급';
+
+  @override
+  String get onboardingLevelAdvanced => '고급';
+
+  @override
+  String get onboardingQuickWinQuizPrompt => '어떤 문장이 올바르게 사용하나요?';
+
+  @override
+  String get onboardingQuickWinCorrect => '정답! 새로운 단어를 배웠어요.';
+
+  @override
+  String get onboardingQuickWinIncorrect => '좋은 시도예요. 정답은 A입니다.';
+
+  @override
+  String get onboardingProgressTitle => '벌써 배우고 있어요.';
+
+  @override
+  String get onboardingProgressWordLearned => '단어 1개 학습';
+
+  @override
+  String get onboardingProgressStreakStarted => '연속 1일 시작';
+
+  @override
+  String get onboardingProgressYourProgress => '내 진행률';
+
+  @override
+  String get onboardingProgressMotivation => '하루 5분이 무엇을 할 수 있는지 상상해보세요.';
+
+  @override
+  String get onboardingDailyHabitTitle => '얼마나 자주 연습하고 싶으세요?';
+
+  @override
+  String get onboardingDailyHabitSubtitle => '꾸준함이 강도보다 낫습니다.';
+
+  @override
+  String get onboardingDailyHabit5min => '5분/일';
+
+  @override
+  String get onboardingDailyHabit10min => '10분/일';
+
+  @override
+  String get onboardingDailyHabit15min => '15분/일';
+
+  @override
+  String get onboardingPlanTitle => 'WordStock 플랜이 준비되었습니다';
+
+  @override
+  String get onboardingPlanYourPlan => '내 플랜';
+
+  @override
+  String get onboardingPlanGoalLabel => '목표';
+
+  @override
+  String get onboardingPlanLevelLabel => '레벨';
+
+  @override
+  String get onboardingPlanDailyLabel => '매일';
+
+  @override
+  String onboardingPlanDailyValue(int minutes) {
+    return '$minutes분/일';
+  }
+
+  @override
+  String get onboardingPlanWhatYouGet => '받게 될 것';
+
+  @override
+  String onboardingPlanDailyLessons(int minutes) {
+    return '매일 $minutes분 레슨';
+  }
+
+  @override
+  String get onboardingPlanWordsMatchedLevel => '레벨에 맞는 단어';
+
+  @override
+  String get onboardingPlanSmartReviews => '잊지 않도록 스마트 복습';
+
+  @override
+  String get onboardingPlanProgressTracking => '진행률 추적 & 연속 기록';
+
+  @override
+  String get onboardingProofTitle => '혼자가 아니에요';
+
+  @override
+  String get onboardingProofLearnerCount => '42,000+';
+
+  @override
+  String get onboardingProofLearnerLabel => '학습자들이 매일 영어를 향상시키고 있습니다';
+
+  @override
+  String get onboardingProofRating => '4.6 평균 평점';
+
+  @override
+  String get onboardingProofAppStore => '앱스토어에서';
+
+  @override
+  String get onboardingContinue => '계속';
 }

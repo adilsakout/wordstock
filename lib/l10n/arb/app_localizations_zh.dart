@@ -672,4 +672,131 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get settingsThemeDark => '深色';
+
+  @override
+  String get onboardingGoalTitle => '您學習英語的目標是什麼？';
+
+  @override
+  String get onboardingGoalSubtitle => '選擇最重要的。我們會為您量身定制。';
+
+  @override
+  String get onboardingGoalSpeakConfidently => '自信地說話';
+
+  @override
+  String get onboardingGoalGrowVocabulary => '擴大詞彙量';
+
+  @override
+  String get onboardingGoalPrepareWorkExams => '準備工作或考試';
+
+  @override
+  String get onboardingGoalTravelWithoutStress => '輕鬆旅行';
+
+  @override
+  String get onboardingLevelTitle => '您目前的程度是什麼？';
+
+  @override
+  String get onboardingLevelSubtitle => '別想太多。您可以隨時更改。';
+
+  @override
+  String get onboardingLevelBeginner => '初級';
+
+  @override
+  String get onboardingLevelIntermediate => '中級';
+
+  @override
+  String get onboardingLevelAdvanced => '高級';
+
+  @override
+  String get onboardingQuickWinQuizPrompt => '哪個句子正確使用了這個詞？';
+
+  @override
+  String get onboardingQuickWinCorrect => '正確！您剛學會了一個新單字。';
+
+  @override
+  String get onboardingQuickWinIncorrect => '不錯的嘗試。正確答案是 A。';
+
+  @override
+  String get onboardingProgressTitle => '您已經在學習了。';
+
+  @override
+  String get onboardingProgressWordLearned => '學會 1 個單字';
+
+  @override
+  String get onboardingProgressStreakStarted => '開始 1 天連續';
+
+  @override
+  String get onboardingProgressYourProgress => '您的進度';
+
+  @override
+  String get onboardingProgressMotivation => '想像每天 5 分鐘能做到什麼。';
+
+  @override
+  String get onboardingDailyHabitTitle => '您想多久練習一次？';
+
+  @override
+  String get onboardingDailyHabitSubtitle => '堅持勝過強度。';
+
+  @override
+  String get onboardingDailyHabit5min => '5 分鐘/天';
+
+  @override
+  String get onboardingDailyHabit10min => '10 分鐘/天';
+
+  @override
+  String get onboardingDailyHabit15min => '15 分鐘/天';
+
+  @override
+  String get onboardingPlanTitle => '您的 WordStock 計劃已準備好';
+
+  @override
+  String get onboardingPlanYourPlan => '您的計劃';
+
+  @override
+  String get onboardingPlanGoalLabel => '目標';
+
+  @override
+  String get onboardingPlanLevelLabel => '程度';
+
+  @override
+  String get onboardingPlanDailyLabel => '每日';
+
+  @override
+  String onboardingPlanDailyValue(int minutes) {
+    return '$minutes 分鐘/天';
+  }
+
+  @override
+  String get onboardingPlanWhatYouGet => '您將獲得';
+
+  @override
+  String onboardingPlanDailyLessons(int minutes) {
+    return '每日 $minutes 分鐘課程';
+  }
+
+  @override
+  String get onboardingPlanWordsMatchedLevel => '符合您程度的單字';
+
+  @override
+  String get onboardingPlanSmartReviews => '智能複習讓您不會忘記';
+
+  @override
+  String get onboardingPlanProgressTracking => '進度追蹤與連續記錄';
+
+  @override
+  String get onboardingProofTitle => '您並不孤單';
+
+  @override
+  String get onboardingProofLearnerCount => '42,000+';
+
+  @override
+  String get onboardingProofLearnerLabel => '學習者每天都在提升英語';
+
+  @override
+  String get onboardingProofRating => '4.6 平均評分';
+
+  @override
+  String get onboardingProofAppStore => '在 App Store';
+
+  @override
+  String get onboardingContinue => '繼續';
 }
