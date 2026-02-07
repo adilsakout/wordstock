@@ -26,186 +26,191 @@ class PlanRevealPage extends StatelessWidget {
         final levelText = state.levelDisplayText;
         final dailyMinutes = state.dailyMinutes ?? 10;
 
-        return Scaffold(
-          backgroundColor: theme.colorScheme.surface,
-          body: SafeArea(
-            child: SingleChildScrollView(
-              padding: EdgeInsets.symmetric(
-                horizontal: size.width * 0.06,
-              ),
-              child: Column(
-                children: [
-                  // Title with entrance animation
-                  Text(
-                    'Your WordStock plan is ready',
-                    textAlign: TextAlign.center,
-                    style: theme.textTheme.headlineMedium?.copyWith(
-                      fontWeight: FontWeight.bold,
-                      color: theme.colorScheme.onSurface,
-                      height: 1.2,
+        return ColoredBox(
+          color: theme.colorScheme.surface,
+          child: Padding(
+            padding: const EdgeInsets.all(16),
+            child: Column(
+              children: [
+                const SizedBox(height: 16),
+                // Title with entrance animation
+                Text(
+                  'Your WordStock plan is ready',
+                  textAlign: TextAlign.center,
+                  style: theme.textTheme.headlineMedium?.copyWith(
+                    fontWeight: FontWeight.bold,
+                    color: theme.colorScheme.onSurface,
+                    height: 1.2,
+                  ),
+                ).animate().fadeIn(duration: 600.ms, delay: 200.ms).slideY(
+                      begin: 0.3,
+                      end: 0,
+                      duration: 600.ms,
+                      delay: 200.ms,
                     ),
-                  ).animate().fadeIn(duration: 600.ms, delay: 200.ms).slideY(
-                        begin: 0.3,
-                        end: 0,
-                        duration: 600.ms,
-                        delay: 200.ms,
-                      ),
-                  const SizedBox(height: 16),
+                const SizedBox(height: 16),
 
-                  // Summary card showing user selections
-                  Container(
-                    padding: const EdgeInsets.all(20),
-                    decoration: BoxDecoration(
-                      color: isDark ? theme.colorScheme.surface : Colors.white,
-                      borderRadius: BorderRadius.circular(20),
-                      border: Border.all(
-                        color: AppColors.primaryBlue.withValues(alpha: 0.2),
-                      ),
-                      boxShadow: [
-                        BoxShadow(
-                          color: isDark
-                              ? Colors.black.withValues(alpha: 0.3)
-                              : Colors.grey.withValues(alpha: 0.1),
-                          blurRadius: 16,
-                          offset: const Offset(0, 6),
-                        ),
-                      ],
+                // Summary card showing user selections
+                Container(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 16,
+                    vertical: 20,
+                  ),
+                  decoration: BoxDecoration(
+                    color: isDark ? theme.colorScheme.surface : Colors.white,
+                    borderRadius: BorderRadius.circular(20),
+                    border: Border.all(
+                      color: AppColors.primaryBlue.withValues(alpha: 0.2),
                     ),
-                    child: Column(
-                      children: [
-                        // Header
-                        Row(
-                          children: [
-                            Container(
-                              padding: const EdgeInsets.all(10),
-                              decoration: BoxDecoration(
-                                color: AppColors.primaryBlue
-                                    .withValues(alpha: 0.1),
-                                borderRadius: BorderRadius.circular(12),
-                              ),
-                              child: const Icon(
-                                Icons.auto_awesome,
-                                color: AppColors.primaryBlue,
-                                size: 24,
-                              ),
+                    boxShadow: [
+                      BoxShadow(
+                        color: isDark
+                            ? Colors.black.withValues(alpha: 0.3)
+                            : Colors.grey.withValues(alpha: 0.1),
+                        blurRadius: 16,
+                        offset: const Offset(0, 6),
+                      ),
+                    ],
+                  ),
+                  child: Column(
+                    spacing: 8,
+                    children: [
+                      // Header
+                      Row(
+                        children: [
+                          Container(
+                            padding: const EdgeInsets.all(10),
+                            decoration: BoxDecoration(
+                              color:
+                                  AppColors.primaryBlue.withValues(alpha: 0.1),
+                              borderRadius: BorderRadius.circular(12),
                             ),
-                            const SizedBox(width: 12),
-                            Text(
-                              'Your Plan',
-                              style: theme.textTheme.titleMedium?.copyWith(
-                                fontWeight: FontWeight.bold,
-                                color: AppColors.primaryBlue,
-                              ),
+                            child: const Icon(
+                              Icons.auto_awesome,
+                              color: AppColors.primaryBlue,
+                              size: 24,
                             ),
-                          ],
-                        ),
-
-                        // Goal row
-                        _PlanDetailRow(
-                          icon: Icons.flag,
-                          label: 'Goal',
-                          value: goalText,
-                          delay: 600,
-                        ),
-
-                        // Level row
-                        _PlanDetailRow(
-                          icon: Icons.trending_up,
-                          label: 'Level',
-                          value: levelText,
-                          delay: 750,
-                        ),
-
-                        // Daily commitment row
-                        _PlanDetailRow(
-                          icon: Icons.schedule,
-                          label: 'Daily',
-                          value: '$dailyMinutes min/day',
-                          delay: 900,
-                        ),
-                      ],
-                    ),
-                  ).animate().fadeIn(duration: 600.ms, delay: 500.ms).scale(
-                        begin: const Offset(0.95, 0.95),
-                        end: const Offset(1, 1),
-                        duration: 600.ms,
-                        delay: 500.ms,
-                      ),
-
-                  const SizedBox(height: 32),
-
-                  // What you'll get section
-                  Container(
-                    padding: const EdgeInsets.all(20),
-                    decoration: BoxDecoration(
-                      color: isDark
-                          ? theme.colorScheme.surface
-                          : AppColors.primaryGreen.withValues(alpha: 0.05),
-                      borderRadius: BorderRadius.circular(20),
-                      border: Border.all(
-                        color: AppColors.primaryGreen.withValues(alpha: 0.2),
-                      ),
-                    ),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          "What you'll get",
-                          style: theme.textTheme.titleMedium?.copyWith(
-                            fontWeight: FontWeight.bold,
-                            color: theme.colorScheme.onSurface,
                           ),
-                        ),
+                          const SizedBox(width: 12),
+                          Text(
+                            'Your Plan',
+                            style: theme.textTheme.titleMedium?.copyWith(
+                              fontWeight: FontWeight.bold,
+                              color: AppColors.primaryBlue,
+                            ),
+                          ),
+                        ],
+                      ),
 
-                        const SizedBox(height: 16),
+                      // Goal row
+                      _PlanDetailRow(
+                        icon: Icons.flag,
+                        label: 'Goal',
+                        value: goalText,
+                        delay: 600,
+                      ),
 
-                        // Bullet points
-                        _BulletPoint(
-                          text: 'Daily $dailyMinutes-minute lessons',
-                          delay: 1100,
-                        ),
-                        const SizedBox(height: 10),
-                        const _BulletPoint(
-                          text: 'Words matched to your level',
-                          delay: 1200,
-                        ),
-                        const SizedBox(height: 10),
-                        const _BulletPoint(
-                          text: "Smart reviews so you don't forget",
-                          delay: 1300,
-                        ),
-                        const SizedBox(height: 10),
-                        const _BulletPoint(
-                          text: 'Progress tracking & streaks',
-                          delay: 1400,
-                        ),
-                      ],
+                      // Level row
+                      _PlanDetailRow(
+                        icon: Icons.trending_up,
+                        label: 'Level',
+                        value: levelText,
+                        delay: 750,
+                      ),
+
+                      // Daily commitment row
+                      _PlanDetailRow(
+                        icon: Icons.schedule,
+                        label: 'Daily',
+                        value: '$dailyMinutes min/day',
+                        delay: 900,
+                      ),
+                    ],
+                  ),
+                ).animate().fadeIn(duration: 600.ms, delay: 500.ms).scale(
+                      begin: const Offset(0.95, 0.95),
+                      end: const Offset(1, 1),
+                      duration: 600.ms,
+                      delay: 500.ms,
                     ),
-                  ).animate().fadeIn(duration: 600.ms, delay: 1000.ms).slideY(
-                        begin: 0.1,
-                        end: 0,
-                        duration: 600.ms,
-                        delay: 1000.ms,
+
+                const SizedBox(height: 32),
+
+                // What you'll get section
+                Container(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 16,
+                    vertical: 20,
+                  ),
+                  decoration: BoxDecoration(
+                    color: isDark
+                        ? theme.colorScheme.surface
+                        : AppColors.primaryGreen.withValues(alpha: 0.05),
+                    borderRadius: BorderRadius.circular(20),
+                    border: Border.all(
+                      color: AppColors.primaryGreen.withValues(alpha: 0.2),
+                    ),
+                  ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        "What you'll get",
+                        style: theme.textTheme.titleMedium?.copyWith(
+                          fontWeight: FontWeight.bold,
+                          color: theme.colorScheme.onSurface,
+                        ),
                       ),
 
-                  const SizedBox(height: 40),
+                      const SizedBox(height: 16),
 
-                  // CTA Button
-                  PushableButton(
-                    height: 56,
-                    borderRadius: 16,
-                    text: 'Next',
-                    onTap: () => context.read<OnboardingCubit>().nextPage(),
-                  ).animate().fadeIn(duration: 600.ms, delay: 1500.ms).slideY(
-                        begin: 0.2,
-                        end: 0,
-                        duration: 600.ms,
-                        delay: 1500.ms,
+                      // Bullet points
+                      _BulletPoint(
+                        text: 'Daily $dailyMinutes-minute lessons',
+                        delay: 1100,
                       ),
+                      const SizedBox(height: 10),
+                      const _BulletPoint(
+                        text: 'Words matched to your level',
+                        delay: 1200,
+                      ),
+                      const SizedBox(height: 10),
+                      const _BulletPoint(
+                        text: "Smart reviews so you don't forget",
+                        delay: 1300,
+                      ),
+                      const SizedBox(height: 10),
+                      const _BulletPoint(
+                        text: 'Progress tracking & streaks',
+                        delay: 1400,
+                      ),
+                    ],
+                  ),
+                ).animate().fadeIn(duration: 600.ms, delay: 1000.ms).slideY(
+                      begin: 0.1,
+                      end: 0,
+                      duration: 600.ms,
+                      delay: 1000.ms,
+                    ),
 
-                  const SizedBox(height: 24),
-                ],
-              ),
+                const SizedBox(height: 24),
+
+                // CTA Button
+                PushableButton(
+                  height: 56,
+                  width: size.width * 0.8,
+                  borderRadius: 16,
+                  text: 'Next',
+                  onTap: () => context.read<OnboardingCubit>().nextPage(),
+                ).animate().fadeIn(duration: 600.ms, delay: 1500.ms).slideY(
+                      begin: 0.2,
+                      end: 0,
+                      duration: 600.ms,
+                      delay: 1500.ms,
+                    ),
+
+                const SizedBox(height: 24),
+              ],
             ),
           ),
         );

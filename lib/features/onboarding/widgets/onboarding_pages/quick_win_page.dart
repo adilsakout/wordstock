@@ -129,7 +129,6 @@ class _QuickWinPageState extends State<QuickWinPage> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                const SizedBox(height: 16),
                 // Word Card
                 Container(
                   padding: const EdgeInsets.all(24),

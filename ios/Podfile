@@ -39,6 +39,17 @@ end
 post_install do |installer|
   installer.pods_project.targets.each do |target|
     flutter_additional_ios_build_settings(target)
+    
+    # Fix for facebook_app_events Swift module definition conflict
+    # This disables the strict module verification that causes conflicts
+    # when Swift plugins are imported from Objective-C code
+    target.build_configurations.each do |config|
+      config.build_settings['BUILD_LIBRARY_FOR_DISTRIBUTION'] = 'YES'
+      config.build_settings['SWIFT_SUPPRESS_WARNINGS'] = 'YES'
+      
+      # Disable module verification to prevent duplicate definition errors
+      config.build_settings['OTHER_SWIFT_FLAGS'] = '$(inherited) -Xfrontend -module-interface-preserve-types-as-written'
+    end
   end
 end
 

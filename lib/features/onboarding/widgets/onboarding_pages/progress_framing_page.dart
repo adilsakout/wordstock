@@ -21,166 +21,164 @@ class ProgressFramingPage extends StatelessWidget {
 
     return Scaffold(
       backgroundColor: theme.colorScheme.surface,
-      body: SafeArea(
-        child: Padding(
-          padding: EdgeInsets.symmetric(
-            horizontal: size.width * 0.08,
-          ),
-          child: Column(
-            children: [
-              // Celebration icon with animation
-              Container(
-                width: 100,
-                height: 100,
-                decoration: BoxDecoration(
-                  color: AppColors.primaryGreen.withValues(alpha: 0.15),
-                  shape: BoxShape.circle,
+      body: Padding(
+        padding: EdgeInsets.symmetric(
+          horizontal: size.width * 0.1,
+        ),
+        child: Column(
+          children: [
+            const SizedBox(height: 32),
+            // Celebration icon with animation
+            Container(
+              width: 80,
+              height: 80,
+              decoration: BoxDecoration(
+                color: AppColors.primaryGreen.withValues(alpha: 0.15),
+                shape: BoxShape.circle,
+              ),
+              child: const Icon(
+                Icons.emoji_events,
+                size: 50,
+                color: AppColors.primaryGreen,
+              ),
+            ).animate().fadeIn(duration: 600.ms, delay: 200.ms).scale(
+                  begin: const Offset(0.5, 0.5),
+                  end: const Offset(1, 1),
+                  duration: 600.ms,
+                  delay: 200.ms,
+                  curve: Curves.elasticOut,
                 ),
-                child: const Icon(
-                  Icons.emoji_events,
-                  size: 50,
-                  color: AppColors.primaryGreen,
-                ),
-              ).animate().fadeIn(duration: 600.ms, delay: 200.ms).scale(
-                    begin: const Offset(0.5, 0.5),
-                    end: const Offset(1, 1),
-                    duration: 600.ms,
-                    delay: 200.ms,
-                    curve: Curves.elasticOut,
+
+            const SizedBox(height: 32),
+
+            // Title with entrance animation
+            Text(
+              "You're already learning.",
+              textAlign: TextAlign.center,
+              style: theme.textTheme.headlineMedium?.copyWith(
+                fontWeight: FontWeight.bold,
+                color: theme.colorScheme.onSurface,
+                height: 1.2,
+              ),
+            )
+                .animate()
+                .fadeIn(duration: 600.ms, delay: 500.ms)
+                .slideY(begin: 0.3, end: 0, duration: 600.ms, delay: 500.ms),
+
+            const SizedBox(height: 40),
+
+            // Stats container
+            Container(
+              padding: const EdgeInsets.all(24),
+              decoration: BoxDecoration(
+                color: isDark ? theme.colorScheme.surface : Colors.white,
+                borderRadius: BorderRadius.circular(20),
+                boxShadow: [
+                  BoxShadow(
+                    color: isDark
+                        ? Colors.black.withValues(alpha: 0.3)
+                        : Colors.grey.withValues(alpha: 0.15),
+                    blurRadius: 20,
+                    offset: const Offset(0, 8),
+                  ),
+                ],
+              ),
+              child: Column(
+                children: [
+                  // First stat: Word learned
+                  const _StatRow(
+                    icon: Icons.menu_book,
+                    iconColor: AppColors.primaryBlue,
+                    label: '1 word learned',
+                    delay: 800,
                   ),
 
-              const SizedBox(height: 32),
+                  const SizedBox(height: 20),
 
-              // Title with entrance animation
-              Text(
-                "You're already learning.",
-                textAlign: TextAlign.center,
-                style: theme.textTheme.headlineMedium?.copyWith(
-                  fontWeight: FontWeight.bold,
-                  color: theme.colorScheme.onSurface,
-                  height: 1.2,
-                ),
-              )
-                  .animate()
-                  .fadeIn(duration: 600.ms, delay: 500.ms)
-                  .slideY(begin: 0.3, end: 0, duration: 600.ms, delay: 500.ms),
-
-              const SizedBox(height: 40),
-
-              // Stats container
-              Container(
-                padding: const EdgeInsets.all(24),
-                decoration: BoxDecoration(
-                  color: isDark ? theme.colorScheme.surface : Colors.white,
-                  borderRadius: BorderRadius.circular(20),
-                  boxShadow: [
-                    BoxShadow(
-                      color: isDark
-                          ? Colors.black.withValues(alpha: 0.3)
-                          : Colors.grey.withValues(alpha: 0.15),
-                      blurRadius: 20,
-                      offset: const Offset(0, 8),
-                    ),
-                  ],
-                ),
-                child: Column(
-                  children: [
-                    // First stat: Word learned
-                    const _StatRow(
-                      icon: Icons.menu_book,
-                      iconColor: AppColors.primaryBlue,
-                      label: '1 word learned',
-                      delay: 800,
-                    ),
-
-                    const SizedBox(height: 20),
-
-                    // Divider
-                    Divider(
-                      color: theme.colorScheme.onSurface.withValues(alpha: 0.1),
-                    ),
-
-                    const SizedBox(height: 20),
-
-                    // Second stat: Streak started
-                    const _StatRow(
-                      icon: Icons.local_fire_department,
-                      iconColor: Colors.orange,
-                      label: '1 streak started',
-                      delay: 1000,
-                    ),
-
-                    const SizedBox(height: 24),
-
-                    // Mini progress bar visualization
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          'Your progress',
-                          style: theme.textTheme.bodySmall?.copyWith(
-                            color: theme.colorScheme.onSurface
-                                .withValues(alpha: 0.6),
-                          ),
-                        ),
-                        const SizedBox(height: 8),
-                        ClipRRect(
-                          borderRadius: BorderRadius.circular(10),
-                          child: LinearProgressIndicator(
-                            value: 0.14, // 1/7 progress
-                            minHeight: 12,
-                            backgroundColor: theme.colorScheme.onSurface
-                                .withValues(alpha: 0.1),
-                            valueColor: const AlwaysStoppedAnimation<Color>(
-                              AppColors.primaryGreen,
-                            ),
-                          ),
-                        ),
-                      ],
-                    ).animate().fadeIn(duration: 500.ms, delay: 1200.ms).slideY(
-                          begin: 0.2,
-                          end: 0,
-                          duration: 500.ms,
-                          delay: 1200.ms,
-                        ),
-                  ],
-                ),
-              ).animate().fadeIn(duration: 600.ms, delay: 700.ms).scale(
-                    begin: const Offset(0.95, 0.95),
-                    end: const Offset(1, 1),
-                    duration: 600.ms,
-                    delay: 700.ms,
+                  // Divider
+                  Divider(
+                    color: theme.colorScheme.onSurface.withValues(alpha: 0.1),
                   ),
 
-              const SizedBox(height: 32),
+                  const SizedBox(height: 20),
 
-              // Motivational text
-              Text(
-                'Imagine what 5 minutes a day can do.',
-                textAlign: TextAlign.center,
-                style: theme.textTheme.bodyLarge?.copyWith(
-                  color: theme.colorScheme.onSurface.withValues(alpha: 0.7),
-                  fontStyle: FontStyle.italic,
-                  height: 1.5,
+                  // Second stat: Streak started
+                  const _StatRow(
+                    icon: Icons.local_fire_department,
+                    iconColor: Colors.orange,
+                    label: '1 streak started',
+                    delay: 1000,
+                  ),
+
+                  const SizedBox(height: 24),
+
+                  // Mini progress bar visualization
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        'Your progress',
+                        style: theme.textTheme.bodySmall?.copyWith(
+                          color: theme.colorScheme.onSurface
+                              .withValues(alpha: 0.6),
+                        ),
+                      ),
+                      const SizedBox(height: 8),
+                      ClipRRect(
+                        borderRadius: BorderRadius.circular(10),
+                        child: LinearProgressIndicator(
+                          value: 0.14, // 1/7 progress
+                          minHeight: 12,
+                          backgroundColor: theme.colorScheme.onSurface
+                              .withValues(alpha: 0.1),
+                          valueColor: const AlwaysStoppedAnimation<Color>(
+                            AppColors.primaryGreen,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ).animate().fadeIn(duration: 500.ms, delay: 1200.ms).slideY(
+                        begin: 0.2,
+                        end: 0,
+                        duration: 500.ms,
+                        delay: 1200.ms,
+                      ),
+                ],
+              ),
+            ).animate().fadeIn(duration: 600.ms, delay: 700.ms).scale(
+                  begin: const Offset(0.95, 0.95),
+                  end: const Offset(1, 1),
+                  duration: 600.ms,
+                  delay: 700.ms,
                 ),
-              ).animate().fadeIn(duration: 600.ms, delay: 1400.ms),
 
-              const Spacer(flex: 2),
+            const SizedBox(height: 32),
 
-              // CTA Button
-              PushableButton(
-                height: 56,
-                borderRadius: 16,
-                text: 'Next',
-                onTap: () => context.read<OnboardingCubit>().nextPage(),
-              )
-                  .animate()
-                  .fadeIn(duration: 600.ms, delay: 1600.ms)
-                  .slideY(begin: 0.2, end: 0, duration: 600.ms, delay: 1600.ms),
+            // Motivational text
+            Text(
+              'Imagine what 5 minutes a day can do.',
+              textAlign: TextAlign.center,
+              style: theme.textTheme.bodyLarge?.copyWith(
+                color: theme.colorScheme.onSurface.withValues(alpha: 0.7),
+                fontStyle: FontStyle.italic,
+                height: 1.5,
+              ),
+            ).animate().fadeIn(duration: 600.ms, delay: 1400.ms),
 
-              const SizedBox(height: 24),
-            ],
-          ),
+            const SizedBox(height: 24),
+            // CTA Button
+            PushableButton(
+              height: 56,
+              borderRadius: 16,
+              text: 'Next',
+              onTap: () => context.read<OnboardingCubit>().nextPage(),
+            )
+                .animate()
+                .fadeIn(duration: 600.ms, delay: 1600.ms)
+                .slideY(begin: 0.2, end: 0, duration: 600.ms, delay: 1600.ms),
+
+            const SizedBox(height: 24),
+          ],
         ),
       ),
     );

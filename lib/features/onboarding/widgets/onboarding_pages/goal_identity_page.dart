@@ -35,128 +35,121 @@ class GoalIdentityPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<OnboardingCubit, OnboardingState>(
       builder: (context, state) {
-        final size = MediaQuery.of(context).size;
-
-        return Scaffold(
-          backgroundColor: Theme.of(context).colorScheme.surface,
-          body: SafeArea(
-            child: Padding(
-              padding: EdgeInsets.symmetric(
-                horizontal: size.width * 0.08,
-                vertical: size.height * 0.04,
-              ),
-              child: Column(
-                children: [
-                  const Spacer(),
-
-                  // Title with entrance animation
-                  Text(
-                    "What's your goal with English?",
-                    textAlign: TextAlign.center,
-                    style: Theme.of(context).textTheme.headlineMedium?.copyWith(
-                          fontWeight: FontWeight.bold,
-                          color: Theme.of(context).colorScheme.onSurface,
-                          height: 1.2,
-                        ),
-                  )
-                      .animate()
-                      .fadeIn(
-                        duration: 600.ms,
-                        delay: 200.ms,
-                        curve: Curves.easeOut,
-                      )
-                      .slideY(
-                        begin: 0.3,
-                        end: 0,
-                        duration: 600.ms,
-                        delay: 200.ms,
-                        curve: Curves.easeOut,
+        return ColoredBox(
+          color: Theme.of(context).colorScheme.surface,
+          child: Padding(
+            padding: const EdgeInsets.all(16),
+            child: Column(
+              children: [
+                // Title with entrance animation
+                Text(
+                  "What's your goal with English?",
+                  textAlign: TextAlign.center,
+                  style: Theme.of(context).textTheme.headlineMedium?.copyWith(
+                        fontWeight: FontWeight.bold,
+                        color: Theme.of(context).colorScheme.onSurface,
+                        height: 1.2,
                       ),
+                )
+                    .animate()
+                    .fadeIn(
+                      duration: 600.ms,
+                      delay: 200.ms,
+                      curve: Curves.easeOut,
+                    )
+                    .slideY(
+                      begin: 0.3,
+                      end: 0,
+                      duration: 600.ms,
+                      delay: 200.ms,
+                      curve: Curves.easeOut,
+                    ),
 
-                  const SizedBox(height: 16),
+                const SizedBox(height: 16),
 
-                  // Subtitle with gentle fade-in animation
-                  Text(
-                    "Pick what matters most. We'll adapt everything.",
-                    textAlign: TextAlign.center,
-                    style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                          color: Theme.of(context)
-                              .colorScheme
-                              .onSurface
-                              .withValues(alpha: 0.7),
-                          height: 1.5,
-                        ),
-                  )
-                      .animate()
-                      .fadeIn(
-                        duration: 600.ms,
-                        delay: 500.ms,
-                        curve: Curves.easeOut,
-                      )
-                      .slideY(
-                        begin: 0.2,
-                        end: 0,
-                        duration: 600.ms,
-                        delay: 500.ms,
-                        curve: Curves.easeOut,
+                // Subtitle with gentle fade-in animation
+                Text(
+                  "Pick what matters most. We'll adapt everything.",
+                  textAlign: TextAlign.center,
+                  style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                        color: Theme.of(context)
+                            .colorScheme
+                            .onSurface
+                            .withValues(alpha: 0.7),
+                        height: 1.5,
                       ),
+                )
+                    .animate()
+                    .fadeIn(
+                      duration: 600.ms,
+                      delay: 500.ms,
+                      curve: Curves.easeOut,
+                    )
+                    .slideY(
+                      begin: 0.2,
+                      end: 0,
+                      duration: 600.ms,
+                      delay: 500.ms,
+                      curve: Curves.easeOut,
+                    ),
 
-                  const SizedBox(height: 40),
+                const SizedBox(height: 40),
 
-                  // Goal options with staggered animations
-                  ...List.generate(
-                    _goalOptions.length,
-                    (index) {
-                      final goal = _goalOptions[index];
-                      final goalId = goal['id']!;
-                      final goalText = goal['text']!;
+                // Goal options with staggered animations
+                ...List.generate(
+                  _goalOptions.length,
+                  (index) {
+                    final goal = _goalOptions[index];
+                    final goalId = goal['id']!;
+                    final goalText = goal['text']!;
 
-                      // Check if this goal is selected
-                      //(either confirmed or temp)
-                      final isSelected = state.onboardingGoal == goalId ||
-                          state.tempSelectedGoal == goalId;
+                    // Check if this goal is selected
+                    //(either confirmed or temp)
+                    final isSelected = state.onboardingGoal == goalId ||
+                        state.tempSelectedGoal == goalId;
 
-                      return Padding(
-                        padding: EdgeInsets.only(
-                          bottom: index < _goalOptions.length - 1 ? 16 : 0,
+                    return Padding(
+                      padding: EdgeInsets.only(
+                        bottom: index < _goalOptions.length - 1 ? 16 : 0,
+                        left: 16,
+                        right: 16,
+                      ),
+                      child: AnimatedScale(
+                        scale: isSelected ? 1.02 : 1.0,
+                        duration: const Duration(milliseconds: 200),
+                        curve: Curves.easeOutQuad,
+                        child: Selector(
+                          text: goalText,
+                          selected: isSelected,
+                          onTap: () => _selectGoal(context, goalId),
                         ),
-                        child: AnimatedScale(
-                          scale: isSelected ? 1.02 : 1.0,
-                          duration: const Duration(milliseconds: 200),
-                          curve: Curves.easeOutQuad,
-                          child: Selector(
-                            text: goalText,
-                            selected: isSelected,
-                            onTap: () => _selectGoal(context, goalId),
+                      )
+                          .animate()
+                          .fadeIn(
+                            duration: 500.ms,
+                            delay: (800 + (index * 100)).ms,
+                            curve: Curves.easeOut,
+                          )
+                          .slideY(
+                            begin: 0.3,
+                            end: 0,
+                            duration: 500.ms,
+                            delay: (800 + (index * 100)).ms,
+                            curve: Curves.easeOut,
+                          )
+                          .scale(
+                            begin: const Offset(0.8, 0.8),
+                            end: const Offset(1, 1),
+                            duration: 500.ms,
+                            delay: (800 + (index * 100)).ms,
+                            curve: Curves.easeOut,
                           ),
-                        )
-                            .animate()
-                            .fadeIn(
-                              duration: 500.ms,
-                              delay: (800 + (index * 100)).ms,
-                              curve: Curves.easeOut,
-                            )
-                            .slideY(
-                              begin: 0.3,
-                              end: 0,
-                              duration: 500.ms,
-                              delay: (800 + (index * 100)).ms,
-                              curve: Curves.easeOut,
-                            )
-                            .scale(
-                              begin: const Offset(0.8, 0.8),
-                              end: const Offset(1, 1),
-                              duration: 500.ms,
-                              delay: (800 + (index * 100)).ms,
-                              curve: Curves.easeOut,
-                            ),
-                      );
-                    },
-                  ),
+                    );
+                  },
+                ),
 
-                  const Spacer(flex: 2),
-                ],
-              ),
+                const Spacer(flex: 2),
+              ],
             ),
           ),
         );
