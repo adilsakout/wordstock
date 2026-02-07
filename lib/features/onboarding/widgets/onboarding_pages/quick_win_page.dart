@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gaimon/gaimon.dart';
 import 'package:wordstock/core/theme/app_theme.dart';
 import 'package:wordstock/features/onboarding/cubit/onboarding_cubit.dart';
+import 'package:wordstock/l10n/l10n.dart';
 import 'package:wordstock/widgets/button.dart';
 
 /// Screen 3: Quick Win Page
@@ -183,7 +184,7 @@ class _QuickWinPageState extends State<QuickWinPage> {
 
                 // Quiz prompt
                 Text(
-                  'Which sentence uses it correctly?',
+                  context.l10n.onboardingQuickWinQuizPrompt,
                   textAlign: TextAlign.center,
                   style: theme.textTheme.titleMedium?.copyWith(
                     fontWeight: FontWeight.w600,
@@ -293,8 +294,8 @@ class _QuickWinPageState extends State<QuickWinPage> {
                         Expanded(
                           child: Text(
                             _selectedAnswerIndex == _correctAnswerIndex
-                                ? 'Correct! You just learned a new word.'
-                                : 'Nice try. The correct answer is A.',
+                                ? context.l10n.onboardingQuickWinCorrect
+                                : context.l10n.onboardingQuickWinIncorrect,
                             style: theme.textTheme.bodyMedium?.copyWith(
                               fontWeight: FontWeight.w600,
                               color: _selectedAnswerIndex == _correctAnswerIndex

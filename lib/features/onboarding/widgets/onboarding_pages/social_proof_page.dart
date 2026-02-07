@@ -6,6 +6,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:wordstock/core/theme/app_theme.dart';
 import 'package:wordstock/features/onboarding/cubit/onboarding_cubit.dart';
 import 'package:wordstock/features/subscription/cubit/subscription_cubit.dart';
+import 'package:wordstock/l10n/l10n.dart';
 import 'package:wordstock/widgets/button.dart';
 
 /// Screen 7: Social Proof Page
@@ -58,7 +59,7 @@ class SocialProofPage extends StatelessWidget {
             children: [
               // Title with entrance animation
               Text(
-                "You're not doing this alone",
+                context.l10n.onboardingProofTitle,
                 textAlign: TextAlign.center,
                 style: theme.textTheme.headlineMedium?.copyWith(
                   fontWeight: FontWeight.bold,
@@ -89,11 +90,11 @@ class SocialProofPage extends StatelessWidget {
                 child: Column(
                   children: [
                     // Learner count stat
-                    const _SocialProofStat(
+                    _SocialProofStat(
                       icon: Icons.people_alt,
                       iconColor: AppColors.primaryBlue,
                       value: '42,000+',
-                      label: 'learners improving their English every day',
+                      label: context.l10n.onboardingProofLearnerLabel,
                       delay: 800,
                     ),
 
@@ -155,7 +156,7 @@ class SocialProofPage extends StatelessWidget {
 
                     // Rating text
                     Text(
-                      '4.6 average rating',
+                      context.l10n.onboardingProofRating,
                       style: theme.textTheme.titleMedium?.copyWith(
                         fontWeight: FontWeight.w600,
                         color: theme.colorScheme.onSurface,
@@ -165,7 +166,7 @@ class SocialProofPage extends StatelessWidget {
                     const SizedBox(height: 4),
 
                     Text(
-                      'on the App Store',
+                      context.l10n.onboardingProofAppStore,
                       style: theme.textTheme.bodySmall?.copyWith(
                         color:
                             theme.colorScheme.onSurface.withValues(alpha: 0.6),

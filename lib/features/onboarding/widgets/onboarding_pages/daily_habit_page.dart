@@ -3,6 +3,7 @@ import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:wordstock/features/onboarding/cubit/onboarding_cubit.dart';
 import 'package:wordstock/features/onboarding/widgets/selector.dart';
+import 'package:wordstock/l10n/l10n.dart';
 
 /// Screen 5: Daily Habit Page
 ///
@@ -12,12 +13,27 @@ import 'package:wordstock/features/onboarding/widgets/selector.dart';
 class DailyHabitPage extends StatelessWidget {
   const DailyHabitPage({super.key});
 
-  // Time options with their values and display text
+  // Time options with their values and emoji
   static const List<Map<String, dynamic>> _timeOptions = [
-    {'minutes': 5, 'text': '5 min/day', 'emoji': '⚡️'},
-    {'minutes': 10, 'text': '10 min/day', 'emoji': '⏱️'},
-    {'minutes': 15, 'text': '15 min/day', 'emoji': '🚀'},
+    {'minutes': 5, 'emoji': '⚡️'},
+    {'minutes': 10, 'emoji': '⏱️'},
+    {'minutes': 15, 'emoji': '🚀'},
   ];
+
+  /// Get localized text for daily habit option
+  String _getHabitText(BuildContext context, int minutes) {
+    final l10n = context.l10n;
+    switch (minutes) {
+      case 5:
+        return l10n.onboardingDailyHabit5min;
+      case 10:
+        return l10n.onboardingDailyHabit10min;
+      case 15:
+        return l10n.onboardingDailyHabit15min;
+      default:
+        return '$minutes min/day';
+    }
+  }
 
   /// Handles time selection with visual feedback and state update
   void _selectTime(BuildContext context, int minutes) {
@@ -43,7 +59,7 @@ class DailyHabitPage extends StatelessWidget {
               children: [
                 // Title with entrance animation
                 Text(
-                  'How often do you want to practice?',
+                  context.l10n.onboardingDailyHabitTitle,
                   textAlign: TextAlign.center,
                   style: theme.textTheme.headlineMedium?.copyWith(
                     fontWeight: FontWeight.bold,
@@ -69,7 +85,7 @@ class DailyHabitPage extends StatelessWidget {
 
                 // Subtitle with gentle fade-in animation
                 Text(
-                  'Consistency beats intensity.',
+                  context.l10n.onboardingDailyHabitSubtitle,
                   textAlign: TextAlign.center,
                   style: theme.textTheme.bodyLarge?.copyWith(
                     color: theme.colorScheme.onSurface.withValues(alpha: 0.7),
@@ -98,7 +114,7 @@ class DailyHabitPage extends StatelessWidget {
                   (index) {
                     final option = _timeOptions[index];
                     final minutes = option['minutes'] as int;
-                    final text = option['text'] as String;
+                    final text = _getHabitText(context, minutes);
                     final emoji = option['emoji'] as String;
 
                     // Check if this time is selected

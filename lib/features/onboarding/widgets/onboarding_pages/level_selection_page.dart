@@ -3,6 +3,7 @@ import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:wordstock/features/onboarding/cubit/onboarding_cubit.dart';
 import 'package:wordstock/features/onboarding/widgets/selector.dart';
+import 'package:wordstock/l10n/l10n.dart';
 
 /// Screen 2: Level Selection Page
 ///
@@ -12,12 +13,27 @@ import 'package:wordstock/features/onboarding/widgets/selector.dart';
 class LevelSelectionPage extends StatelessWidget {
   const LevelSelectionPage({super.key});
 
-  // Level options with their identifiers and display text
-  static const List<Map<String, String>> _levelOptions = [
-    {'id': 'beginner', 'text': 'Beginner'},
-    {'id': 'intermediate', 'text': 'Intermediate'},
-    {'id': 'advanced', 'text': 'Advanced'},
+  // Level options with their identifiers
+  static const List<String> _levelIds = [
+    'beginner',
+    'intermediate',
+    'advanced',
   ];
+
+  /// Get localized level text for a level id
+  String _getLevelText(BuildContext context, String levelId) {
+    final l10n = context.l10n;
+    switch (levelId) {
+      case 'beginner':
+        return l10n.onboardingLevelBeginner;
+      case 'intermediate':
+        return l10n.onboardingLevelIntermediate;
+      case 'advanced':
+        return l10n.onboardingLevelAdvanced;
+      default:
+        return levelId;
+    }
+  }
 
   /// Handles level selection with visual feedback and state update
   void _selectLevel(BuildContext context, String levelId) {
@@ -47,7 +63,7 @@ class LevelSelectionPage extends StatelessWidget {
               children: [
                 // Title with entrance animation
                 Text(
-                  "What's your current level?",
+                  context.l10n.onboardingLevelTitle,
                   textAlign: TextAlign.center,
                   style: Theme.of(context).textTheme.headlineMedium?.copyWith(
                         fontWeight: FontWeight.bold,
@@ -73,7 +89,7 @@ class LevelSelectionPage extends StatelessWidget {
 
                 // Subtitle with gentle fade-in animation
                 Text(
-                  "Don't overthink it. You can change it anytime.",
+                  context.l10n.onboardingLevelSubtitle,
                   textAlign: TextAlign.center,
                   style: Theme.of(context).textTheme.bodyLarge?.copyWith(
                         color: Theme.of(context)
@@ -101,11 +117,10 @@ class LevelSelectionPage extends StatelessWidget {
 
                 // Level options with staggered animations
                 ...List.generate(
-                  _levelOptions.length,
+                  _levelIds.length,
                   (index) {
-                    final level = _levelOptions[index];
-                    final levelId = level['id']!;
-                    final levelText = level['text']!;
+                    final levelId = _levelIds[index];
+                    final levelText = _getLevelText(context, levelId);
 
                     // Check if this level is selected
                     //(either confirmed or temp)
@@ -114,7 +129,7 @@ class LevelSelectionPage extends StatelessWidget {
 
                     return Padding(
                       padding: EdgeInsets.only(
-                        bottom: index < _levelOptions.length - 1 ? 16 : 0,
+                        bottom: index < _levelIds.length - 1 ? 16 : 0,
                       ),
                       child: AnimatedScale(
                         scale: isSelected ? 1.02 : 1.0,

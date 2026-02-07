@@ -3,6 +3,7 @@ import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:wordstock/core/theme/app_theme.dart';
 import 'package:wordstock/features/onboarding/cubit/onboarding_cubit.dart';
+import 'package:wordstock/l10n/l10n.dart';
 import 'package:wordstock/widgets/button.dart';
 
 /// Screen 6: Plan Reveal Page
@@ -22,9 +23,37 @@ class PlanRevealPage extends StatelessWidget {
         final isDark = theme.brightness == Brightness.dark;
 
         // Get display values from state
-        final goalText = state.goalDisplayText;
-        final levelText = state.levelDisplayText;
+        final goalId = state.onboardingGoal;
+        final levelId = state.onboardingLevel;
         final dailyMinutes = state.dailyMinutes ?? 10;
+
+        // Get localized goal text
+        String goalText;
+        switch (goalId) {
+          case 'speak_confidently':
+            goalText = context.l10n.onboardingGoalSpeakConfidently;
+          case 'grow_vocabulary':
+            goalText = context.l10n.onboardingGoalGrowVocabulary;
+          case 'prepare_work_exams':
+            goalText = context.l10n.onboardingGoalPrepareWorkExams;
+          case 'travel_without_stress':
+            goalText = context.l10n.onboardingGoalTravelWithoutStress;
+          default:
+            goalText = state.goalDisplayText;
+        }
+
+        // Get localized level text
+        String levelText;
+        switch (levelId) {
+          case 'beginner':
+            levelText = context.l10n.onboardingLevelBeginner;
+          case 'intermediate':
+            levelText = context.l10n.onboardingLevelIntermediate;
+          case 'advanced':
+            levelText = context.l10n.onboardingLevelAdvanced;
+          default:
+            levelText = state.levelDisplayText;
+        }
 
         return ColoredBox(
           color: theme.colorScheme.surface,
@@ -35,7 +64,7 @@ class PlanRevealPage extends StatelessWidget {
                 const SizedBox(height: 16),
                 // Title with entrance animation
                 Text(
-                  'Your WordStock plan is ready',
+                  context.l10n.onboardingPlanTitle,
                   textAlign: TextAlign.center,
                   style: theme.textTheme.headlineMedium?.copyWith(
                     fontWeight: FontWeight.bold,
@@ -93,7 +122,7 @@ class PlanRevealPage extends StatelessWidget {
                           ),
                           const SizedBox(width: 12),
                           Text(
-                            'Your Plan',
+                            context.l10n.onboardingPlanYourPlan,
                             style: theme.textTheme.titleMedium?.copyWith(
                               fontWeight: FontWeight.bold,
                               color: AppColors.primaryBlue,
@@ -105,7 +134,7 @@ class PlanRevealPage extends StatelessWidget {
                       // Goal row
                       _PlanDetailRow(
                         icon: Icons.flag,
-                        label: 'Goal',
+                        label: context.l10n.onboardingPlanGoalLabel,
                         value: goalText,
                         delay: 600,
                       ),
@@ -113,7 +142,7 @@ class PlanRevealPage extends StatelessWidget {
                       // Level row
                       _PlanDetailRow(
                         icon: Icons.trending_up,
-                        label: 'Level',
+                        label: context.l10n.onboardingPlanLevelLabel,
                         value: levelText,
                         delay: 750,
                       ),
@@ -121,8 +150,9 @@ class PlanRevealPage extends StatelessWidget {
                       // Daily commitment row
                       _PlanDetailRow(
                         icon: Icons.schedule,
-                        label: 'Daily',
-                        value: '$dailyMinutes min/day',
+                        label: context.l10n.onboardingPlanDailyLabel,
+                        value:
+                            context.l10n.onboardingPlanDailyValue(dailyMinutes),
                         delay: 900,
                       ),
                     ],
@@ -155,7 +185,7 @@ class PlanRevealPage extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        "What you'll get",
+                        context.l10n.onboardingPlanWhatYouGet,
                         style: theme.textTheme.titleMedium?.copyWith(
                           fontWeight: FontWeight.bold,
                           color: theme.colorScheme.onSurface,
@@ -166,22 +196,23 @@ class PlanRevealPage extends StatelessWidget {
 
                       // Bullet points
                       _BulletPoint(
-                        text: 'Daily $dailyMinutes-minute lessons',
+                        text: context.l10n
+                            .onboardingPlanDailyLessons(dailyMinutes),
                         delay: 1100,
                       ),
                       const SizedBox(height: 10),
-                      const _BulletPoint(
-                        text: 'Words matched to your level',
+                      _BulletPoint(
+                        text: context.l10n.onboardingPlanWordsMatchedLevel,
                         delay: 1200,
                       ),
                       const SizedBox(height: 10),
-                      const _BulletPoint(
-                        text: "Smart reviews so you don't forget",
+                      _BulletPoint(
+                        text: context.l10n.onboardingPlanSmartReviews,
                         delay: 1300,
                       ),
                       const SizedBox(height: 10),
-                      const _BulletPoint(
-                        text: 'Progress tracking & streaks',
+                      _BulletPoint(
+                        text: context.l10n.onboardingPlanProgressTracking,
                         delay: 1400,
                       ),
                     ],

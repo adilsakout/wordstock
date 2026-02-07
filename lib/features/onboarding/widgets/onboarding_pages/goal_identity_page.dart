@@ -3,6 +3,7 @@ import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:wordstock/features/onboarding/cubit/onboarding_cubit.dart';
 import 'package:wordstock/features/onboarding/widgets/selector.dart';
+import 'package:wordstock/l10n/l10n.dart';
 
 /// Screen 1: Goal Identity Page
 ///
@@ -12,13 +13,30 @@ import 'package:wordstock/features/onboarding/widgets/selector.dart';
 class GoalIdentityPage extends StatelessWidget {
   const GoalIdentityPage({super.key});
 
-  // Goal options with their identifiers and display text
-  static const List<Map<String, String>> _goalOptions = [
-    {'id': 'speak_confidently', 'text': 'Speak confidently'},
-    {'id': 'grow_vocabulary', 'text': 'Grow my vocabulary'},
-    {'id': 'prepare_work_exams', 'text': 'Prepare for work or exams'},
-    {'id': 'travel_without_stress', 'text': 'Travel without stress'},
+  // Goal options with their identifiers
+  static const List<String> _goalIds = [
+    'speak_confidently',
+    'grow_vocabulary',
+    'prepare_work_exams',
+    'travel_without_stress',
   ];
+
+  /// Get localized goal text for a goal id
+  String _getGoalText(BuildContext context, String goalId) {
+    final l10n = context.l10n;
+    switch (goalId) {
+      case 'speak_confidently':
+        return l10n.onboardingGoalSpeakConfidently;
+      case 'grow_vocabulary':
+        return l10n.onboardingGoalGrowVocabulary;
+      case 'prepare_work_exams':
+        return l10n.onboardingGoalPrepareWorkExams;
+      case 'travel_without_stress':
+        return l10n.onboardingGoalTravelWithoutStress;
+      default:
+        return goalId;
+    }
+  }
 
   /// Handles goal selection with visual feedback and state update
   void _selectGoal(BuildContext context, String goalId) {
@@ -43,7 +61,7 @@ class GoalIdentityPage extends StatelessWidget {
               children: [
                 // Title with entrance animation
                 Text(
-                  "What's your goal with English?",
+                  context.l10n.onboardingGoalTitle,
                   textAlign: TextAlign.center,
                   style: Theme.of(context).textTheme.headlineMedium?.copyWith(
                         fontWeight: FontWeight.bold,
@@ -69,7 +87,7 @@ class GoalIdentityPage extends StatelessWidget {
 
                 // Subtitle with gentle fade-in animation
                 Text(
-                  "Pick what matters most. We'll adapt everything.",
+                  context.l10n.onboardingGoalSubtitle,
                   textAlign: TextAlign.center,
                   style: Theme.of(context).textTheme.bodyLarge?.copyWith(
                         color: Theme.of(context)
@@ -97,11 +115,10 @@ class GoalIdentityPage extends StatelessWidget {
 
                 // Goal options with staggered animations
                 ...List.generate(
-                  _goalOptions.length,
+                  _goalIds.length,
                   (index) {
-                    final goal = _goalOptions[index];
-                    final goalId = goal['id']!;
-                    final goalText = goal['text']!;
+                    final goalId = _goalIds[index];
+                    final goalText = _getGoalText(context, goalId);
 
                     // Check if this goal is selected
                     //(either confirmed or temp)
@@ -110,7 +127,7 @@ class GoalIdentityPage extends StatelessWidget {
 
                     return Padding(
                       padding: EdgeInsets.only(
-                        bottom: index < _goalOptions.length - 1 ? 16 : 0,
+                        bottom: index < _goalIds.length - 1 ? 16 : 0,
                         left: 16,
                         right: 16,
                       ),

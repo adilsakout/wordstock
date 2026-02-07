@@ -3,6 +3,7 @@ import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:wordstock/core/theme/app_theme.dart';
 import 'package:wordstock/features/onboarding/cubit/onboarding_cubit.dart';
+import 'package:wordstock/l10n/l10n.dart';
 import 'package:wordstock/widgets/button.dart';
 
 /// Screen 4: Progress Framing Page
@@ -53,7 +54,7 @@ class ProgressFramingPage extends StatelessWidget {
 
             // Title with entrance animation
             Text(
-              "You're already learning.",
+              context.l10n.onboardingProgressTitle,
               textAlign: TextAlign.center,
               style: theme.textTheme.headlineMedium?.copyWith(
                 fontWeight: FontWeight.bold,
@@ -86,10 +87,10 @@ class ProgressFramingPage extends StatelessWidget {
               child: Column(
                 children: [
                   // First stat: Word learned
-                  const _StatRow(
+                  _StatRow(
                     icon: Icons.menu_book,
                     iconColor: AppColors.primaryBlue,
-                    label: '1 word learned',
+                    label: context.l10n.onboardingProgressWordLearned,
                     delay: 800,
                   ),
 
@@ -103,10 +104,10 @@ class ProgressFramingPage extends StatelessWidget {
                   const SizedBox(height: 20),
 
                   // Second stat: Streak started
-                  const _StatRow(
+                  _StatRow(
                     icon: Icons.local_fire_department,
                     iconColor: Colors.orange,
-                    label: '1 streak started',
+                    label: context.l10n.onboardingProgressStreakStarted,
                     delay: 1000,
                   ),
 
@@ -117,7 +118,7 @@ class ProgressFramingPage extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        'Your progress',
+                        context.l10n.onboardingProgressYourProgress,
                         style: theme.textTheme.bodySmall?.copyWith(
                           color: theme.colorScheme.onSurface
                               .withValues(alpha: 0.6),
@@ -156,7 +157,7 @@ class ProgressFramingPage extends StatelessWidget {
 
             // Motivational text
             Text(
-              'Imagine what 5 minutes a day can do.',
+              context.l10n.onboardingProgressMotivation,
               textAlign: TextAlign.center,
               style: theme.textTheme.bodyLarge?.copyWith(
                 color: theme.colorScheme.onSurface.withValues(alpha: 0.7),
