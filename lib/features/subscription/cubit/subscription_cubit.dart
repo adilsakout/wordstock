@@ -1,7 +1,8 @@
-import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:purchases_flutter/purchases_flutter.dart';
+import 'package:purchases_ui_flutter/paywall_result.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:wordstock/repositories/rc_repository.dart';
 import 'package:wordstock/services/facebook_service.dart';
@@ -50,11 +51,7 @@ class SubscriptionCubit extends Cubit<SubscriptionState> {
     try {
       emit(const SubscriptionState.loading());
       final isSubscribed = await _rcRepository.isUserSubscribed();
-      if (kDebugMode) {
-        emit(const SubscriptionState.loaded(isSubscribed: true));
-      } else {
-        emit(SubscriptionState.loaded(isSubscribed: isSubscribed));
-      }
+      emit(SubscriptionState.loaded(isSubscribed: isSubscribed));
     } catch (e) {
       emit(SubscriptionState.error(message: e.toString()));
     }
@@ -72,11 +69,6 @@ class SubscriptionCubit extends Cubit<SubscriptionState> {
       // Only check subscription and show paywall if onboarding is completed
       if (hasSeenOnboarding) {
         final isSubscribed = await _rcRepository.isUserSubscribed();
-
-        if (kDebugMode) {
-          emit(const SubscriptionState.loaded(isSubscribed: true));
-          return;
-        }
 
         emit(SubscriptionState.loaded(isSubscribed: isSubscribed));
 
@@ -101,7 +93,12 @@ class SubscriptionCubit extends Cubit<SubscriptionState> {
       // Check status before showing paywall
       final wasSubscribed = await _rcRepository.isUserSubscribed();
 
-      await _rcRepository.presentPaywall();
+      final result = await _rcRepository.presentPaywall();
+
+      if (result == PaywallResult.cancelled) {
+        await showPaywall();
+        debugPrint('Paywall not presented ');
+      }
 
       // Check status after showing paywall
       final isSubscribed = await _rcRepository.isUserSubscribed();
