@@ -12,8 +12,26 @@ class AppLocalizationsHi extends AppLocalizations {
   String get welcomeTitle => 'वर्डस्टॉक में आपका स्वागत है';
 
   @override
-  String get welcomeDescription =>
-      'वर्डस्टॉक एक ऐसा टूल है जो आपको नए शब्द सीखने में मदद करता है।';
+  String get welcomeSubtitle =>
+      'Learn words you\'ll actually use, in just 5 minutes a day.';
+
+  @override
+  String get welcomeBulletPersonalized => 'Personalized words for your level';
+
+  @override
+  String get welcomeBulletSmartReviews => 'Smart reviews so you don\'t forget';
+
+  @override
+  String get welcomeBulletAssessments => 'Quick assessments that adapt to you';
+
+  @override
+  String get welcomeSocialProof => 'Trusted by 42,000 learners';
+
+  @override
+  String get welcomeCta => 'Build my plan';
+
+  @override
+  String get welcomeSkip => 'Skip';
 
   @override
   String get infoTitle => 'अपनी खुद की शब्द सूची बनाएं';
@@ -723,6 +741,12 @@ class AppLocalizationsHi extends AppLocalizations {
   String get onboardingGoalTravelWithoutStress => 'तनाव-मुक्त यात्रा करना';
 
   @override
+  String get onboardingGoalMixSimilarWords => 'I mix up similar words';
+
+  @override
+  String get onboardingGoalSoundNatural => 'I want to sound natural';
+
+  @override
   String get onboardingLevelTitle => 'आपका वर्तमान स्तर क्या है?';
 
   @override
@@ -739,14 +763,27 @@ class AppLocalizationsHi extends AppLocalizations {
   String get onboardingLevelAdvanced => 'उन्नत';
 
   @override
-  String get onboardingQuickWinQuizPrompt =>
-      'कौन सा वाक्य इसे सही ढंग से उपयोग करता है?';
+  String get onboardingLevelHelper =>
+      'Most learners start here. You\'re not behind.';
 
   @override
-  String get onboardingQuickWinCorrect => 'सही! आपने एक नया शब्द सीख लिया।';
+  String get onboardingAssessmentTitle => 'Vocabulary assessment';
 
   @override
-  String get onboardingQuickWinIncorrect => 'अच्छा प्रयास। सही उत्तर A है।';
+  String get onboardingAssessmentContext =>
+      'This helps us calibrate your level.';
+
+  @override
+  String get onboardingAssessmentQuizPrompt =>
+      'Which sentence uses it correctly?';
+
+  @override
+  String get onboardingAssessmentCorrect =>
+      'Correct. You just learned a new word.';
+
+  @override
+  String get onboardingAssessmentIncorrect =>
+      'Assessment complete. The correct answer is A.';
 
   @override
   String get onboardingProgressTitle => 'आप पहले से सीख रहे हैं।';
@@ -769,6 +806,10 @@ class AppLocalizationsHi extends AppLocalizations {
 
   @override
   String get onboardingDailyHabitSubtitle => 'निरंतरता तीव्रता से बेहतर है।';
+
+  @override
+  String get onboardingDailyHabitHelper =>
+      'We\'ll gently coach you to stay consistent.';
 
   @override
   String get onboardingDailyHabit5min => '5 मिनट/दिन';
@@ -817,10 +858,18 @@ class AppLocalizationsHi extends AppLocalizations {
   String get onboardingPlanProgressTracking => 'प्रगति ट्रैकिंग और स्ट्रीक्स';
 
   @override
+  String get onboardingPlanReassurance =>
+      'Designed for where most learners start.';
+
+  @override
   String get onboardingProofTitle => 'आप अकेले नहीं हैं';
 
   @override
   String get onboardingProofLearnerCount => '42,000+';
+
+  @override
+  String get onboardingProofSubtitle =>
+      'Join 42,000 learners improving their English every day';
 
   @override
   String get onboardingProofLearnerLabel =>

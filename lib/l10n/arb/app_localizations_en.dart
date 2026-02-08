@@ -9,11 +9,29 @@ class AppLocalizationsEn extends AppLocalizations {
   AppLocalizationsEn([String locale = 'en']) : super(locale);
 
   @override
-  String get welcomeTitle => 'Welcome to Wordstock';
+  String get welcomeTitle => 'Welcome to WordStock';
 
   @override
-  String get welcomeDescription =>
-      'Wordstock is a tool that helps you learn new words.';
+  String get welcomeSubtitle =>
+      'Learn words you\'ll actually use, in just 5 minutes a day.';
+
+  @override
+  String get welcomeBulletPersonalized => 'Personalized words for your level';
+
+  @override
+  String get welcomeBulletSmartReviews => 'Smart reviews so you don\'t forget';
+
+  @override
+  String get welcomeBulletAssessments => 'Quick assessments that adapt to you';
+
+  @override
+  String get welcomeSocialProof => 'Trusted by 42,000 learners';
+
+  @override
+  String get welcomeCta => 'Build my plan';
+
+  @override
+  String get welcomeSkip => 'Skip';
 
   @override
   String get infoTitle => 'Create a custom word list';
@@ -672,11 +690,11 @@ class AppLocalizationsEn extends AppLocalizations {
   String get saveButton => 'Save';
 
   @override
-  String get notificationPermissionTitle => 'Learn words with daily reminders';
+  String get notificationPermissionTitle => 'Stay on track with gentle nudges';
 
   @override
   String get notificationPermissionDescription =>
-      'Allow notifications to get daily reminders and never miss your learning streak.';
+      'We\'ll send a friendly reminder when it\'s time to practice. Small nudges lead to big results.';
 
   @override
   String get enableNotifications => 'Enable Notifications';
@@ -703,23 +721,31 @@ class AppLocalizationsEn extends AppLocalizations {
   String get settingsThemeDark => 'Dark';
 
   @override
-  String get onboardingGoalTitle => 'What\'s your goal with English?';
+  String get onboardingGoalTitle => 'How does English hold you back today?';
 
   @override
   String get onboardingGoalSubtitle =>
-      'Pick what matters most. We\'ll adapt everything.';
+      'Your answer helps us personalize your plan.';
 
   @override
-  String get onboardingGoalSpeakConfidently => 'Speak confidently';
+  String get onboardingGoalSpeakConfidently => 'I hesitate when I speak';
 
   @override
-  String get onboardingGoalGrowVocabulary => 'Grow my vocabulary';
+  String get onboardingGoalGrowVocabulary => 'I forget words I already learned';
 
   @override
-  String get onboardingGoalPrepareWorkExams => 'Prepare for work or exams';
+  String get onboardingGoalPrepareWorkExams =>
+      'I need English for work or exams';
 
   @override
-  String get onboardingGoalTravelWithoutStress => 'Travel without stress';
+  String get onboardingGoalTravelWithoutStress =>
+      'I struggle in real conversations while traveling';
+
+  @override
+  String get onboardingGoalMixSimilarWords => 'I mix up similar words';
+
+  @override
+  String get onboardingGoalSoundNatural => 'I want to sound natural';
 
   @override
   String get onboardingLevelTitle => 'What\'s your current level?';
@@ -738,16 +764,27 @@ class AppLocalizationsEn extends AppLocalizations {
   String get onboardingLevelAdvanced => 'Advanced';
 
   @override
-  String get onboardingQuickWinQuizPrompt =>
+  String get onboardingLevelHelper =>
+      'Most learners start here. You\'re not behind.';
+
+  @override
+  String get onboardingAssessmentTitle => 'Vocabulary assessment';
+
+  @override
+  String get onboardingAssessmentContext =>
+      'This helps us calibrate your level.';
+
+  @override
+  String get onboardingAssessmentQuizPrompt =>
       'Which sentence uses it correctly?';
 
   @override
-  String get onboardingQuickWinCorrect =>
-      'Correct! You just learned a new word.';
+  String get onboardingAssessmentCorrect =>
+      'Correct. You just learned a new word.';
 
   @override
-  String get onboardingQuickWinIncorrect =>
-      'Nice try. The correct answer is A.';
+  String get onboardingAssessmentIncorrect =>
+      'Assessment complete. The correct answer is A.';
 
   @override
   String get onboardingProgressTitle => 'You\'re already learning.';
@@ -766,10 +803,15 @@ class AppLocalizationsEn extends AppLocalizations {
       'Imagine what 5 minutes a day can do.';
 
   @override
-  String get onboardingDailyHabitTitle => 'How often do you want to practice?';
+  String get onboardingDailyHabitTitle => 'What daily practice works for you?';
 
   @override
-  String get onboardingDailyHabitSubtitle => 'Consistency beats intensity.';
+  String get onboardingDailyHabitSubtitle =>
+      'Short, consistent sessions work best.';
+
+  @override
+  String get onboardingDailyHabitHelper =>
+      'We\'ll gently coach you to stay consistent.';
 
   @override
   String get onboardingDailyHabit5min => '5 min/day';
@@ -818,10 +860,18 @@ class AppLocalizationsEn extends AppLocalizations {
   String get onboardingPlanProgressTracking => 'Progress tracking & streaks';
 
   @override
+  String get onboardingPlanReassurance =>
+      'Designed for where most learners start.';
+
+  @override
   String get onboardingProofTitle => 'You\'re not doing this alone';
 
   @override
   String get onboardingProofLearnerCount => '42,000+';
+
+  @override
+  String get onboardingProofSubtitle =>
+      'Join 42,000 learners improving their English every day';
 
   @override
   String get onboardingProofLearnerLabel =>

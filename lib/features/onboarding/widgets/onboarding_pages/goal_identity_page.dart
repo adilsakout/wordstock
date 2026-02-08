@@ -14,12 +14,13 @@ import 'package:wordstock/l10n/l10n.dart';
 class GoalIdentityPage extends StatelessWidget {
   const GoalIdentityPage({super.key});
 
-  // Goal options with their identifiers
+  // Goal options with their identifiers (short text that fits one line)
   static const List<String> _goalIds = [
     'speak_confidently',
     'grow_vocabulary',
     'prepare_work_exams',
-    'travel_without_stress',
+    'mix_similar_words',
+    'sound_natural',
   ];
 
   /// Get localized goal text for a goal id
@@ -32,8 +33,10 @@ class GoalIdentityPage extends StatelessWidget {
         return l10n.onboardingGoalGrowVocabulary;
       case 'prepare_work_exams':
         return l10n.onboardingGoalPrepareWorkExams;
-      case 'travel_without_stress':
-        return l10n.onboardingGoalTravelWithoutStress;
+      case 'mix_similar_words':
+        return l10n.onboardingGoalMixSimilarWords;
+      case 'sound_natural':
+        return l10n.onboardingGoalSoundNatural;
       default:
         return goalId;
     }

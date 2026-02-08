@@ -22,38 +22,12 @@ class PlanRevealPage extends StatelessWidget {
         final theme = Theme.of(context);
         final isDark = theme.brightness == Brightness.dark;
 
-        // Get display values from state
-        final goalId = state.onboardingGoal;
-        final levelId = state.onboardingLevel;
+        // Get display values from state (localized so they translate)
         final dailyMinutes = state.dailyMinutes ?? 10;
-
-        // Get localized goal text
-        String goalText;
-        switch (goalId) {
-          case 'speak_confidently':
-            goalText = context.l10n.onboardingGoalSpeakConfidently;
-          case 'grow_vocabulary':
-            goalText = context.l10n.onboardingGoalGrowVocabulary;
-          case 'prepare_work_exams':
-            goalText = context.l10n.onboardingGoalPrepareWorkExams;
-          case 'travel_without_stress':
-            goalText = context.l10n.onboardingGoalTravelWithoutStress;
-          default:
-            goalText = state.goalDisplayText;
-        }
-
-        // Get localized level text
-        String levelText;
-        switch (levelId) {
-          case 'beginner':
-            levelText = context.l10n.onboardingLevelBeginner;
-          case 'intermediate':
-            levelText = context.l10n.onboardingLevelIntermediate;
-          case 'advanced':
-            levelText = context.l10n.onboardingLevelAdvanced;
-          default:
-            levelText = state.levelDisplayText;
-        }
+        final goalText =
+            context.localizedOnboardingGoalText(state.onboardingGoal);
+        final levelText =
+            context.localizedOnboardingLevelText(state.onboardingLevel);
 
         return ColoredBox(
           color: theme.colorScheme.surface,
@@ -224,7 +198,21 @@ class PlanRevealPage extends StatelessWidget {
                       delay: 1000.ms,
                     ),
 
-                const SizedBox(height: 24),
+                const SizedBox(height: 16),
+
+                // Reassurance line — reduces anxiety about starting level,
+                // normalizes the learner's position
+                Text(
+                  context.l10n.onboardingPlanReassurance,
+                  textAlign: TextAlign.center,
+                  style: theme.textTheme.bodySmall?.copyWith(
+                    color: theme.colorScheme.onSurface.withValues(alpha: 0.5),
+                    fontStyle: FontStyle.italic,
+                    height: 1.4,
+                  ),
+                ).animate().fadeIn(duration: 500.ms, delay: 1500.ms),
+
+                const SizedBox(height: 16),
 
                 // CTA Button
                 PushableButton(

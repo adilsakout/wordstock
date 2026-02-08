@@ -12,7 +12,26 @@ class AppLocalizationsKo extends AppLocalizations {
   String get welcomeTitle => 'Wordstock에 오신 것을 환영합니다';
 
   @override
-  String get welcomeDescription => 'Wordstock은 새로운 단어를 학습하는 데 도움을 주는 도구입니다.';
+  String get welcomeSubtitle =>
+      'Learn words you\'ll actually use, in just 5 minutes a day.';
+
+  @override
+  String get welcomeBulletPersonalized => 'Personalized words for your level';
+
+  @override
+  String get welcomeBulletSmartReviews => 'Smart reviews so you don\'t forget';
+
+  @override
+  String get welcomeBulletAssessments => 'Quick assessments that adapt to you';
+
+  @override
+  String get welcomeSocialProof => 'Trusted by 42,000 learners';
+
+  @override
+  String get welcomeCta => 'Build my plan';
+
+  @override
+  String get welcomeSkip => 'Skip';
 
   @override
   String get infoTitle => '맞춤 단어 목록 만들기';
@@ -703,6 +722,12 @@ class AppLocalizationsKo extends AppLocalizations {
   String get onboardingGoalTravelWithoutStress => '스트레스 없이 여행하기';
 
   @override
+  String get onboardingGoalMixSimilarWords => 'I mix up similar words';
+
+  @override
+  String get onboardingGoalSoundNatural => 'I want to sound natural';
+
+  @override
   String get onboardingLevelTitle => '현재 레벨이 어떻게 되나요?';
 
   @override
@@ -718,13 +743,27 @@ class AppLocalizationsKo extends AppLocalizations {
   String get onboardingLevelAdvanced => '고급';
 
   @override
-  String get onboardingQuickWinQuizPrompt => '어떤 문장이 올바르게 사용하나요?';
+  String get onboardingLevelHelper =>
+      'Most learners start here. You\'re not behind.';
 
   @override
-  String get onboardingQuickWinCorrect => '정답! 새로운 단어를 배웠어요.';
+  String get onboardingAssessmentTitle => 'Vocabulary assessment';
 
   @override
-  String get onboardingQuickWinIncorrect => '좋은 시도예요. 정답은 A입니다.';
+  String get onboardingAssessmentContext =>
+      'This helps us calibrate your level.';
+
+  @override
+  String get onboardingAssessmentQuizPrompt =>
+      'Which sentence uses it correctly?';
+
+  @override
+  String get onboardingAssessmentCorrect =>
+      'Correct. You just learned a new word.';
+
+  @override
+  String get onboardingAssessmentIncorrect =>
+      'Assessment complete. The correct answer is A.';
 
   @override
   String get onboardingProgressTitle => '벌써 배우고 있어요.';
@@ -746,6 +785,10 @@ class AppLocalizationsKo extends AppLocalizations {
 
   @override
   String get onboardingDailyHabitSubtitle => '꾸준함이 강도보다 낫습니다.';
+
+  @override
+  String get onboardingDailyHabitHelper =>
+      'We\'ll gently coach you to stay consistent.';
 
   @override
   String get onboardingDailyHabit5min => '5분/일';
@@ -794,10 +837,18 @@ class AppLocalizationsKo extends AppLocalizations {
   String get onboardingPlanProgressTracking => '진행률 추적 & 연속 기록';
 
   @override
+  String get onboardingPlanReassurance =>
+      'Designed for where most learners start.';
+
+  @override
   String get onboardingProofTitle => '혼자가 아니에요';
 
   @override
   String get onboardingProofLearnerCount => '42,000+';
+
+  @override
+  String get onboardingProofSubtitle =>
+      'Join 42,000 learners improving their English every day';
 
   @override
   String get onboardingProofLearnerLabel => '학습자들이 매일 영어를 향상시키고 있습니다';

@@ -33,8 +33,13 @@ class OnboardingCubit extends Cubit<OnboardingState> {
     //_initializePageController();
   }
 
-  // Total pages for the new 7-screen onboarding flow
-  static const int totalPages = 7;
+  // Total pages in the PageView (welcome + 8 onboarding steps)
+  // Welcome screen is at index 0 and does NOT count toward progress.
+  // Steps 1-8 map to PageView indices 1-8.
+  static const int totalPages = 9;
+
+  // Number of actual onboarding steps (excluding welcome)
+  static const int totalSteps = 8;
   final PageController pageController = PageController();
   final UserRepository _userRepository;
   final EnglishTestRepository _englishTestRepository;
@@ -305,7 +310,7 @@ class OnboardingCubit extends Cubit<OnboardingState> {
   }
 
   // ============================================
-  // Onboarding V2 Methods (7-Screen Flow)
+  // Onboarding V2 Methods (8-Screen Flow)
   // ============================================
 
   /// Sets temporary goal selection for visual feedback before confirmation
@@ -386,29 +391,43 @@ class OnboardingCubit extends Cubit<OnboardingState> {
     nextPage();
   }
 
-  /// Returns the progress value for the step indicator (1-based)
-  double get stepProgress => (state.currentPage + 1) / totalPages;
+  /// Returns the progress value for the step indicator.
+  /// Welcome screen (page 0) has 0 progress.
+  /// Steps 1-8 map to progress 1/8 through 8/8.
+  double get stepProgress {
+    if (state.currentPage <= 0) return 0;
+    return state.currentPage / totalSteps;
+  }
 
-  /// Returns the current step number (1-based for display)
-  int get currentStep => state.currentPage + 1;
+  /// Returns the current step number (1-based for display).
+  /// Welcome screen returns 0 (no step number shown).
+  int get currentStep => state.currentPage;
 
-  /// Checks if the CTA should be enabled based on current page requirements
+  /// Whether the current page is the welcome screen (no progress indicator)
+  bool get isOnWelcomeScreen => state.currentPage == 0;
+
+  /// Checks if the CTA should be enabled based on current page requirements.
+  /// Page indices shifted by +1 due to welcome screen at index 0.
   bool get isCtaEnabled {
     switch (state.currentPage) {
-      case 0: // Goal selection - requires selection
-        return state.onboardingGoal != null || state.tempSelectedGoal != null;
-      case 1: // Level selection - requires selection
-        return state.onboardingLevel != null || state.tempSelectedLevel != null;
-      case 2: // Quick win - requires answering quiz
-        return state.microWinAnswered;
-      case 3: // Progress framing - always enabled
+      case 0: // Welcome screen - always enabled
         return true;
-      case 4: // Daily habit - requires selection
+      case 1: // Goal selection - requires selection
+        return state.onboardingGoal != null || state.tempSelectedGoal != null;
+      case 2: // Level selection - requires selection
+        return state.onboardingLevel != null || state.tempSelectedLevel != null;
+      case 3: // Assessment - requires answering quiz
+        return state.microWinAnswered;
+      case 4: // Progress framing - always enabled
+        return true;
+      case 5: // Daily habit - requires selection
         return state.dailyMinutes != null ||
             state.tempSelectedDailyMinutes != null;
-      case 5: // Plan reveal - always enabled
+      case 6: // Notification permission - always enabled
         return true;
-      case 6: // Social proof - always enabled
+      case 7: // Plan reveal - always enabled
+        return true;
+      case 8: // Social proof - always enabled
         return true;
       default:
         return true;

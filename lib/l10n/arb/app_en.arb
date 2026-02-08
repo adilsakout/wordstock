@@ -1,12 +1,36 @@
 {
     "@@locale": "en",
-    "welcomeTitle": "Welcome to Wordstock",
+    "welcomeTitle": "Welcome to WordStock",
     "@welcomeTitle": {
-        "description": "Text shown in the Welcome Page"
+        "description": "Title shown on the welcome screen"
     },
-    "welcomeDescription": "Wordstock is a tool that helps you learn new words.",
-    "@welcomeDescription": {
-        "description": "Text shown in the Welcome Page"
+    "welcomeSubtitle": "Learn words you'll actually use, in just 5 minutes a day.",
+    "@welcomeSubtitle": {
+        "description": "Subtitle shown on the welcome screen"
+    },
+    "welcomeBulletPersonalized": "Personalized words for your level",
+    "@welcomeBulletPersonalized": {
+        "description": "Welcome screen bullet point about personalization"
+    },
+    "welcomeBulletSmartReviews": "Smart reviews so you don't forget",
+    "@welcomeBulletSmartReviews": {
+        "description": "Welcome screen bullet point about smart reviews"
+    },
+    "welcomeBulletAssessments": "Quick assessments that adapt to you",
+    "@welcomeBulletAssessments": {
+        "description": "Welcome screen bullet point about adaptive assessments"
+    },
+    "welcomeSocialProof": "Trusted by 42,000 learners",
+    "@welcomeSocialProof": {
+        "description": "Social proof line on welcome screen"
+    },
+    "welcomeCta": "Build my plan",
+    "@welcomeCta": {
+        "description": "Primary CTA button text on welcome screen"
+    },
+    "welcomeSkip": "Skip",
+    "@welcomeSkip": {
+        "description": "Secondary skip action on welcome screen"
     },
     "infoTitle": "Create a custom word list",
     "@infoTitle": {
@@ -925,11 +949,11 @@
     "@saveButton": {
         "description": "Text for save button"
     },
-    "notificationPermissionTitle": "Learn words with daily reminders",
+    "notificationPermissionTitle": "Stay on track with gentle nudges",
     "@notificationPermissionTitle": {
         "description": "Title for the notification permission page"
     },
-    "notificationPermissionDescription": "Allow notifications to get daily reminders and never miss your learning streak.",
+    "notificationPermissionDescription": "We'll send a friendly reminder when it's time to practice. Small nudges lead to big results.",
     "@notificationPermissionDescription": {
         "description": "Description text for notification permission request"
     },
@@ -965,29 +989,37 @@
     "@settingsThemeDark": {
         "description": "Option for dark theme"
     },
-    "onboardingGoalTitle": "What's your goal with English?",
+    "onboardingGoalTitle": "How does English hold you back today?",
     "@onboardingGoalTitle": {
-        "description": "Title for goal identity onboarding page"
+        "description": "Title for goal identity onboarding page (problem-surfacing)"
     },
-    "onboardingGoalSubtitle": "Pick what matters most. We'll adapt everything.",
+    "onboardingGoalSubtitle": "Your answer helps us personalize your plan.",
     "@onboardingGoalSubtitle": {
         "description": "Subtitle for goal identity onboarding page"
     },
-    "onboardingGoalSpeakConfidently": "Speak confidently",
+    "onboardingGoalSpeakConfidently": "I hesitate when I speak",
     "@onboardingGoalSpeakConfidently": {
-        "description": "Goal option for speaking confidently"
+        "description": "Goal option for speaking hesitation"
     },
-    "onboardingGoalGrowVocabulary": "Grow my vocabulary",
+    "onboardingGoalGrowVocabulary": "I forget words I already learned",
     "@onboardingGoalGrowVocabulary": {
-        "description": "Goal option for growing vocabulary"
+        "description": "Goal option for forgetting words"
     },
-    "onboardingGoalPrepareWorkExams": "Prepare for work or exams",
+    "onboardingGoalPrepareWorkExams": "I need English for work or exams",
     "@onboardingGoalPrepareWorkExams": {
-        "description": "Goal option for work or exams preparation"
+        "description": "Goal option for work or exams"
     },
-    "onboardingGoalTravelWithoutStress": "Travel without stress",
+    "onboardingGoalTravelWithoutStress": "I struggle in real conversations while traveling",
     "@onboardingGoalTravelWithoutStress": {
-        "description": "Goal option for stress-free travel"
+        "description": "Goal option for travel conversation struggles"
+    },
+    "onboardingGoalMixSimilarWords": "I mix up similar words",
+    "@onboardingGoalMixSimilarWords": {
+        "description": "Goal option for mixing similar words"
+    },
+    "onboardingGoalSoundNatural": "I want to sound natural",
+    "@onboardingGoalSoundNatural": {
+        "description": "Goal option for sounding natural"
     },
     "onboardingLevelTitle": "What's your current level?",
     "@onboardingLevelTitle": {
@@ -1009,17 +1041,29 @@
     "@onboardingLevelAdvanced": {
         "description": "Advanced level option"
     },
-    "onboardingQuickWinQuizPrompt": "Which sentence uses it correctly?",
-    "@onboardingQuickWinQuizPrompt": {
-        "description": "Quiz prompt for quick win page"
+    "onboardingLevelHelper": "Most learners start here. You're not behind.",
+    "@onboardingLevelHelper": {
+        "description": "Helper text below level options to reduce shame"
     },
-    "onboardingQuickWinCorrect": "Correct! You just learned a new word.",
-    "@onboardingQuickWinCorrect": {
-        "description": "Feedback when user answers correctly"
+    "onboardingAssessmentTitle": "Vocabulary assessment",
+    "@onboardingAssessmentTitle": {
+        "description": "Title for vocabulary assessment page"
     },
-    "onboardingQuickWinIncorrect": "Nice try. The correct answer is A.",
-    "@onboardingQuickWinIncorrect": {
-        "description": "Feedback when user answers incorrectly"
+    "onboardingAssessmentContext": "This helps us calibrate your level.",
+    "@onboardingAssessmentContext": {
+        "description": "Context text for vocabulary assessment"
+    },
+    "onboardingAssessmentQuizPrompt": "Which sentence uses it correctly?",
+    "@onboardingAssessmentQuizPrompt": {
+        "description": "Quiz prompt for assessment page"
+    },
+    "onboardingAssessmentCorrect": "Correct. You just learned a new word.",
+    "@onboardingAssessmentCorrect": {
+        "description": "Feedback when user answers correctly in assessment"
+    },
+    "onboardingAssessmentIncorrect": "Assessment complete. The correct answer is A.",
+    "@onboardingAssessmentIncorrect": {
+        "description": "Feedback when user answers incorrectly in assessment"
     },
     "onboardingProgressTitle": "You're already learning.",
     "@onboardingProgressTitle": {
@@ -1041,13 +1085,17 @@
     "@onboardingProgressMotivation": {
         "description": "Motivational text on progress page"
     },
-    "onboardingDailyHabitTitle": "How often do you want to practice?",
+    "onboardingDailyHabitTitle": "What daily practice works for you?",
     "@onboardingDailyHabitTitle": {
         "description": "Title for daily habit page"
     },
-    "onboardingDailyHabitSubtitle": "Consistency beats intensity.",
+    "onboardingDailyHabitSubtitle": "Short, consistent sessions work best.",
     "@onboardingDailyHabitSubtitle": {
         "description": "Subtitle for daily habit page"
+    },
+    "onboardingDailyHabitHelper": "We'll gently coach you to stay consistent.",
+    "@onboardingDailyHabitHelper": {
+        "description": "Helper text below daily habit options"
     },
     "onboardingDailyHabit5min": "5 min/day",
     "@onboardingDailyHabit5min": {
@@ -1115,6 +1163,10 @@
     "@onboardingPlanProgressTracking": {
         "description": "Benefit: progress tracking"
     },
+    "onboardingPlanReassurance": "Designed for where most learners start.",
+    "@onboardingPlanReassurance": {
+        "description": "Reassurance line below plan benefits"
+    },
     "onboardingProofTitle": "You're not doing this alone",
     "@onboardingProofTitle": {
         "description": "Title for social proof page"
@@ -1122,6 +1174,10 @@
     "onboardingProofLearnerCount": "42,000+",
     "@onboardingProofLearnerCount": {
         "description": "Number of learners"
+    },
+    "onboardingProofSubtitle": "Join 42,000 learners improving their English every day",
+    "@onboardingProofSubtitle": {
+        "description": "Subtitle text for social proof page"
     },
     "onboardingProofLearnerLabel": "learners improving their English every day",
     "@onboardingProofLearnerLabel": {

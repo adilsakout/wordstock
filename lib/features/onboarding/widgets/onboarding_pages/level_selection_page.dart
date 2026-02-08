@@ -168,6 +168,27 @@ class LevelSelectionPage extends StatelessWidget {
                     );
                   },
                 ),
+
+                const SizedBox(height: 24),
+
+                // Helper text below options — reduces shame, normalizes
+                // beginner status so users answer honestly
+                Text(
+                  context.l10n.onboardingLevelHelper,
+                  textAlign: TextAlign.center,
+                  style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                        color: Theme.of(context)
+                            .colorScheme
+                            .onSurface
+                            .withValues(alpha: 0.5),
+                        fontStyle: FontStyle.italic,
+                        height: 1.4,
+                      ),
+                ).animate().fadeIn(
+                      duration: 500.ms,
+                      delay: 1200.ms,
+                      curve: Curves.easeOut,
+                    ),
               ],
             ),
           ),

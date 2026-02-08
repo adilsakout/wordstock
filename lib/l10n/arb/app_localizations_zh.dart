@@ -12,7 +12,26 @@ class AppLocalizationsZh extends AppLocalizations {
   String get welcomeTitle => '歡迎使用 Wordstock';
 
   @override
-  String get welcomeDescription => 'Wordstock 是一個幫助您學習新單字的工具。';
+  String get welcomeSubtitle =>
+      'Learn words you\'ll actually use, in just 5 minutes a day.';
+
+  @override
+  String get welcomeBulletPersonalized => 'Personalized words for your level';
+
+  @override
+  String get welcomeBulletSmartReviews => 'Smart reviews so you don\'t forget';
+
+  @override
+  String get welcomeBulletAssessments => 'Quick assessments that adapt to you';
+
+  @override
+  String get welcomeSocialProof => 'Trusted by 42,000 learners';
+
+  @override
+  String get welcomeCta => 'Build my plan';
+
+  @override
+  String get welcomeSkip => 'Skip';
 
   @override
   String get infoTitle => '建立自訂單字清單';
@@ -692,6 +711,12 @@ class AppLocalizationsZh extends AppLocalizations {
   String get onboardingGoalTravelWithoutStress => '輕鬆旅行';
 
   @override
+  String get onboardingGoalMixSimilarWords => 'I mix up similar words';
+
+  @override
+  String get onboardingGoalSoundNatural => 'I want to sound natural';
+
+  @override
   String get onboardingLevelTitle => '您目前的程度是什麼？';
 
   @override
@@ -707,13 +732,27 @@ class AppLocalizationsZh extends AppLocalizations {
   String get onboardingLevelAdvanced => '高級';
 
   @override
-  String get onboardingQuickWinQuizPrompt => '哪個句子正確使用了這個詞？';
+  String get onboardingLevelHelper =>
+      'Most learners start here. You\'re not behind.';
 
   @override
-  String get onboardingQuickWinCorrect => '正確！您剛學會了一個新單字。';
+  String get onboardingAssessmentTitle => 'Vocabulary assessment';
 
   @override
-  String get onboardingQuickWinIncorrect => '不錯的嘗試。正確答案是 A。';
+  String get onboardingAssessmentContext =>
+      'This helps us calibrate your level.';
+
+  @override
+  String get onboardingAssessmentQuizPrompt =>
+      'Which sentence uses it correctly?';
+
+  @override
+  String get onboardingAssessmentCorrect =>
+      'Correct. You just learned a new word.';
+
+  @override
+  String get onboardingAssessmentIncorrect =>
+      'Assessment complete. The correct answer is A.';
 
   @override
   String get onboardingProgressTitle => '您已經在學習了。';
@@ -735,6 +774,10 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get onboardingDailyHabitSubtitle => '堅持勝過強度。';
+
+  @override
+  String get onboardingDailyHabitHelper =>
+      'We\'ll gently coach you to stay consistent.';
 
   @override
   String get onboardingDailyHabit5min => '5 分鐘/天';
@@ -783,10 +826,18 @@ class AppLocalizationsZh extends AppLocalizations {
   String get onboardingPlanProgressTracking => '進度追蹤與連續記錄';
 
   @override
+  String get onboardingPlanReassurance =>
+      'Designed for where most learners start.';
+
+  @override
   String get onboardingProofTitle => '您並不孤單';
 
   @override
   String get onboardingProofLearnerCount => '42,000+';
+
+  @override
+  String get onboardingProofSubtitle =>
+      'Join 42,000 learners improving their English every day';
 
   @override
   String get onboardingProofLearnerLabel => '學習者每天都在提升英語';

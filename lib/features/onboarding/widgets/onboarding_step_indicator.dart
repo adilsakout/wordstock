@@ -22,10 +22,17 @@ class OnboardingStepIndicator extends StatelessWidget {
         final theme = Theme.of(context);
         final isDark = theme.brightness == Brightness.dark;
 
-        // Calculate progress value for the bar
+        // Hide the entire indicator on the welcome screen (page 0)
+        // The welcome screen does NOT count toward the 7-step progress
+        if (cubit.isOnWelcomeScreen) {
+          return const SizedBox.shrink();
+        }
+
+        // Calculate progress value for the bar (steps 1-7)
         final progressValue = cubit.stepProgress;
 
-        // Show back button only if not on first page
+        // Show back button only if past the welcome screen
+        // (page 1 can go back to welcome, page 0 has no back)
         final showBackButton = state.currentPage > 0;
 
         return ColoredBox(

@@ -166,6 +166,24 @@ class DailyHabitPage extends StatelessWidget {
                   },
                 ),
 
+                const SizedBox(height: 24),
+
+                // Helper text — frames notifications as coaching,
+                // sets expectation for gentle reminders
+                Text(
+                  context.l10n.onboardingDailyHabitHelper,
+                  textAlign: TextAlign.center,
+                  style: theme.textTheme.bodySmall?.copyWith(
+                    color: theme.colorScheme.onSurface.withValues(alpha: 0.5),
+                    fontStyle: FontStyle.italic,
+                    height: 1.4,
+                  ),
+                ).animate().fadeIn(
+                      duration: 500.ms,
+                      delay: 1200.ms,
+                      curve: Curves.easeOut,
+                    ),
+
                 const Spacer(flex: 2),
               ],
             ),

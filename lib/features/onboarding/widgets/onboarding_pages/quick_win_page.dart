@@ -8,11 +8,13 @@ import 'package:wordstock/features/onboarding/cubit/onboarding_cubit.dart';
 import 'package:wordstock/l10n/l10n.dart';
 import 'package:wordstock/widgets/button.dart';
 
-/// Screen 3: Quick Win Page
+/// Screen 3: Vocabulary Assessment Page
 ///
-/// Shows a word card with "Serendipity" and its definition, then presents
-/// a multiple-choice quiz. The CTA is disabled until the user answers.
-/// Provides immediate feedback on answer selection.
+/// Framed as a professional assessment rather than a fun quiz to set
+/// the right educational tone. Shows a word card with "Serendipity"
+/// and its definition, then presents a multiple-choice question.
+/// CTA is disabled until the user answers.
+/// Provides immediate, respectful feedback on answer selection.
 class QuickWinPage extends StatefulWidget {
   const QuickWinPage({super.key});
 
@@ -156,6 +158,47 @@ class _QuickWinPageState extends State<QuickWinPage> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
+                const SizedBox(height: 8),
+
+                // ── Assessment title ──
+                // Framed as professional calibration, not a "quiz"
+                Text(
+                  context.l10n.onboardingAssessmentTitle,
+                  textAlign: TextAlign.center,
+                  style: theme.textTheme.headlineMedium?.copyWith(
+                    fontWeight: FontWeight.bold,
+                    color: theme.colorScheme.onSurface,
+                    height: 1.2,
+                  ),
+                ).animate().fadeIn(duration: 600.ms, delay: 200.ms).slideY(
+                      begin: 0.3,
+                      end: 0,
+                      duration: 600.ms,
+                      delay: 200.ms,
+                      curve: Curves.easeOut,
+                    ),
+
+                const SizedBox(height: 12),
+
+                // ── Context text ──
+                // Explains the purpose: calibration, not testing
+                Text(
+                  context.l10n.onboardingAssessmentContext,
+                  textAlign: TextAlign.center,
+                  style: theme.textTheme.bodyLarge?.copyWith(
+                    color: theme.colorScheme.onSurface.withValues(alpha: 0.7),
+                    height: 1.5,
+                  ),
+                ).animate().fadeIn(duration: 600.ms, delay: 400.ms).slideY(
+                      begin: 0.2,
+                      end: 0,
+                      duration: 600.ms,
+                      delay: 400.ms,
+                      curve: Curves.easeOut,
+                    ),
+
+                const SizedBox(height: 24),
+
                 // Word Card
                 Container(
                   padding: const EdgeInsets.all(24),
@@ -208,9 +251,9 @@ class _QuickWinPageState extends State<QuickWinPage> {
 
                 const SizedBox(height: 32),
 
-                // Quiz prompt
+                // Assessment prompt
                 Text(
-                  context.l10n.onboardingQuickWinQuizPrompt,
+                  context.l10n.onboardingAssessmentQuizPrompt,
                   textAlign: TextAlign.center,
                   style: theme.textTheme.titleMedium?.copyWith(
                     fontWeight: FontWeight.w600,
@@ -320,8 +363,8 @@ class _QuickWinPageState extends State<QuickWinPage> {
                         Expanded(
                           child: Text(
                             _selectedAnswerIndex == _correctAnswerIndex
-                                ? context.l10n.onboardingQuickWinCorrect
-                                : context.l10n.onboardingQuickWinIncorrect,
+                                ? context.l10n.onboardingAssessmentCorrect
+                                : context.l10n.onboardingAssessmentIncorrect,
                             style: theme.textTheme.bodyMedium?.copyWith(
                               fontWeight: FontWeight.w600,
                               color: _selectedAnswerIndex == _correctAnswerIndex

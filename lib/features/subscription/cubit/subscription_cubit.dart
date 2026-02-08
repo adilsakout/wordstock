@@ -96,7 +96,6 @@ class SubscriptionCubit extends Cubit<SubscriptionState> {
       final result = await _rcRepository.presentPaywall();
 
       if (result == PaywallResult.cancelled) {
-        await showPaywall();
         debugPrint('Paywall not presented ');
       }
 

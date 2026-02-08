@@ -71,6 +71,23 @@ class SocialProofPage extends StatelessWidget {
                   .fadeIn(duration: 600.ms, delay: 500.ms)
                   .slideY(begin: 0.3, end: 0, duration: 600.ms, delay: 500.ms),
 
+              const SizedBox(height: 12),
+
+              // Subtitle — community framing to reduce uncertainty
+              Text(
+                context.l10n.onboardingProofSubtitle,
+                textAlign: TextAlign.center,
+                style: theme.textTheme.bodyLarge?.copyWith(
+                  color: theme.colorScheme.onSurface.withValues(alpha: 0.7),
+                  height: 1.5,
+                ),
+              )
+                  .animate()
+                  .fadeIn(duration: 600.ms, delay: 600.ms)
+                  .slideY(begin: 0.2, end: 0, duration: 600.ms, delay: 600.ms),
+
+              const SizedBox(height: 8),
+
               // Stats container
               Container(
                 padding: const EdgeInsets.all(28),

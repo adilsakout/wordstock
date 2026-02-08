@@ -71,7 +71,7 @@ class OnboardingState extends Equatable {
 
   /// User's primary goal for learning English
   /// One of: 'speak_confidently', 'grow_vocabulary',
-  /// 'prepare_work_exams', 'travel_without_stress'
+  /// 'prepare_work_exams', 'mix_similar_words', 'sound_natural'
   final String? onboardingGoal;
 
   /// User's current English level
@@ -165,36 +165,10 @@ class OnboardingState extends Equatable {
   // ============================================
   // Helper getters for onboarding V2
   // ============================================
-
-  /// Returns the display text for the selected goal
-  String get goalDisplayText {
-    switch (onboardingGoal) {
-      case 'speak_confidently':
-        return 'Speak confidently';
-      case 'grow_vocabulary':
-        return 'Grow my vocabulary';
-      case 'prepare_work_exams':
-        return 'Prepare for work or exams';
-      case 'travel_without_stress':
-        return 'Travel without stress';
-      default:
-        return '';
-    }
-  }
-
-  /// Returns the display text for the selected level
-  String get levelDisplayText {
-    switch (onboardingLevel) {
-      case 'beginner':
-        return 'Beginner';
-      case 'intermediate':
-        return 'Intermediate';
-      case 'advanced':
-        return 'Advanced';
-      default:
-        return '';
-    }
-  }
+  //
+  // Goal and level display text are resolved in the UI via
+  // context.localizedOnboardingGoalText(goalId) and
+  // context.localizedOnboardingLevelText(levelId) so they get translated.
 
   /// Returns the display text for daily minutes
   String get dailyMinutesDisplayText {
