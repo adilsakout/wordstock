@@ -1,10 +1,7 @@
 import {
   createClient,
-  PostgrestSingleResponse,
   SupabaseClient,
 } from "jsr:@supabase/supabase-js";
-import pako from "https://cdn.jsdelivr.net/npm/pako@2.0.4/dist/pako.esm.mjs";
-import { parse as parseCSVData } from "https://deno.land/std@0.221.0/csv/mod.ts";
 
 interface Notification {
   id: string;
@@ -12,11 +9,16 @@ interface Notification {
   word: string | null;
   definition: string | null;
   user_id: string;
-  notification_type: 'daily_reminder' | 'practice_reminder' | 'new_word' | 'streak_reminder';
+  notification_type: "daily_reminder" | "practice_reminder" | "new_word" | "streak_reminder";
+  scheduled_at: string;
 }
 
-interface OneSignalCSVExportResponse {
-  csv_file_url: string;
+interface UserNotificationSettings {
+  notifications_enabled: boolean;
+  daily_reminder_enabled: boolean;
+  practice_reminder_enabled: boolean;
+  new_word_notification_enabled: boolean;
+  streak_reminder_enabled: boolean;
 }
 
 async function fetchPendingNotifications(
@@ -25,7 +27,7 @@ async function fetchPendingNotifications(
 ): Promise<Notification[]> {
   const { data: pending, error } = await supabase
     .from("word_notifications")
-    .select("id, onesignal_id, word, definition, user_id, notification_type")
+    .select("id, onesignal_id, word, definition, user_id, notification_type, scheduled_at")
     .eq("sent", false)
     .lte("scheduled_at", now)
     .limit(1000);
@@ -38,383 +40,152 @@ async function fetchPendingNotifications(
   return pending || [];
 }
 
-async function requestCSVExport(appId: string, apiKey: string) {
-  const response = await fetch(
-    "https://onesignal.com/api/v1/players/csv_export?app_id=" + appId,
-    {
-      method: "POST",
-      headers: {
-        "Authorization": `Basic ${apiKey}`,
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        extra_fields: [
-          "external_user_id",
-        ],
-      }),
-    },
-  );
+async function markNotificationsAsSent(
+  supabase: SupabaseClient,
+  ids: string[],
+): Promise<void> {
+  if (ids.length === 0) return;
+  const { error } = await supabase
+    .from("word_notifications")
+    .update({ sent: true })
+    .in("id", ids);
 
-  if (!response.ok) {
-    const errorText = await response.text();
-    console.error("❌ Error requesting CSV export:", errorText);
-    throw new Error("Error requesting CSV export");
+  if (error) {
+    console.error("❌ Error marking notifications as sent:", error.message);
   }
-
-  const data = await response.json() as OneSignalCSVExportResponse;
-  return data.csv_file_url;
 }
 
-async function downloadCSV(
-  csvUrl: string,
-  maxRetries = 5,
-  initialDelayMs = 2000,
-): Promise<string> {
-  console.log("Attempting to download CSV from URL:", csvUrl);
+async function bulkClearStaleNotifications(
+  supabase: SupabaseClient,
+  cutoff: string,
+): Promise<void> {
+  const { error, count } = await supabase
+    .from("word_notifications")
+    .update({ sent: true })
+    .eq("sent", false)
+    .lt("scheduled_at", cutoff);
 
-  // Add specific retry logic for 404 errors
-  for (let attempt = 1; attempt <= maxRetries; attempt++) {
-    try {
-      console.log(`Download attempt ${attempt} of ${maxRetries}...`);
-
-      const csvResponse = await fetch(csvUrl);
-      if (csvResponse.status === 404) {
-        if (attempt < maxRetries) {
-          // Calculate exponential backoff delay
-          const delayMs = initialDelayMs * Math.pow(2, attempt - 1);
-          console.log(
-            `CSV file not ready yet (404). Retrying in ${delayMs}ms...`,
-          );
-          await new Promise((resolve) => setTimeout(resolve, delayMs));
-          continue; // Try again after delay
-        } else {
-          console.error(
-            `❌ CSV file still not available after ${maxRetries} attempts`,
-          );
-          throw new Error(
-            `CSV file not available after ${maxRetries} attempts`,
-          );
-        }
-      }
-
-      if (!csvResponse.ok) {
-        const errorText = await csvResponse.text();
-        console.error(
-          `❌ Error downloading CSV: Status ${csvResponse.status}, Response:`,
-          errorText,
-        );
-        throw new Error(`Error downloading CSV: Status ${csvResponse.status}`);
-      }
-
-      console.log("✅ CSV download successful, getting arrayBuffer...");
-      const arrayBuffer = await csvResponse.arrayBuffer();
-      console.log(
-        `✅ Got arrayBuffer of size: ${arrayBuffer.byteLength} bytes`,
-      );
-
-      // Decompress GZ content
-      try {
-        const gzData = new Uint8Array(arrayBuffer);
-        console.log(
-          `Attempting to decompress ${gzData.length} bytes of GZ data`,
-        );
-        const csvText = pako.ungzip(gzData, { to: "string" }) as string;
-
-        if (!csvText) {
-          throw new Error("Failed to decompress CSV - result was empty");
-        }
-
-        console.log(
-          `✅ Successfully decompressed GZ data to ${csvText.length} characters`,
-        );
-
-        // Validate CSV structure
-        if (!csvText.includes(",")) {
-          throw new Error("Invalid CSV format: No comma separators found");
-        }
-
-        // Log sample data for debugging
-        const sampleSize = Math.min(500, csvText.length);
-        console.log("CSV Data sample:", csvText.slice(0, sampleSize));
-
-        return csvText;
-      } catch (decompressError) {
-        console.error("❌ Error decompressing GZ data:", decompressError);
-        throw new Error(
-          `Error decompressing GZ data: ${decompressError instanceof Error
-            ? decompressError.message
-            : String(decompressError)
-          }`,
-        );
-      }
-    } catch (fetchError) {
-      if (
-        fetchError instanceof Error &&
-        fetchError.message.includes("CSV file not available") &&
-        attempt >= maxRetries
-      ) {
-        // This is our final retry error, rethrow it
-        throw fetchError;
-      }
-
-      if (attempt < maxRetries) {
-        // For other errors, also retry with exponential backoff
-        const delayMs = initialDelayMs * Math.pow(2, attempt - 1);
-        console.error(
-          `❌ Error in downloadCSV (attempt ${attempt}):`,
-          fetchError,
-        );
-        console.log(`Retrying in ${delayMs}ms...`);
-        await new Promise((resolve) => setTimeout(resolve, delayMs));
-      } else {
-        console.error(`❌ Failed after ${maxRetries} attempts:`, fetchError);
-        throw new Error(
-          `Error downloading CSV after ${maxRetries} attempts: ${fetchError instanceof Error
-            ? fetchError.message
-            : String(fetchError)
-          }`,
-        );
-      }
-    }
+  if (error) {
+    console.error("❌ Error clearing stale notifications:", error.message);
+  } else {
+    console.log(`🗑 Cleared ${count ?? "unknown"} stale notifications (>24h old)`);
   }
-
-  // This should never be reached due to the throw in the loop, but TypeScript needs it
-  throw new Error("Failed to download CSV after all retry attempts");
 }
 
-function parseCSV(csvText: string, userId: string): string {
-  // Parse CSV without specifying columns to get all fields
-  const rows = parseCSVData(csvText, {
-    skipFirstRow: false, // Don't skip so we can see the headers
-  });
-
-  if (rows.length < 2) {
-    console.error("❌ CSV file is empty or malformed");
-    return "";
-  }
-
-  // Get header row and find our column indices
-  const headers = rows[0];
-  const externalUserIdIndex = headers.indexOf("external_user_id");
-  const invalidIdentifierIndex = headers.indexOf("invalid_identifier");
-
-  console.log("CSV Headers:", headers);
-  console.log("Column indices - external_user_id:", externalUserIdIndex, "invalid_identifier:", invalidIdentifierIndex);
-
-  if (externalUserIdIndex === -1) {
-    console.error("❌ Could not find external_user_id column");
-    return "";
-  }
-
-  // Process data rows (skip header row)
-  for (let i = 1; i < rows.length; i++) {
-    const row = rows[i];
-    const externalUserId = row[externalUserIdIndex]?.trim();
-    // Only check invalidIdentifier if the column exists
-    const invalidIdentifier = invalidIdentifierIndex !== -1
-      ? row[invalidIdentifierIndex]?.trim().toLowerCase()
-      : "f"; // Default to subscribed if column doesn't exist
-
-    if (externalUserId === userId) {
-      if (invalidIdentifier === "f") {
-        console.log(`✅ User ${userId} is subscribed.`);
-        return externalUserId;
-      } else {
-        console.log(`❌ User ${userId} is unsubscribed.`);
-        return "";
-      }
-    }
-  }
-
-  console.log(`❌ User ${userId} not found in CSV.`);
-  return "";
-}
-
-// Function to generate notification content based on type
 function getNotificationContent(notification: Notification): { heading: string; content: string } {
   switch (notification.notification_type) {
-    case 'daily_reminder':
+    case "daily_reminder":
       return {
         heading: "Daily Practice Reminder 📚",
-        content: "Time to expand your vocabulary! Start your daily practice session now."
+        content: "Time to expand your vocabulary! Start your daily practice session now.",
       };
-    case 'practice_reminder':
+    case "practice_reminder":
       return {
         heading: "Don't Break Your Streak! 🔥",
-        content: "You haven't practiced recently. Keep your learning momentum going!"
+        content: "You haven't practiced recently. Keep your learning momentum going!",
       };
-    case 'new_word':
+    case "new_word":
       return {
         heading: notification.word || "New Word",
-        content: notification.definition || "Learn a new word today!"
+        content: notification.definition || "Learn a new word today!",
       };
-    case 'streak_reminder':
+    case "streak_reminder":
       return {
         heading: "Streak Alert! ⚡",
-        content: "Your learning streak is at risk! Practice now to keep it alive."
+        content: "Your learning streak is at risk! Practice now to keep it alive.",
       };
     default:
       return {
         heading: "WordStock Reminder",
-        content: "Time to practice your vocabulary!"
+        content: "Time to practice your vocabulary!",
       };
   }
 }
 
-async function sendNotifications(
-  supabase: SupabaseClient,
-  userId: string,
-  pending: Notification[],
+async function sendOneSignalNotification(
+  notif: Notification,
   appId: string,
   apiKey: string,
-) {
-  const sendPromises: Promise<unknown>[] = [];
-
-  for (const notif of pending) {
-    const { heading, content } = getNotificationContent(notif);
-    
-    sendPromises.push(
-      fetch(
-        "https://onesignal.com/api/v1/notifications",
-        {
-          method: "POST",
-          headers: {
-            "Authorization": `Basic ${apiKey}`,
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            app_id: appId,
-            include_external_user_ids: [userId],
-            contents: { en: content },
-            headings: { en: heading },
-          }),
-        },
-      ).then(async (response) => {
-        const result = await response.json();
-
-        if (!response.ok || result.errors) {
-          console.error(
-            `❌ OneSignal error for notification ${notif.id} (${notif.notification_type}):`,
-            result,
-          );
-          return;
-        }
-
-        console.log(`✅ OneSignal ${notif.notification_type} notification sent for ID ${notif.id}`);
-
-        const updateResult = await supabase
-          .from("word_notifications")
-          .update({ sent: true })
-          .eq("id", notif.id);
-
-        if (updateResult.error) {
-          console.error(
-            `❌ Error updating notification ${notif.id}:`,
-            updateResult.error,
-          );
-        } else {
-          console.log(`✅ Notification ${notif.id} updated as sent`);
-        }
-
-        return updateResult;
-      }).catch((e: unknown) => {
-        console.error(
-          `❌ Failed to send to OneSignal for ID ${notif.id} (${notif.notification_type}):`,
-          e instanceof Error ? e.message : String(e),
-        );
-      }),
-    );
-  }
-
-  await Promise.all(sendPromises);
-}
-
-async function updateNotificationsAsSent(
-  supabase: SupabaseClient,
-  pending: Notification[],
-) {
-  const updatePromises = pending.map((notif) =>
-    supabase
-      .from("word_notifications")
-      .update({ sent: true })
-      .eq("id", notif.id)
-      .then((result: PostgrestSingleResponse<null>) => {
-        if (result.error) {
-          console.error(
-            `❌ Error updating notification ${notif.id}:`,
-            result.error,
-          );
-        } else {
-          console.log(
-            `✅ Notification ${notif.id} marked as sent (no subscribed devices)`,
-          );
-        }
-        return result;
-      })
-  );
-
-  await Promise.all(updatePromises);
-}
-
-// New function to group notifications by user
-function groupNotificationsByUser(notifications: Notification[]): Map<string, Notification[]> {
-  const userNotifications = new Map<string, Notification[]>();
-
-  for (const notification of notifications) {
-    const userNotifs = userNotifications.get(notification.user_id) || [];
-    userNotifs.push(notification);
-    userNotifications.set(notification.user_id, userNotifs);
-  }
-
-  return userNotifications;
-}
-
-// Function to check user notification settings based on notification type
-async function checkUserNotificationSettings(
-  supabase: SupabaseClient,
-  userId: string,
-  notificationType: string,
 ): Promise<boolean> {
+  const { heading, content } = getNotificationContent(notif);
+
   try {
-    const { data: user, error } = await supabase
-      .from("user_profiles")
-      .select(
-        "notifications_enabled, daily_reminder_enabled, practice_reminder_enabled, new_word_notification_enabled, streak_reminder_enabled"
-      )
-      .eq("user_id", userId)
-      .single();
+    const response = await fetch("https://api.onesignal.com/notifications?c=push", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": `Key ${apiKey}`,
+      },
+      body: JSON.stringify({
+        app_id: appId,
+        include_subscription_ids: [notif.onesignal_id],
+        headings: { en: heading },
+        contents: { en: content },
+      }),
+    });
 
-    if (error) {
-      console.error(`❌ Error fetching user settings for ${userId}:`, error);
-      return false; // Default to not sending if we can't check settings
-    }
+    const result = await response.json();
 
-    // Check if global notifications are enabled first
-    if (!user.notifications_enabled) {
+    if (!response.ok || result.errors) {
+      console.error(
+        `❌ OneSignal error for notification ${notif.id} (${notif.notification_type}):`,
+        result.errors || result,
+      );
       return false;
     }
 
-    // Check specific notification type setting
-    switch (notificationType) {
-      case 'daily_reminder':
-        return user.daily_reminder_enabled === true;
-      case 'practice_reminder':
-        return user.practice_reminder_enabled === true;
-      case 'new_word':
-        return user.new_word_notification_enabled === true;
-      case 'streak_reminder':
-        return user.streak_reminder_enabled === true;
-      default:
-        console.error(`❌ Unknown notification type: ${notificationType}`);
-        return false;
-    }
-  } catch (error) {
-    console.error(`❌ Error checking user settings for ${userId}:`, error);
-    return false; // Default to not sending if there's an error
+    console.log(`✅ Sent ${notif.notification_type} for user ${notif.user_id}`);
+    return true;
+  } catch (err) {
+    console.error(
+      `❌ Network error for notification ${notif.id}:`,
+      err instanceof Error ? err.message : String(err),
+    );
+    return false;
   }
 }
 
-// Update main processing logic
+function groupByUser(notifications: Notification[]): Map<string, Notification[]> {
+  const map = new Map<string, Notification[]>();
+  for (const notif of notifications) {
+    const list = map.get(notif.user_id) || [];
+    list.push(notif);
+    map.set(notif.user_id, list);
+  }
+  return map;
+}
+
+async function fetchUserSettings(
+  supabase: SupabaseClient,
+  userId: string,
+): Promise<UserNotificationSettings | null> {
+  const { data, error } = await supabase
+    .from("user_profiles")
+    .select(
+      "notifications_enabled, daily_reminder_enabled, practice_reminder_enabled, new_word_notification_enabled, streak_reminder_enabled",
+    )
+    .eq("user_id", userId)
+    .single();
+
+  if (error || !data) {
+    console.error(`❌ Error fetching settings for user ${userId}:`, error?.message);
+    return null;
+  }
+
+  return data as UserNotificationSettings;
+}
+
+function isTypeEnabled(settings: UserNotificationSettings, type: string): boolean {
+  if (!settings.notifications_enabled) return false;
+  switch (type) {
+    case "daily_reminder": return settings.daily_reminder_enabled === true;
+    case "practice_reminder": return settings.practice_reminder_enabled === true;
+    case "new_word": return settings.new_word_notification_enabled === true;
+    case "streak_reminder": return settings.streak_reminder_enabled === true;
+    default: return false;
+  }
+}
+
 Deno.serve(async () => {
   const supabase: SupabaseClient = createClient(
     Deno.env.get("SUPABASE_URL")!,
@@ -422,99 +193,74 @@ Deno.serve(async () => {
   );
 
   const ONE_SIGNAL_APP_ID = Deno.env.get("ONESIGNAL_APP_ID")!;
-  const ONE_SIGNAL_REST_API_KEY = Deno.env.get("ONESIGNAL_API_KEY")!;
+  const ONE_SIGNAL_API_KEY = Deno.env.get("ONESIGNAL_API_KEY")!;
 
-  console.log("ONE_SIGNAL_REST_API_KEY:", ONE_SIGNAL_REST_API_KEY);
-  const now = new Date().toISOString();
+  const now = new Date();
+  const nowISO = now.toISOString();
+  // Cutoff: skip notifications older than 24 hours
+  const cutoffISO = new Date(now.getTime() - 24 * 60 * 60 * 1000).toISOString();
 
-  console.log("Time now:", now);
+  console.log("⏰ Processing notifications at:", nowISO);
 
   try {
-    const pending = await fetchPendingNotifications(supabase, now);
+    // Step 1: Bulk-clear all stale notifications in one DB call (clears the backlog)
+    await bulkClearStaleNotifications(supabase, cutoffISO);
+
+    // Step 2: Fetch current pending notifications (scheduled within last 24h)
+    const pending = await fetchPendingNotifications(supabase, nowISO);
 
     if (!pending || pending.length === 0) {
       console.log("✅ No notifications to send at this time");
       return new Response("No pending notifications", { status: 200 });
     }
 
-    console.log(`Found ${pending.length} total pending notifications`);
+    console.log(`📋 Found ${pending.length} notifications to process`);
 
-    // Group notifications by user
-    const userNotifications = groupNotificationsByUser(pending);
-    console.log(`Processing notifications for ${userNotifications.size} users`);
+    const userNotifications = groupByUser(pending);
+    console.log(`👥 Processing for ${userNotifications.size} users`);
 
-    // Get CSV export for subscription status
-    const csvUrl = await requestCSVExport(
-      ONE_SIGNAL_APP_ID,
-      ONE_SIGNAL_REST_API_KEY,
-    );
-
-    console.log("CSV URL:", csvUrl);
-    const csvText = await downloadCSV(csvUrl);
-
-    // Process each user's notifications
     const processPromises: Promise<void>[] = [];
 
     for (const [userId, notifications] of userNotifications) {
       processPromises.push((async () => {
-        console.log(`Processing ${notifications.length} notifications for user ${userId}`);
+        // Fetch user settings once per user (not per notification)
+        const settings = await fetchUserSettings(supabase, userId);
 
-        // Check user's notification settings for each notification type
-        const notificationsToSend: Notification[] = [];
-        const notificationsToSkip: Notification[] = [];
+        const toSendIds: string[] = [];
+        const toSkipIds: string[] = [];
 
-        for (const notification of notifications) {
-          const isEnabled = await checkUserNotificationSettings(
-            supabase, 
-            userId, 
-            notification.notification_type
-          );
-          
-          if (isEnabled) {
-            notificationsToSend.push(notification);
+        for (const notif of notifications) {
+          if (settings && isTypeEnabled(settings, notif.notification_type)) {
+            toSendIds.push(notif.id);
           } else {
-            notificationsToSkip.push(notification);
-            console.log(
-              `⏩ Skipping ${notification.notification_type} notification: User ${userId} has this type disabled`,
-            );
+            toSkipIds.push(notif.id);
+            console.log(`⏩ Skipping ${notif.notification_type} for user ${userId} (disabled)`);
           }
         }
 
-        // Mark skipped notifications as sent
-        if (notificationsToSkip.length > 0) {
-          await updateNotificationsAsSent(supabase, notificationsToSkip);
+        // Mark disabled notifications as sent without sending
+        if (toSkipIds.length > 0) {
+          await markNotificationsAsSent(supabase, toSkipIds);
         }
 
         // Send enabled notifications
-        if (notificationsToSend.length === 0) {
-          console.log(`⏩ No enabled notifications to send for user ${userId}`);
-          return;
+        const toSendNotifs = notifications.filter(n => toSendIds.includes(n.id));
+        const sentIds: string[] = [];
+
+        for (const notif of toSendNotifs) {
+          const success = await sendOneSignalNotification(notif, ONE_SIGNAL_APP_ID, ONE_SIGNAL_API_KEY);
+          if (success) sentIds.push(notif.id);
         }
 
-        const validUserId = parseCSV(csvText, userId);
-
-        if (!validUserId) {
-          console.log(
-            `⏩ Skipping notifications: No valid subscription found for user ${userId}`,
-          );
-          await updateNotificationsAsSent(supabase, notifications);
-          return;
+        if (sentIds.length > 0) {
+          await markNotificationsAsSent(supabase, sentIds);
         }
-
-        await sendNotifications(
-          supabase,
-          validUserId,
-          notificationsToSend,
-          ONE_SIGNAL_APP_ID,
-          ONE_SIGNAL_REST_API_KEY,
-        );
       })());
     }
 
-    // Wait for all user notifications to be processed
     await Promise.all(processPromises);
 
-    return new Response("✅ All notification types processed", { status: 200 });
+    return new Response("✅ Notifications processed", { status: 200 });
   } catch (error) {
     console.error("❌ Error processing notifications:", error);
     return new Response("Error processing notifications", { status: 500 });
