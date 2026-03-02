@@ -24,13 +24,22 @@ class OnboardingCubit extends Cubit<OnboardingState> {
         _englishTestRepository =
             englishTestRepository ?? const EnglishTestRepository(),
         super(
-          const OnboardingState(currentPage: 0, progress: 0),
+          OnboardingState(
+            currentPage: 0,
+            progress: 0,
+            createdAt: DateTime.now(), // Set createdAt when onboarding starts
+          ),
         ) {
     //_initializePageController();
   }
-  // Define totalPages here or pass it as a parameter
 
-  static const int totalPages = 3;
+  // Total pages in the PageView (welcome + 8 onboarding steps)
+  // Welcome screen is at index 0 and does NOT count toward progress.
+  // Steps 1-8 map to PageView indices 1-8.
+  static const int totalPages = 9;
+
+  // Number of actual onboarding steps (excluding welcome)
+  static const int totalSteps = 8;
   final PageController pageController = PageController();
   final UserRepository _userRepository;
   final EnglishTestRepository _englishTestRepository;
@@ -297,6 +306,131 @@ class OnboardingCubit extends Cubit<OnboardingState> {
       debugPrint('Error requesting notification permission: $e');
     } finally {
       emit(state.copyWith(isRequestingPermission: false));
+    }
+  }
+
+  // ============================================
+  // Onboarding V2 Methods (8-Screen Flow)
+  // ============================================
+
+  /// Sets temporary goal selection for visual feedback before confirmation
+  void setTempOnboardingGoal(String goal) {
+    emit(state.copyWith(tempSelectedGoal: goal));
+  }
+
+  /// Confirms goal selection and proceeds to next page
+  void selectOnboardingGoal(String goal) {
+    emit(
+      state.copyWith(
+        onboardingGoal: goal,
+      ),
+    );
+    nextPage();
+  }
+
+  /// Clears temporary goal selection
+  void clearTempOnboardingGoal() {
+    emit(state.copyWith());
+  }
+
+  /// Sets temporary level selection for visual feedback before confirmation
+  void setTempOnboardingLevel(String level) {
+    emit(state.copyWith(tempSelectedLevel: level));
+  }
+
+  /// Confirms level selection and proceeds to next page
+  void selectOnboardingLevel(String level) {
+    emit(
+      state.copyWith(
+        onboardingLevel: level,
+      ),
+    );
+    nextPage();
+  }
+
+  /// Clears temporary level selection
+  void clearTempOnboardingLevel() {
+    emit(state.copyWith());
+  }
+
+  /// Records the micro win quiz answer
+  /// Sets microWinCompleted=true regardless of correctness
+  void answerMicroWinQuiz({required bool isCorrect}) {
+    emit(
+      state.copyWith(
+        microWinAnswered: true,
+        microWinCorrect: isCorrect,
+        microWinCompleted: true,
+      ),
+    );
+  }
+
+  /// Sets temporary daily minutes selection for visual feedback
+  void setTempDailyMinutes(int minutes) {
+    emit(state.copyWith(tempSelectedDailyMinutes: minutes));
+  }
+
+  /// Confirms daily minutes selection and proceeds to next page
+  void selectDailyMinutes(int minutes) {
+    emit(
+      state.copyWith(
+        dailyMinutes: minutes,
+      ),
+    );
+    nextPage();
+  }
+
+  /// Clears temporary daily minutes selection
+  void clearTempDailyMinutes() {
+    emit(state.copyWith());
+  }
+
+  /// Navigates to next page without any state updates
+  /// Used for screens that don't require selection (progress framing, etc.)
+  void goToNextPage() {
+    nextPage();
+  }
+
+  /// Returns the progress value for the step indicator.
+  /// Welcome screen (page 0) has 0 progress.
+  /// Steps 1-8 map to progress 1/8 through 8/8.
+  double get stepProgress {
+    if (state.currentPage <= 0) return 0;
+    return state.currentPage / totalSteps;
+  }
+
+  /// Returns the current step number (1-based for display).
+  /// Welcome screen returns 0 (no step number shown).
+  int get currentStep => state.currentPage;
+
+  /// Whether the current page is the welcome screen (no progress indicator)
+  bool get isOnWelcomeScreen => state.currentPage == 0;
+
+  /// Checks if the CTA should be enabled based on current page requirements.
+  /// Page indices shifted by +1 due to welcome screen at index 0.
+  bool get isCtaEnabled {
+    switch (state.currentPage) {
+      case 0: // Welcome screen - always enabled
+        return true;
+      case 1: // Goal selection - requires selection
+        return state.onboardingGoal != null || state.tempSelectedGoal != null;
+      case 2: // Level selection - requires selection
+        return state.onboardingLevel != null || state.tempSelectedLevel != null;
+      case 3: // Assessment - requires answering quiz
+        return state.microWinAnswered;
+      case 4: // Progress framing - always enabled
+        return true;
+      case 5: // Daily habit - requires selection
+        return state.dailyMinutes != null ||
+            state.tempSelectedDailyMinutes != null;
+      case 6: // Notification permission - always enabled
+        return true;
+      case 7: // Plan reveal - always enabled
+        return true;
+      case 8: // Social proof - always enabled
+        return true;
+      default:
+        return true;
     }
   }
 }

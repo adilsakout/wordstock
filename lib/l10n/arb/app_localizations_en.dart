@@ -9,11 +9,29 @@ class AppLocalizationsEn extends AppLocalizations {
   AppLocalizationsEn([String locale = 'en']) : super(locale);
 
   @override
-  String get welcomeTitle => 'Welcome to Wordstock';
+  String get welcomeTitle => 'Welcome to WordStock';
 
   @override
-  String get welcomeDescription =>
-      'Wordstock is a tool that helps you learn new words.';
+  String get welcomeSubtitle =>
+      'Learn words you\'ll actually use, in just 5 minutes a day.';
+
+  @override
+  String get welcomeBulletPersonalized => 'Personalized words for your level';
+
+  @override
+  String get welcomeBulletSmartReviews => 'Smart reviews so you don\'t forget';
+
+  @override
+  String get welcomeBulletAssessments => 'Quick assessments that adapt to you';
+
+  @override
+  String get welcomeSocialProof => 'Trusted by 42,000 learners';
+
+  @override
+  String get welcomeCta => 'Build my plan';
+
+  @override
+  String get welcomeSkip => 'Skip';
 
   @override
   String get infoTitle => 'Create a custom word list';
@@ -672,11 +690,11 @@ class AppLocalizationsEn extends AppLocalizations {
   String get saveButton => 'Save';
 
   @override
-  String get notificationPermissionTitle => 'Learn words with daily reminders';
+  String get notificationPermissionTitle => 'Stay on track with gentle nudges';
 
   @override
   String get notificationPermissionDescription =>
-      'Allow notifications to get daily reminders and never miss your learning streak.';
+      'We\'ll send a friendly reminder when it\'s time to practice. Small nudges lead to big results.';
 
   @override
   String get enableNotifications => 'Enable Notifications';
@@ -701,4 +719,170 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get settingsThemeDark => 'Dark';
+
+  @override
+  String get onboardingGoalTitle => 'How does English hold you back today?';
+
+  @override
+  String get onboardingGoalSubtitle =>
+      'Your answer helps us personalize your plan.';
+
+  @override
+  String get onboardingGoalSpeakConfidently => 'I hesitate when I speak';
+
+  @override
+  String get onboardingGoalGrowVocabulary => 'I forget words I already learned';
+
+  @override
+  String get onboardingGoalPrepareWorkExams =>
+      'I need English for work or exams';
+
+  @override
+  String get onboardingGoalTravelWithoutStress =>
+      'I struggle in real conversations while traveling';
+
+  @override
+  String get onboardingGoalMixSimilarWords => 'I mix up similar words';
+
+  @override
+  String get onboardingGoalSoundNatural => 'I want to sound natural';
+
+  @override
+  String get onboardingLevelTitle => 'What\'s your current level?';
+
+  @override
+  String get onboardingLevelSubtitle =>
+      'Don\'t overthink it. You can change it anytime.';
+
+  @override
+  String get onboardingLevelBeginner => 'Beginner';
+
+  @override
+  String get onboardingLevelIntermediate => 'Intermediate';
+
+  @override
+  String get onboardingLevelAdvanced => 'Advanced';
+
+  @override
+  String get onboardingLevelHelper =>
+      'Most learners start here. You\'re not behind.';
+
+  @override
+  String get onboardingAssessmentTitle => 'Vocabulary assessment';
+
+  @override
+  String get onboardingAssessmentContext =>
+      'This helps us calibrate your level.';
+
+  @override
+  String get onboardingAssessmentQuizPrompt =>
+      'Which sentence uses it correctly?';
+
+  @override
+  String get onboardingAssessmentCorrect =>
+      'Correct. You just learned a new word.';
+
+  @override
+  String get onboardingAssessmentIncorrect =>
+      'Assessment complete. The correct answer is A.';
+
+  @override
+  String get onboardingProgressTitle => 'You\'re already learning.';
+
+  @override
+  String get onboardingProgressWordLearned => '1 word learned';
+
+  @override
+  String get onboardingProgressStreakStarted => '1 streak started';
+
+  @override
+  String get onboardingProgressYourProgress => 'Your progress';
+
+  @override
+  String get onboardingProgressMotivation =>
+      'Imagine what 5 minutes a day can do.';
+
+  @override
+  String get onboardingDailyHabitTitle => 'What daily practice works for you?';
+
+  @override
+  String get onboardingDailyHabitSubtitle =>
+      'Short, consistent sessions work best.';
+
+  @override
+  String get onboardingDailyHabitHelper =>
+      'We\'ll gently coach you to stay consistent.';
+
+  @override
+  String get onboardingDailyHabit5min => '5 min/day';
+
+  @override
+  String get onboardingDailyHabit10min => '10 min/day';
+
+  @override
+  String get onboardingDailyHabit15min => '15 min/day';
+
+  @override
+  String get onboardingPlanTitle => 'Your WordStock plan is ready';
+
+  @override
+  String get onboardingPlanYourPlan => 'Your Plan';
+
+  @override
+  String get onboardingPlanGoalLabel => 'Goal';
+
+  @override
+  String get onboardingPlanLevelLabel => 'Level';
+
+  @override
+  String get onboardingPlanDailyLabel => 'Daily';
+
+  @override
+  String onboardingPlanDailyValue(int minutes) {
+    return '$minutes min/day';
+  }
+
+  @override
+  String get onboardingPlanWhatYouGet => 'What you\'ll get';
+
+  @override
+  String onboardingPlanDailyLessons(int minutes) {
+    return 'Daily $minutes-minute lessons';
+  }
+
+  @override
+  String get onboardingPlanWordsMatchedLevel => 'Words matched to your level';
+
+  @override
+  String get onboardingPlanSmartReviews => 'Smart reviews so you don\'t forget';
+
+  @override
+  String get onboardingPlanProgressTracking => 'Progress tracking & streaks';
+
+  @override
+  String get onboardingPlanReassurance =>
+      'Designed for where most learners start.';
+
+  @override
+  String get onboardingProofTitle => 'You\'re not doing this alone';
+
+  @override
+  String get onboardingProofLearnerCount => '42,000+';
+
+  @override
+  String get onboardingProofSubtitle =>
+      'Join 42,000 learners improving their English every day';
+
+  @override
+  String get onboardingProofLearnerLabel =>
+      'learners improving their English every day';
+
+  @override
+  String get onboardingProofRating => '4.6 average rating';
+
+  @override
+  String get onboardingProofAppStore => 'on the App Store';
+
+  @override
+  String get onboardingContinue => 'Continue';
 }

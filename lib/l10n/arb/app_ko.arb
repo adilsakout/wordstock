@@ -964,5 +964,179 @@
     "settingsThemeDark": "다크",
     "@settingsThemeDark": {
         "description": "Option for dark theme"
+    },
+    "onboardingGoalTitle": "영어로 목표가 무엇인가요?",
+    "@onboardingGoalTitle": {
+        "description": "Title for goal identity onboarding page"
+    },
+    "onboardingGoalSubtitle": "가장 중요한 것을 선택하세요. 모든 것을 맞춤화해 드립니다.",
+    "@onboardingGoalSubtitle": {
+        "description": "Subtitle for goal identity onboarding page"
+    },
+    "onboardingGoalSpeakConfidently": "자신 있게 말하기",
+    "@onboardingGoalSpeakConfidently": {
+        "description": "Goal option for speaking confidently"
+    },
+    "onboardingGoalGrowVocabulary": "어휘력 늘리기",
+    "@onboardingGoalGrowVocabulary": {
+        "description": "Goal option for growing vocabulary"
+    },
+    "onboardingGoalPrepareWorkExams": "업무나 시험 준비",
+    "@onboardingGoalPrepareWorkExams": {
+        "description": "Goal option for work or exams preparation"
+    },
+    "onboardingGoalTravelWithoutStress": "스트레스 없이 여행하기",
+    "@onboardingGoalTravelWithoutStress": {
+        "description": "Goal option for stress-free travel"
+    },
+    "onboardingLevelTitle": "현재 레벨이 어떻게 되나요?",
+    "@onboardingLevelTitle": {
+        "description": "Title for level selection onboarding page"
+    },
+    "onboardingLevelSubtitle": "너무 고민하지 마세요. 언제든지 변경할 수 있습니다.",
+    "@onboardingLevelSubtitle": {
+        "description": "Subtitle for level selection onboarding page"
+    },
+    "onboardingLevelBeginner": "초급",
+    "@onboardingLevelBeginner": {
+        "description": "Beginner level option"
+    },
+    "onboardingLevelIntermediate": "중급",
+    "@onboardingLevelIntermediate": {
+        "description": "Intermediate level option"
+    },
+    "onboardingLevelAdvanced": "고급",
+    "@onboardingLevelAdvanced": {
+        "description": "Advanced level option"
+    },
+    "onboardingQuickWinQuizPrompt": "어떤 문장이 올바르게 사용하나요?",
+    "@onboardingQuickWinQuizPrompt": {
+        "description": "Quiz prompt for quick win page"
+    },
+    "onboardingQuickWinCorrect": "정답! 새로운 단어를 배웠어요.",
+    "@onboardingQuickWinCorrect": {
+        "description": "Feedback when user answers correctly"
+    },
+    "onboardingQuickWinIncorrect": "좋은 시도예요. 정답은 A입니다.",
+    "@onboardingQuickWinIncorrect": {
+        "description": "Feedback when user answers incorrectly"
+    },
+    "onboardingProgressTitle": "벌써 배우고 있어요.",
+    "@onboardingProgressTitle": {
+        "description": "Title for progress framing page"
+    },
+    "onboardingProgressWordLearned": "단어 1개 학습",
+    "@onboardingProgressWordLearned": {
+        "description": "Stat showing words learned"
+    },
+    "onboardingProgressStreakStarted": "연속 1일 시작",
+    "@onboardingProgressStreakStarted": {
+        "description": "Stat showing streak started"
+    },
+    "onboardingProgressYourProgress": "내 진행률",
+    "@onboardingProgressYourProgress": {
+        "description": "Label for progress bar"
+    },
+    "onboardingProgressMotivation": "하루 5분이 무엇을 할 수 있는지 상상해보세요.",
+    "@onboardingProgressMotivation": {
+        "description": "Motivational text on progress page"
+    },
+    "onboardingDailyHabitTitle": "얼마나 자주 연습하고 싶으세요?",
+    "@onboardingDailyHabitTitle": {
+        "description": "Title for daily habit page"
+    },
+    "onboardingDailyHabitSubtitle": "꾸준함이 강도보다 낫습니다.",
+    "@onboardingDailyHabitSubtitle": {
+        "description": "Subtitle for daily habit page"
+    },
+    "onboardingDailyHabit5min": "5분/일",
+    "@onboardingDailyHabit5min": {
+        "description": "5 minute daily habit option"
+    },
+    "onboardingDailyHabit10min": "10분/일",
+    "@onboardingDailyHabit10min": {
+        "description": "10 minute daily habit option"
+    },
+    "onboardingDailyHabit15min": "15분/일",
+    "@onboardingDailyHabit15min": {
+        "description": "15 minute daily habit option"
+    },
+    "onboardingPlanTitle": "WordStock 플랜이 준비되었습니다",
+    "@onboardingPlanTitle": {
+        "description": "Title for plan reveal page"
+    },
+    "onboardingPlanYourPlan": "내 플랜",
+    "@onboardingPlanYourPlan": {
+        "description": "Header for plan summary"
+    },
+    "onboardingPlanGoalLabel": "목표",
+    "@onboardingPlanGoalLabel": {
+        "description": "Label for goal in plan"
+    },
+    "onboardingPlanLevelLabel": "레벨",
+    "@onboardingPlanLevelLabel": {
+        "description": "Label for level in plan"
+    },
+    "onboardingPlanDailyLabel": "매일",
+    "@onboardingPlanDailyLabel": {
+        "description": "Label for daily commitment in plan"
+    },
+    "onboardingPlanDailyValue": "{minutes}분/일",
+    "@onboardingPlanDailyValue": {
+        "description": "Daily commitment value",
+        "placeholders": {
+            "minutes": {
+                "type": "int"
+            }
+        }
+    },
+    "onboardingPlanWhatYouGet": "받게 될 것",
+    "@onboardingPlanWhatYouGet": {
+        "description": "Section header for benefits"
+    },
+    "onboardingPlanDailyLessons": "매일 {minutes}분 레슨",
+    "@onboardingPlanDailyLessons": {
+        "description": "Benefit: daily lessons",
+        "placeholders": {
+            "minutes": {
+                "type": "int"
+            }
+        }
+    },
+    "onboardingPlanWordsMatchedLevel": "레벨에 맞는 단어",
+    "@onboardingPlanWordsMatchedLevel": {
+        "description": "Benefit: level-matched words"
+    },
+    "onboardingPlanSmartReviews": "잊지 않도록 스마트 복습",
+    "@onboardingPlanSmartReviews": {
+        "description": "Benefit: smart reviews"
+    },
+    "onboardingPlanProgressTracking": "진행률 추적 & 연속 기록",
+    "@onboardingPlanProgressTracking": {
+        "description": "Benefit: progress tracking"
+    },
+    "onboardingProofTitle": "혼자가 아니에요",
+    "@onboardingProofTitle": {
+        "description": "Title for social proof page"
+    },
+    "onboardingProofLearnerCount": "42,000+",
+    "@onboardingProofLearnerCount": {
+        "description": "Number of learners"
+    },
+    "onboardingProofLearnerLabel": "학습자들이 매일 영어를 향상시키고 있습니다",
+    "@onboardingProofLearnerLabel": {
+        "description": "Label for learner count"
+    },
+    "onboardingProofRating": "4.6 평균 평점",
+    "@onboardingProofRating": {
+        "description": "App Store rating"
+    },
+    "onboardingProofAppStore": "앱스토어에서",
+    "@onboardingProofAppStore": {
+        "description": "App Store label"
+    },
+    "onboardingContinue": "계속",
+    "@onboardingContinue": {
+        "description": "Continue button text"
     }
 }

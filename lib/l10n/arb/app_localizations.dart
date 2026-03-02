@@ -108,17 +108,53 @@ abstract class AppLocalizations {
     Locale('zh')
   ];
 
-  /// Text shown in the Welcome Page
+  /// Title shown on the welcome screen
   ///
   /// In en, this message translates to:
-  /// **'Welcome to Wordstock'**
+  /// **'Welcome to WordStock'**
   String get welcomeTitle;
 
-  /// Text shown in the Welcome Page
+  /// Subtitle shown on the welcome screen
   ///
   /// In en, this message translates to:
-  /// **'Wordstock is a tool that helps you learn new words.'**
-  String get welcomeDescription;
+  /// **'Learn words you\'ll actually use, in just 5 minutes a day.'**
+  String get welcomeSubtitle;
+
+  /// Welcome screen bullet point about personalization
+  ///
+  /// In en, this message translates to:
+  /// **'Personalized words for your level'**
+  String get welcomeBulletPersonalized;
+
+  /// Welcome screen bullet point about smart reviews
+  ///
+  /// In en, this message translates to:
+  /// **'Smart reviews so you don\'t forget'**
+  String get welcomeBulletSmartReviews;
+
+  /// Welcome screen bullet point about adaptive assessments
+  ///
+  /// In en, this message translates to:
+  /// **'Quick assessments that adapt to you'**
+  String get welcomeBulletAssessments;
+
+  /// Social proof line on welcome screen
+  ///
+  /// In en, this message translates to:
+  /// **'Trusted by 42,000 learners'**
+  String get welcomeSocialProof;
+
+  /// Primary CTA button text on welcome screen
+  ///
+  /// In en, this message translates to:
+  /// **'Build my plan'**
+  String get welcomeCta;
+
+  /// Secondary skip action on welcome screen
+  ///
+  /// In en, this message translates to:
+  /// **'Skip'**
+  String get welcomeSkip;
 
   /// Text shown in the Info Page
   ///
@@ -1269,13 +1305,13 @@ abstract class AppLocalizations {
   /// Title for the notification permission page
   ///
   /// In en, this message translates to:
-  /// **'Learn words with daily reminders'**
+  /// **'Stay on track with gentle nudges'**
   String get notificationPermissionTitle;
 
   /// Description text for notification permission request
   ///
   /// In en, this message translates to:
-  /// **'Allow notifications to get daily reminders and never miss your learning streak.'**
+  /// **'We\'ll send a friendly reminder when it\'s time to practice. Small nudges lead to big results.'**
   String get notificationPermissionDescription;
 
   /// Button text to enable notifications
@@ -1325,6 +1361,300 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Dark'**
   String get settingsThemeDark;
+
+  /// Title for goal identity onboarding page (problem-surfacing)
+  ///
+  /// In en, this message translates to:
+  /// **'How does English hold you back today?'**
+  String get onboardingGoalTitle;
+
+  /// Subtitle for goal identity onboarding page
+  ///
+  /// In en, this message translates to:
+  /// **'Your answer helps us personalize your plan.'**
+  String get onboardingGoalSubtitle;
+
+  /// Goal option for speaking hesitation
+  ///
+  /// In en, this message translates to:
+  /// **'I hesitate when I speak'**
+  String get onboardingGoalSpeakConfidently;
+
+  /// Goal option for forgetting words
+  ///
+  /// In en, this message translates to:
+  /// **'I forget words I already learned'**
+  String get onboardingGoalGrowVocabulary;
+
+  /// Goal option for work or exams
+  ///
+  /// In en, this message translates to:
+  /// **'I need English for work or exams'**
+  String get onboardingGoalPrepareWorkExams;
+
+  /// Goal option for travel conversation struggles
+  ///
+  /// In en, this message translates to:
+  /// **'I struggle in real conversations while traveling'**
+  String get onboardingGoalTravelWithoutStress;
+
+  /// Goal option for mixing similar words
+  ///
+  /// In en, this message translates to:
+  /// **'I mix up similar words'**
+  String get onboardingGoalMixSimilarWords;
+
+  /// Goal option for sounding natural
+  ///
+  /// In en, this message translates to:
+  /// **'I want to sound natural'**
+  String get onboardingGoalSoundNatural;
+
+  /// Title for level selection onboarding page
+  ///
+  /// In en, this message translates to:
+  /// **'What\'s your current level?'**
+  String get onboardingLevelTitle;
+
+  /// Subtitle for level selection onboarding page
+  ///
+  /// In en, this message translates to:
+  /// **'Don\'t overthink it. You can change it anytime.'**
+  String get onboardingLevelSubtitle;
+
+  /// Beginner level option
+  ///
+  /// In en, this message translates to:
+  /// **'Beginner'**
+  String get onboardingLevelBeginner;
+
+  /// Intermediate level option
+  ///
+  /// In en, this message translates to:
+  /// **'Intermediate'**
+  String get onboardingLevelIntermediate;
+
+  /// Advanced level option
+  ///
+  /// In en, this message translates to:
+  /// **'Advanced'**
+  String get onboardingLevelAdvanced;
+
+  /// Helper text below level options to reduce shame
+  ///
+  /// In en, this message translates to:
+  /// **'Most learners start here. You\'re not behind.'**
+  String get onboardingLevelHelper;
+
+  /// Title for vocabulary assessment page
+  ///
+  /// In en, this message translates to:
+  /// **'Vocabulary assessment'**
+  String get onboardingAssessmentTitle;
+
+  /// Context text for vocabulary assessment
+  ///
+  /// In en, this message translates to:
+  /// **'This helps us calibrate your level.'**
+  String get onboardingAssessmentContext;
+
+  /// Quiz prompt for assessment page
+  ///
+  /// In en, this message translates to:
+  /// **'Which sentence uses it correctly?'**
+  String get onboardingAssessmentQuizPrompt;
+
+  /// Feedback when user answers correctly in assessment
+  ///
+  /// In en, this message translates to:
+  /// **'Correct. You just learned a new word.'**
+  String get onboardingAssessmentCorrect;
+
+  /// Feedback when user answers incorrectly in assessment
+  ///
+  /// In en, this message translates to:
+  /// **'Assessment complete. The correct answer is A.'**
+  String get onboardingAssessmentIncorrect;
+
+  /// Title for progress framing page
+  ///
+  /// In en, this message translates to:
+  /// **'You\'re already learning.'**
+  String get onboardingProgressTitle;
+
+  /// Stat showing words learned
+  ///
+  /// In en, this message translates to:
+  /// **'1 word learned'**
+  String get onboardingProgressWordLearned;
+
+  /// Stat showing streak started
+  ///
+  /// In en, this message translates to:
+  /// **'1 streak started'**
+  String get onboardingProgressStreakStarted;
+
+  /// Label for progress bar
+  ///
+  /// In en, this message translates to:
+  /// **'Your progress'**
+  String get onboardingProgressYourProgress;
+
+  /// Motivational text on progress page
+  ///
+  /// In en, this message translates to:
+  /// **'Imagine what 5 minutes a day can do.'**
+  String get onboardingProgressMotivation;
+
+  /// Title for daily habit page
+  ///
+  /// In en, this message translates to:
+  /// **'What daily practice works for you?'**
+  String get onboardingDailyHabitTitle;
+
+  /// Subtitle for daily habit page
+  ///
+  /// In en, this message translates to:
+  /// **'Short, consistent sessions work best.'**
+  String get onboardingDailyHabitSubtitle;
+
+  /// Helper text below daily habit options
+  ///
+  /// In en, this message translates to:
+  /// **'We\'ll gently coach you to stay consistent.'**
+  String get onboardingDailyHabitHelper;
+
+  /// 5 minute daily habit option
+  ///
+  /// In en, this message translates to:
+  /// **'5 min/day'**
+  String get onboardingDailyHabit5min;
+
+  /// 10 minute daily habit option
+  ///
+  /// In en, this message translates to:
+  /// **'10 min/day'**
+  String get onboardingDailyHabit10min;
+
+  /// 15 minute daily habit option
+  ///
+  /// In en, this message translates to:
+  /// **'15 min/day'**
+  String get onboardingDailyHabit15min;
+
+  /// Title for plan reveal page
+  ///
+  /// In en, this message translates to:
+  /// **'Your WordStock plan is ready'**
+  String get onboardingPlanTitle;
+
+  /// Header for plan summary
+  ///
+  /// In en, this message translates to:
+  /// **'Your Plan'**
+  String get onboardingPlanYourPlan;
+
+  /// Label for goal in plan
+  ///
+  /// In en, this message translates to:
+  /// **'Goal'**
+  String get onboardingPlanGoalLabel;
+
+  /// Label for level in plan
+  ///
+  /// In en, this message translates to:
+  /// **'Level'**
+  String get onboardingPlanLevelLabel;
+
+  /// Label for daily commitment in plan
+  ///
+  /// In en, this message translates to:
+  /// **'Daily'**
+  String get onboardingPlanDailyLabel;
+
+  /// Daily commitment value
+  ///
+  /// In en, this message translates to:
+  /// **'{minutes} min/day'**
+  String onboardingPlanDailyValue(int minutes);
+
+  /// Section header for benefits
+  ///
+  /// In en, this message translates to:
+  /// **'What you\'ll get'**
+  String get onboardingPlanWhatYouGet;
+
+  /// Benefit: daily lessons
+  ///
+  /// In en, this message translates to:
+  /// **'Daily {minutes}-minute lessons'**
+  String onboardingPlanDailyLessons(int minutes);
+
+  /// Benefit: level-matched words
+  ///
+  /// In en, this message translates to:
+  /// **'Words matched to your level'**
+  String get onboardingPlanWordsMatchedLevel;
+
+  /// Benefit: smart reviews
+  ///
+  /// In en, this message translates to:
+  /// **'Smart reviews so you don\'t forget'**
+  String get onboardingPlanSmartReviews;
+
+  /// Benefit: progress tracking
+  ///
+  /// In en, this message translates to:
+  /// **'Progress tracking & streaks'**
+  String get onboardingPlanProgressTracking;
+
+  /// Reassurance line below plan benefits
+  ///
+  /// In en, this message translates to:
+  /// **'Designed for where most learners start.'**
+  String get onboardingPlanReassurance;
+
+  /// Title for social proof page
+  ///
+  /// In en, this message translates to:
+  /// **'You\'re not doing this alone'**
+  String get onboardingProofTitle;
+
+  /// Number of learners
+  ///
+  /// In en, this message translates to:
+  /// **'42,000+'**
+  String get onboardingProofLearnerCount;
+
+  /// Subtitle text for social proof page
+  ///
+  /// In en, this message translates to:
+  /// **'Join 42,000 learners improving their English every day'**
+  String get onboardingProofSubtitle;
+
+  /// Label for learner count
+  ///
+  /// In en, this message translates to:
+  /// **'learners improving their English every day'**
+  String get onboardingProofLearnerLabel;
+
+  /// App Store rating
+  ///
+  /// In en, this message translates to:
+  /// **'4.6 average rating'**
+  String get onboardingProofRating;
+
+  /// App Store label
+  ///
+  /// In en, this message translates to:
+  /// **'on the App Store'**
+  String get onboardingProofAppStore;
+
+  /// Continue button text
+  ///
+  /// In en, this message translates to:
+  /// **'Continue'**
+  String get onboardingContinue;
 }
 
 class _AppLocalizationsDelegate

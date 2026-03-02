@@ -964,5 +964,179 @@
     "settingsThemeDark": "深色",
     "@settingsThemeDark": {
         "description": "Option for dark theme"
+    },
+    "onboardingGoalTitle": "您學習英語的目標是什麼？",
+    "@onboardingGoalTitle": {
+        "description": "Title for goal identity onboarding page"
+    },
+    "onboardingGoalSubtitle": "選擇最重要的。我們會為您量身定制。",
+    "@onboardingGoalSubtitle": {
+        "description": "Subtitle for goal identity onboarding page"
+    },
+    "onboardingGoalSpeakConfidently": "自信地說話",
+    "@onboardingGoalSpeakConfidently": {
+        "description": "Goal option for speaking confidently"
+    },
+    "onboardingGoalGrowVocabulary": "擴大詞彙量",
+    "@onboardingGoalGrowVocabulary": {
+        "description": "Goal option for growing vocabulary"
+    },
+    "onboardingGoalPrepareWorkExams": "準備工作或考試",
+    "@onboardingGoalPrepareWorkExams": {
+        "description": "Goal option for work or exams preparation"
+    },
+    "onboardingGoalTravelWithoutStress": "輕鬆旅行",
+    "@onboardingGoalTravelWithoutStress": {
+        "description": "Goal option for stress-free travel"
+    },
+    "onboardingLevelTitle": "您目前的程度是什麼？",
+    "@onboardingLevelTitle": {
+        "description": "Title for level selection onboarding page"
+    },
+    "onboardingLevelSubtitle": "別想太多。您可以隨時更改。",
+    "@onboardingLevelSubtitle": {
+        "description": "Subtitle for level selection onboarding page"
+    },
+    "onboardingLevelBeginner": "初級",
+    "@onboardingLevelBeginner": {
+        "description": "Beginner level option"
+    },
+    "onboardingLevelIntermediate": "中級",
+    "@onboardingLevelIntermediate": {
+        "description": "Intermediate level option"
+    },
+    "onboardingLevelAdvanced": "高級",
+    "@onboardingLevelAdvanced": {
+        "description": "Advanced level option"
+    },
+    "onboardingQuickWinQuizPrompt": "哪個句子正確使用了這個詞？",
+    "@onboardingQuickWinQuizPrompt": {
+        "description": "Quiz prompt for quick win page"
+    },
+    "onboardingQuickWinCorrect": "正確！您剛學會了一個新單字。",
+    "@onboardingQuickWinCorrect": {
+        "description": "Feedback when user answers correctly"
+    },
+    "onboardingQuickWinIncorrect": "不錯的嘗試。正確答案是 A。",
+    "@onboardingQuickWinIncorrect": {
+        "description": "Feedback when user answers incorrectly"
+    },
+    "onboardingProgressTitle": "您已經在學習了。",
+    "@onboardingProgressTitle": {
+        "description": "Title for progress framing page"
+    },
+    "onboardingProgressWordLearned": "學會 1 個單字",
+    "@onboardingProgressWordLearned": {
+        "description": "Stat showing words learned"
+    },
+    "onboardingProgressStreakStarted": "開始 1 天連續",
+    "@onboardingProgressStreakStarted": {
+        "description": "Stat showing streak started"
+    },
+    "onboardingProgressYourProgress": "您的進度",
+    "@onboardingProgressYourProgress": {
+        "description": "Label for progress bar"
+    },
+    "onboardingProgressMotivation": "想像每天 5 分鐘能做到什麼。",
+    "@onboardingProgressMotivation": {
+        "description": "Motivational text on progress page"
+    },
+    "onboardingDailyHabitTitle": "您想多久練習一次？",
+    "@onboardingDailyHabitTitle": {
+        "description": "Title for daily habit page"
+    },
+    "onboardingDailyHabitSubtitle": "堅持勝過強度。",
+    "@onboardingDailyHabitSubtitle": {
+        "description": "Subtitle for daily habit page"
+    },
+    "onboardingDailyHabit5min": "5 分鐘/天",
+    "@onboardingDailyHabit5min": {
+        "description": "5 minute daily habit option"
+    },
+    "onboardingDailyHabit10min": "10 分鐘/天",
+    "@onboardingDailyHabit10min": {
+        "description": "10 minute daily habit option"
+    },
+    "onboardingDailyHabit15min": "15 分鐘/天",
+    "@onboardingDailyHabit15min": {
+        "description": "15 minute daily habit option"
+    },
+    "onboardingPlanTitle": "您的 WordStock 計劃已準備好",
+    "@onboardingPlanTitle": {
+        "description": "Title for plan reveal page"
+    },
+    "onboardingPlanYourPlan": "您的計劃",
+    "@onboardingPlanYourPlan": {
+        "description": "Header for plan summary"
+    },
+    "onboardingPlanGoalLabel": "目標",
+    "@onboardingPlanGoalLabel": {
+        "description": "Label for goal in plan"
+    },
+    "onboardingPlanLevelLabel": "程度",
+    "@onboardingPlanLevelLabel": {
+        "description": "Label for level in plan"
+    },
+    "onboardingPlanDailyLabel": "每日",
+    "@onboardingPlanDailyLabel": {
+        "description": "Label for daily commitment in plan"
+    },
+    "onboardingPlanDailyValue": "{minutes} 分鐘/天",
+    "@onboardingPlanDailyValue": {
+        "description": "Daily commitment value",
+        "placeholders": {
+            "minutes": {
+                "type": "int"
+            }
+        }
+    },
+    "onboardingPlanWhatYouGet": "您將獲得",
+    "@onboardingPlanWhatYouGet": {
+        "description": "Section header for benefits"
+    },
+    "onboardingPlanDailyLessons": "每日 {minutes} 分鐘課程",
+    "@onboardingPlanDailyLessons": {
+        "description": "Benefit: daily lessons",
+        "placeholders": {
+            "minutes": {
+                "type": "int"
+            }
+        }
+    },
+    "onboardingPlanWordsMatchedLevel": "符合您程度的單字",
+    "@onboardingPlanWordsMatchedLevel": {
+        "description": "Benefit: level-matched words"
+    },
+    "onboardingPlanSmartReviews": "智能複習讓您不會忘記",
+    "@onboardingPlanSmartReviews": {
+        "description": "Benefit: smart reviews"
+    },
+    "onboardingPlanProgressTracking": "進度追蹤與連續記錄",
+    "@onboardingPlanProgressTracking": {
+        "description": "Benefit: progress tracking"
+    },
+    "onboardingProofTitle": "您並不孤單",
+    "@onboardingProofTitle": {
+        "description": "Title for social proof page"
+    },
+    "onboardingProofLearnerCount": "42,000+",
+    "@onboardingProofLearnerCount": {
+        "description": "Number of learners"
+    },
+    "onboardingProofLearnerLabel": "學習者每天都在提升英語",
+    "@onboardingProofLearnerLabel": {
+        "description": "Label for learner count"
+    },
+    "onboardingProofRating": "4.6 平均評分",
+    "@onboardingProofRating": {
+        "description": "App Store rating"
+    },
+    "onboardingProofAppStore": "在 App Store",
+    "@onboardingProofAppStore": {
+        "description": "App Store label"
+    },
+    "onboardingContinue": "繼續",
+    "@onboardingContinue": {
+        "description": "Continue button text"
     }
 }

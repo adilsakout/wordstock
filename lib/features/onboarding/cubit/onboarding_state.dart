@@ -24,6 +24,17 @@ class OnboardingState extends Equatable {
     this.englishTestQuestions = const [],
     this.isLoadingEnglishQuestions = false,
     this.englishTestError,
+    // New onboarding V2 fields
+    this.onboardingGoal,
+    this.onboardingLevel,
+    this.dailyMinutes,
+    this.microWinCompleted = false,
+    this.microWinAnswered = false,
+    this.microWinCorrect = false,
+    this.createdAt,
+    this.tempSelectedGoal,
+    this.tempSelectedLevel,
+    this.tempSelectedDailyMinutes,
   });
 
   final int currentPage;
@@ -53,6 +64,43 @@ class OnboardingState extends Equatable {
 
   /// Error message if English test questions failed to load
   final String? englishTestError;
+
+  // ============================================
+  // New Onboarding V2 Fields (7-Screen Flow)
+  // ============================================
+
+  /// User's primary goal for learning English
+  /// One of: 'speak_confidently', 'grow_vocabulary',
+  /// 'prepare_work_exams', 'mix_similar_words', 'sound_natural'
+  final String? onboardingGoal;
+
+  /// User's current English level
+  /// One of: 'beginner', 'intermediate', 'advanced'
+  final String? onboardingLevel;
+
+  /// Daily practice time commitment in minutes (5, 10, or 15)
+  final int? dailyMinutes;
+
+  /// Whether the user has completed the micro win (quick quiz)
+  final bool microWinCompleted;
+
+  /// Whether the user has answered the micro win quiz (regardless of result)
+  final bool microWinAnswered;
+
+  /// Whether the user answered the micro win quiz correctly
+  final bool microWinCorrect;
+
+  /// Timestamp when the onboarding flow was started
+  final DateTime? createdAt;
+
+  /// Temporary selected goal for visual feedback before confirmation
+  final String? tempSelectedGoal;
+
+  /// Temporary selected level for visual feedback before confirmation
+  final String? tempSelectedLevel;
+
+  /// Temporary selected daily minutes for visual feedback before confirmation
+  final int? tempSelectedDailyMinutes;
 
   /// Returns the selected age range as an enum value
   AgeRange? get ageRange =>
@@ -101,7 +149,32 @@ class OnboardingState extends Equatable {
         englishTestQuestions,
         isLoadingEnglishQuestions,
         englishTestError,
+        // New V2 fields
+        onboardingGoal,
+        onboardingLevel,
+        dailyMinutes,
+        microWinCompleted,
+        microWinAnswered,
+        microWinCorrect,
+        createdAt,
+        tempSelectedGoal,
+        tempSelectedLevel,
+        tempSelectedDailyMinutes,
       ];
+
+  // ============================================
+  // Helper getters for onboarding V2
+  // ============================================
+  //
+  // Goal and level display text are resolved in the UI via
+  // context.localizedOnboardingGoalText(goalId) and
+  // context.localizedOnboardingLevelText(levelId) so they get translated.
+
+  /// Returns the display text for daily minutes
+  String get dailyMinutesDisplayText {
+    if (dailyMinutes == null) return '';
+    return '$dailyMinutes min/day';
+  }
 
   /// Creates a copy of the current OnboardingState with property changes
   OnboardingState copyWith({
@@ -123,6 +196,17 @@ class OnboardingState extends Equatable {
     List<EnglishTestQuestion>? englishTestQuestions,
     bool? isLoadingEnglishQuestions,
     String? englishTestError,
+    // New V2 fields
+    String? onboardingGoal,
+    String? onboardingLevel,
+    int? dailyMinutes,
+    bool? microWinCompleted,
+    bool? microWinAnswered,
+    bool? microWinCorrect,
+    DateTime? createdAt,
+    String? tempSelectedGoal,
+    String? tempSelectedLevel,
+    int? tempSelectedDailyMinutes,
   }) {
     return OnboardingState(
       currentPage: currentPage ?? this.currentPage,
@@ -147,6 +231,18 @@ class OnboardingState extends Equatable {
       isLoadingEnglishQuestions:
           isLoadingEnglishQuestions ?? this.isLoadingEnglishQuestions,
       englishTestError: englishTestError ?? this.englishTestError,
+      // New V2 fields
+      onboardingGoal: onboardingGoal ?? this.onboardingGoal,
+      onboardingLevel: onboardingLevel ?? this.onboardingLevel,
+      dailyMinutes: dailyMinutes ?? this.dailyMinutes,
+      microWinCompleted: microWinCompleted ?? this.microWinCompleted,
+      microWinAnswered: microWinAnswered ?? this.microWinAnswered,
+      microWinCorrect: microWinCorrect ?? this.microWinCorrect,
+      createdAt: createdAt ?? this.createdAt,
+      tempSelectedGoal: tempSelectedGoal ?? this.tempSelectedGoal,
+      tempSelectedLevel: tempSelectedLevel ?? this.tempSelectedLevel,
+      tempSelectedDailyMinutes:
+          tempSelectedDailyMinutes ?? this.tempSelectedDailyMinutes,
     );
   }
 }

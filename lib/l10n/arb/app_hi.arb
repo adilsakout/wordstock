@@ -964,5 +964,179 @@
     "settingsThemeDark": "डार्क",
     "@settingsThemeDark": {
         "description": "Option for dark theme"
+    },
+    "onboardingGoalTitle": "अंग्रेजी के साथ आपका लक्ष्य क्या है?",
+    "@onboardingGoalTitle": {
+        "description": "Title for goal identity onboarding page"
+    },
+    "onboardingGoalSubtitle": "जो सबसे महत्वपूर्ण है उसे चुनें। हम सब कुछ अनुकूलित करेंगे।",
+    "@onboardingGoalSubtitle": {
+        "description": "Subtitle for goal identity onboarding page"
+    },
+    "onboardingGoalSpeakConfidently": "आत्मविश्वास से बोलना",
+    "@onboardingGoalSpeakConfidently": {
+        "description": "Goal option for speaking confidently"
+    },
+    "onboardingGoalGrowVocabulary": "अपनी शब्दावली बढ़ाना",
+    "@onboardingGoalGrowVocabulary": {
+        "description": "Goal option for growing vocabulary"
+    },
+    "onboardingGoalPrepareWorkExams": "काम या परीक्षा की तैयारी",
+    "@onboardingGoalPrepareWorkExams": {
+        "description": "Goal option for work or exams preparation"
+    },
+    "onboardingGoalTravelWithoutStress": "तनाव-मुक्त यात्रा करना",
+    "@onboardingGoalTravelWithoutStress": {
+        "description": "Goal option for stress-free travel"
+    },
+    "onboardingLevelTitle": "आपका वर्तमान स्तर क्या है?",
+    "@onboardingLevelTitle": {
+        "description": "Title for level selection onboarding page"
+    },
+    "onboardingLevelSubtitle": "ज्यादा मत सोचिए। आप इसे कभी भी बदल सकते हैं।",
+    "@onboardingLevelSubtitle": {
+        "description": "Subtitle for level selection onboarding page"
+    },
+    "onboardingLevelBeginner": "शुरुआती",
+    "@onboardingLevelBeginner": {
+        "description": "Beginner level option"
+    },
+    "onboardingLevelIntermediate": "मध्यवर्ती",
+    "@onboardingLevelIntermediate": {
+        "description": "Intermediate level option"
+    },
+    "onboardingLevelAdvanced": "उन्नत",
+    "@onboardingLevelAdvanced": {
+        "description": "Advanced level option"
+    },
+    "onboardingQuickWinQuizPrompt": "कौन सा वाक्य इसे सही ढंग से उपयोग करता है?",
+    "@onboardingQuickWinQuizPrompt": {
+        "description": "Quiz prompt for quick win page"
+    },
+    "onboardingQuickWinCorrect": "सही! आपने एक नया शब्द सीख लिया।",
+    "@onboardingQuickWinCorrect": {
+        "description": "Feedback when user answers correctly"
+    },
+    "onboardingQuickWinIncorrect": "अच्छा प्रयास। सही उत्तर A है।",
+    "@onboardingQuickWinIncorrect": {
+        "description": "Feedback when user answers incorrectly"
+    },
+    "onboardingProgressTitle": "आप पहले से सीख रहे हैं।",
+    "@onboardingProgressTitle": {
+        "description": "Title for progress framing page"
+    },
+    "onboardingProgressWordLearned": "1 शब्द सीखा",
+    "@onboardingProgressWordLearned": {
+        "description": "Stat showing words learned"
+    },
+    "onboardingProgressStreakStarted": "1 स्ट्रीक शुरू",
+    "@onboardingProgressStreakStarted": {
+        "description": "Stat showing streak started"
+    },
+    "onboardingProgressYourProgress": "आपकी प्रगति",
+    "@onboardingProgressYourProgress": {
+        "description": "Label for progress bar"
+    },
+    "onboardingProgressMotivation": "कल्पना करें कि रोजाना 5 मिनट क्या कर सकते हैं।",
+    "@onboardingProgressMotivation": {
+        "description": "Motivational text on progress page"
+    },
+    "onboardingDailyHabitTitle": "आप कितनी बार अभ्यास करना चाहते हैं?",
+    "@onboardingDailyHabitTitle": {
+        "description": "Title for daily habit page"
+    },
+    "onboardingDailyHabitSubtitle": "निरंतरता तीव्रता से बेहतर है।",
+    "@onboardingDailyHabitSubtitle": {
+        "description": "Subtitle for daily habit page"
+    },
+    "onboardingDailyHabit5min": "5 मिनट/दिन",
+    "@onboardingDailyHabit5min": {
+        "description": "5 minute daily habit option"
+    },
+    "onboardingDailyHabit10min": "10 मिनट/दिन",
+    "@onboardingDailyHabit10min": {
+        "description": "10 minute daily habit option"
+    },
+    "onboardingDailyHabit15min": "15 मिनट/दिन",
+    "@onboardingDailyHabit15min": {
+        "description": "15 minute daily habit option"
+    },
+    "onboardingPlanTitle": "आपका WordStock प्लान तैयार है",
+    "@onboardingPlanTitle": {
+        "description": "Title for plan reveal page"
+    },
+    "onboardingPlanYourPlan": "आपका प्लान",
+    "@onboardingPlanYourPlan": {
+        "description": "Header for plan summary"
+    },
+    "onboardingPlanGoalLabel": "लक्ष्य",
+    "@onboardingPlanGoalLabel": {
+        "description": "Label for goal in plan"
+    },
+    "onboardingPlanLevelLabel": "स्तर",
+    "@onboardingPlanLevelLabel": {
+        "description": "Label for level in plan"
+    },
+    "onboardingPlanDailyLabel": "दैनिक",
+    "@onboardingPlanDailyLabel": {
+        "description": "Label for daily commitment in plan"
+    },
+    "onboardingPlanDailyValue": "{minutes} मिनट/दिन",
+    "@onboardingPlanDailyValue": {
+        "description": "Daily commitment value",
+        "placeholders": {
+            "minutes": {
+                "type": "int"
+            }
+        }
+    },
+    "onboardingPlanWhatYouGet": "आपको क्या मिलेगा",
+    "@onboardingPlanWhatYouGet": {
+        "description": "Section header for benefits"
+    },
+    "onboardingPlanDailyLessons": "दैनिक {minutes}-मिनट पाठ",
+    "@onboardingPlanDailyLessons": {
+        "description": "Benefit: daily lessons",
+        "placeholders": {
+            "minutes": {
+                "type": "int"
+            }
+        }
+    },
+    "onboardingPlanWordsMatchedLevel": "आपके स्तर के अनुसार शब्द",
+    "@onboardingPlanWordsMatchedLevel": {
+        "description": "Benefit: level-matched words"
+    },
+    "onboardingPlanSmartReviews": "स्मार्ट रिव्यू ताकि आप न भूलें",
+    "@onboardingPlanSmartReviews": {
+        "description": "Benefit: smart reviews"
+    },
+    "onboardingPlanProgressTracking": "प्रगति ट्रैकिंग और स्ट्रीक्स",
+    "@onboardingPlanProgressTracking": {
+        "description": "Benefit: progress tracking"
+    },
+    "onboardingProofTitle": "आप अकेले नहीं हैं",
+    "@onboardingProofTitle": {
+        "description": "Title for social proof page"
+    },
+    "onboardingProofLearnerCount": "42,000+",
+    "@onboardingProofLearnerCount": {
+        "description": "Number of learners"
+    },
+    "onboardingProofLearnerLabel": "शिक्षार्थी रोजाना अपनी अंग्रेजी सुधार रहे हैं",
+    "@onboardingProofLearnerLabel": {
+        "description": "Label for learner count"
+    },
+    "onboardingProofRating": "4.6 औसत रेटिंग",
+    "@onboardingProofRating": {
+        "description": "App Store rating"
+    },
+    "onboardingProofAppStore": "App Store पर",
+    "@onboardingProofAppStore": {
+        "description": "App Store label"
+    },
+    "onboardingContinue": "जारी रखें",
+    "@onboardingContinue": {
+        "description": "Continue button text"
     }
 } 

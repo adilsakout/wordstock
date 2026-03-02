@@ -1,14 +1,37 @@
 import 'package:flutter/material.dart';
 import 'package:wordstock/features/onboarding/cubit/cubit.dart';
-import 'package:wordstock/features/onboarding/widgets/onboarding_pages/english_test_page.dart';
+import 'package:wordstock/features/onboarding/widgets/onboarding_pages/daily_habit_page.dart';
+import 'package:wordstock/features/onboarding/widgets/onboarding_pages/goal_identity_page.dart';
+import 'package:wordstock/features/onboarding/widgets/onboarding_pages/level_selection_page.dart';
 import 'package:wordstock/features/onboarding/widgets/onboarding_pages/notification_permission_page.dart';
-import 'package:wordstock/features/onboarding/widgets/onboarding_pages/vocabulary_level_page.dart';
+import 'package:wordstock/features/onboarding/widgets/onboarding_pages/plan_reveal_page.dart';
+import 'package:wordstock/features/onboarding/widgets/onboarding_pages/progress_framing_page.dart';
+import 'package:wordstock/features/onboarding/widgets/onboarding_pages/quick_win_page.dart';
+import 'package:wordstock/features/onboarding/widgets/onboarding_pages/social_proof_page.dart';
 import 'package:wordstock/features/onboarding/widgets/onboarding_pages/welcome_page.dart';
-import 'package:wordstock/l10n/l10n.dart';
+import 'package:wordstock/features/onboarding/widgets/onboarding_step_indicator.dart';
 import 'package:wordstock/services/posthog_service.dart';
-import 'package:wordstock/widgets/button.dart';
-import 'package:wordstock/widgets/progress_bar.dart';
 
+/// The main body of the onboarding flow containing 9 screens:
+///
+/// 0. Welcome — Value context, no progress indicator
+/// 1. Goal Identity — "How does English hold you back today?"
+/// 2. Level Selection — "What's your current level?"
+/// 3. Assessment — Vocabulary assessment (word card + quiz)
+/// 4. Progress Framing — "You're already learning"
+/// 5. Daily Habit — "What daily practice works for you?"
+/// 6. Notification Permission — "Stay on track with gentle nudges"
+/// 7. Plan Reveal — Personalized plan summary
+/// 8. Social Proof — Community stats and CTA to paywall
+///
+/// The Welcome screen (index 0) does NOT count toward the 8-step
+/// progress indicator. Steps 1-8 show progress as 1/8 through 8/8.
+///
+/// Each screen follows Apple Human Interface Guidelines with:
+/// - Clean, modern typography and spacing
+/// - Smooth entrance animations
+/// - Consistent navigation patterns
+/// - Progress indicator at the top (hidden on welcome)
 class OnboardingBody extends StatefulWidget {
   /// {@macro onboarding_body}
   const OnboardingBody({super.key});
@@ -21,7 +44,7 @@ class _OnboardingBodyState extends State<OnboardingBody> {
   @override
   void initState() {
     super.initState();
-    // Track onboarding start
+    // Track onboarding start for analytics
     PosthogService.instance.track('Onboarding Started');
   }
 
@@ -31,89 +54,60 @@ class _OnboardingBodyState extends State<OnboardingBody> {
       builder: (context, state) {
         final cubit = context.read<OnboardingCubit>();
 
-        return PageView(
-          scrollDirection: Axis.vertical,
-          controller: cubit.pageController,
-          // physics: const NeverScrollableScrollPhysics(),
-          children: const [
-            WelcomePage(),
-            VocabularyLevelPage(),
-            NotificationPermissionPage(),
-            EnglishTestPage(),
+        return Column(
+          children: [
+            // Step indicator showing progress (1/8 through 8/8)
+            // Automatically hidden on the welcome screen (page 0)
+            const OnboardingStepIndicator(),
+
+            // PageView with 9 screens (welcome + 8 onboarding steps)
+            Expanded(
+              child: PageView(
+                scrollDirection: Axis.vertical,
+                controller: cubit.pageController,
+                physics: const NeverScrollableScrollPhysics(),
+                children: const [
+                  // Screen 0: Welcome (no progress indicator)
+                  // Sets value context and reduces friction
+                  WelcomePage(),
+
+                  // Screen 1 (Step 1/8): Goal selection
+                  // "How does English hold you back today?"
+                  GoalIdentityPage(),
+
+                  // Screen 2 (Step 2/8): Level selection
+                  // "What's your current level?"
+                  LevelSelectionPage(),
+
+                  // Screen 3 (Step 3/8): Vocabulary assessment
+                  // Teaches "Serendipity" with a calibration quiz
+                  QuickWinPage(),
+
+                  // Screen 4 (Step 4/8): Progress framing
+                  // "You're already learning" — celebrates early progress
+                  ProgressFramingPage(),
+
+                  // Screen 5 (Step 5/8): Daily habit selection
+                  // "What daily practice works for you?"
+                  DailyHabitPage(),
+
+                  // Screen 6 (Step 6/8): Notification permission
+                  // "Stay on track with gentle nudges"
+                  NotificationPermissionPage(),
+
+                  // Screen 7 (Step 7/8): Plan reveal
+                  // Shows personalized plan based on selections
+                  PlanRevealPage(),
+
+                  // Screen 8 (Step 8/8): Social proof
+                  // Community stats and final CTA to paywall
+                  SocialProofPage(),
+                ],
+              ),
+            ),
           ],
         );
       },
-    );
-  }
-}
-
-class OnboardingAppBar extends StatefulWidget {
-  const OnboardingAppBar({
-    required this.progress,
-    required this.currentPage,
-    required this.onSkip,
-    required this.onBack,
-    super.key,
-  });
-
-  final VoidCallback onSkip;
-  final VoidCallback onBack;
-  final double progress;
-  final int currentPage;
-
-  @override
-  State<OnboardingAppBar> createState() => _OnboardingAppBarState();
-}
-
-class _OnboardingAppBarState extends State<OnboardingAppBar> {
-  @override
-  Widget build(BuildContext context) {
-    final l10n = context.l10n;
-    final theme = Theme.of(context);
-    final isDark = theme.brightness == Brightness.dark;
-    final shouldShowAppBar = widget.currentPage > 1;
-
-    return AnimatedOpacity(
-      opacity: shouldShowAppBar ? 1.0 : 0.0,
-      duration: const Duration(milliseconds: 300),
-      child: Padding(
-        padding: const EdgeInsets.all(8),
-        child: Row(
-          children: [
-            PushableButton(
-              width: 45,
-              height: 50,
-              borderRadius: 50,
-              text: '',
-              suffixIcon: Icons.arrow_back_ios,
-              onTap: widget.onBack,
-              tooltip: l10n.onboardingBack,
-            ),
-            const SizedBox(width: 10),
-            Expanded(
-              child: Semantics(
-                label: l10n.onboardingProgressLabel,
-                value: '${(widget.progress * 100).round()}%',
-                child: ProgressBar(progress: widget.progress),
-              ),
-            ),
-            const SizedBox(width: 10),
-            Container(
-              width: 45,
-              height: 45,
-              decoration: BoxDecoration(
-                color: isDark ? Colors.grey.shade800 : Colors.grey.shade200,
-                shape: BoxShape.circle,
-              ),
-              child: Icon(
-                Icons.star_rounded,
-                color: const Color(0xFF77D728),
-                semanticLabel: l10n.onboardingStar,
-              ),
-            ),
-          ],
-        ),
-      ),
     );
   }
 }

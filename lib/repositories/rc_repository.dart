@@ -29,8 +29,8 @@ class RcRepository {
     await Purchases.configure(configuration);
   }
 
-  Future<void> presentPaywall() async {
-    await RevenueCatUI.presentPaywall();
+  Future<PaywallResult> presentPaywall() async {
+    return RevenueCatUI.presentPaywall();
   }
 
   Future<bool> isUserSubscribed() async {

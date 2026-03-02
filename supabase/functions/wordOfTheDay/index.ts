@@ -11,11 +11,12 @@ Deno.serve(async () => {
   const ONE_SIGNAL_APP_ID = Deno.env.get("ONESIGNAL_APP_ID")!;
   const ONE_SIGNAL_API_KEY = Deno.env.get("ONESIGNAL_API_KEY")!;
 
-  // 🔍 Fetch users with a valid OneSignal ID
+  // Fetch users with a valid OneSignal ID and global notifications enabled
   const { data: users, error } = await supabase
     .from("user_profiles")
     .select("onesignal_id")
-    .not("onesignal_id", "is", null);
+    .not("onesignal_id", "is", null)
+    .eq("notifications_enabled", true);
 
   if (error) {
     console.error("❌ Supabase error:", error.message);
@@ -25,9 +26,7 @@ Deno.serve(async () => {
     });
   }
 
-  const onesignalIds = users
-    .map((u) => u.onesignal_id)
-    .filter(Boolean);
+  const onesignalIds = users?.map((u) => u.onesignal_id).filter(Boolean) ?? [];
 
   if (onesignalIds.length === 0) {
     return new Response(JSON.stringify({ message: "No users to notify" }), {
@@ -35,60 +34,45 @@ Deno.serve(async () => {
     });
   }
 
-  console.log(`🔔 Sending notifications to ${onesignalIds.length} users`);
-
-  const title = "Word of the Day 🌟";
-  const message = "Discover today's word and grow your vocabulary!";
+  console.log(`🔔 Sending word of the day to ${onesignalIds.length} users`);
 
   const notificationPayload = {
     app_id: ONE_SIGNAL_APP_ID,
-    included_segments: ["All"],
-    delayed_option: "timezone",
-    delivery_time_of_day: "9:00AM",
-    headings: { en: title },
-    contents: { en: message },
+    include_subscription_ids: onesignalIds,
+    headings: { en: "Word of the Day 🌟" },
+    contents: { en: "Discover today's word and grow your vocabulary!" },
   };
 
   try {
-    const onesignalRes = await fetch(
-      "https://api.onesignal.com/notifications?c=push",
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Key ${ONE_SIGNAL_API_KEY}`,
-          Accept: "application/json",
-        },
-        body: JSON.stringify(notificationPayload),
+    const onesignalRes = await fetch("https://api.onesignal.com/notifications?c=push", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Key ${ONE_SIGNAL_API_KEY}`,
+        Accept: "application/json",
       },
-    );
+      body: JSON.stringify(notificationPayload),
+    });
 
     const result = await onesignalRes.json();
 
     if (!onesignalRes.ok) {
       console.error("❌ OneSignal error:", result.errors || result);
-      return new Response(
-        JSON.stringify({ error: result.errors || result }),
-        {
-          status: onesignalRes.status,
-          headers: { "Content-Type": "application/json" },
-        },
-      );
-    } else {
-      console.log("🔔 Notification sent successfully result:", result);
+      return new Response(JSON.stringify({ error: result.errors || result }), {
+        status: onesignalRes.status,
+        headers: { "Content-Type": "application/json" },
+      });
     }
 
+    console.log("🔔 Word of the day notification sent successfully:", result);
     return new Response(JSON.stringify(result), {
       headers: { "Content-Type": "application/json" },
     });
   } catch (err) {
     console.error("❌ Network or unexpected error:", err);
     return new Response(
-      JSON.stringify({ error: "Failed to send notification", err }),
-      {
-        status: 500,
-        headers: { "Content-Type": "application/json" },
-      },
+      JSON.stringify({ error: "Failed to send notification" }),
+      { status: 500, headers: { "Content-Type": "application/json" } },
     );
   }
 });

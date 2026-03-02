@@ -12,8 +12,26 @@ class AppLocalizationsHi extends AppLocalizations {
   String get welcomeTitle => 'वर्डस्टॉक में आपका स्वागत है';
 
   @override
-  String get welcomeDescription =>
-      'वर्डस्टॉक एक ऐसा टूल है जो आपको नए शब्द सीखने में मदद करता है।';
+  String get welcomeSubtitle =>
+      'Learn words you\'ll actually use, in just 5 minutes a day.';
+
+  @override
+  String get welcomeBulletPersonalized => 'Personalized words for your level';
+
+  @override
+  String get welcomeBulletSmartReviews => 'Smart reviews so you don\'t forget';
+
+  @override
+  String get welcomeBulletAssessments => 'Quick assessments that adapt to you';
+
+  @override
+  String get welcomeSocialProof => 'Trusted by 42,000 learners';
+
+  @override
+  String get welcomeCta => 'Build my plan';
+
+  @override
+  String get welcomeSkip => 'Skip';
 
   @override
   String get infoTitle => 'अपनी खुद की शब्द सूची बनाएं';
@@ -702,4 +720,167 @@ class AppLocalizationsHi extends AppLocalizations {
 
   @override
   String get settingsThemeDark => 'डार्क';
+
+  @override
+  String get onboardingGoalTitle => 'अंग्रेजी के साथ आपका लक्ष्य क्या है?';
+
+  @override
+  String get onboardingGoalSubtitle =>
+      'जो सबसे महत्वपूर्ण है उसे चुनें। हम सब कुछ अनुकूलित करेंगे।';
+
+  @override
+  String get onboardingGoalSpeakConfidently => 'आत्मविश्वास से बोलना';
+
+  @override
+  String get onboardingGoalGrowVocabulary => 'अपनी शब्दावली बढ़ाना';
+
+  @override
+  String get onboardingGoalPrepareWorkExams => 'काम या परीक्षा की तैयारी';
+
+  @override
+  String get onboardingGoalTravelWithoutStress => 'तनाव-मुक्त यात्रा करना';
+
+  @override
+  String get onboardingGoalMixSimilarWords => 'I mix up similar words';
+
+  @override
+  String get onboardingGoalSoundNatural => 'I want to sound natural';
+
+  @override
+  String get onboardingLevelTitle => 'आपका वर्तमान स्तर क्या है?';
+
+  @override
+  String get onboardingLevelSubtitle =>
+      'ज्यादा मत सोचिए। आप इसे कभी भी बदल सकते हैं।';
+
+  @override
+  String get onboardingLevelBeginner => 'शुरुआती';
+
+  @override
+  String get onboardingLevelIntermediate => 'मध्यवर्ती';
+
+  @override
+  String get onboardingLevelAdvanced => 'उन्नत';
+
+  @override
+  String get onboardingLevelHelper =>
+      'Most learners start here. You\'re not behind.';
+
+  @override
+  String get onboardingAssessmentTitle => 'Vocabulary assessment';
+
+  @override
+  String get onboardingAssessmentContext =>
+      'This helps us calibrate your level.';
+
+  @override
+  String get onboardingAssessmentQuizPrompt =>
+      'Which sentence uses it correctly?';
+
+  @override
+  String get onboardingAssessmentCorrect =>
+      'Correct. You just learned a new word.';
+
+  @override
+  String get onboardingAssessmentIncorrect =>
+      'Assessment complete. The correct answer is A.';
+
+  @override
+  String get onboardingProgressTitle => 'आप पहले से सीख रहे हैं।';
+
+  @override
+  String get onboardingProgressWordLearned => '1 शब्द सीखा';
+
+  @override
+  String get onboardingProgressStreakStarted => '1 स्ट्रीक शुरू';
+
+  @override
+  String get onboardingProgressYourProgress => 'आपकी प्रगति';
+
+  @override
+  String get onboardingProgressMotivation =>
+      'कल्पना करें कि रोजाना 5 मिनट क्या कर सकते हैं।';
+
+  @override
+  String get onboardingDailyHabitTitle => 'आप कितनी बार अभ्यास करना चाहते हैं?';
+
+  @override
+  String get onboardingDailyHabitSubtitle => 'निरंतरता तीव्रता से बेहतर है।';
+
+  @override
+  String get onboardingDailyHabitHelper =>
+      'We\'ll gently coach you to stay consistent.';
+
+  @override
+  String get onboardingDailyHabit5min => '5 मिनट/दिन';
+
+  @override
+  String get onboardingDailyHabit10min => '10 मिनट/दिन';
+
+  @override
+  String get onboardingDailyHabit15min => '15 मिनट/दिन';
+
+  @override
+  String get onboardingPlanTitle => 'आपका WordStock प्लान तैयार है';
+
+  @override
+  String get onboardingPlanYourPlan => 'आपका प्लान';
+
+  @override
+  String get onboardingPlanGoalLabel => 'लक्ष्य';
+
+  @override
+  String get onboardingPlanLevelLabel => 'स्तर';
+
+  @override
+  String get onboardingPlanDailyLabel => 'दैनिक';
+
+  @override
+  String onboardingPlanDailyValue(int minutes) {
+    return '$minutes मिनट/दिन';
+  }
+
+  @override
+  String get onboardingPlanWhatYouGet => 'आपको क्या मिलेगा';
+
+  @override
+  String onboardingPlanDailyLessons(int minutes) {
+    return 'दैनिक $minutes-मिनट पाठ';
+  }
+
+  @override
+  String get onboardingPlanWordsMatchedLevel => 'आपके स्तर के अनुसार शब्द';
+
+  @override
+  String get onboardingPlanSmartReviews => 'स्मार्ट रिव्यू ताकि आप न भूलें';
+
+  @override
+  String get onboardingPlanProgressTracking => 'प्रगति ट्रैकिंग और स्ट्रीक्स';
+
+  @override
+  String get onboardingPlanReassurance =>
+      'Designed for where most learners start.';
+
+  @override
+  String get onboardingProofTitle => 'आप अकेले नहीं हैं';
+
+  @override
+  String get onboardingProofLearnerCount => '42,000+';
+
+  @override
+  String get onboardingProofSubtitle =>
+      'Join 42,000 learners improving their English every day';
+
+  @override
+  String get onboardingProofLearnerLabel =>
+      'शिक्षार्थी रोजाना अपनी अंग्रेजी सुधार रहे हैं';
+
+  @override
+  String get onboardingProofRating => '4.6 औसत रेटिंग';
+
+  @override
+  String get onboardingProofAppStore => 'App Store पर';
+
+  @override
+  String get onboardingContinue => 'जारी रखें';
 }

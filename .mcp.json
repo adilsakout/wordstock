@@ -1,0 +1,8 @@
+{
+  "mcpServers": {
+    "supabase": {
+      "type": "http",
+      "url": "https://mcp.supabase.com/mcp?features=functions%2Cdevelopment%2Cdebugging%2Cdatabase"
+    }
+  }
+}

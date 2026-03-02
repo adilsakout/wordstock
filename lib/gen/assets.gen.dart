@@ -186,6 +186,21 @@ class $AssetsSoundsGen {
   List<String> get values => [click, correct, error, faLaLa, success];
 }
 
+class $AssetsSplashGen {
+  const $AssetsSplashGen();
+
+  /// File path: assets/splash/splash_img_dark.png
+  AssetGenImage get splashImgDark =>
+      const AssetGenImage('assets/splash/splash_img_dark.png');
+
+  /// File path: assets/splash/splash_img_light.png
+  AssetGenImage get splashImgLight =>
+      const AssetGenImage('assets/splash/splash_img_light.png');
+
+  /// List of all assets
+  List<AssetGenImage> get values => [splashImgDark, splashImgLight];
+}
+
 class Assets {
   const Assets._();
 
@@ -196,6 +211,7 @@ class Assets {
   static const $AssetsLottieGen lottie = $AssetsLottieGen();
   static const $AssetsSecretsGen secrets = $AssetsSecretsGen();
   static const $AssetsSoundsGen sounds = $AssetsSoundsGen();
+  static const $AssetsSplashGen splash = $AssetsSplashGen();
 
   /// List of all assets
   static List<String> get values => [aEnv];

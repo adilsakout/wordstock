@@ -12,7 +12,26 @@ class AppLocalizationsZh extends AppLocalizations {
   String get welcomeTitle => '歡迎使用 Wordstock';
 
   @override
-  String get welcomeDescription => 'Wordstock 是一個幫助您學習新單字的工具。';
+  String get welcomeSubtitle =>
+      'Learn words you\'ll actually use, in just 5 minutes a day.';
+
+  @override
+  String get welcomeBulletPersonalized => 'Personalized words for your level';
+
+  @override
+  String get welcomeBulletSmartReviews => 'Smart reviews so you don\'t forget';
+
+  @override
+  String get welcomeBulletAssessments => 'Quick assessments that adapt to you';
+
+  @override
+  String get welcomeSocialProof => 'Trusted by 42,000 learners';
+
+  @override
+  String get welcomeCta => 'Build my plan';
+
+  @override
+  String get welcomeSkip => 'Skip';
 
   @override
   String get infoTitle => '建立自訂單字清單';
@@ -672,4 +691,163 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get settingsThemeDark => '深色';
+
+  @override
+  String get onboardingGoalTitle => '您學習英語的目標是什麼？';
+
+  @override
+  String get onboardingGoalSubtitle => '選擇最重要的。我們會為您量身定制。';
+
+  @override
+  String get onboardingGoalSpeakConfidently => '自信地說話';
+
+  @override
+  String get onboardingGoalGrowVocabulary => '擴大詞彙量';
+
+  @override
+  String get onboardingGoalPrepareWorkExams => '準備工作或考試';
+
+  @override
+  String get onboardingGoalTravelWithoutStress => '輕鬆旅行';
+
+  @override
+  String get onboardingGoalMixSimilarWords => 'I mix up similar words';
+
+  @override
+  String get onboardingGoalSoundNatural => 'I want to sound natural';
+
+  @override
+  String get onboardingLevelTitle => '您目前的程度是什麼？';
+
+  @override
+  String get onboardingLevelSubtitle => '別想太多。您可以隨時更改。';
+
+  @override
+  String get onboardingLevelBeginner => '初級';
+
+  @override
+  String get onboardingLevelIntermediate => '中級';
+
+  @override
+  String get onboardingLevelAdvanced => '高級';
+
+  @override
+  String get onboardingLevelHelper =>
+      'Most learners start here. You\'re not behind.';
+
+  @override
+  String get onboardingAssessmentTitle => 'Vocabulary assessment';
+
+  @override
+  String get onboardingAssessmentContext =>
+      'This helps us calibrate your level.';
+
+  @override
+  String get onboardingAssessmentQuizPrompt =>
+      'Which sentence uses it correctly?';
+
+  @override
+  String get onboardingAssessmentCorrect =>
+      'Correct. You just learned a new word.';
+
+  @override
+  String get onboardingAssessmentIncorrect =>
+      'Assessment complete. The correct answer is A.';
+
+  @override
+  String get onboardingProgressTitle => '您已經在學習了。';
+
+  @override
+  String get onboardingProgressWordLearned => '學會 1 個單字';
+
+  @override
+  String get onboardingProgressStreakStarted => '開始 1 天連續';
+
+  @override
+  String get onboardingProgressYourProgress => '您的進度';
+
+  @override
+  String get onboardingProgressMotivation => '想像每天 5 分鐘能做到什麼。';
+
+  @override
+  String get onboardingDailyHabitTitle => '您想多久練習一次？';
+
+  @override
+  String get onboardingDailyHabitSubtitle => '堅持勝過強度。';
+
+  @override
+  String get onboardingDailyHabitHelper =>
+      'We\'ll gently coach you to stay consistent.';
+
+  @override
+  String get onboardingDailyHabit5min => '5 分鐘/天';
+
+  @override
+  String get onboardingDailyHabit10min => '10 分鐘/天';
+
+  @override
+  String get onboardingDailyHabit15min => '15 分鐘/天';
+
+  @override
+  String get onboardingPlanTitle => '您的 WordStock 計劃已準備好';
+
+  @override
+  String get onboardingPlanYourPlan => '您的計劃';
+
+  @override
+  String get onboardingPlanGoalLabel => '目標';
+
+  @override
+  String get onboardingPlanLevelLabel => '程度';
+
+  @override
+  String get onboardingPlanDailyLabel => '每日';
+
+  @override
+  String onboardingPlanDailyValue(int minutes) {
+    return '$minutes 分鐘/天';
+  }
+
+  @override
+  String get onboardingPlanWhatYouGet => '您將獲得';
+
+  @override
+  String onboardingPlanDailyLessons(int minutes) {
+    return '每日 $minutes 分鐘課程';
+  }
+
+  @override
+  String get onboardingPlanWordsMatchedLevel => '符合您程度的單字';
+
+  @override
+  String get onboardingPlanSmartReviews => '智能複習讓您不會忘記';
+
+  @override
+  String get onboardingPlanProgressTracking => '進度追蹤與連續記錄';
+
+  @override
+  String get onboardingPlanReassurance =>
+      'Designed for where most learners start.';
+
+  @override
+  String get onboardingProofTitle => '您並不孤單';
+
+  @override
+  String get onboardingProofLearnerCount => '42,000+';
+
+  @override
+  String get onboardingProofSubtitle =>
+      'Join 42,000 learners improving their English every day';
+
+  @override
+  String get onboardingProofLearnerLabel => '學習者每天都在提升英語';
+
+  @override
+  String get onboardingProofRating => '4.6 平均評分';
+
+  @override
+  String get onboardingProofAppStore => '在 App Store';
+
+  @override
+  String get onboardingContinue => '繼續';
 }

@@ -964,5 +964,179 @@
     "settingsThemeDark": "Oscuro",
     "@settingsThemeDark": {
         "description": "Option for dark theme"
+    },
+    "onboardingGoalTitle": "¿Cuál es tu objetivo con el inglés?",
+    "@onboardingGoalTitle": {
+        "description": "Title for goal identity onboarding page"
+    },
+    "onboardingGoalSubtitle": "Elige lo que más te importa. Lo adaptaremos todo.",
+    "@onboardingGoalSubtitle": {
+        "description": "Subtitle for goal identity onboarding page"
+    },
+    "onboardingGoalSpeakConfidently": "Hablar con confianza",
+    "@onboardingGoalSpeakConfidently": {
+        "description": "Goal option for speaking confidently"
+    },
+    "onboardingGoalGrowVocabulary": "Ampliar mi vocabulario",
+    "@onboardingGoalGrowVocabulary": {
+        "description": "Goal option for growing vocabulary"
+    },
+    "onboardingGoalPrepareWorkExams": "Prepararme para trabajo o exámenes",
+    "@onboardingGoalPrepareWorkExams": {
+        "description": "Goal option for work or exams preparation"
+    },
+    "onboardingGoalTravelWithoutStress": "Viajar sin estrés",
+    "@onboardingGoalTravelWithoutStress": {
+        "description": "Goal option for stress-free travel"
+    },
+    "onboardingLevelTitle": "¿Cuál es tu nivel actual?",
+    "@onboardingLevelTitle": {
+        "description": "Title for level selection onboarding page"
+    },
+    "onboardingLevelSubtitle": "No lo pienses demasiado. Puedes cambiarlo cuando quieras.",
+    "@onboardingLevelSubtitle": {
+        "description": "Subtitle for level selection onboarding page"
+    },
+    "onboardingLevelBeginner": "Principiante",
+    "@onboardingLevelBeginner": {
+        "description": "Beginner level option"
+    },
+    "onboardingLevelIntermediate": "Intermedio",
+    "@onboardingLevelIntermediate": {
+        "description": "Intermediate level option"
+    },
+    "onboardingLevelAdvanced": "Avanzado",
+    "@onboardingLevelAdvanced": {
+        "description": "Advanced level option"
+    },
+    "onboardingQuickWinQuizPrompt": "¿Qué oración lo usa correctamente?",
+    "@onboardingQuickWinQuizPrompt": {
+        "description": "Quiz prompt for quick win page"
+    },
+    "onboardingQuickWinCorrect": "¡Correcto! Acabas de aprender una nueva palabra.",
+    "@onboardingQuickWinCorrect": {
+        "description": "Feedback when user answers correctly"
+    },
+    "onboardingQuickWinIncorrect": "Buen intento. La respuesta correcta es A.",
+    "@onboardingQuickWinIncorrect": {
+        "description": "Feedback when user answers incorrectly"
+    },
+    "onboardingProgressTitle": "Ya estás aprendiendo.",
+    "@onboardingProgressTitle": {
+        "description": "Title for progress framing page"
+    },
+    "onboardingProgressWordLearned": "1 palabra aprendida",
+    "@onboardingProgressWordLearned": {
+        "description": "Stat showing words learned"
+    },
+    "onboardingProgressStreakStarted": "1 racha iniciada",
+    "@onboardingProgressStreakStarted": {
+        "description": "Stat showing streak started"
+    },
+    "onboardingProgressYourProgress": "Tu progreso",
+    "@onboardingProgressYourProgress": {
+        "description": "Label for progress bar"
+    },
+    "onboardingProgressMotivation": "Imagina lo que 5 minutos al día pueden lograr.",
+    "@onboardingProgressMotivation": {
+        "description": "Motivational text on progress page"
+    },
+    "onboardingDailyHabitTitle": "¿Con qué frecuencia quieres practicar?",
+    "@onboardingDailyHabitTitle": {
+        "description": "Title for daily habit page"
+    },
+    "onboardingDailyHabitSubtitle": "La constancia supera a la intensidad.",
+    "@onboardingDailyHabitSubtitle": {
+        "description": "Subtitle for daily habit page"
+    },
+    "onboardingDailyHabit5min": "5 min/día",
+    "@onboardingDailyHabit5min": {
+        "description": "5 minute daily habit option"
+    },
+    "onboardingDailyHabit10min": "10 min/día",
+    "@onboardingDailyHabit10min": {
+        "description": "10 minute daily habit option"
+    },
+    "onboardingDailyHabit15min": "15 min/día",
+    "@onboardingDailyHabit15min": {
+        "description": "15 minute daily habit option"
+    },
+    "onboardingPlanTitle": "Tu plan WordStock está listo",
+    "@onboardingPlanTitle": {
+        "description": "Title for plan reveal page"
+    },
+    "onboardingPlanYourPlan": "Tu Plan",
+    "@onboardingPlanYourPlan": {
+        "description": "Header for plan summary"
+    },
+    "onboardingPlanGoalLabel": "Objetivo",
+    "@onboardingPlanGoalLabel": {
+        "description": "Label for goal in plan"
+    },
+    "onboardingPlanLevelLabel": "Nivel",
+    "@onboardingPlanLevelLabel": {
+        "description": "Label for level in plan"
+    },
+    "onboardingPlanDailyLabel": "Diario",
+    "@onboardingPlanDailyLabel": {
+        "description": "Label for daily commitment in plan"
+    },
+    "onboardingPlanDailyValue": "{minutes} min/día",
+    "@onboardingPlanDailyValue": {
+        "description": "Daily commitment value",
+        "placeholders": {
+            "minutes": {
+                "type": "int"
+            }
+        }
+    },
+    "onboardingPlanWhatYouGet": "Lo que obtendrás",
+    "@onboardingPlanWhatYouGet": {
+        "description": "Section header for benefits"
+    },
+    "onboardingPlanDailyLessons": "Lecciones diarias de {minutes} minutos",
+    "@onboardingPlanDailyLessons": {
+        "description": "Benefit: daily lessons",
+        "placeholders": {
+            "minutes": {
+                "type": "int"
+            }
+        }
+    },
+    "onboardingPlanWordsMatchedLevel": "Palabras adaptadas a tu nivel",
+    "@onboardingPlanWordsMatchedLevel": {
+        "description": "Benefit: level-matched words"
+    },
+    "onboardingPlanSmartReviews": "Repasos inteligentes para que no olvides",
+    "@onboardingPlanSmartReviews": {
+        "description": "Benefit: smart reviews"
+    },
+    "onboardingPlanProgressTracking": "Seguimiento del progreso y rachas",
+    "@onboardingPlanProgressTracking": {
+        "description": "Benefit: progress tracking"
+    },
+    "onboardingProofTitle": "No estás solo en esto",
+    "@onboardingProofTitle": {
+        "description": "Title for social proof page"
+    },
+    "onboardingProofLearnerCount": "42.000+",
+    "@onboardingProofLearnerCount": {
+        "description": "Number of learners"
+    },
+    "onboardingProofLearnerLabel": "estudiantes mejorando su inglés cada día",
+    "@onboardingProofLearnerLabel": {
+        "description": "Label for learner count"
+    },
+    "onboardingProofRating": "4,6 valoración promedio",
+    "@onboardingProofRating": {
+        "description": "App Store rating"
+    },
+    "onboardingProofAppStore": "en la App Store",
+    "@onboardingProofAppStore": {
+        "description": "App Store label"
+    },
+    "onboardingContinue": "Continuar",
+    "@onboardingContinue": {
+        "description": "Continue button text"
     }
 } 

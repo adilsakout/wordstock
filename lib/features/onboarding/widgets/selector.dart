@@ -1,4 +1,3 @@
-import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
 import 'package:gaimon/gaimon.dart';
 
@@ -21,7 +20,6 @@ class Selector extends StatefulWidget {
 class SelectorState extends State<Selector>
     with SingleTickerProviderStateMixin {
   late final AnimationController _animationController;
-  final AudioPlayer _audioPlayer = AudioPlayer();
 
   @override
   void initState() {
@@ -50,7 +48,6 @@ class SelectorState extends State<Selector>
   @override
   void dispose() {
     _animationController.dispose();
-    _audioPlayer.dispose();
     super.dispose();
   }
 
