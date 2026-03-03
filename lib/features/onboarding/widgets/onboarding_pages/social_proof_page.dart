@@ -31,7 +31,10 @@ class SocialProofPage extends StatelessWidget {
         // First navigate to home
         context.go('/home');
 
-        // Then show the paywall
+        // Mark paywall as shown so it doesn't re-show on next app open
+        await prefs.setBool('paywall_shown_after_onboarding', true);
+
+        // Then show the paywall once
         await Future.delayed(const Duration(milliseconds: 500), () {
           if (context.mounted) {
             context.read<SubscriptionCubit>().showPaywall();

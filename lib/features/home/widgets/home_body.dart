@@ -6,6 +6,8 @@ import 'package:gaimon/gaimon.dart';
 import 'package:go_router/go_router.dart';
 import 'package:in_app_review/in_app_review.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:wordstock/features/credit/cubit/credit_cubit.dart';
+import 'package:wordstock/features/credit/widgets/credit_indicator_widget.dart';
 import 'package:wordstock/features/home/cubit/cubit.dart';
 import 'package:wordstock/features/home/cubit/learning_progress_cubit.dart';
 import 'package:wordstock/features/home/widgets/paywall_button.dart';
@@ -49,10 +51,10 @@ class _HomeBodyState extends State<HomeBody>
     )..repeat(reverse: true);
     WidgetsBinding.instance.addPostFrameCallback((_) {
       context.read<HomeCubit>().fetchWords();
-      context
-          .read<SubscriptionCubit>()
-          .checkSubscriptionAndShowPaywallAfterOnboarding();
+      context.read<SubscriptionCubit>().checkSubscription();
+      context.read<CreditCubit>().loadCredits();
 
+      _showPaywallOnceAfterOnboarding();
       _requestReview();
     });
   }
@@ -137,6 +139,36 @@ class _HomeBodyState extends State<HomeBody>
         );
       },
     );
+  }
+
+  /// Shows the paywall exactly once after onboarding completes.
+  /// Uses a SharedPreferences flag to prevent showing it again.
+  Future<void> _showPaywallOnceAfterOnboarding() async {
+    final prefs = await SharedPreferences.getInstance();
+    final paywallShown =
+        prefs.getBool('paywall_shown_after_onboarding') ?? false;
+
+    if (paywallShown) return;
+
+    final hasCompletedOnboarding =
+        prefs.getBool('onboarding_completed') ?? false;
+    if (!hasCompletedOnboarding) return;
+
+    await prefs.setBool('paywall_shown_after_onboarding', true);
+
+    if (!mounted) return;
+
+    final isSubscribed =
+        context.read<SubscriptionCubit>().state.maybeWhen(
+              loaded: (isSubscribed) => isSubscribed,
+              orElse: () => false,
+            );
+
+    if (!isSubscribed) {
+      await Future<void>.delayed(const Duration(milliseconds: 500));
+      if (!mounted) return;
+      await context.read<SubscriptionCubit>().showPaywall();
+    }
   }
 
   Future<void> _requestReview() async {
@@ -239,6 +271,7 @@ class _HomeBodyState extends State<HomeBody>
                             children: [
                               const UserStreakWidget(),
                               const UserPointWidget(),
+                              const CreditIndicatorWidget(),
                               const Spacer(),
                               if (kDebugMode)
                                 IconButton(
