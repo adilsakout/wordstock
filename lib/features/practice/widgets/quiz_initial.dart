@@ -104,7 +104,7 @@ class _QuizInitialState extends State<QuizInitial>
                 ),
                 child: const Center(
                   child: Text(
-                    'Vocabulary Quiz',
+                    'Practice',
                     style: TextStyle(
                       color: Colors.white,
                       fontSize: 16,
@@ -130,18 +130,18 @@ class _QuizInitialState extends State<QuizInitial>
           child: RichText(
             textAlign: TextAlign.center,
             text: const TextSpan(
-              text: 'Test your vocabulary knowledge with one of our ',
+              text: 'Choose a mode to practice your vocabulary with ',
               style: TextStyle(
                 color: Colors.black54,
                 fontSize: 14,
               ),
               children: [
                 TextSpan(
-                  text: 'AI-generated',
+                  text: 'AI-powered',
                   style: TextStyle(fontWeight: FontWeight.bold),
                 ),
                 TextSpan(
-                  text: ' quiz!',
+                  text: ' questions.',
                 ),
               ],
             ),
@@ -172,6 +172,60 @@ class _QuizInitialState extends State<QuizInitial>
             .fadeIn(delay: 300.ms, duration: 250.ms)
             .slideY(
               delay: 300.ms,
+              begin: 0.3,
+              end: 0,
+              duration: 250.ms,
+              curve: Curves.easeOutCubic,
+            ),
+        const SizedBox(height: 12),
+
+        // Flashcard Mode Button
+        PushableButton(
+          width: 220,
+          height: 56,
+          buttonColor: const Color(0xff1CB0F6),
+          shadowColor: const Color(0xff1899D6),
+          text: 'Flashcard Mode',
+          prefixIcon: Icons.style_rounded,
+          spacing: 8,
+          onTap: () {
+            Gaimon.light();
+            context.read<PracticeCubit>().startFlashcards();
+            // Navigation is handled by BlocListener in PracticeBody
+          },
+        )
+            .animate(controller: _animationController)
+            .fadeIn(delay: 400.ms, duration: 250.ms)
+            .slideY(
+              delay: 400.ms,
+              begin: 0.3,
+              end: 0,
+              duration: 250.ms,
+              curve: Curves.easeOutCubic,
+            ),
+        const SizedBox(height: 12),
+
+        // Typing Mode Button
+        PushableButton(
+          width: 220,
+          height: 56,
+          buttonColor: const Color(0xffFFC800),
+          shadowColor: const Color(0xffCDB054),
+          text: 'Typing Mode',
+          prefixIcon: Icons.keyboard_rounded,
+          spacing: 8,
+          onTap: () {
+            Gaimon.light();
+            context.read<PracticeCubit>().getQuizFromWords(
+                  mode: PracticeMode.typing,
+                );
+            widget.onTap();
+          },
+        )
+            .animate(controller: _animationController)
+            .fadeIn(delay: 500.ms, duration: 250.ms)
+            .slideY(
+              delay: 500.ms,
               begin: 0.3,
               end: 0,
               duration: 250.ms,

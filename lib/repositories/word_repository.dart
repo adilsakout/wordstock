@@ -178,6 +178,79 @@ class WordRepository {
     }
   }
 
+  /// Returns up to [total] words prioritised for adaptive quiz:
+  ///  1. Overdue (next_review_date < now, not mastered) — up to 6 slots
+  ///  2. Due today (next_review_date = today, not mastered)
+  ///  3. New unseen words (no user_progress row)
+  Future<List<Word>> getAdaptiveQuizWords({int total = 10}) async {
+    try {
+      final userId = _getUserId();
+      final now = DateTime.now();
+      final nowIso = now.toIso8601String();
+
+      // 1. Overdue words
+      final overdueResponse = await _supabase
+          .from('user_progress')
+          .select('word_id, words!inner(*)')
+          .eq('user_id', userId)
+          .eq('mastered', false)
+          .lt('next_review_date', nowIso)
+          .order('next_review_date')
+          .limit(6);
+
+      final overdue = (overdueResponse as List<dynamic>)
+          .map(
+            (json) => Word.fromJson(
+              (json as Map<String, dynamic>)['words'] as Map<String, dynamic>,
+            ),
+          )
+          .toList();
+
+      final seenIds = overdue.map((w) => w.id).toSet();
+      final remaining = total - overdue.length;
+
+      if (remaining <= 0) return overdue.take(total).toList();
+
+      // 2. Due-today words (next_review_date == today, not already loaded)
+      final todayEnd = DateTime(now.year, now.month, now.day, 23, 59, 59)
+          .toIso8601String();
+
+      final dueResponse = await _supabase
+          .from('user_progress')
+          .select('word_id, words!inner(*)')
+          .eq('user_id', userId)
+          .eq('mastered', false)
+          .gte('next_review_date', nowIso)
+          .lte('next_review_date', todayEnd)
+          .order('next_review_date')
+          .limit(remaining);
+
+      final dueToday = (dueResponse as List<dynamic>)
+          .map(
+            (json) => Word.fromJson(
+              (json as Map<String, dynamic>)['words'] as Map<String, dynamic>,
+            ),
+          )
+          .where((w) => !seenIds.contains(w.id))
+          .toList();
+
+      final combined = [...overdue, ...dueToday];
+      seenIds.addAll(dueToday.map((w) => w.id));
+      final remaining2 = total - combined.length;
+
+      if (remaining2 <= 0) return combined.take(total).toList();
+
+      // 3. New unseen words (fall back to RPC which handles ordering)
+      final allNew = await getQuizWords();
+      final newWords = allNew.where((w) => !seenIds.contains(w.id)).toList();
+
+      return [...combined, ...newWords.take(remaining2)];
+    } catch (e) {
+      log('Error in getAdaptiveQuizWords, falling back to getQuizWords: $e');
+      return getQuizWords();
+    }
+  }
+
   Future<List<Word>> getQuizWords() async {
     try {
       final response = await _supabase.rpc<dynamic>(
@@ -200,24 +273,34 @@ class WordRepository {
     }
   }
 
-  /// Get words due for review today (spaced repetition)
+  /// Get words due for review today (spaced repetition).
+  /// Returns words where next_review_date <= now AND mastered = false.
+  /// Falls back to new unseen words if none are due.
   Future<List<Word>> getTodaysReviewWords() async {
     try {
+      final now = DateTime.now().toIso8601String();
+
       final response = await _supabase
           .from('user_progress')
           .select('word_id, words!inner(*)')
           .eq('user_id', _getUserId())
+          .eq('mastered', false)
+          .lte('next_review_date', now)
           .order('next_review_date')
-          .order('shuffle_order')
           .limit(10);
 
-      return response
+      final words = (response as List<dynamic>)
           .map(
             (json) => Word.fromJson(
-              json['words'] as Map<String, dynamic>,
+              (json as Map<String, dynamic>)['words'] as Map<String, dynamic>,
             ),
           )
           .toList();
+
+      if (words.isNotEmpty) return words;
+
+      // Fallback: return new unseen words
+      return getQuizWords();
     } catch (e) {
       throw Exception('Failed to load review words: $e');
     }
@@ -283,6 +366,83 @@ class WordRepository {
     }
   }
 
+  /// Returns the next review interval in days based on times reviewed.
+  /// Uses a simple fixed interval table for spaced repetition.
+  int _getNextIntervalDays(int timesReviewed) {
+    const intervals = [1, 3, 7, 14, 30];
+    final index = timesReviewed.clamp(0, intervals.length - 1);
+    return intervals[index];
+  }
+
+  /// Updates user_progress after a quiz session.
+  ///
+  /// [wordIdToResult] maps word ID → was the answer correct.
+  /// Correct answers advance the SR interval; wrong answers reset to day 1.
+  Future<void> updateProgressAfterQuiz(
+    Map<String, bool> wordIdToResult,
+  ) async {
+    if (wordIdToResult.isEmpty) return;
+
+    try {
+      final userId = _getUserId();
+      final now = DateTime.now();
+
+      // Fetch existing progress rows for these words
+      final wordIds = wordIdToResult.keys.toList();
+      final existing = await _supabase
+          .from('user_progress')
+          .select('word_id, times_reviewed, mastered')
+          .eq('user_id', userId)
+          .inFilter('word_id', wordIds);
+
+      final existingMap = <String, Map<String, dynamic>>{};
+      for (final row in existing as List<dynamic>) {
+        final r = row as Map<String, dynamic>;
+        existingMap[r['word_id'].toString()] = r;
+      }
+
+      final upsertRows = <Map<String, dynamic>>[];
+
+      for (final entry in wordIdToResult.entries) {
+        final wordId = entry.key;
+        final wasCorrect = entry.value;
+        final prev = existingMap[wordId];
+        final prevTimesReviewed = (prev?['times_reviewed'] as int?) ?? 0;
+
+        int newTimesReviewed;
+        bool mastered;
+        int intervalDays;
+
+        if (wasCorrect) {
+          newTimesReviewed = prevTimesReviewed + 1;
+          intervalDays = _getNextIntervalDays(newTimesReviewed);
+          mastered = newTimesReviewed >= 5;
+        } else {
+          newTimesReviewed = 0;
+          intervalDays = 1;
+          mastered = false;
+        }
+
+        upsertRows.add({
+          'user_id': userId,
+          'word_id': wordId,
+          'times_reviewed': newTimesReviewed,
+          'mastered': mastered,
+          'last_reviewed': now.toIso8601String(),
+          'next_review_date':
+              now.add(Duration(days: intervalDays)).toIso8601String(),
+        });
+      }
+
+      await _supabase
+          .from('user_progress')
+          .upsert(upsertRows, onConflict: 'user_id,word_id');
+    } catch (e) {
+      log('Error updating progress after quiz: $e');
+      throw Exception('Failed to update quiz progress: $e');
+    }
+  }
+
   /// Mark words as learned
   Future<void> markWordAsLearned(List<String> wordIds) async {
     try {
@@ -293,22 +453,9 @@ class WordRepository {
           wordIds.where((id) => id.isNotEmpty).toSet().toList();
       if (validWordIds.isEmpty) return;
 
-      final now = DateTime.now();
-      final nextReviewDate = now.add(const Duration(days: 1));
-
-      await _supabase.from('user_progress').upsert(
-            validWordIds
-                .map(
-                  (wordId) => {
-                    'user_id': _getUserId(),
-                    'word_id': wordId,
-                    'mastered': true,
-                    'next_review_date': nextReviewDate.toIso8601String(),
-                  },
-                )
-                .toList(),
-            onConflict: 'user_id,word_id',
-          );
+      await updateProgressAfterQuiz(
+        {for (final id in validWordIds) id: true},
+      );
     } catch (e) {
       throw Exception('Failed to learn word: $e');
     }
@@ -323,7 +470,7 @@ class WordRepository {
           .from('user_progress')
           .select('word_id, words!inner(*)')
           .eq('user_id', _getUserId())
-          .order('updated_at', ascending: false)
+          .order('last_reviewed', ascending: false)
           .limit(limit);
 
       return response

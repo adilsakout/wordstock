@@ -48,6 +48,7 @@ class _VocabularyQuizState extends State<VocabularyQuiz>
 
   void _goToNextQuestion(BuildContext context, PracticeQuizLoaded state) {
     if (state.isLastQuestion) {
+      if (state.isLoadingMore) return; // Still waiting for more questions
       widget.onTap(); // Go to results page
       return;
     }
@@ -244,7 +245,9 @@ class _VocabularyQuizState extends State<VocabularyQuiz>
                             children: [
                               const SizedBox(width: 16),
                               Text(
-                                l10n.vocabularyQuiz,
+                                state.mode == PracticeMode.typing
+                                    ? 'Typing Mode'
+                                    : l10n.vocabularyQuiz,
                                 style: const TextStyle(
                                   color: Color(0xffE94E77),
                                   fontSize: 16,
@@ -264,10 +267,12 @@ class _VocabularyQuizState extends State<VocabularyQuiz>
                                 ),
                                 child: Center(
                                   child: Text(
-                                    l10n.questionCounter(
-                                      currentIndex + 1,
-                                      questions.length,
-                                    ),
+                                    state.isLoadingMore
+                                        ? '${currentIndex + 1} / ${questions.length}+'
+                                        : l10n.questionCounter(
+                                            currentIndex + 1,
+                                            questions.length,
+                                          ),
                                     style: const TextStyle(
                                       color: Colors.white,
                                       fontSize: 16,
@@ -286,17 +291,20 @@ class _VocabularyQuizState extends State<VocabularyQuiz>
               ),
 
               const SizedBox(height: 16),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16),
-                child: Text(
-                  l10n.selectCorrectWord,
-                  textAlign: TextAlign.center,
-                  style: const TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.w600,
+              if (state.mode != PracticeMode.typing)
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 16),
+                  child: Text(
+                    l10n.selectCorrectWord,
+                    textAlign: TextAlign.center,
+                    style: const TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.w600,
+                    ),
                   ),
                 ),
-              ),
+              if (state.mode != PracticeMode.typing)
+                const SizedBox(height: 8),
 
               // Expanded area for PageView
               Expanded(
@@ -318,6 +326,7 @@ class _VocabularyQuizState extends State<VocabularyQuiz>
                       question: question,
                       isAnswered: isCurrentQuestion && hasSubmittedAnswer,
                       selectedOption: state.selectedAnswers[index],
+                      mode: state.mode,
                       onTap: (option) {
                         // Only process selection for current question
                         if (isCurrentQuestion && !hasSubmittedAnswer) {
@@ -329,127 +338,140 @@ class _VocabularyQuizState extends State<VocabularyQuiz>
                 ),
               ),
 
-              AnimatedSlide(
-                offset: (hasSubmittedAnswer && _showNextButton)
-                    ? Offset.zero
-                    : const Offset(0, 1),
-                duration: const Duration(milliseconds: 400),
+              // Footer slides in after an answer is submitted.
+              // AnimatedSize collapses the height to zero when hidden so it
+              // does NOT reserve dead layout space (unlike AnimatedSlide).
+              AnimatedSize(
+                duration: const Duration(milliseconds: 350),
                 curve: Curves.easeOutCubic,
-                child: AnimatedContainer(
-                  duration: const Duration(milliseconds: 300),
-                  curve: Curves.easeInOut,
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(32),
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.black.withValues(alpha: 0.1),
-                        blurRadius: 20,
-                        offset: const Offset(0, -4),
-                      ),
-                    ],
-                  ),
-                  child: SafeArea(
-                    top: false,
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 24,
-                        vertical: 20,
-                      ),
-                      child: Column(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          // Feedback icon and message
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              // Icon with animation
-                              Container(
-                                width: 32,
-                                height: 32,
-                                decoration: BoxDecoration(
-                                  color: (state.answerResults[currentIndex] ??
-                                          false)
-                                      ? const Color(0xff58CC02)
-                                      : const Color(0xffFF4B4B),
-                                  shape: BoxShape.circle,
+                alignment: Alignment.bottomCenter,
+                child: (hasSubmittedAnswer && _showNextButton)
+                    ? Container(
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(32),
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.black.withValues(alpha: 0.1),
+                              blurRadius: 20,
+                              offset: const Offset(0, -4),
+                            ),
+                          ],
+                        ),
+                        child: SafeArea(
+                          top: false,
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 24,
+                              vertical: 20,
+                            ),
+                            child: Column(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                // Feedback icon and message
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Container(
+                                      width: 32,
+                                      height: 32,
+                                      decoration: BoxDecoration(
+                                        color: (state.answerResults[
+                                                        currentIndex] ??
+                                                    false)
+                                                ? const Color(0xff58CC02)
+                                                : const Color(0xffFF4B4B),
+                                        shape: BoxShape.circle,
+                                      ),
+                                      child: Icon(
+                                        (state.answerResults[currentIndex] ??
+                                                false)
+                                            ? Icons.check_rounded
+                                            : Icons.close_rounded,
+                                        color: Colors.white,
+                                        size: 24,
+                                      ),
+                                    )
+                                        .animate()
+                                        .scale(
+                                          begin: Offset.zero,
+                                          end: const Offset(1, 1),
+                                          duration: 400.ms,
+                                          curve: Curves.elasticOut,
+                                        )
+                                        .fadeIn(duration: 300.ms),
+                                    const SizedBox(width: 16),
+                                    Expanded(
+                                      child: Text(
+                                        (state.answerResults[currentIndex] ??
+                                                false)
+                                            ? "That's Correct!"
+                                            : "That's Incorrect",
+                                        style: TextStyle(
+                                          fontSize: 18,
+                                          fontWeight: FontWeight.bold,
+                                          color: (state.answerResults[
+                                                          currentIndex] ??
+                                                      false)
+                                                  ? const Color(0xff58CC02)
+                                                  : const Color(0xffFF4B4B),
+                                        ),
+                                      )
+                                          .animate()
+                                          .fadeIn(
+                                            duration: 300.ms,
+                                            delay: 100.ms,
+                                          )
+                                          .slideX(
+                                            begin: -0.2,
+                                            end: 0,
+                                            duration: 400.ms,
+                                            curve: Curves.easeOut,
+                                          ),
+                                    ),
+                                  ],
                                 ),
-                                child: Icon(
-                                  (state.answerResults[currentIndex] ?? false)
-                                      ? Icons.check_rounded
-                                      : Icons.close_rounded,
-                                  color: Colors.white,
-                                  size: 24,
-                                ),
-                              )
-                                  .animate()
-                                  .scale(
-                                    begin: Offset.zero,
-                                    end: const Offset(1, 1),
-                                    duration: 400.ms,
-                                    curve: Curves.elasticOut,
-                                  )
-                                  .fadeIn(duration: 300.ms),
-                              const SizedBox(width: 16),
-                              // Feedback message
-                              Expanded(
-                                child: Text(
-                                  (state.answerResults[currentIndex] ?? false)
-                                      ? "That's Correct!"
-                                      : "That's Incorrect",
-                                  style: TextStyle(
-                                    fontSize: 18,
-                                    fontWeight: FontWeight.bold,
-                                    color: (state.answerResults[currentIndex] ??
-                                            false)
-                                        ? const Color(0xff58CC02)
-                                        : const Color(0xffFF4B4B),
-                                  ),
+                                const SizedBox(height: 24),
+                                PushableButton(
+                                  width: double.infinity,
+                                  height: 56,
+                                  buttonColor:
+                                      (state.answerResults[currentIndex] ??
+                                              false)
+                                          ? const Color(0xff58CC02)
+                                          : const Color(0xffFF4B4B),
+                                  shadowColor:
+                                      (state.answerResults[currentIndex] ??
+                                              false)
+                                          ? const Color(0xff58A700)
+                                          : const Color(0xffE94E77),
+                                  text: !state.isLastQuestion
+                                      ? l10n.next
+                                      : state.isLoadingMore
+                                          ? 'Loading…'
+                                          : l10n.finish,
+                                  onTap: (hasSubmittedAnswer &&
+                                          _showNextButton &&
+                                          !(state.isLastQuestion &&
+                                              state.isLoadingMore))
+                                      ? () => _goToNextQuestion(context, state)
+                                      : () {},
                                 )
                                     .animate()
-                                    .fadeIn(duration: 300.ms, delay: 100.ms)
-                                    .slideX(
-                                      begin: -0.2,
-                                      end: 0,
+                                    .fadeIn(duration: 300.ms, delay: 200.ms)
+                                    .scale(
+                                      begin: const Offset(0.95, 0.95),
+                                      end: const Offset(1, 1),
                                       duration: 400.ms,
+                                      delay: 200.ms,
                                       curve: Curves.easeOut,
                                     ),
-                              ),
-                            ],
+                              ],
+                            ),
                           ),
-                          const SizedBox(height: 24),
-                          // Next/Finish button
-                          PushableButton(
-                            width: double.infinity,
-                            height: 56,
-                            buttonColor:
-                                (state.answerResults[currentIndex] ?? false)
-                                    ? const Color(0xff58CC02)
-                                    : const Color(0xffFF4B4B),
-                            shadowColor:
-                                (state.answerResults[currentIndex] ?? false)
-                                    ? const Color(0xff58A700)
-                                    : const Color(0xffE94E77),
-                            text:
-                                state.isLastQuestion ? l10n.finish : l10n.next,
-                            onTap: (hasSubmittedAnswer && _showNextButton)
-                                ? () => _goToNextQuestion(context, state)
-                                : () {}, // Empty function as fallback
-                          )
-                              .animate()
-                              .fadeIn(duration: 300.ms, delay: 200.ms)
-                              .scale(
-                                begin: const Offset(0.95, 0.95),
-                                end: const Offset(1, 1),
-                                duration: 400.ms,
-                                delay: 200.ms,
-                                curve: Curves.easeOut,
-                              ),
-                        ],
-                      ),
-                    ),
-                  ),
-                ),
+                        ),
+                      )
+                    : const SizedBox.shrink(),
               ),
             ],
           );

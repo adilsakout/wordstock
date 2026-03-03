@@ -11,6 +11,7 @@ abstract class PracticeQuizQuestion with _$PracticeQuizQuestion {
     required String question,
     required List<String> options,
     @JsonKey(name: 'correct_answer') required String correctAnswer,
+    @JsonKey(name: 'word_id') String? wordId,
   }) = _PracticeQuizQuestion;
 
   /// Factory constructor to create a [PracticeQuizQuestion] from JSON.

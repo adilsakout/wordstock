@@ -1,5 +1,8 @@
+import 'dart:async';
 import 'dart:convert';
 
+import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:http/http.dart' as http;
 import 'package:logger/logger.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:wordstock/model/models.dart';
@@ -173,7 +176,8 @@ class QuizRepository {
     return words
         .map(
           (word) => '''
-- Word: ${word.word}
+- ID: ${word.id}
+  Word: ${word.word}
   Definition: ${word.definition}
   Example: ${word.example ?? "N/A"}
   Phonetic: ${word.phonetic ?? "N/A"}
@@ -240,6 +244,7 @@ STRICT OUTPUT FORMAT:
   "questions": [
     {
       "question_id": "1",
+      "word_id": "<exact ID from the vocabulary word above>",
       "question": "The scientist's ___ research methodology yielded groundbreaking results in the field.",
       "options": ["meticulous", "cursory", "erratic"],
       "correct_answer": "meticulous"
@@ -256,6 +261,7 @@ CRITICAL REQUIREMENTS:
 6. Generate exactly $wordCount questions, one per vocabulary word
 7. Ensure perfect JSON formatting with no syntax errors
 8. The correct answer must be the exact vocabulary word from the provided list
+9. The word_id field MUST be the exact ID string from the vocabulary word's "ID:" field above
 
 DISTRACTOR SELECTION STRATEGIES:
 - For adjectives: Use contrasting qualities or intensities
@@ -540,6 +546,241 @@ ENSURE EACH QUESTION:
       ..i('- API response time: ${apiResponseTime}ms')
       ..i('- Response processing: ${processingTime}ms')
       ..i('- Total time: ${totalTime}ms');
+  }
+
+  /// Streams quiz questions from the AI one-by-one as they are generated.
+  ///
+  /// Uses the SSE streaming endpoint so the first question is yielded after
+  /// ~1-2 seconds instead of waiting for the full 5-15 second batch.
+  Stream<PracticeQuizQuestion> getQuizFromOpenAIStream({
+    required List<Word> words,
+  }) async* {
+    if (words.isEmpty) return;
+
+    final wordDetails = _formatWordDetails(words);
+    final prompt = _buildPrompt(wordDetails, words.length);
+
+    final supabaseUrl = dotenv.env['SUPABASE_URL'] ?? '';
+    final anonKey = dotenv.env['SUPABASE_ANON_KEY'] ?? '';
+    final authToken =
+        SupabaseRepository.client.auth.currentSession?.accessToken ?? anonKey;
+
+    final uri = Uri.parse('$supabaseUrl/functions/v1/chat-completion');
+    final body = jsonEncode({
+      'stream': true,
+      'messages': [
+        {
+          'role': 'system',
+          'content':
+              'You are an expert language teacher creating vocabulary quizzes.',
+        },
+        {'role': 'user', 'content': prompt},
+      ],
+      'max_tokens': 2000,
+      'temperature': 0.6,
+    });
+
+    final client = http.Client();
+    try {
+      final request = http.Request('POST', uri)
+        ..headers['Content-Type'] = 'application/json'
+        ..headers['Authorization'] = 'Bearer $authToken'
+        ..headers['apikey'] = anonKey
+        ..body = body;
+
+      final streamedResponse =
+          await client.send(request).timeout(const Duration(seconds: 90));
+
+      if (streamedResponse.statusCode != 200) {
+        throw Exception(
+          'Edge function returned status ${streamedResponse.statusCode}',
+        );
+      }
+
+      final contentBuffer = StringBuffer();
+      var extractedCount = 0;
+
+      await for (final line in streamedResponse.stream
+          .transform(utf8.decoder)
+          .transform(const LineSplitter())) {
+        if (!line.startsWith('data: ')) continue;
+
+        final data = line.substring(6).trim();
+        if (data == '[DONE]') break;
+        if (data.isEmpty) continue;
+
+        try {
+          final chunkJson = jsonDecode(data) as Map<String, dynamic>;
+          final choices = chunkJson['choices'] as List?;
+          if (choices == null || choices.isEmpty) continue;
+
+          final delta =
+              (choices[0] as Map<String, dynamic>)['delta']
+                  as Map<String, dynamic>?;
+          final content = delta?['content'] as String?;
+          if (content == null || content.isEmpty) continue;
+
+          contentBuffer.write(content);
+
+          final newQuestions = _parseNewQuestionsFromBuffer(
+            contentBuffer.toString(),
+            extractedCount,
+          );
+
+          for (final q in newQuestions) {
+            extractedCount++;
+            yield q;
+          }
+        } catch (_) {
+          // Skip malformed SSE chunks
+        }
+      }
+
+      // Final pass — catch any remaining complete questions in the buffer
+      final remaining = _parseNewQuestionsFromBuffer(
+        contentBuffer.toString(),
+        extractedCount,
+      );
+      for (final q in remaining) {
+        yield q;
+      }
+    } finally {
+      client.close();
+    }
+  }
+
+  /// Parses complete question JSON objects from a partial JSON buffer.
+  ///
+  /// Uses bracket-depth tracking to find complete `{...}` objects inside the
+  /// `"questions": [...]` array without needing the outer JSON to be complete.
+  /// Returns only objects after [alreadyExtracted] (so we never re-yield).
+  List<PracticeQuizQuestion> _parseNewQuestionsFromBuffer(
+    String content,
+    int alreadyExtracted,
+  ) {
+    final questionsKeyIdx = content.indexOf('"questions"');
+    if (questionsKeyIdx == -1) return [];
+
+    final bracketIdx = content.indexOf('[', questionsKeyIdx);
+    if (bracketIdx == -1) return [];
+
+    final results = <PracticeQuizQuestion>[];
+    var pos = bracketIdx + 1;
+    var objectCount = 0;
+
+    while (pos < content.length) {
+      // Skip whitespace and commas
+      while (pos < content.length) {
+        final c = content[pos];
+        if (c == ' ' || c == '\n' || c == '\r' || c == '\t' || c == ',') {
+          pos++;
+        } else {
+          break;
+        }
+      }
+
+      if (pos >= content.length) break;
+      if (content[pos] == ']') break;
+      if (content[pos] != '{') break;
+
+      // Walk the object using depth tracking, respecting strings
+      final objStart = pos;
+      var depth = 0;
+      var inString = false;
+      var escaped = false;
+
+      while (pos < content.length) {
+        final c = content[pos];
+        if (escaped) {
+          escaped = false;
+        } else if (inString) {
+          if (c == r'\') {
+            escaped = true;
+          } else if (c == '"') {
+            inString = false;
+          }
+        } else {
+          if (c == '"') {
+            inString = true;
+          } else if (c == '{') {
+            depth++;
+          } else if (c == '}') {
+            depth--;
+            if (depth == 0) {
+              pos++;
+              break;
+            }
+          }
+        }
+        pos++;
+      }
+
+      if (depth != 0) break; // Incomplete object — stop parsing
+
+      objectCount++;
+
+      if (objectCount > alreadyExtracted) {
+        final objStr = content.substring(objStart, pos);
+        try {
+          final jsonMap = jsonDecode(objStr) as Map<String, dynamic>;
+          final question = PracticeQuizQuestion.fromJson(jsonMap);
+          if (_validateQuestionQuality(question)) {
+            question.options.shuffle();
+            results.add(question);
+          }
+        } catch (_) {
+          // Skip questions that fail parsing or validation
+        }
+      }
+    }
+
+    return results;
+  }
+
+  /// Saves a completed practice session to the database.
+  Future<void> savePracticeSession({
+    required int totalQuestions,
+    required int correctAnswers,
+    required String mode,
+  }) async {
+    if (totalQuestions <= 0) return;
+    final scorePercent =
+        (correctAnswers / totalQuestions * 100).clamp(0, 100).toDouble();
+    try {
+      await _supabase.from('practice_sessions').insert({
+        'user_id': _userId,
+        'total_questions': totalQuestions,
+        'correct_answers': correctAnswers,
+        'score_percent': scorePercent,
+        'mode': mode,
+      });
+    } catch (e) {
+      logger.e('Failed to save practice session: $e');
+    }
+  }
+
+  /// Returns practice sessions for the current user over the last [days] days.
+  Future<List<PracticeSession>> getPracticeHistory({int days = 14}) async {
+    try {
+      final since =
+          DateTime.now().subtract(Duration(days: days)).toIso8601String();
+      final response = await _supabase
+          .from('practice_sessions')
+          .select()
+          .eq('user_id', _userId)
+          .gte('completed_at', since)
+          .order('completed_at');
+
+      return (response as List<dynamic>)
+          .map(
+            (json) =>
+                PracticeSession.fromJson(json as Map<String, dynamic>),
+          )
+          .toList();
+    } catch (e) {
+      logger.e('Failed to fetch practice history: $e');
+      return [];
+    }
   }
 
   /// Disposes resources

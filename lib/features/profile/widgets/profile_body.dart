@@ -10,6 +10,7 @@ import 'package:wordstock/core/constants/vocabulary_levels.dart';
 import 'package:wordstock/core/services/navigation_service.dart';
 
 import 'package:wordstock/features/profile/cubit/cubit.dart';
+import 'package:wordstock/features/profile/widgets/practice_history_chart.dart';
 import 'package:wordstock/features/profile/widgets/profile_menu_item.dart';
 import 'package:wordstock/features/profile/widgets/theme_bottom_sheet.dart';
 import 'package:wordstock/l10n/arb/app_localizations.dart';
@@ -343,6 +344,25 @@ class _ProfileBodyState extends State<ProfileBody> {
         ).animate().fadeIn(
               duration: 200.milliseconds,
               delay: 300.milliseconds,
+            ),
+
+        const SizedBox(height: 24),
+
+        // Practice History Section
+        Text(
+          'Practice History',
+          style: theme.textTheme.titleMedium?.copyWith(
+            fontSize: 18,
+            fontWeight: FontWeight.w700,
+          ),
+        ).animate().fadeIn(
+              duration: 250.milliseconds,
+              delay: 320.milliseconds,
+            ),
+        const SizedBox(height: 12),
+        const PracticeHistoryChart().animate().fadeIn(
+              duration: 300.milliseconds,
+              delay: 350.milliseconds,
             ),
 
         const SizedBox(height: 24),
