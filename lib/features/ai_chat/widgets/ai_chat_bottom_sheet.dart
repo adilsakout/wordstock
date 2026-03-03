@@ -5,6 +5,7 @@ import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:markdown_widget/markdown_widget.dart';
 import 'package:wordstock/features/ai_chat/cubit/ai_chat_cubit.dart';
+import 'package:wordstock/features/user_data/cubit/user_data_cubit.dart';
 import 'package:wordstock/l10n/l10n.dart';
 import 'package:wordstock/model/word.dart';
 import 'package:wordstock/widgets/button.dart';
@@ -65,15 +66,22 @@ class _AIChatBottomSheetState extends State<AIChatBottomSheet> {
     if (!_hasInitializedChat) {
       _hasInitializedChat = true;
 
-      // Immediately start conversation about the word when sheet opens
-      // using localized prompts for user's language
-      // Use the detailed vocabulary system message for both the
-      // initial call and follow-ups so the AI behaves consistently.
+      // Read the user's vocabulary level to tailor AI explanations
+      final profile =
+          context.read<StreakCubit>().state.profile;
+      final levelName = profile?.level.name ?? 'intermediate';
+      final levelHint =
+          " The student is at the '$levelName' level — adjust "
+          'your explanation complexity accordingly.';
+
+      final systemMsg = context.l10n.aiVocabularySystemMessage(
+            widget.word.word,
+          ) +
+          levelHint;
+
       context.read<AIChatCubit>().startChatWithWord(
             widget.word,
-            systemMessage: context.l10n.aiVocabularySystemMessage(
-              widget.word.word,
-            ),
+            systemMessage: systemMsg,
             initialPrompt: context.l10n.aiInitialPrompt(
               widget.word.word,
               widget.word.definition,
