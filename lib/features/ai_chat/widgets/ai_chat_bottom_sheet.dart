@@ -561,44 +561,24 @@ class _AIChatBottomSheetState extends State<AIChatBottomSheet> {
   }
 }
 
-/// A widget that animates markdown text appearing character by character
+/// Typing animation that uses lightweight [Text] during animation
+/// and switches to full [MarkdownWidget] only once complete.
 ///
-/// This creates a natural, engaging typing animation for markdown content.
-/// Features include:
-/// - Smooth character-by-character reveal at natural typing speed
-/// - Full markdown rendering with proper formatting
-/// - Blinking cursor at the end while typing
-/// - Callback for each character to enable auto-scrolling
-/// - Apple-style smooth timing that feels organic
+/// This avoids re-parsing the entire markdown tree every 30 ms,
+/// which was causing jank on longer AI responses.
 class _MarkdownTypingAnimationText extends StatefulWidget {
-  /// Creates a markdown typing animation text widget
-  ///
-  /// [text] - The full markdown text to animate
-  /// [typingSpeed] - Duration between each character (default: 30ms)
-  /// [onCharacterAdded] - Called each time a character is revealed
-  /// [onAnimationComplete] - Called when animation completes
   const _MarkdownTypingAnimationText({
     required this.text,
     super.key,
-    // ignore: unused_element_parameter
-    this.typingSpeed = const Duration(milliseconds: 30),
     this.onCharacterAdded,
     this.onAnimationComplete,
   });
 
-  /// The complete markdown text that will be animated character by character
   final String text;
 
-  /// Speed of typing animation - time between each character
-  /// Default 30ms provides natural, readable typing speed
-  final Duration typingSpeed;
-
-  /// Callback triggered each time a new character appears
-  /// Used for triggering scroll updates during animation
+  /// Time between each character reveal.
+  static const typingSpeed = Duration(milliseconds: 30);
   final VoidCallback? onCharacterAdded;
-
-  /// Callback triggered when the entire animation completes
-  /// Used to mark the message as animated to prevent re-animation
   final VoidCallback? onAnimationComplete;
 
   @override
@@ -607,119 +587,63 @@ class _MarkdownTypingAnimationText extends StatefulWidget {
 }
 
 class _MarkdownTypingAnimationTextState
-    extends State<_MarkdownTypingAnimationText> with TickerProviderStateMixin {
-  // Animation controller for the blinking cursor
+    extends State<_MarkdownTypingAnimationText>
+    with SingleTickerProviderStateMixin {
   late AnimationController _cursorController;
-  late Animation<double> _cursorAnimation;
-
-  // Timer for character reveal animation
   Timer? _typingTimer;
-
-  // Current number of characters visible
   int _currentCharCount = 0;
-
-  // Whether typing animation is complete
   bool _isTypingComplete = false;
 
   @override
   void initState() {
     super.initState();
-
-    // Set up simple cursor blinking for markdown
     _cursorController = AnimationController(
-      duration: const Duration(milliseconds: 530), // Natural blink rate
+      duration: const Duration(milliseconds: 530),
       vsync: this,
-    );
-    _cursorAnimation = Tween<double>(
-      begin: 0,
-      end: 1,
-    ).animate(
-      CurvedAnimation(
-        parent: _cursorController,
-        curve: Curves.easeInOut,
-      ),
-    );
+    )..repeat(reverse: true);
 
-    // Start cursor blinking
-    _cursorController.repeat(reverse: true);
-
-    // Start typing animation with a small delay for entrance effect
-    Future.delayed(const Duration(milliseconds: 200), _startTypingAnimation);
+    Future.delayed(
+      const Duration(milliseconds: 200),
+      _startTypingAnimation,
+    );
   }
 
-  /// Initiates the character-by-character typing animation
-  ///
-  /// Uses a Timer to progressively reveal characters at a natural pace.
-  /// Includes special handling for spaces and punctuation for more
-  /// realistic typing rhythm.
-  ///
-  /// All setState calls are guarded with mounted checks to prevent
-  /// errors when the widget is disposed during animation.
+  static const _speed =
+      _MarkdownTypingAnimationText.typingSpeed;
+
   void _startTypingAnimation() {
-    _typingTimer = Timer.periodic(widget.typingSpeed, (timer) {
-      // Guard against setState after dispose
+    _typingTimer = Timer.periodic(_speed, (timer) {
       if (!mounted) {
         timer.cancel();
         return;
       }
 
       if (_currentCharCount < widget.text.length) {
-        // Only update state if widget is still mounted
-        if (mounted) {
-          setState(() {
-            _currentCharCount++;
-          });
-        }
-
-        // Trigger callback for scroll updates (safe to call even if disposed)
+        setState(() => _currentCharCount++);
         widget.onCharacterAdded?.call();
 
-        // Add slight variation in typing speed for more natural feel
-        final currentChar = widget.text[_currentCharCount - 1];
-        if (currentChar == ' ') {
-          // Slightly slower after spaces (more natural)
+        final ch = widget.text[_currentCharCount - 1];
+        if (ch == ' ' || ch == '.' || ch == '!' || ch == '?') {
           timer.cancel();
+          final extra = (ch == ' ') ? 15 : 100;
           Future.delayed(
-            Duration(milliseconds: widget.typingSpeed.inMilliseconds + 15),
+            Duration(
+              milliseconds: _speed.inMilliseconds + extra,
+            ),
             () {
-              // Double-check mounted before restarting animation
-              if (mounted) _startTypingAnimation();
-            },
-          );
-        } else if (currentChar == '.' ||
-            currentChar == '!' ||
-            currentChar == '?') {
-          // Pause slightly longer after sentence endings
-          timer.cancel();
-          Future.delayed(
-            Duration(milliseconds: widget.typingSpeed.inMilliseconds + 100),
-            () {
-              // Double-check mounted before restarting animation
               if (mounted) _startTypingAnimation();
             },
           );
         }
       } else {
-        // Typing complete - stop cursor after a brief pause
         timer.cancel();
+        if (!mounted) return;
+        setState(() => _isTypingComplete = true);
 
-        // Only update state if widget is still mounted
-        if (mounted) {
-          setState(() {
-            _isTypingComplete = true;
-          });
-        }
-
-        Future.delayed(const Duration(milliseconds: 800), () {
-          // Guard all operations with mounted check
-          if (mounted) {
-            _cursorController.stop();
-            if (mounted) {
-              setState(() {}); // Remove cursor
-            }
-            // Notify that animation is complete (safe to call)
-            widget.onAnimationComplete?.call();
-          }
+        Future.delayed(const Duration(milliseconds: 500), () {
+          if (!mounted) return;
+          _cursorController.stop();
+          widget.onAnimationComplete?.call();
         });
       }
     });
@@ -734,59 +658,37 @@ class _MarkdownTypingAnimationTextState
 
   @override
   Widget build(BuildContext context) {
-    // Get the visible portion of the markdown text
-    final visibleText = widget.text.substring(0, _currentCharCount);
+    // After animation completes, render full markdown once
+    if (_isTypingComplete) {
+      return MarkdownWidget(
+        data: widget.text,
+        shrinkWrap: true,
+        config: MarkdownConfig(
+          configs: [
+            const PConfig(
+              textStyle: TextStyle(color: Colors.black87, fontSize: 14),
+            ),
+            CodeConfig(
+              style: TextStyle(
+                backgroundColor: Colors.grey.shade300,
+                fontFamily: 'monospace',
+                fontSize: 13,
+              ),
+            ),
+          ],
+        ),
+      );
+    }
 
+    // During animation: use lightweight Text (no markdown parsing)
+    final visible = widget.text.substring(0, _currentCharCount);
     return AnimatedBuilder(
-      animation: _cursorAnimation,
-      builder: (context, child) {
-        // Add blinking cursor if still typing
-        final textWithCursor = !_isTypingComplete
-            ? '$visibleText${_cursorAnimation.value > 0.5 ? '|' : ''}'
-            : visibleText;
-
-        return MarkdownWidget(
-          data: textWithCursor,
-          shrinkWrap: true,
-          config: MarkdownConfig(
-            configs: [
-              const PConfig(
-                textStyle: TextStyle(
-                  color: Colors.black87,
-                  fontSize: 14,
-                ),
-              ),
-              CodeConfig(
-                style: TextStyle(
-                  backgroundColor: Colors.grey.shade300,
-                  fontFamily: 'monospace',
-                  fontSize: 13,
-                ),
-              ),
-              // BlockquoteConfig - will configure later
-              const H1Config(
-                style: TextStyle(
-                  color: Colors.black87,
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              const H2Config(
-                style: TextStyle(
-                  color: Colors.black87,
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              const H3Config(
-                style: TextStyle(
-                  color: Colors.black87,
-                  fontSize: 16,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-            ],
-          ),
+      animation: _cursorController,
+      builder: (context, _) {
+        final cursor = _cursorController.value > 0.5 ? '|' : '';
+        return Text(
+          '$visible$cursor',
+          style: const TextStyle(color: Colors.black87, fontSize: 14),
         );
       },
     );
