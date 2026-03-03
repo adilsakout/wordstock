@@ -1,7 +1,5 @@
 import 'dart:convert';
 
-import 'package:flutter_dotenv/flutter_dotenv.dart';
-import 'package:http/http.dart' as http;
 import 'package:logger/logger.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:wordstock/model/models.dart';
@@ -11,17 +9,12 @@ import 'package:wordstock/repositories/supabase_repository.dart';
 class QuizRepository {
   QuizRepository()
       : _supabase = SupabaseRepository.client,
-        _userId = SupabaseRepository.client.auth.currentUser?.id ?? '',
-        _client = http.Client();
+        _userId = SupabaseRepository.client.auth.currentUser?.id ?? '';
 
   final SupabaseClient _supabase;
   final String _userId;
   final Logger logger = Logger();
-  final http.Client _client;
 
-  // OpenAI API constants
-  static const _openAIEndpoint = 'https://api.openai.com/v1/chat/completions';
-  static const _openAIModel = 'gpt-3.5-turbo';
   static const _maxQuizGenerationRetries = 2;
 
   /// Fetches quiz questions from Supabase
@@ -61,7 +54,10 @@ class QuizRepository {
     }
   }
 
-  /// Generates a quiz using OpenAI based on provided vocabulary words
+  /// Generates a quiz using AI based on provided vocabulary words.
+  ///
+  /// Routes through the Supabase `chat-completion` Edge Function so the
+  /// OpenAI API key stays server-side.
   Future<List<PracticeQuizQuestion>> getQuizFromOpenAI({
     required List<Word> words,
     int retryCount = 0,
@@ -72,23 +68,29 @@ class QuizRepository {
     }
 
     final stopwatch = Stopwatch()..start();
-    logger.i('Starting OpenAI quiz generation for ${words.length} words');
+    logger.i('Starting AI quiz generation for ${words.length} words');
 
     try {
-      final apiKey = _getOpenAIApiKey();
       final wordDetails = _formatWordDetails(words);
       final prompt = _buildPrompt(wordDetails, words.length);
-      final requestBody = _buildRequestBody(prompt);
 
       final requestPrepTime = stopwatch.elapsedMilliseconds;
       logger.d('Request preparation completed in ${requestPrepTime}ms');
 
-      final response = await _sendOpenAIRequest(apiKey, requestBody);
+      // Call Edge Function instead of direct OpenAI
+      final content = await _callEdgeFunction(
+        systemMessage:
+            'You are an expert language teacher creating vocabulary '
+            'quizzes.',
+        userMessage: prompt,
+        maxTokens: 2000,
+        temperature: 0.6,
+      );
 
       final apiResponseTime = stopwatch.elapsedMilliseconds - requestPrepTime;
-      logger.i('OpenAI API responded in ${apiResponseTime}ms');
+      logger.i('AI API responded in ${apiResponseTime}ms');
 
-      final questions = _processApiResponse(response.body);
+      final questions = _processContent(content);
 
       stopwatch.stop();
       _logPerformanceMetrics(
@@ -98,12 +100,14 @@ class QuizRepository {
       );
 
       // Apply fallback mechanism for quality vs quantity balance
-      final finalQuestions = _applyFallbackMechanism(questions, words.length);
+      final finalQuestions = _applyFallbackMechanism(
+        questions,
+        words.length,
+      );
 
       if (finalQuestions.isNotEmpty) {
         logger.i(
-          'Successfully generated ${finalQuestions.length} questions '
-          'from OpenAI',
+          'Successfully generated ${finalQuestions.length} questions',
         );
         return finalQuestions;
       } else {
@@ -111,25 +115,57 @@ class QuizRepository {
       }
     } catch (e) {
       stopwatch.stop();
-      logger.e('Error generating quiz from OpenAI: $e');
+      logger.e('Error generating quiz from AI: $e');
 
       // Implement retry logic for recoverable errors
       if (retryCount < _maxQuizGenerationRetries) {
         logger.w('Retrying quiz generation (attempt ${retryCount + 1})');
-        return getQuizFromOpenAI(words: words, retryCount: retryCount + 1);
+        return getQuizFromOpenAI(
+          words: words,
+          retryCount: retryCount + 1,
+        );
       }
 
       rethrow;
     }
   }
 
-  /// Gets the OpenAI API key from environment variables
-  String _getOpenAIApiKey() {
-    final apiKey = dotenv.env['OPENAI_API_KEY'];
-    if (apiKey == null) {
-      throw Exception('OpenAI API key not found in environment variables');
+  /// Calls the Supabase `chat-completion` Edge Function.
+  Future<String> _callEdgeFunction({
+    required String systemMessage,
+    required String userMessage,
+    int? maxTokens,
+    double? temperature,
+  }) async {
+    final response = await SupabaseRepository.client.functions
+        .invoke(
+          'chat-completion',
+          body: {
+            'messages': [
+              {'role': 'system', 'content': systemMessage},
+              {'role': 'user', 'content': userMessage},
+            ],
+            if (maxTokens != null) 'max_tokens': maxTokens,
+            if (temperature != null) 'temperature': temperature,
+          },
+        )
+        .timeout(const Duration(seconds: 60));
+
+    final data = response.data;
+    if (data is Map && data.containsKey('error')) {
+      throw Exception(data['error'] as String);
     }
-    return apiKey;
+
+    if (data is String) {
+      final parsed = json.decode(data) as Map<String, dynamic>;
+      return parsed['content'] as String;
+    }
+
+    if (data is Map && data.containsKey('content')) {
+      return data['content'] as String;
+    }
+
+    throw Exception('Invalid response format from AI service');
   }
 
   /// Formats word details for the prompt
@@ -147,7 +183,7 @@ class QuizRepository {
         .join('\n');
   }
 
-  /// Builds the prompt for OpenAI
+  /// Builds the prompt for quiz generation
   String _buildPrompt(String wordDetails, int wordCount) {
     return '''
 
@@ -250,96 +286,25 @@ ENSURE EACH QUESTION:
 ''';
   }
 
-  /// Builds the request body for OpenAI API
-  String _buildRequestBody(String prompt) {
-    return jsonEncode({
-      'model': _openAIModel,
-      'messages': [
-        {
-          'role': 'system',
-          'content':
-              'You are an expert language teacher creating vocabulary quizzes.',
-        },
-        {'role': 'user', 'content': prompt},
-      ],
-      'temperature': 0.6,
-      'max_tokens': 2000,
-    });
-  }
-
-  /// Sends request to OpenAI API
-  Future<http.Response> _sendOpenAIRequest(
-    String apiKey,
-    String requestBody,
-  ) async {
-    final response = await _client.post(
-      Uri.parse(_openAIEndpoint),
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': 'Bearer $apiKey',
-      },
-      body: requestBody,
-    );
-
-    if (response.statusCode != 200) {
-      logger.e('OpenAI API error: ${response.body}');
-      throw Exception('Failed to generate quiz: ${response.statusCode}');
-    }
-
-    return response;
-  }
-
-  /// Processes the API response and converts it to quiz questions
-  List<PracticeQuizQuestion> _processApiResponse(String responseBody) {
+  /// Processes the AI response content and converts to quiz questions
+  List<PracticeQuizQuestion> _processContent(String content) {
     try {
-      // Parse the response
-      final dynamic decodedJson = jsonDecode(responseBody);
-      if (decodedJson is! Map<String, dynamic>) {
-        throw Exception('Invalid API response: root is not a JSON object');
-      }
-
-      final jsonResponse = decodedJson;
-      logger.d('OpenAI API response received');
-
-      if (!jsonResponse.containsKey('choices') ||
-          jsonResponse['choices'] is! List ||
-          (jsonResponse['choices'] as List).isEmpty) {
-        throw Exception('Invalid API response: missing or empty choices array');
-      }
-
-      final firstChoice = (jsonResponse['choices'] as List).first;
-      if (firstChoice is! Map ||
-          !firstChoice.containsKey('message') ||
-          firstChoice['message'] is! Map) {
-        throw Exception('Invalid API response: malformed choice object');
-      }
-
-      final message = firstChoice['message'] as Map;
-      if (!message.containsKey('content') || message['content'] is! String) {
-        throw Exception('Invalid API response: missing or invalid content');
-      }
-
-      final content = message['content'] as String;
-      logger.d('Content extracted from response');
-
-      // Extract JSON from content (it might be wrapped in markdown code blocks)
+      // Extract JSON from content (might be wrapped in markdown code blocks)
       final jsonMatch = RegExp(r'{[\s\S]*}').firstMatch(content);
       if (jsonMatch == null) {
-        logger.e('Failed to extract JSON from OpenAI response: $content');
-        throw Exception('Invalid response format from OpenAI');
+        logger.e(
+          'Failed to extract JSON from AI response: $content',
+        );
+        throw Exception('Invalid response format from AI');
       }
 
       final jsonStr = jsonMatch.group(0) ?? '{}';
-      logger.d('JSON extracted from content');
-
-      // Parse the JSON into our data model
       final parsedData = jsonDecode(jsonStr);
-      logger.d('Parsed JSON data: ${parsedData.runtimeType}');
 
       return _extractQuestionsFromParsedData(parsedData);
     } catch (e) {
-      logger.e('Error processing API response: $e');
-      throw Exception('Failed to process OpenAI response: $e');
+      logger.e('Error processing AI response: $e');
+      throw Exception('Failed to process AI response: $e');
     }
   }
 
@@ -347,16 +312,13 @@ ENSURE EACH QUESTION:
   List<PracticeQuizQuestion> _extractQuestionsFromParsedData(
     dynamic parsedData,
   ) {
-    // Check if 'questions' key exists
     if (parsedData is Map && parsedData.containsKey('questions')) {
       final questionsData = parsedData['questions'];
 
-      // Check if questions is a list
       if (questionsData is List) {
         final questionsJson = questionsData;
         logger.d('Found ${questionsJson.length} questions in response');
 
-        // Convert to PracticeQuizQuestion objects and validate
         final validQuestions = <PracticeQuizQuestion>[];
 
         for (final item in questionsJson) {
@@ -364,21 +326,25 @@ ENSURE EACH QUESTION:
             final question =
                 PracticeQuizQuestion.fromJson(item as Map<String, dynamic>);
 
-            // Validate question quality
             if (_validateQuestionQuality(question)) {
-              question.options.shuffle(); // Shuffle options for each question
+              question.options.shuffle();
               validQuestions.add(question);
             } else {
-              logger.w('Question failed validation: ${question.question}');
+              logger.w(
+                'Question failed validation: ${question.question}',
+              );
             }
           } catch (e) {
-            logger.e('Error parsing question: $e\nQuestion data: $item');
-            // Continue with other questions rather than failing completely
+            logger.e(
+              'Error parsing question: $e\nQuestion data: $item',
+            );
           }
         }
 
         if (validQuestions.isEmpty) {
-          throw Exception('No valid questions generated from OpenAI response');
+          throw Exception(
+            'No valid questions generated from AI response',
+          );
         }
 
         logger.i(
@@ -388,51 +354,54 @@ ENSURE EACH QUESTION:
         return validQuestions;
       } else {
         logger.e(
-          'The "questions" field is not a list: ${questionsData.runtimeType}',
+          'The "questions" field is not a list: '
+          '${questionsData.runtimeType}',
         );
         throw Exception(
           'Invalid response format: questions field is not a list',
         );
       }
     } else {
-      logger.e('Response missing "questions" key or not a map: $parsedData');
-      throw Exception('Invalid response format: missing questions field');
+      logger.e(
+        'Response missing "questions" key or not a map: $parsedData',
+      );
+      throw Exception(
+        'Invalid response format: missing questions field',
+      );
     }
   }
 
   /// Validates the quality of a generated quiz question
   bool _validateQuestionQuality(PracticeQuizQuestion question) {
-    // Check if question contains exactly one blank
     if (!_hasExactlyOneBlank(question.question)) {
       logger.w('Question validation failed: incorrect number of blanks');
       return false;
     }
 
-    // Verify correct answer is in options
     if (!question.options.contains(question.correctAnswer)) {
-      logger.w('Question validation failed: correct answer not in options');
+      logger.w(
+        'Question validation failed: correct answer not in options',
+      );
       return false;
     }
 
-    // Ensure options are unique
     if (question.options.toSet().length != question.options.length) {
       logger.w('Question validation failed: duplicate options');
       return false;
     }
 
-    // Check if question has exactly 3 options
     if (question.options.length != 3) {
-      logger.w('Question validation failed: incorrect number of options');
+      logger.w(
+        'Question validation failed: incorrect number of options',
+      );
       return false;
     }
 
-    // Validate question length (not too short or too long)
     if (!_isValidQuestionLength(question.question)) {
       logger.w('Question validation failed: invalid question length');
       return false;
     }
 
-    // Check for obvious quality issues
     if (_hasObviousQualityIssues(question)) {
       logger.w('Question validation failed: quality issues detected');
       return false;
@@ -441,31 +410,25 @@ ENSURE EACH QUESTION:
     return true;
   }
 
-  /// Checks if question contains exactly one blank
   bool _hasExactlyOneBlank(String question) {
     final blankCount = '___'.allMatches(question).length;
     return blankCount == 1;
   }
 
-  /// Validates question length is appropriate
   bool _isValidQuestionLength(String question) {
     final wordCount = question.split(' ').length;
-    return wordCount >= 5 && wordCount <= 30; // Reasonable sentence length
+    return wordCount >= 5 && wordCount <= 30;
   }
 
-  /// Checks for obvious quality issues in the question
   bool _hasObviousQualityIssues(PracticeQuizQuestion question) {
     final questionLower = question.question.toLowerCase();
     final correctAnswerLower = question.correctAnswer.toLowerCase();
 
-    // Check if the question contains the correct answer
-    // (avoiding obvious hints)
     if (questionLower.contains(correctAnswerLower) &&
         correctAnswerLower.length > 3) {
       return true;
     }
 
-    // Check if any option appears directly in the question text
     for (final option in question.options) {
       if (option.toLowerCase() != correctAnswerLower &&
           questionLower.contains(option.toLowerCase()) &&
@@ -474,12 +437,10 @@ ENSURE EACH QUESTION:
       }
     }
 
-    // Check for overly short options (likely low quality)
     if (question.options.any((option) => option.length < 2)) {
       return true;
     }
 
-    // Check for suspiciously similar options
     if (_hasSuspiciouslySimilarOptions(question.options)) {
       return true;
     }
@@ -487,11 +448,9 @@ ENSURE EACH QUESTION:
     return false;
   }
 
-  /// Checks if options are too similar to each other
   bool _hasSuspiciouslySimilarOptions(List<String> options) {
     for (var i = 0; i < options.length; i++) {
       for (var j = i + 1; j < options.length; j++) {
-        // Check if two options are very similar
         if (_calculateSimilarity(options[i], options[j]) > 0.8) {
           return true;
         }
@@ -500,7 +459,6 @@ ENSURE EACH QUESTION:
     return false;
   }
 
-  /// Calculates similarity between two strings (basic implementation)
   double _calculateSimilarity(String str1, String str2) {
     if (str1 == str2) return 1;
 
@@ -513,7 +471,6 @@ ENSURE EACH QUESTION:
     return (longer.length - editDistance) / longer.length;
   }
 
-  /// Calculates edit distance between two strings
   int _calculateEditDistance(String str1, String str2) {
     final matrix = List.generate(
       str1.length + 1,
@@ -542,14 +499,12 @@ ENSURE EACH QUESTION:
     return matrix[str1.length][str2.length];
   }
 
-  /// Applies fallback mechanism to ensure adequate question quantity
-  /// while maintaining quality standards
   List<PracticeQuizQuestion> _applyFallbackMechanism(
     List<PracticeQuizQuestion> validatedQuestions,
     int targetQuestionCount,
   ) {
-    // If we have enough validated questions, return them
-    if (validatedQuestions.length >= (targetQuestionCount * 0.8).round()) {
+    if (validatedQuestions.length >=
+        (targetQuestionCount * 0.8).round()) {
       logger.i(
         'Sufficient validated questions available: '
         '${validatedQuestions.length}',
@@ -557,9 +512,6 @@ ENSURE EACH QUESTION:
       return validatedQuestions;
     }
 
-    // If we have too few validated questions, log warning but return
-    // what we have
-    // This prevents complete failure due to overly strict validation
     if (validatedQuestions.isNotEmpty) {
       logger.w(
         'Only ${validatedQuestions.length} out of $targetQuestionCount '
@@ -568,13 +520,13 @@ ENSURE EACH QUESTION:
       return validatedQuestions;
     }
 
-    // If no questions passed validation, this indicates a serious issue
-    logger
-        .e('No questions passed validation - this may indicate prompt issues');
-    return validatedQuestions; // Return empty list, let caller handle
+    logger.e(
+      'No questions passed validation - '
+      'this may indicate prompt issues',
+    );
+    return validatedQuestions;
   }
 
-  /// Logs performance metrics for quiz generation
   void _logPerformanceMetrics(
     int totalTime,
     int requestPrepTime,
@@ -583,7 +535,7 @@ ENSURE EACH QUESTION:
     final processingTime = totalTime - requestPrepTime - apiResponseTime;
 
     logger
-      ..i('Performance metrics for OpenAI quiz generation:')
+      ..i('Performance metrics for AI quiz generation:')
       ..i('- Request preparation: ${requestPrepTime}ms')
       ..i('- API response time: ${apiResponseTime}ms')
       ..i('- Response processing: ${processingTime}ms')
@@ -592,6 +544,6 @@ ENSURE EACH QUESTION:
 
   /// Disposes resources
   void dispose() {
-    _client.close();
+    // No HTTP client to clean up — Supabase client is managed globally
   }
 }
