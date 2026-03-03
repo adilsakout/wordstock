@@ -3,6 +3,7 @@ import 'dart:convert';
 
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
+import 'package:wordstock/features/credit/cubit/credit_cubit.dart';
 import 'package:wordstock/model/word.dart';
 import 'package:wordstock/repositories/supabase_repository.dart';
 
@@ -14,10 +15,18 @@ part 'ai_chat_state.dart';
 /// - Initiating conversations about specific vocabulary words
 /// - Sending user messages and receiving AI responses via Edge Function
 /// - Managing conversation history and loading states
-/// - Enforcing vocabulary-focused conversation scope
+/// - Consuming a daily credit only after the first successful response
 class AIChatCubit extends Cubit<AIChatState> {
-  /// Creates a new [AIChatCubit] instance with initial state
-  AIChatCubit() : super(const AIChatInitial());
+  /// Creates a new [AIChatCubit] instance.
+  ///
+  /// If [creditCubit] is provided, a credit is consumed only after
+  /// the first successful AI response — never before.
+  AIChatCubit({CreditCubit? creditCubit})
+      : _creditCubit = creditCubit,
+        super(const AIChatInitial());
+
+  final CreditCubit? _creditCubit;
+  bool _creditConsumed = false;
 
   /// Initiates a conversation about the specified [word]
   ///
@@ -70,6 +79,9 @@ class AIChatCubit extends Cubit<AIChatState> {
           isLoading: false,
         ),
       );
+
+      // Consume credit only after first successful response
+      await _tryConsumeCredit();
     } catch (e) {
       emit(AIChatError(errorMessage: e.toString()));
     }
@@ -183,5 +195,10 @@ class AIChatCubit extends Cubit<AIChatState> {
     throw Exception('Invalid response format from AI service');
   }
 
-  // No HTTP client to clean up — Supabase client is managed globally
+  /// Consume a credit once after the first successful response.
+  Future<void> _tryConsumeCredit() async {
+    if (_creditConsumed || _creditCubit == null) return;
+    _creditConsumed = true;
+    await _creditCubit.tryConsumeCredit();
+  }
 }

@@ -35,8 +35,14 @@ class AIChatButton extends StatelessWidget {
   /// - Provide educational context for the AI assistant
   final Word word;
 
-  /// Presents the AI chat interface in a modal bottom sheet
-  Future<void> _showChatBottomSheet(BuildContext context) async {
+  /// Presents the AI chat interface in a modal bottom sheet.
+  ///
+  /// Passes [creditCubit] so credit is consumed only after the first
+  /// successful AI response — not before the chat opens.
+  Future<void> _showChatBottomSheet(
+    BuildContext context, {
+    CreditCubit? creditCubit,
+  }) async {
     if (!context.mounted) return;
 
     await showModalBottomSheet<void>(
@@ -45,7 +51,7 @@ class AIChatButton extends StatelessWidget {
       backgroundColor: Colors.transparent,
       useSafeArea: true,
       builder: (_) => BlocProvider(
-        create: (_) => AIChatCubit(),
+        create: (_) => AIChatCubit(creditCubit: creditCubit),
         child: AIChatBottomSheet(word: word),
       ),
     );
@@ -53,8 +59,9 @@ class AIChatButton extends StatelessWidget {
 
   /// Handles button tap with credit-based access.
   ///
-  /// Subscribers get unlimited access. Free users consume a daily credit.
-  /// When credits are exhausted, the paywall is shown.
+  /// Subscribers get unlimited access. Free users must have credits
+  /// available; the actual credit consumption happens inside the cubit
+  /// after the first successful AI response.
   Future<void> _handleTap(BuildContext context) async {
     Gaimon.soft();
 
@@ -66,16 +73,16 @@ class AIChatButton extends StatelessWidget {
       return;
     }
 
-    // Free users: try to consume a credit
-    final allowed = await creditCubit.tryConsumeCredit();
-    if (!allowed) {
+    // Free users: check if credits are available (don't consume yet)
+    if (!creditCubit.state.canUseFeature) {
       if (!context.mounted) return;
       await context.read<SubscriptionCubit>().showPaywall();
       return;
     }
 
     if (!context.mounted) return;
-    await _showChatBottomSheet(context);
+    // Credit will be consumed by AIChatCubit after first success
+    await _showChatBottomSheet(context, creditCubit: creditCubit);
   }
 
   @override
