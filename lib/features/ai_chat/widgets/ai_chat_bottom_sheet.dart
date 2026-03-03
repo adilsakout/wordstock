@@ -178,7 +178,10 @@ class _AIChatBottomSheetState extends State<AIChatBottomSheet> {
                 ),
                 boxShadow: [
                   BoxShadow(
-                    color: Colors.black.withValues(alpha: 0.1),
+                    color: Theme.of(context)
+                        .colorScheme
+                        .shadow
+                        .withValues(alpha: 0.1),
                     blurRadius: 10,
                     offset: const Offset(0, -5),
                   ),
@@ -210,7 +213,9 @@ class _AIChatBottomSheetState extends State<AIChatBottomSheet> {
                         child: Center(
                           child: Text(
                             l10n.chatWithAIError(state.errorMessage),
-                            style: const TextStyle(color: Colors.red),
+                            style: TextStyle(
+                              color: Theme.of(context).colorScheme.error,
+                            ),
                           ),
                         ),
                       )
@@ -252,7 +257,10 @@ class _AIChatBottomSheetState extends State<AIChatBottomSheet> {
             width: 40,
             height: 5,
             decoration: BoxDecoration(
-              color: Colors.grey.withValues(alpha: 0.3),
+              color: Theme.of(context)
+                  .colorScheme
+                  .onSurface
+                  .withValues(alpha: 0.3),
               borderRadius: BorderRadius.circular(10),
             ),
           ),
@@ -339,13 +347,14 @@ class _AIChatBottomSheetState extends State<AIChatBottomSheet> {
   /// - Smooth spring animations following Apple design patterns
   /// - Proper positioning aligned with AI messages
   Widget _buildTypingIndicator(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
     return Align(
       alignment: Alignment.centerLeft,
       child: Container(
         margin: const EdgeInsets.symmetric(vertical: 4),
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
         decoration: BoxDecoration(
-          color: Colors.grey.shade200,
+          color: colorScheme.surfaceContainerHighest,
           borderRadius: BorderRadius.circular(16),
         ),
         child: Row(
@@ -358,7 +367,7 @@ class _AIChatBottomSheetState extends State<AIChatBottomSheet> {
                 height: 8,
                 margin: EdgeInsets.only(right: i < 2 ? 4 : 0),
                 decoration: BoxDecoration(
-                  color: Colors.grey.shade500,
+                  color: colorScheme.onSurfaceVariant,
                   shape: BoxShape.circle,
                 ),
               )
@@ -395,6 +404,7 @@ class _AIChatBottomSheetState extends State<AIChatBottomSheet> {
     required Duration animationDelay,
     bool isLatestAIMessage = false,
   }) {
+    final colorScheme = Theme.of(context).colorScheme;
     return Align(
       alignment: isUser ? Alignment.centerRight : Alignment.centerLeft,
       child: Container(
@@ -404,14 +414,16 @@ class _AIChatBottomSheetState extends State<AIChatBottomSheet> {
           maxWidth: MediaQuery.of(context).size.width * 0.75,
         ),
         decoration: BoxDecoration(
-          color: isUser ? Theme.of(context).primaryColor : Colors.grey.shade200,
+          color: isUser
+              ? Theme.of(context).primaryColor
+              : colorScheme.surfaceContainerHighest,
           borderRadius: BorderRadius.circular(16),
         ),
         child: isUser
             ? Text(
                 message,
                 style: TextStyle(
-                  color: isUser ? Colors.white : Colors.black87,
+                  color: colorScheme.onPrimary,
                 ),
               )
             : _shouldAnimateMessage(message, isLatestAIMessage)
@@ -425,30 +437,36 @@ class _AIChatBottomSheetState extends State<AIChatBottomSheet> {
                       });
                     },
                   )
-                : MarkdownWidget(
-                    data: message,
-                    shrinkWrap: true,
-                    config: MarkdownConfig(
-                      configs: [
-                        const PConfig(
-                          textStyle: TextStyle(
-                            color: Colors.black87,
-                            fontSize: 14,
-                          ),
-                        ),
-                        CodeConfig(
-                          style: TextStyle(
-                            backgroundColor: Colors.grey.shade300,
-                            fontFamily: 'monospace',
-                            fontSize: 13,
-                          ),
-                        ),
-                        // BlockquoteConfig - will configure later
-                      ],
-                    ),
-                  ),
+                : _buildMarkdownContent(context, message),
       ),
     ).animate(delay: animationDelay).fadeIn().slideY(begin: 0.2, end: 0);
+  }
+
+  /// Builds theme-aware markdown content for AI messages.
+  Widget _buildMarkdownContent(BuildContext context, String data) {
+    final colorScheme = Theme.of(context).colorScheme;
+    return MarkdownWidget(
+      data: data,
+      shrinkWrap: true,
+      config: MarkdownConfig(
+        configs: [
+          PConfig(
+            textStyle: TextStyle(
+              color: colorScheme.onSurface,
+              fontSize: 14,
+            ),
+          ),
+          CodeConfig(
+            style: TextStyle(
+              backgroundColor:
+                  colorScheme.surfaceContainerHigh,
+              fontFamily: 'monospace',
+              fontSize: 13,
+            ),
+          ),
+        ],
+      ),
+    );
   }
 
   /// Determines if an AI message should animate or show as static text
@@ -465,17 +483,25 @@ class _AIChatBottomSheetState extends State<AIChatBottomSheet> {
   /// without destroying the conversation history.
   Widget _buildErrorBanner(BuildContext context, AIChatLoaded state) {
     final l10n = context.l10n;
+    final colorScheme = Theme.of(context).colorScheme;
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-      color: Colors.red.shade50,
+      color: colorScheme.errorContainer,
       child: Row(
         children: [
-          const Icon(Icons.error_outline, color: Colors.red, size: 20),
+          Icon(
+            Icons.error_outline,
+            color: colorScheme.error,
+            size: 20,
+          ),
           const SizedBox(width: 8),
           Expanded(
             child: Text(
               l10n.chatWithAIError(state.errorMessage ?? ''),
-              style: const TextStyle(color: Colors.red, fontSize: 13),
+              style: TextStyle(
+                color: colorScheme.onErrorContainer,
+                fontSize: 13,
+              ),
               maxLines: 2,
               overflow: TextOverflow.ellipsis,
             ),
@@ -522,7 +548,10 @@ class _AIChatBottomSheetState extends State<AIChatBottomSheet> {
         color: Theme.of(context).colorScheme.surface,
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withValues(alpha: 0.05),
+            color: Theme.of(context)
+                .colorScheme
+                .shadow
+                .withValues(alpha: 0.05),
             blurRadius: 5,
             offset: const Offset(0, -1),
           ),
@@ -540,7 +569,9 @@ class _AIChatBottomSheetState extends State<AIChatBottomSheet> {
                   borderSide: BorderSide.none,
                 ),
                 filled: true,
-                fillColor: Colors.grey.shade100,
+                fillColor: Theme.of(context)
+                    .colorScheme
+                    .surfaceContainerLow,
                 contentPadding: const EdgeInsets.symmetric(
                   horizontal: 16,
                   vertical: 10,
@@ -666,6 +697,8 @@ class _MarkdownTypingAnimationTextState
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+
     // After animation completes, render full markdown once
     if (_isTypingComplete) {
       return MarkdownWidget(
@@ -673,12 +706,16 @@ class _MarkdownTypingAnimationTextState
         shrinkWrap: true,
         config: MarkdownConfig(
           configs: [
-            const PConfig(
-              textStyle: TextStyle(color: Colors.black87, fontSize: 14),
+            PConfig(
+              textStyle: TextStyle(
+                color: colorScheme.onSurface,
+                fontSize: 14,
+              ),
             ),
             CodeConfig(
               style: TextStyle(
-                backgroundColor: Colors.grey.shade300,
+                backgroundColor:
+                    colorScheme.surfaceContainerHigh,
                 fontFamily: 'monospace',
                 fontSize: 13,
               ),
@@ -696,7 +733,10 @@ class _MarkdownTypingAnimationTextState
         final cursor = _cursorController.value > 0.5 ? '|' : '';
         return Text(
           '$visible$cursor',
-          style: const TextStyle(color: Colors.black87, fontSize: 14),
+          style: TextStyle(
+            color: colorScheme.onSurface,
+            fontSize: 14,
+          ),
         );
       },
     );
