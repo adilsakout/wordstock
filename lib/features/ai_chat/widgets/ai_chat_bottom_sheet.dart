@@ -58,6 +58,9 @@ class _AIChatBottomSheetState extends State<AIChatBottomSheet> {
   // Debounce timer to prevent rapid-fire sends
   Timer? _sendDebounce;
 
+  // Throttle scroll-to-bottom calls during streaming
+  DateTime? _lastScrollTime;
+
   // Captured cubit reference for safe access in dispose()
   late final AIChatCubit _chatCubit;
 
@@ -188,10 +191,35 @@ class _AIChatBottomSheetState extends State<AIChatBottomSheet> {
 
     return BlocConsumer<AIChatCubit, AIChatState>(
       listener: (context, state) {
-        // Auto-scroll when new messages arrive or loading state changes
         if (state is AIChatLoaded) {
-          // Scroll to show new messages or typing indicator
-          _scrollToBottom();
+          if (state.isStreaming) {
+            // Throttle scroll during streaming (max every 200ms)
+            final now = DateTime.now();
+            if (_lastScrollTime == null ||
+                now.difference(_lastScrollTime!) >
+                    const Duration(milliseconds: 200)) {
+              _lastScrollTime = now;
+              _scrollToBottom();
+            }
+          } else {
+            _scrollToBottom();
+
+            // Mark the latest assistant message as already
+            // animated if it arrived via streaming.
+            if (!state.isLoading &&
+                state.streamingContent == null) {
+              final assistantMsgs = state.messages
+                  .where(
+                    (m) => m.role == MessageRole.assistant,
+                  )
+                  .toList();
+              if (assistantMsgs.isNotEmpty) {
+                _completedAnimations.add(
+                  assistantMsgs.last.content,
+                );
+              }
+            }
+          }
         }
       },
       builder: (context, state) {
@@ -343,11 +371,18 @@ class _AIChatBottomSheetState extends State<AIChatBottomSheet> {
 
     final hasAssistantMessage =
         visibleMessages.any((m) => m.role == MessageRole.assistant);
-    final showChips = hasAssistantMessage && !state.isLoading;
+    final hasStreamingContent = state.isStreaming &&
+        state.streamingContent != null &&
+        state.streamingContent!.isNotEmpty;
+    final showChips =
+        hasAssistantMessage && !state.isLoading && !hasStreamingContent;
 
-    // Extra items: typing indicator (when loading) + suggestion chips
+    // Extra items: streaming bubble OR typing indicator, plus chips
+    final showTypingIndicator =
+        state.isLoading && !hasStreamingContent;
     final itemCount = visibleMessages.length +
-        (state.isLoading ? 1 : 0) +
+        (hasStreamingContent ? 1 : 0) +
+        (showTypingIndicator ? 1 : 0) +
         (showChips ? 1 : 0);
 
     return ListView.builder(
@@ -355,8 +390,19 @@ class _AIChatBottomSheetState extends State<AIChatBottomSheet> {
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
       itemCount: itemCount,
       itemBuilder: (context, index) {
-        // Show retrying or typing indicator when AI is loading
-        if (state.isLoading && index == visibleMessages.length) {
+        // Show streaming bubble with live content
+        if (hasStreamingContent &&
+            index == visibleMessages.length) {
+          return _buildStreamingBubble(
+            context,
+            state.streamingContent!,
+          );
+        }
+
+        // Show retrying or typing indicator when loading
+        // (only before streaming starts)
+        if (showTypingIndicator &&
+            index == visibleMessages.length) {
           if (state.isRetrying) {
             return _buildRetryingIndicator(context, state);
           }
@@ -375,8 +421,9 @@ class _AIChatBottomSheetState extends State<AIChatBottomSheet> {
           context,
           message: message.content,
           isUser: isUser,
-          animationDelay: (50 * index).ms, // Staggered entrance animations
-          isLatestAIMessage: !isUser && index == visibleMessages.length - 1,
+          animationDelay: (50 * index).ms,
+          isLatestAIMessage:
+              !isUser && index == visibleMessages.length - 1,
         );
       },
     );
@@ -471,6 +518,41 @@ class _AIChatBottomSheetState extends State<AIChatBottomSheet> {
         ),
       ),
     ).animate().fadeIn(duration: 300.ms);
+  }
+
+  /// Builds a streaming bubble that shows accumulated tokens with
+  /// markdown stripped for performance (same pattern as the typing
+  /// animation). A blinking cursor indicates content is still arriving.
+  Widget _buildStreamingBubble(
+    BuildContext context,
+    String content,
+  ) {
+    final colorScheme = Theme.of(context).colorScheme;
+    return Align(
+      alignment: Alignment.centerLeft,
+      child: Container(
+        margin: const EdgeInsets.symmetric(vertical: 4),
+        padding: const EdgeInsets.symmetric(
+          horizontal: 16,
+          vertical: 10,
+        ),
+        constraints: BoxConstraints(
+          maxWidth: MediaQuery.of(context).size.width * 0.75,
+        ),
+        decoration: BoxDecoration(
+          color: colorScheme.surfaceContainerHighest,
+          borderRadius: BorderRadius.circular(16),
+        ),
+        child: Text(
+          '${_stripMarkdown(content)}▎',
+          style: TextStyle(
+            color: colorScheme.onSurface,
+            fontSize: 14,
+            height: 1.5,
+          ),
+        ),
+      ),
+    );
   }
 
   /// Builds tappable suggestion chips shown after the latest AI
@@ -782,6 +864,17 @@ class _AIChatBottomSheetState extends State<AIChatBottomSheet> {
   }
 }
 
+/// Strips common markdown formatting for clean display during the
+/// typing animation and streaming bubble.
+String _stripMarkdown(String text) {
+  return text
+      .replaceAll(RegExp(r'#{1,6}\s*'), '')
+      .replaceAll('**', '')
+      .replaceAll(RegExp('^- ', multiLine: true), '• ')
+      .replaceAll(RegExp(r'^\* ', multiLine: true), '• ')
+      .replaceAll('`', '');
+}
+
 /// Typing animation that uses lightweight [Text] during animation
 /// and switches to full [MarkdownWidget] only once complete.
 ///
@@ -814,17 +907,6 @@ class _MarkdownTypingAnimationTextState
   Timer? _typingTimer;
   int _currentCharCount = 0;
   bool _isTypingComplete = false;
-
-  /// Strips common markdown formatting for clean display
-  /// during the typing animation.
-  static String _stripMarkdown(String text) {
-    return text
-        .replaceAll(RegExp(r'#{1,6}\s*'), '')
-        .replaceAll('**', '')
-        .replaceAll(RegExp('^- ', multiLine: true), '• ')
-        .replaceAll(RegExp(r'^\* ', multiLine: true), '• ')
-        .replaceAll('`', '');
-  }
 
   @override
   void initState() {

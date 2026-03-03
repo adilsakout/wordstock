@@ -90,6 +90,8 @@ class AIChatLoaded extends AIChatState {
     this.errorMessage,
     this.isRetrying = false,
     this.retryAttempt = 0,
+    this.isStreaming = false,
+    this.streamingContent,
   });
 
   /// The vocabulary word that is the focus of this conversation
@@ -111,6 +113,12 @@ class AIChatLoaded extends AIChatState {
   /// The current retry attempt number (1-based). Zero when not retrying.
   final int retryAttempt;
 
+  /// Whether tokens are actively arriving from the SSE stream.
+  final bool isStreaming;
+
+  /// Accumulated content from the stream so far. Null when not streaming.
+  final String? streamingContent;
+
   /// Whether there is a recoverable error to display
   bool get hasError => errorMessage != null;
 
@@ -121,6 +129,8 @@ class AIChatLoaded extends AIChatState {
     String? Function()? errorMessage,
     bool? isRetrying,
     int? retryAttempt,
+    bool? isStreaming,
+    String? Function()? streamingContent,
   }) {
     return AIChatLoaded(
       word: word ?? this.word,
@@ -130,12 +140,24 @@ class AIChatLoaded extends AIChatState {
           errorMessage != null ? errorMessage() : this.errorMessage,
       isRetrying: isRetrying ?? this.isRetrying,
       retryAttempt: retryAttempt ?? this.retryAttempt,
+      isStreaming: isStreaming ?? this.isStreaming,
+      streamingContent: streamingContent != null
+          ? streamingContent()
+          : this.streamingContent,
     );
   }
 
   @override
-  List<Object?> get props =>
-      [word, messages, isLoading, errorMessage, isRetrying, retryAttempt];
+  List<Object?> get props => [
+        word,
+        messages,
+        isLoading,
+        errorMessage,
+        isRetrying,
+        retryAttempt,
+        isStreaming,
+        streamingContent,
+      ];
 }
 
 /// Error state when something goes wrong with the AI chat

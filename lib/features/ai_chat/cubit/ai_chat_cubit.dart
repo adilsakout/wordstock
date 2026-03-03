@@ -4,6 +4,7 @@ import 'dart:io';
 
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
+import 'package:http/http.dart' show ByteStream;
 import 'package:supabase_flutter/supabase_flutter.dart' show FunctionException;
 import 'package:wordstock/features/credit/cubit/credit_cubit.dart';
 import 'package:wordstock/model/word.dart';
@@ -80,8 +81,8 @@ class AIChatCubit extends Cubit<AIChatState> {
         ),
       );
 
-      // Call Edge Function with automatic retry for transient errors
-      final response = await _callEdgeFunctionWithRetry([
+      // Stream response from Edge Function
+      final response = await _callEdgeFunctionStreaming([
         {'role': 'system', 'content': systemMessage},
         {'role': 'user', 'content': initialPrompt},
       ]);
@@ -101,9 +102,6 @@ class AIChatCubit extends Cubit<AIChatState> {
           isLoading: false,
         ),
       );
-
-      // Consume credit only after first successful response
-      await _tryConsumeCredit();
     } catch (e) {
       // Keep loaded state so conversation is preserved
       if (state is AIChatLoaded) {
@@ -113,6 +111,8 @@ class AIChatCubit extends Cubit<AIChatState> {
             isLoading: false,
             isRetrying: false,
             retryAttempt: 0,
+            isStreaming: false,
+            streamingContent: () => null,
             errorMessage: e.toString,
           ),
         );
@@ -162,7 +162,7 @@ class AIChatCubit extends Cubit<AIChatState> {
         ),
       );
 
-      final responseContent = await _callEdgeFunctionWithRetry(
+      final responseContent = await _callEdgeFunctionStreaming(
         conversationHistory,
       );
 
@@ -178,17 +178,36 @@ class AIChatCubit extends Cubit<AIChatState> {
         currentState.copyWith(
           messages: messagesWithResponse,
           isLoading: false,
-          errorMessage: () => null, // clear any previous error
+          isStreaming: false,
+          streamingContent: () => null,
+          errorMessage: () => null,
         ),
       );
     } catch (e) {
-      // Preserve conversation — show inline error with retry
+      // Preserve partial streaming content if available.
+      final partial = (state is AIChatLoaded)
+          ? (state as AIChatLoaded).streamingContent
+          : null;
+
+      final finalMessages =
+          partial != null && partial.isNotEmpty
+              ? (List<ChatMessage>.from(updatedMessages)
+                ..add(
+                  ChatMessage(
+                    role: MessageRole.assistant,
+                    content: partial,
+                  ),
+                ))
+              : updatedMessages;
+
       emit(
         currentState.copyWith(
-          messages: updatedMessages,
+          messages: finalMessages,
           isLoading: false,
           isRetrying: false,
           retryAttempt: 0,
+          isStreaming: false,
+          streamingContent: () => null,
           errorMessage: e.toString,
         ),
       );
@@ -313,25 +332,53 @@ class AIChatCubit extends Cubit<AIChatState> {
         msg.contains('network');
   }
 
-  /// Wraps [_callEdgeFunction] with automatic retry for transient errors.
+  /// Calls the edge function with streaming enabled.
   ///
-  /// Up to [_maxRetries] attempts with exponential backoff (1s → 2s → 4s).
-  /// Emits [AIChatLoaded] with `isRetrying: true` between attempts so the
-  /// UI can show a retrying indicator. Rethrows if the error is
-  /// non-retryable or all attempts are exhausted.
-  Future<String> _callEdgeFunctionWithRetry(
+  /// Emits [AIChatLoaded] updates with `streamingContent` as tokens
+  /// arrive. Falls back to non-streaming if the response is not SSE.
+  /// Consumes a credit on the first token.
+  Future<String> _callEdgeFunctionStreaming(
     List<Map<String, dynamic>> messages,
   ) async {
     for (var attempt = 0; attempt < _maxRetries; attempt++) {
       try {
-        return await _callEdgeFunction(messages);
+        final response = await SupabaseRepository.client.functions.invoke(
+          'chat-completion',
+          body: {'messages': messages, 'stream': true},
+        );
+
+        // If the response is a ByteStream, process SSE.
+        if (response.data is ByteStream) {
+          return await _processStream(response.data as ByteStream);
+        }
+
+        // Fallback: the edge function returned a non-streaming response
+        // (e.g. before the streaming update was deployed).
+        final data = response.data;
+        if (data is Map && data.containsKey('content')) {
+          await _tryConsumeCredit();
+          return data['content'] as String;
+        }
+        if (data is String) {
+          final parsed = json.decode(data) as Map<String, dynamic>;
+          await _tryConsumeCredit();
+          return parsed['content'] as String;
+        }
+        if (data is Map && data.containsKey('error')) {
+          throw Exception(data['error'] as String);
+        }
+        throw Exception('Invalid response format from AI service');
       } catch (e) {
+        // Only retry if no content has been streamed yet.
+        final hasPartial = state is AIChatLoaded &&
+            (state as AIChatLoaded).streamingContent != null &&
+            (state as AIChatLoaded).streamingContent!.isNotEmpty;
+
         final isLastAttempt = attempt == _maxRetries - 1;
-        if (!_isRetryableError(e) || isLastAttempt) {
+        if (!_isRetryableError(e) || isLastAttempt || hasPartial) {
           rethrow;
         }
 
-        // Emit retrying state so the UI can show progress.
         if (state is AIChatLoaded) {
           emit(
             (state as AIChatLoaded).copyWith(
@@ -344,39 +391,69 @@ class AIChatCubit extends Cubit<AIChatState> {
         await Future<void>.delayed(_retryDelays[attempt]);
       }
     }
-    // Unreachable — loop either returns or rethrows.
     throw Exception('All retry attempts exhausted');
   }
 
-  /// Calls the Supabase `chat-completion` Edge Function.
-  ///
-  /// The Edge Function holds the OpenAI API key server-side,
-  /// preventing key exposure on the client.
-  Future<String> _callEdgeFunction(
-    List<Map<String, dynamic>> messages,
-  ) async {
-    final response = await SupabaseRepository.client.functions
-        .invoke(
-          'chat-completion',
-          body: {'messages': messages},
-        )
-        .timeout(const Duration(seconds: 30));
+  /// Processes an SSE byte stream, accumulating content and emitting
+  /// state updates as tokens arrive.
+  Future<String> _processStream(ByteStream stream) async {
+    final buffer = StringBuffer();
+    final sseBuffer = StringBuffer();
 
-    final data = response.data;
-    if (data is Map && data.containsKey('error')) {
-      throw Exception(data['error'] as String);
+    await for (final chunk in stream.transform(const Utf8Decoder())) {
+      sseBuffer.write(chunk);
+
+      // Process complete SSE lines.
+      final lines = sseBuffer.toString().split('\n');
+      // Keep the last (potentially incomplete) line in the buffer.
+      sseBuffer
+        ..clear()
+        ..write(lines.removeLast());
+
+      for (final line in lines) {
+        final trimmed = line.trim();
+        if (trimmed.isEmpty || !trimmed.startsWith('data: ')) continue;
+
+        final data = trimmed.substring(6); // strip 'data: '
+        if (data == '[DONE]') continue;
+
+        try {
+          final parsed = json.decode(data) as Map<String, dynamic>;
+          final choices = parsed['choices'] as List<dynamic>?;
+          if (choices == null || choices.isEmpty) continue;
+
+          final choice =
+              choices[0] as Map<String, dynamic>;
+          final delta =
+              choice['delta'] as Map<String, dynamic>?;
+          final content = delta?['content'] as String?;
+          if (content == null) continue;
+
+          buffer.write(content);
+
+          // Consume credit on first token.
+          if (buffer.length == content.length) {
+            await _tryConsumeCredit();
+          }
+
+          // Emit accumulated content.
+          if (state is AIChatLoaded) {
+            emit(
+              (state as AIChatLoaded).copyWith(
+                isStreaming: true,
+                isRetrying: false,
+                retryAttempt: 0,
+                streamingContent: buffer.toString,
+              ),
+            );
+          }
+        } catch (_) {
+          // Skip unparseable lines (partial JSON from split chunks).
+        }
+      }
     }
 
-    if (data is String) {
-      final parsed = json.decode(data) as Map<String, dynamic>;
-      return parsed['content'] as String;
-    }
-
-    if (data is Map && data.containsKey('content')) {
-      return data['content'] as String;
-    }
-
-    throw Exception('Invalid response format from AI service');
+    return buffer.toString();
   }
 
   /// Consume a credit once after the first successful response.
