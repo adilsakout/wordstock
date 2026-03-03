@@ -327,17 +327,28 @@ class _AIChatBottomSheetState extends State<AIChatBottomSheet> {
         .where((message) => message.role != MessageRole.system)
         .toList();
 
-    // Add 1 to item count if AI is loading (for typing indicator)
-    final itemCount = visibleMessages.length + (state.isLoading ? 1 : 0);
+    final hasAssistantMessage =
+        visibleMessages.any((m) => m.role == MessageRole.assistant);
+    final showChips = hasAssistantMessage && !state.isLoading;
+
+    // Extra items: typing indicator (when loading) + suggestion chips
+    final itemCount = visibleMessages.length +
+        (state.isLoading ? 1 : 0) +
+        (showChips ? 1 : 0);
 
     return ListView.builder(
       controller: _scrollController,
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
       itemCount: itemCount,
       itemBuilder: (context, index) {
-        // Show typing indicator as last item when AI is loading
+        // Show typing indicator when AI is loading
         if (state.isLoading && index == visibleMessages.length) {
           return _buildTypingIndicator(context);
+        }
+
+        // Show suggestion chips as the last item
+        if (showChips && index == itemCount - 1) {
+          return _buildSuggestionChips(context);
         }
 
         final message = visibleMessages[index];
@@ -401,6 +412,47 @@ class _AIChatBottomSheetState extends State<AIChatBottomSheet> {
         .animate()
         .fadeIn(duration: 300.ms)
         .slideY(begin: 0.3, end: 0, curve: Curves.easeOut);
+  }
+
+  /// Builds tappable suggestion chips shown after the latest AI
+  /// response to reduce friction and guide the conversation.
+  Widget _buildSuggestionChips(BuildContext context) {
+    final l10n = context.l10n;
+    final colorScheme = Theme.of(context).colorScheme;
+    final suggestions = [
+      l10n.aiSuggestionExamples,
+      l10n.aiSuggestionSynonyms,
+      l10n.aiSuggestionPronunciation,
+    ];
+
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 8),
+      child: Wrap(
+        spacing: 8,
+        runSpacing: 4,
+        children: suggestions.map((text) {
+          return ActionChip(
+            label: Text(
+              text,
+              style: TextStyle(
+                color: colorScheme.primary,
+                fontSize: 13,
+              ),
+            ),
+            backgroundColor: colorScheme.primaryContainer
+                .withValues(alpha: 0.3),
+            side: BorderSide(
+              color: colorScheme.primary
+                  .withValues(alpha: 0.3),
+            ),
+            onPressed: () {
+              _messageController.text = text;
+              _debouncedSend();
+            },
+          );
+        }).toList(),
+      ),
+    ).animate().fadeIn(duration: 300.ms);
   }
 
   /// Creates individual chat bubbles with modern iMessage-style design

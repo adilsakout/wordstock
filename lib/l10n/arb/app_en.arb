@@ -1194,5 +1194,17 @@
     "onboardingContinue": "Continue",
     "@onboardingContinue": {
         "description": "Continue button text"
+    },
+    "aiSuggestionExamples": "Show me more examples",
+    "@aiSuggestionExamples": {
+        "description": "Suggested follow-up chip: request more usage examples"
+    },
+    "aiSuggestionSynonyms": "What are the synonyms?",
+    "@aiSuggestionSynonyms": {
+        "description": "Suggested follow-up chip: request synonyms"
+    },
+    "aiSuggestionPronunciation": "How do I pronounce it?",
+    "@aiSuggestionPronunciation": {
+        "description": "Suggested follow-up chip: request pronunciation help"
     }
 }
