@@ -13,6 +13,7 @@ import 'package:wordstock/model/onboarding_enums.dart';
 import 'package:wordstock/model/user_profile.dart';
 import 'package:wordstock/repositories/english_test_repository.dart';
 import 'package:wordstock/repositories/user_repository.dart';
+import 'package:wordstock/services/posthog_service.dart';
 
 part 'onboarding_state.dart';
 
@@ -52,6 +53,25 @@ class OnboardingCubit extends Cubit<OnboardingState> {
     final currentPage = pageController.page?.round() ?? 0;
     final progress = currentPage / totalPages;
     emit(state.copyWith(currentPage: currentPage, progress: progress));
+
+    const stepNames = {
+      0: 'welcome',
+      1: 'goal_identity',
+      2: 'level_selection',
+      3: 'assessment',
+      4: 'progress_framing',
+      5: 'daily_habit',
+      6: 'notification',
+      7: 'plan_reveal',
+      8: 'social_proof',
+    };
+    await PosthogService.instance.track(
+      'Onboarding Step Viewed',
+      properties: {
+        'step': currentPage,
+        'step_name': stepNames[currentPage] ?? 'unknown',
+      },
+    );
 
     // Save the current page index to SharedPreferences
     final prefs = await SharedPreferences.getInstance();
@@ -257,6 +277,21 @@ class OnboardingCubit extends Cubit<OnboardingState> {
 
   /// Save only vocabulary level from onboarding data to the user profile
   Future<void> saveOnboardingData() async {
+    await PosthogService.instance.track(
+      'Onboarding Completed',
+      properties: {
+        'goal': state.onboardingGoal ?? '',
+        'level': state.onboardingLevel ?? '',
+        'daily_minutes': state.dailyMinutes ?? 0,
+        r'$set': <String, Object>{
+          'onboarding_goal': state.onboardingGoal ?? '',
+          'onboarding_level': state.onboardingLevel ?? '',
+          'daily_minutes': state.dailyMinutes ?? 0,
+          'onboarding_completed': true,
+        },
+      },
+    );
+
     try {
       // Convert vocabulary level index to enum
       final vocabularyLevel = VocabularyLevel.values[state.vocabularyLevel];
@@ -281,6 +316,7 @@ class OnboardingCubit extends Cubit<OnboardingState> {
       final status = await Permission.notification.request();
 
       if (status.isGranted) {
+        await PosthogService.instance.track('Notification Permission Granted');
         // Add a brief delay for better UX
         await Future<void>.delayed(const Duration(milliseconds: 300));
         nextPage();
@@ -288,6 +324,13 @@ class OnboardingCubit extends Cubit<OnboardingState> {
         bool? result;
         if (Platform.isIOS) {
           result = await OneSignal.Notifications.requestPermission(true);
+          if (result == true) {
+            await PosthogService.instance
+                .track('Notification Permission Granted');
+          } else {
+            await PosthogService.instance
+                .track('Notification Permission Denied');
+          }
           await Future<void>.delayed(const Duration(milliseconds: 300));
           nextPage();
         } else {
@@ -295,6 +338,13 @@ class OnboardingCubit extends Cubit<OnboardingState> {
               .resolvePlatformSpecificImplementation<
                   AndroidFlutterLocalNotificationsPlugin>()
               ?.requestNotificationsPermission();
+          if ((result ?? false) == true) {
+            await PosthogService.instance
+                .track('Notification Permission Granted');
+          } else {
+            await PosthogService.instance
+                .track('Notification Permission Denied');
+          }
         }
 
         if ((result ?? false) == true) {
@@ -325,6 +375,8 @@ class OnboardingCubit extends Cubit<OnboardingState> {
         onboardingGoal: goal,
       ),
     );
+    PosthogService.instance
+        .track('Onboarding Goal Selected', properties: {'goal': goal});
     nextPage();
   }
 
@@ -345,6 +397,8 @@ class OnboardingCubit extends Cubit<OnboardingState> {
         onboardingLevel: level,
       ),
     );
+    PosthogService.instance
+        .track('Onboarding Level Selected', properties: {'level': level});
     nextPage();
   }
 
@@ -363,6 +417,12 @@ class OnboardingCubit extends Cubit<OnboardingState> {
         microWinCompleted: true,
       ),
     );
+    PosthogService.instance.track(
+      'Onboarding Assessment Completed',
+      properties: {
+        'is_correct': isCorrect,
+      },
+    );
   }
 
   /// Sets temporary daily minutes selection for visual feedback
@@ -376,6 +436,10 @@ class OnboardingCubit extends Cubit<OnboardingState> {
       state.copyWith(
         dailyMinutes: minutes,
       ),
+    );
+    PosthogService.instance.track(
+      'Onboarding Daily Habit Selected',
+      properties: {'minutes': minutes},
     );
     nextPage();
   }
