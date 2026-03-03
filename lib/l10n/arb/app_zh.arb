@@ -1138,5 +1138,17 @@
     "onboardingContinue": "繼續",
     "@onboardingContinue": {
         "description": "Continue button text"
+    },
+    "chatRetrying": "重试中… ({attempt}/{maxAttempts})",
+    "@chatRetrying": {
+        "description": "Message shown when automatically retrying a failed AI request",
+        "placeholders": {
+            "attempt": {
+                "type": "int"
+            },
+            "maxAttempts": {
+                "type": "int"
+            }
+        }
     }
 }

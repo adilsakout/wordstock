@@ -905,4 +905,9 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get aiSuggestionPronunciation => 'How do I pronounce it?';
+
+  @override
+  String chatRetrying(int attempt, int maxAttempts) {
+    return 'Nouvelle tentative… ($attempt/$maxAttempts)';
+  }
 }

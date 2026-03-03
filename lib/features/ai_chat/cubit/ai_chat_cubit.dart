@@ -1,8 +1,10 @@
 import 'dart:async';
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
+import 'package:supabase_flutter/supabase_flutter.dart' show FunctionException;
 import 'package:wordstock/features/credit/cubit/credit_cubit.dart';
 import 'package:wordstock/model/word.dart';
 import 'package:wordstock/repositories/chat_repository.dart';
@@ -38,6 +40,16 @@ class AIChatCubit extends Cubit<AIChatState> {
   /// to include in the API payload. 10 messages ≈ 5 user+assistant pairs.
   static const int _maxHistoryMessages = 10;
 
+  /// Maximum number of automatic retry attempts for transient errors.
+  static const int _maxRetries = 3;
+
+  /// Exponential backoff delays between retry attempts.
+  static const List<Duration> _retryDelays = [
+    Duration(seconds: 1),
+    Duration(seconds: 2),
+    Duration(seconds: 4),
+  ];
+
   /// Initiates a conversation about the specified [word]
   ///
   /// Shows the user's message immediately, then fetches the AI response
@@ -68,8 +80,8 @@ class AIChatCubit extends Cubit<AIChatState> {
         ),
       );
 
-      // Call Edge Function instead of direct OpenAI
-      final response = await _callEdgeFunction([
+      // Call Edge Function with automatic retry for transient errors
+      final response = await _callEdgeFunctionWithRetry([
         {'role': 'system', 'content': systemMessage},
         {'role': 'user', 'content': initialPrompt},
       ]);
@@ -99,6 +111,8 @@ class AIChatCubit extends Cubit<AIChatState> {
         emit(
           s.copyWith(
             isLoading: false,
+            isRetrying: false,
+            retryAttempt: 0,
             errorMessage: e.toString,
           ),
         );
@@ -148,7 +162,7 @@ class AIChatCubit extends Cubit<AIChatState> {
         ),
       );
 
-      final responseContent = await _callEdgeFunction(
+      final responseContent = await _callEdgeFunctionWithRetry(
         conversationHistory,
       );
 
@@ -173,6 +187,8 @@ class AIChatCubit extends Cubit<AIChatState> {
         currentState.copyWith(
           messages: updatedMessages,
           isLoading: false,
+          isRetrying: false,
+          retryAttempt: 0,
           errorMessage: e.toString,
         ),
       );
@@ -279,6 +295,57 @@ class AIChatCubit extends Cubit<AIChatState> {
     // Append the new user message.
     result.add({'role': 'user', 'content': newUserMessage});
     return result;
+  }
+
+  /// Whether [error] is a transient failure worth retrying.
+  ///
+  /// Retries on: network errors, timeouts, 5xx server errors.
+  /// Does NOT retry on: 4xx client errors, response format issues.
+  bool _isRetryableError(Object error) {
+    if (error is TimeoutException) return true;
+    if (error is SocketException) return true;
+    if (error is FunctionException) return error.status >= 500;
+
+    final msg = error.toString().toLowerCase();
+    return msg.contains('socketexception') ||
+        msg.contains('connection') ||
+        msg.contains('timeout') ||
+        msg.contains('network');
+  }
+
+  /// Wraps [_callEdgeFunction] with automatic retry for transient errors.
+  ///
+  /// Up to [_maxRetries] attempts with exponential backoff (1s → 2s → 4s).
+  /// Emits [AIChatLoaded] with `isRetrying: true` between attempts so the
+  /// UI can show a retrying indicator. Rethrows if the error is
+  /// non-retryable or all attempts are exhausted.
+  Future<String> _callEdgeFunctionWithRetry(
+    List<Map<String, dynamic>> messages,
+  ) async {
+    for (var attempt = 0; attempt < _maxRetries; attempt++) {
+      try {
+        return await _callEdgeFunction(messages);
+      } catch (e) {
+        final isLastAttempt = attempt == _maxRetries - 1;
+        if (!_isRetryableError(e) || isLastAttempt) {
+          rethrow;
+        }
+
+        // Emit retrying state so the UI can show progress.
+        if (state is AIChatLoaded) {
+          emit(
+            (state as AIChatLoaded).copyWith(
+              isRetrying: true,
+              retryAttempt: attempt + 1,
+            ),
+          );
+        }
+
+        await Future<void>.delayed(_retryDelays[attempt]);
+      }
+    }
+    // Unreachable — loop either returns or rethrows.
+    throw Exception('All retry attempts exhausted');
   }
 
   /// Calls the Supabase `chat-completion` Edge Function.

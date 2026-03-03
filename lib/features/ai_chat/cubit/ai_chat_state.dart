@@ -88,6 +88,8 @@ class AIChatLoaded extends AIChatState {
     required this.messages,
     required this.isLoading,
     this.errorMessage,
+    this.isRetrying = false,
+    this.retryAttempt = 0,
   });
 
   /// The vocabulary word that is the focus of this conversation
@@ -103,6 +105,12 @@ class AIChatLoaded extends AIChatState {
   /// retry button so the user does not lose their conversation.
   final String? errorMessage;
 
+  /// Whether an automatic retry is currently in progress.
+  final bool isRetrying;
+
+  /// The current retry attempt number (1-based). Zero when not retrying.
+  final int retryAttempt;
+
   /// Whether there is a recoverable error to display
   bool get hasError => errorMessage != null;
 
@@ -111,6 +119,8 @@ class AIChatLoaded extends AIChatState {
     List<ChatMessage>? messages,
     bool? isLoading,
     String? Function()? errorMessage,
+    bool? isRetrying,
+    int? retryAttempt,
   }) {
     return AIChatLoaded(
       word: word ?? this.word,
@@ -118,11 +128,14 @@ class AIChatLoaded extends AIChatState {
       isLoading: isLoading ?? this.isLoading,
       errorMessage:
           errorMessage != null ? errorMessage() : this.errorMessage,
+      isRetrying: isRetrying ?? this.isRetrying,
+      retryAttempt: retryAttempt ?? this.retryAttempt,
     );
   }
 
   @override
-  List<Object?> get props => [word, messages, isLoading, errorMessage];
+  List<Object?> get props =>
+      [word, messages, isLoading, errorMessage, isRetrying, retryAttempt];
 }
 
 /// Error state when something goes wrong with the AI chat

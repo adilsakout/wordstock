@@ -355,8 +355,11 @@ class _AIChatBottomSheetState extends State<AIChatBottomSheet> {
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
       itemCount: itemCount,
       itemBuilder: (context, index) {
-        // Show typing indicator when AI is loading
+        // Show retrying or typing indicator when AI is loading
         if (state.isLoading && index == visibleMessages.length) {
+          if (state.isRetrying) {
+            return _buildRetryingIndicator(context, state);
+          }
           return _buildTypingIndicator(context);
         }
 
@@ -426,6 +429,48 @@ class _AIChatBottomSheetState extends State<AIChatBottomSheet> {
         .animate()
         .fadeIn(duration: 300.ms)
         .slideY(begin: 0.3, end: 0, curve: Curves.easeOut);
+  }
+
+  /// Builds a retrying indicator shown when the cubit is automatically
+  /// retrying a transient failure with exponential backoff.
+  Widget _buildRetryingIndicator(
+    BuildContext context,
+    AIChatLoaded state,
+  ) {
+    final l10n = context.l10n;
+    final colorScheme = Theme.of(context).colorScheme;
+    return Align(
+      alignment: Alignment.centerLeft,
+      child: Container(
+        margin: const EdgeInsets.symmetric(vertical: 4),
+        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+        decoration: BoxDecoration(
+          color: colorScheme.surfaceContainerHighest,
+          borderRadius: BorderRadius.circular(16),
+        ),
+        child: Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            SizedBox(
+              width: 16,
+              height: 16,
+              child: CircularProgressIndicator(
+                strokeWidth: 2,
+                color: colorScheme.onSurfaceVariant,
+              ),
+            ),
+            const SizedBox(width: 8),
+            Text(
+              l10n.chatRetrying(state.retryAttempt, 3),
+              style: TextStyle(
+                color: colorScheme.onSurfaceVariant,
+                fontSize: 13,
+              ),
+            ),
+          ],
+        ),
+      ),
+    ).animate().fadeIn(duration: 300.ms);
   }
 
   /// Builds tappable suggestion chips shown after the latest AI

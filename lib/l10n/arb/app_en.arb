@@ -1206,5 +1206,17 @@
     "aiSuggestionPronunciation": "How do I pronounce it?",
     "@aiSuggestionPronunciation": {
         "description": "Suggested follow-up chip: request pronunciation help"
+    },
+    "chatRetrying": "Retrying… ({attempt}/{maxAttempts})",
+    "@chatRetrying": {
+        "description": "Message shown when automatically retrying a failed AI request",
+        "placeholders": {
+            "attempt": {
+                "type": "int"
+            },
+            "maxAttempts": {
+                "type": "int"
+            }
+        }
     }
 }

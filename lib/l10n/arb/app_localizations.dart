@@ -1673,6 +1673,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'How do I pronounce it?'**
   String get aiSuggestionPronunciation;
+
+  /// Message shown when automatically retrying a failed AI request
+  ///
+  /// In en, this message translates to:
+  /// **'Retrying… ({attempt}/{maxAttempts})'**
+  String chatRetrying(int attempt, int maxAttempts);
 }
 
 class _AppLocalizationsDelegate
