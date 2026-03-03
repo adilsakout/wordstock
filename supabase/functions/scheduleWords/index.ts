@@ -78,6 +78,8 @@ function getLocalDateStr(timezone: string, date: Date): string {
   return new Intl.DateTimeFormat("en-CA", { timeZone: timezone }).format(date);
 }
 
+const CHUNK_SIZE = 500;
+
 Deno.serve(async () => {
   console.log("🚀 Starting word scheduling function");
 
@@ -86,7 +88,7 @@ Deno.serve(async () => {
     Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!,
   );
 
-  // 1. Fetch all users with OneSignal ID and notifications enabled
+  // 1. Fetch all users with OneSignal ID and notifications enabled (1 query)
   console.log("🔍 Fetching users with OneSignal ID and notifications enabled");
   const { data: users, error: userError } = await supabase
     .from("user_profiles")
@@ -113,7 +115,12 @@ Deno.serve(async () => {
 
   console.log(`📊 Found ${users.length} users with notifications enabled`);
 
-  // 2. Fetch word pool once and reuse
+  if (users.length === 0) {
+    console.log("✨ No users to schedule — done");
+    return new Response("✅ No users to schedule", { status: 200 });
+  }
+
+  // 2. Fetch word pool once and reuse (1 query)
   console.log("📚 Fetching word pool (1000 words)");
   const { data: allWords, error: wordError } = await supabase
     .from("words")
@@ -130,6 +137,32 @@ Deno.serve(async () => {
   const now = new Date();
   console.log(`📅 Scheduling notifications for: ${now.toISOString()}`);
 
+  // 3. Bulk DELETE existing notifications for all users in a single time window.
+  // Window: now-16h → now+40h covers all timezones (UTC-12 to UTC+14)
+  // and all notification times (9 AM earliest, 8 PM latest local).
+  const windowStart = new Date(now.getTime() - 16 * 60 * 60 * 1000);
+  const windowEnd = new Date(now.getTime() + 40 * 60 * 60 * 1000);
+  const userIds = users.map((u) => u.user_id);
+
+  console.log(`🗑️  Bulk deleting existing notifications in window ${windowStart.toISOString()} → ${windowEnd.toISOString()}`);
+
+  for (let i = 0; i < userIds.length; i += CHUNK_SIZE) {
+    const chunk = userIds.slice(i, i + CHUNK_SIZE);
+    const { error: deleteError } = await supabase
+      .from("word_notifications")
+      .delete()
+      .in("user_id", chunk)
+      .gte("scheduled_at", windowStart.toISOString())
+      .lte("scheduled_at", windowEnd.toISOString());
+
+    if (deleteError) {
+      console.error(`❌ Bulk delete error (chunk ${i / CHUNK_SIZE + 1}):`, deleteError.message);
+    }
+  }
+
+  // 4. Build all notifications in memory — zero DB calls per user
+  const allNotifications: NotificationData[] = [];
+
   for (const user of users) {
     const {
       user_id: userId,
@@ -144,58 +177,11 @@ Deno.serve(async () => {
     } = user;
 
     const tz = time_zone || "UTC";
-    console.log(`\n👤 Processing user ${userId} (timezone: ${tz})`);
-
-    // Check if notifications already exist for today (in user's local timezone)
     const userLocalToday = getLocalDateStr(tz, now);
-    const todayStart = new Date(`${userLocalToday}T00:00:00.000Z`);
-    // End of user's local day = start of next day
-    const todayEnd = new Date(todayStart.getTime() + 24 * 60 * 60 * 1000);
 
-    // Use a wider UTC window to catch all notifications scheduled for user's local today
-    // (user's local day could start up to 14h before or after UTC midnight)
-    const windowStart = new Date(todayStart.getTime() - 14 * 60 * 60 * 1000);
-    const windowEnd = new Date(todayEnd.getTime() + 14 * 60 * 60 * 1000);
-
-    const { data: existingNotifications, error: checkError } = await supabase
-      .from("word_notifications")
-      .select("notification_type")
-      .eq("user_id", userId)
-      .gte("scheduled_at", windowStart.toISOString())
-      .lte("scheduled_at", windowEnd.toISOString());
-
-    if (checkError) {
-      console.error(`❌ Error checking existing notifications for user ${userId}:`, checkError.message);
-      continue;
-    }
-
-    const existingTypes = new Set(
-      existingNotifications?.map((n: { notification_type: string }) => n.notification_type) || [],
-    );
-
-    if (existingTypes.size > 0) {
-      console.log(`⚠️  Existing notifications found for user ${userId}: [${Array.from(existingTypes).join(", ")}] — deleting to reschedule`);
-
-      const { error: deleteError } = await supabase
-        .from("word_notifications")
-        .delete()
-        .eq("user_id", userId)
-        .gte("scheduled_at", windowStart.toISOString())
-        .lte("scheduled_at", windowEnd.toISOString());
-
-      if (deleteError) {
-        console.error(`❌ Error deleting existing notifications for user ${userId}:`, deleteError.message);
-        continue;
-      }
-    }
-
-    const allNotifications: NotificationData[] = [];
-
-    // 1. Daily Reminder — 9 AM in user's local timezone
+    // Daily Reminder — 9 AM in user's local timezone
     if (daily_reminder_enabled) {
       const scheduled = getScheduledUTCTime(tz, 9, 0, now);
-      console.log(`📅 Daily reminder for user ${userId}: ${scheduled.toISOString()}`);
-
       allNotifications.push({
         user_id: userId,
         onesignal_id,
@@ -206,17 +192,14 @@ Deno.serve(async () => {
       });
     }
 
-    // 2. Practice Reminder — 6 PM in user's local timezone
-    //    Send if user hasn't been active for 24+ hours OR has never been active
+    // Practice Reminder — 6 PM in user's local timezone
+    // Send if user hasn't been active for 24+ hours OR has never been active
     if (practice_reminder_enabled) {
       const shouldSend = !last_active_date ||
         (now.getTime() - new Date(last_active_date).getTime()) / (1000 * 60 * 60) >= 24;
 
       if (shouldSend) {
         const scheduled = getScheduledUTCTime(tz, 18, 0, now);
-        const reason = !last_active_date ? "never active" : "inactive 24h+";
-        console.log(`🏃 Practice reminder for user ${userId} (${reason}): ${scheduled.toISOString()}`);
-
         allNotifications.push({
           user_id: userId,
           onesignal_id,
@@ -228,14 +211,12 @@ Deno.serve(async () => {
       }
     }
 
-    // 3. New Word Notification — random time 9 AM–9 PM in user's local timezone
+    // New Word Notification — random time 9 AM–8 PM in user's local timezone
     if (new_word_notification_enabled) {
       const randomHour = 9 + Math.floor(Math.random() * 12); // 9–20
       const randomMinute = Math.floor(Math.random() * 60);
       const selectedWord = shuffleArray(allWords)[0] as { word: string; definition: string };
       const scheduled = getScheduledUTCTime(tz, randomHour, randomMinute, now);
-      console.log(`📚 New word for user ${userId}: "${selectedWord.word}" at ${scheduled.toISOString()}`);
-
       allNotifications.push({
         user_id: userId,
         onesignal_id,
@@ -246,17 +227,14 @@ Deno.serve(async () => {
       });
     }
 
-    // 4. Streak Reminder — 8 PM in user's local timezone (only if streak is at risk)
+    // Streak Reminder — 8 PM in user's local timezone (only if streak is at risk)
     if (streak_reminder_enabled && daily_streak && daily_streak > 0) {
       const lastActive = last_active_date ? new Date(last_active_date) : null;
-      // Compare in user's local timezone so we don't falsely flag users active today
       const isActiveToday = lastActive &&
         getLocalDateStr(tz, lastActive) === userLocalToday;
 
       if (!isActiveToday) {
         const scheduled = getScheduledUTCTime(tz, 20, 0, now);
-        console.log(`🔥 Streak reminder for user ${userId} (${daily_streak}-day streak): ${scheduled.toISOString()}`);
-
         allNotifications.push({
           user_id: userId,
           onesignal_id,
@@ -267,23 +245,25 @@ Deno.serve(async () => {
         });
       }
     }
+  }
 
-    if (allNotifications.length > 0) {
-      const { error: insertError } = await supabase
-        .from("word_notifications")
-        .insert(allNotifications);
+  console.log(`📬 Built ${allNotifications.length} notifications for ${users.length} users`);
 
-      if (insertError) {
-        console.error(`❌ Insert error for user ${userId}:`, insertError.message);
-      } else {
-        const types = allNotifications.map((n) => n.notification_type).join(", ");
-        console.log(`✅ Scheduled ${allNotifications.length} notifications for user ${userId}: [${types}]`);
-      }
+  // 5. Batch INSERT all notifications (1 query per 500 rows)
+  let inserted = 0;
+  for (let i = 0; i < allNotifications.length; i += CHUNK_SIZE) {
+    const chunk = allNotifications.slice(i, i + CHUNK_SIZE);
+    const { error: insertError } = await supabase
+      .from("word_notifications")
+      .insert(chunk);
+
+    if (insertError) {
+      console.error(`❌ Batch insert error (chunk ${i / CHUNK_SIZE + 1}):`, insertError.message);
     } else {
-      console.log(`⏩ No notifications to schedule for user ${userId}`);
+      inserted += chunk.length;
     }
   }
 
-  console.log("✨ Scheduling complete");
-  return new Response("✅ All notifications scheduled", { status: 200 });
+  console.log(`✨ Scheduling complete — inserted ${inserted} notifications`);
+  return new Response(`✅ Scheduled ${inserted} notifications for ${users.length} users`, { status: 200 });
 });
