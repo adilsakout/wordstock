@@ -691,6 +691,17 @@ class _MarkdownTypingAnimationTextState
   int _currentCharCount = 0;
   bool _isTypingComplete = false;
 
+  /// Strips common markdown formatting for clean display
+  /// during the typing animation.
+  static String _stripMarkdown(String text) {
+    return text
+        .replaceAll(RegExp(r'#{1,6}\s*'), '')
+        .replaceAll('**', '')
+        .replaceAll(RegExp('^- ', multiLine: true), '• ')
+        .replaceAll(RegExp(r'^\* ', multiLine: true), '• ')
+        .replaceAll('`', '');
+  }
+
   @override
   void initState() {
     super.initState();
@@ -783,12 +794,14 @@ class _MarkdownTypingAnimationTextState
       );
     }
 
-    // During animation: use lightweight Text (no markdown parsing)
-    final visible = widget.text.substring(0, _currentCharCount);
+    // During animation: use lightweight Text with markdown stripped
+    final raw = widget.text.substring(0, _currentCharCount);
+    final visible = _stripMarkdown(raw);
     return AnimatedBuilder(
       animation: _cursorController,
       builder: (context, _) {
-        final cursor = _cursorController.value > 0.5 ? '|' : '';
+        final cursor =
+            _cursorController.value > 0.5 ? '|' : '';
         return Text(
           '$visible$cursor',
           style: TextStyle(
