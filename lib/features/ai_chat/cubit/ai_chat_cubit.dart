@@ -83,7 +83,18 @@ class AIChatCubit extends Cubit<AIChatState> {
       // Consume credit only after first successful response
       await _tryConsumeCredit();
     } catch (e) {
-      emit(AIChatError(errorMessage: e.toString()));
+      // Keep loaded state so conversation is preserved
+      if (state is AIChatLoaded) {
+        final s = state as AIChatLoaded;
+        emit(
+          s.copyWith(
+            isLoading: false,
+            errorMessage: e.toString,
+          ),
+        );
+      } else {
+        emit(AIChatError(errorMessage: e.toString()));
+      }
     }
   }
 
@@ -112,6 +123,7 @@ class AIChatCubit extends Cubit<AIChatState> {
       currentState.copyWith(
         messages: updatedMessages,
         isLoading: true,
+        errorMessage: () => null, // clear any previous error
       ),
     );
 
@@ -157,10 +169,18 @@ class AIChatCubit extends Cubit<AIChatState> {
         currentState.copyWith(
           messages: messagesWithResponse,
           isLoading: false,
+          errorMessage: () => null, // clear any previous error
         ),
       );
     } catch (e) {
-      emit(AIChatError(errorMessage: e.toString()));
+      // Preserve conversation — show inline error with retry
+      emit(
+        currentState.copyWith(
+          messages: updatedMessages,
+          isLoading: false,
+          errorMessage: e.toString,
+        ),
+      );
     }
   }
 

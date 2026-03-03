@@ -62,42 +62,50 @@ class AIChatLoading extends AIChatState {
 /// - [word]: The vocabulary word being discussed
 /// - [messages]: Complete conversation history
 /// - [isLoading]: Whether a response is currently being generated
+/// - [errorMessage]: An inline error (e.g. network failure) that does
+///   NOT destroy the conversation — user can retry
 class AIChatLoaded extends AIChatState {
   /// Creates a loaded state with conversation data
   const AIChatLoaded({
     required this.word,
     required this.messages,
     required this.isLoading,
+    this.errorMessage,
   });
 
   /// The vocabulary word that is the focus of this conversation
   final Word word;
 
   /// Complete list of messages in the conversation
-  /// Includes system, user, and assistant messages
   final List<ChatMessage> messages;
 
   /// Whether the AI is currently generating a response
-  /// Used to show loading indicators and disable input
   final bool isLoading;
 
-  /// Creates a copy of this state with modified properties
-  ///
-  /// Allows partial updates while preserving other properties
+  /// Non-null when the last request failed. Shown inline with a
+  /// retry button so the user does not lose their conversation.
+  final String? errorMessage;
+
+  /// Whether there is a recoverable error to display
+  bool get hasError => errorMessage != null;
+
   AIChatLoaded copyWith({
     Word? word,
     List<ChatMessage>? messages,
     bool? isLoading,
+    String? Function()? errorMessage,
   }) {
     return AIChatLoaded(
       word: word ?? this.word,
       messages: messages ?? this.messages,
       isLoading: isLoading ?? this.isLoading,
+      errorMessage:
+          errorMessage != null ? errorMessage() : this.errorMessage,
     );
   }
 
   @override
-  List<Object?> get props => [word, messages, isLoading];
+  List<Object?> get props => [word, messages, isLoading, errorMessage];
 }
 
 /// Error state when something goes wrong with the AI chat

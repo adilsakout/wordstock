@@ -203,13 +203,15 @@ class _AIChatBottomSheetState extends State<AIChatBottomSheet> {
                         ),
                       )
                     else
-                      // Initial state - show empty space while initialization
-                      Expanded(
-                        child: Container(),
-                      ),
+                      Expanded(child: Container()),
+
+                    // Inline error banner with retry
+                    if (state is AIChatLoaded && state.hasError)
+                      _buildErrorBanner(context, state),
 
                     // Input field only shown when conversation is active
-                    if (state is AIChatLoaded) _buildInputField(context, state),
+                    if (state is AIChatLoaded)
+                      _buildInputField(context, state),
                   ],
                 ),
               ),
@@ -443,6 +445,47 @@ class _AIChatBottomSheetState extends State<AIChatBottomSheet> {
   /// This prevents re-animation when scrolling or rebuilding.
   bool _shouldAnimateMessage(String message, bool isLatestAIMessage) {
     return isLatestAIMessage && !_completedAnimations.contains(message);
+  }
+
+  /// Builds an inline error banner with a retry button.
+  ///
+  /// Shown above the input field when the last request failed,
+  /// without destroying the conversation history.
+  Widget _buildErrorBanner(BuildContext context, AIChatLoaded state) {
+    final l10n = context.l10n;
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+      color: Colors.red.shade50,
+      child: Row(
+        children: [
+          const Icon(Icons.error_outline, color: Colors.red, size: 20),
+          const SizedBox(width: 8),
+          Expanded(
+            child: Text(
+              l10n.chatWithAIError(state.errorMessage ?? ''),
+              style: const TextStyle(color: Colors.red, fontSize: 13),
+              maxLines: 2,
+              overflow: TextOverflow.ellipsis,
+            ),
+          ),
+          TextButton(
+            onPressed: () {
+              // Re-send the last user message
+              final lastUserMsg = state.messages
+                  .lastWhere((m) => m.role == MessageRole.user);
+              context.read<AIChatCubit>().sendMessage(
+                    lastUserMsg.content,
+                    vocabularySystemMessage:
+                        l10n.aiVocabularySystemMessage(
+                      state.word.word,
+                    ),
+                  );
+            },
+            child: const Text('Retry'),
+          ),
+        ],
+      ),
+    );
   }
 
   /// Builds the message input area with send button
