@@ -1,10 +1,12 @@
 import 'dart:developer';
+
 import 'package:advanced_in_app_review/advanced_in_app_review.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:posthog_flutter/posthog_flutter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:wordstock/core/theme/app_theme.dart';
+import 'package:wordstock/features/credit/cubit/credit_cubit.dart';
 import 'package:wordstock/features/favorite_words/favorite_words.dart';
 import 'package:wordstock/features/home/cubit/home_cubit.dart';
 import 'package:wordstock/features/home/cubit/learning_progress_cubit.dart';
@@ -16,6 +18,7 @@ import 'package:wordstock/features/settings/settings.dart';
 import 'package:wordstock/features/subscription/cubit/subscription_cubit.dart';
 import 'package:wordstock/features/user_data/cubit/user_data_cubit.dart';
 import 'package:wordstock/l10n/arb/app_localizations.dart';
+import 'package:wordstock/repositories/credit_repository.dart';
 import 'package:wordstock/repositories/quiz_repository.dart';
 import 'package:wordstock/repositories/rc_repository.dart';
 import 'package:wordstock/repositories/settings_repository.dart';
@@ -143,6 +146,7 @@ class _AppState extends State<App> {
   final ttsRepository = TTSRepository();
   final quizRepository = QuizRepository();
   final rcRepository = RcRepository();
+  final creditRepository = CreditRepository();
   final settingsRepository = SettingsRepository();
 
   @override
@@ -180,6 +184,12 @@ class _AppState extends State<App> {
         ),
         BlocProvider<SubscriptionCubit>(
           create: (context) => SubscriptionCubit(rcRepository: rcRepository),
+        ),
+        BlocProvider<CreditCubit>(
+          create: (context) => CreditCubit(
+            creditRepository: creditRepository,
+            subscriptionCubit: context.read<SubscriptionCubit>(),
+          ),
         ),
         BlocProvider<SettingsCubit>(
           create: (context) =>
