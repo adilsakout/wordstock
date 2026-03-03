@@ -42,7 +42,6 @@ class WordRepository {
           .from('user_profiles')
           .select('vocabulary_level')
           .eq('user_id', _getUserId())
-          .order('shuffle_order')
           .maybeSingle();
 
       if (response != null && response['vocabulary_level'] != null) {
@@ -115,7 +114,6 @@ class WordRepository {
     ''')
           .eq('level', userVocabularyLevel) // Filter by user's vocabulary level
           .eq('user_favorites.user_id', _getUserId())
-          .order('shuffle_order')
           .range(page * pageSize, (page + 1) * pageSize - 1); // Add pagination
 
       final words = response.map((json) {
@@ -159,7 +157,6 @@ class WordRepository {
     ''')
           .eq('level', level) // Filter by vocabulary level
           .eq('user_favorites.user_id', _getUserId())
-          .order('shuffle_order')
           .range(page * pageSize, (page + 1) * pageSize - 1); // Add pagination
 
       final words = response.map((json) {
