@@ -67,9 +67,13 @@ class _AIChatBottomSheetState extends State<AIChatBottomSheet> {
 
       // Immediately start conversation about the word when sheet opens
       // using localized prompts for user's language
+      // Use the detailed vocabulary system message for both the
+      // initial call and follow-ups so the AI behaves consistently.
       context.read<AIChatCubit>().startChatWithWord(
             widget.word,
-            systemMessage: context.l10n.aiAssistantSystemMessage,
+            systemMessage: context.l10n.aiVocabularySystemMessage(
+              widget.word.word,
+            ),
             initialPrompt: context.l10n.aiInitialPrompt(
               widget.word.word,
               widget.word.definition,
