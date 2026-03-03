@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:go_router/go_router.dart';
+import 'package:wordstock/features/credit/cubit/credit_cubit.dart';
 import 'package:wordstock/features/home/cubit/learning_progress_cubit.dart';
 import 'package:wordstock/features/practice/practice.dart';
 import 'package:wordstock/features/subscription/cubit/subscription_cubit.dart';
@@ -16,24 +17,29 @@ class PracticeReminderPage extends StatelessWidget {
   final VoidCallback onContinue;
 
   Future<void> _handlePracticeButtonTap(BuildContext context) async {
-    // Check subscription status
-    final subscriptionState = context.read<SubscriptionCubit>().state;
-    final isSubscribed = subscriptionState.maybeWhen(
-      loaded: (isSubscribed) => isSubscribed,
-      orElse: () => false,
-    );
+    final creditCubit = context.read<CreditCubit>();
 
-    if (!isSubscribed) {
-      // Show paywall if not subscribed
+    // Subscribers bypass credit system
+    if (creditCubit.state.isSubscribed) {
+      final learningCubit = context.read<LearningProgressCubit>();
+      await learningCubit.startPractice();
+      if (context.mounted) {
+        await context.push(PracticePage.name);
+      }
+      return;
+    }
+
+    // Free users: try to consume a credit
+    final allowed = await creditCubit.tryConsumeCredit();
+    if (!allowed) {
+      if (!context.mounted) return;
       await context.read<SubscriptionCubit>().showPaywall();
       return;
     }
 
-    // Reset cumulative words counter when starting practice
+    if (!context.mounted) return;
     final learningCubit = context.read<LearningProgressCubit>();
     await learningCubit.startPractice();
-
-    // Navigate to practice page if context is still mounted
     if (context.mounted) {
       await context.push(PracticePage.name);
     }

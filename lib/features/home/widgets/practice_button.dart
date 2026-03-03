@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:wordstock/features/credit/cubit/credit_cubit.dart';
 import 'package:wordstock/features/home/cubit/learning_progress_cubit.dart';
 import 'package:wordstock/features/practice/practice.dart';
 import 'package:wordstock/features/subscription/cubit/subscription_cubit.dart';
@@ -12,24 +13,27 @@ class PracticeButton extends StatelessWidget {
   const PracticeButton({super.key});
 
   Future<void> _handlePracticeClick(BuildContext context) async {
-    final state = context.read<SubscriptionCubit>().state;
+    final creditCubit = context.read<CreditCubit>();
     final navigator = context.go;
 
-    await state.maybeWhen(
-      loaded: (isSubscribed) async {
-        if (isSubscribed) {
-          await context.read<LearningProgressCubit>().startPractice();
-          navigator(PracticePage.name);
-        } else {
-          // Show paywall if not subscribed
-          await context.read<SubscriptionCubit>().showPaywall();
-        }
-      },
-      orElse: () async {
-        // If state is not loaded, check subscription first
-        await context.read<SubscriptionCubit>().checkSubscription();
-      },
-    );
+    // Subscribers bypass credit system
+    if (creditCubit.state.isSubscribed) {
+      await context.read<LearningProgressCubit>().startPractice();
+      navigator(PracticePage.name);
+      return;
+    }
+
+    // Free users: try to consume a credit
+    final allowed = await creditCubit.tryConsumeCredit();
+    if (!allowed) {
+      if (!context.mounted) return;
+      await context.read<SubscriptionCubit>().showPaywall();
+      return;
+    }
+
+    if (!context.mounted) return;
+    await context.read<LearningProgressCubit>().startPractice();
+    navigator(PracticePage.name);
   }
 
   @override
