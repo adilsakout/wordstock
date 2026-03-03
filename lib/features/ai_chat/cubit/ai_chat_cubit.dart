@@ -34,6 +34,10 @@ class AIChatCubit extends Cubit<AIChatState> {
   final ChatRepository? _chatRepository;
   bool _creditConsumed = false;
 
+  /// Maximum number of non-system messages (after the first exchange)
+  /// to include in the API payload. 10 messages ≈ 5 user+assistant pairs.
+  static const int _maxHistoryMessages = 10;
+
   /// Initiates a conversation about the specified [word]
   ///
   /// Shows the user's message immediately, then fetches the AI response
@@ -134,30 +138,15 @@ class AIChatCubit extends Cubit<AIChatState> {
     );
 
     try {
-      // Build conversation history for the Edge Function
-      final conversationHistory = <Map<String, dynamic>>[
-        {
-          'role': 'system',
-          'content': vocabularySystemMessage.replaceAll(
-            '{word}',
-            currentWord.word,
-          ),
-        },
-      ];
-
-      for (final msg in currentState.messages) {
-        if (msg.role != MessageRole.system) {
-          conversationHistory.add({
-            'role': msg.role.name,
-            'content': msg.content,
-          });
-        }
-      }
-
-      conversationHistory.add({
-        'role': 'user',
-        'content': message,
-      });
+      // Build windowed conversation history for the Edge Function
+      final conversationHistory = _buildSlidingWindowMessages(
+        currentMessages: currentState.messages,
+        newUserMessage: message,
+        systemMessage: vocabularySystemMessage.replaceAll(
+          '{word}',
+          currentWord.word,
+        ),
+      );
 
       final responseContent = await _callEdgeFunction(
         conversationHistory,
@@ -232,6 +221,64 @@ class AIChatCubit extends Cubit<AIChatState> {
       wordId: s.word.id,
       messages: s.messages,
     );
+  }
+
+  /// Builds a windowed message list for the API payload.
+  ///
+  /// Always includes:
+  /// 1. The system message (context for the AI)
+  /// 2. The first user + assistant exchange (initial word explanation)
+  /// 3. The last [_maxHistoryMessages] from the remaining conversation
+  /// 4. The new user message
+  ///
+  /// The full conversation stays visible in the UI — only the API
+  /// payload is capped to control token usage and latency.
+  List<Map<String, dynamic>> _buildSlidingWindowMessages({
+    required List<ChatMessage> currentMessages,
+    required String newUserMessage,
+    required String systemMessage,
+  }) {
+    final nonSystemMessages = currentMessages
+        .where((m) => m.role != MessageRole.system)
+        .toList();
+
+    final result = <Map<String, dynamic>>[
+      {'role': 'system', 'content': systemMessage},
+    ];
+
+    if (nonSystemMessages.length <= 2) {
+      // Short conversation — send everything.
+      for (final msg in nonSystemMessages) {
+        result.add({'role': msg.role.name, 'content': msg.content});
+      }
+    } else {
+      // Always keep the first exchange (user question + assistant answer).
+      result
+        ..add({
+          'role': nonSystemMessages[0].role.name,
+          'content': nonSystemMessages[0].content,
+        })
+        ..add({
+          'role': nonSystemMessages[1].role.name,
+          'content': nonSystemMessages[1].content,
+        });
+
+      // Sliding window over the rest.
+      final remaining = nonSystemMessages.sublist(2);
+      final windowStart = remaining.length > _maxHistoryMessages
+          ? remaining.length - _maxHistoryMessages
+          : 0;
+      for (var i = windowStart; i < remaining.length; i++) {
+        result.add({
+          'role': remaining[i].role.name,
+          'content': remaining[i].content,
+        });
+      }
+    }
+
+    // Append the new user message.
+    result.add({'role': 'user', 'content': newUserMessage});
+    return result;
   }
 
   /// Calls the Supabase `chat-completion` Edge Function.
