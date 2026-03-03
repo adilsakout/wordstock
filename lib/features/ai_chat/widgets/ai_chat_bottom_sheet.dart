@@ -1,9 +1,11 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:markdown_widget/markdown_widget.dart';
+import 'package:share_plus/share_plus.dart';
 import 'package:wordstock/features/ai_chat/cubit/ai_chat_cubit.dart';
 import 'package:wordstock/features/user_data/cubit/user_data_cubit.dart';
 import 'package:wordstock/l10n/l10n.dart';
@@ -405,41 +407,97 @@ class _AIChatBottomSheetState extends State<AIChatBottomSheet> {
     bool isLatestAIMessage = false,
   }) {
     final colorScheme = Theme.of(context).colorScheme;
-    return Align(
-      alignment: isUser ? Alignment.centerRight : Alignment.centerLeft,
-      child: Container(
-        margin: const EdgeInsets.symmetric(vertical: 4),
-        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
-        constraints: BoxConstraints(
-          maxWidth: MediaQuery.of(context).size.width * 0.75,
-        ),
-        decoration: BoxDecoration(
-          color: isUser
-              ? Theme.of(context).primaryColor
-              : colorScheme.surfaceContainerHighest,
-          borderRadius: BorderRadius.circular(16),
-        ),
-        child: isUser
-            ? Text(
-                message,
-                style: TextStyle(
-                  color: colorScheme.onPrimary,
-                ),
-              )
-            : _shouldAnimateMessage(message, isLatestAIMessage)
-                ? _MarkdownTypingAnimationText(
-                    key: ValueKey(message.hashCode),
-                    text: message,
-                    onCharacterAdded: _scrollToBottom,
-                    onAnimationComplete: () {
-                      setState(() {
-                        _completedAnimations.add(message);
-                      });
-                    },
-                  )
-                : _buildMarkdownContent(context, message),
+    final bubble = Container(
+      margin: const EdgeInsets.symmetric(vertical: 4),
+      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+      constraints: BoxConstraints(
+        maxWidth: MediaQuery.of(context).size.width * 0.75,
       ),
+      decoration: BoxDecoration(
+        color: isUser
+            ? Theme.of(context).primaryColor
+            : colorScheme.surfaceContainerHighest,
+        borderRadius: BorderRadius.circular(16),
+      ),
+      child: isUser
+          ? Text(
+              message,
+              style: TextStyle(
+                color: colorScheme.onPrimary,
+              ),
+            )
+          : _shouldAnimateMessage(message, isLatestAIMessage)
+              ? _MarkdownTypingAnimationText(
+                  key: ValueKey(message.hashCode),
+                  text: message,
+                  onCharacterAdded: _scrollToBottom,
+                  onAnimationComplete: () {
+                    setState(() {
+                      _completedAnimations.add(message);
+                    });
+                  },
+                )
+              : _buildMarkdownContent(context, message),
+    );
+
+    return Align(
+      alignment: isUser
+          ? Alignment.centerRight
+          : Alignment.centerLeft,
+      child: isUser
+          ? bubble
+          : GestureDetector(
+              onLongPress: () =>
+                  _showMessageActions(context, message),
+              child: bubble,
+            ),
     ).animate(delay: animationDelay).fadeIn().slideY(begin: 0.2, end: 0);
+  }
+
+  /// Shows copy / share actions for an AI message.
+  void _showMessageActions(
+    BuildContext context,
+    String message,
+  ) {
+    final colorScheme = Theme.of(context).colorScheme;
+    showModalBottomSheet<void>(
+      context: context,
+      builder: (ctx) => SafeArea(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            ListTile(
+              leading: Icon(
+                Icons.copy_rounded,
+                color: colorScheme.onSurface,
+              ),
+              title: const Text('Copy'),
+              onTap: () {
+                Clipboard.setData(ClipboardData(text: message));
+                Navigator.pop(ctx);
+                ScaffoldMessenger.of(context).showSnackBar(
+                  const SnackBar(
+                    content: Text('Copied to clipboard'),
+                    duration: Duration(seconds: 2),
+                  ),
+                );
+              },
+            ),
+            ListTile(
+              leading: Icon(
+                Icons.share_rounded,
+                color: colorScheme.onSurface,
+              ),
+              title: const Text('Share'),
+              onTap: () {
+                Navigator.pop(ctx);
+                Share.share(message);
+              },
+            ),
+          ],
+        ),
+      ),
+    );
   }
 
   /// Builds theme-aware markdown content for AI messages.
