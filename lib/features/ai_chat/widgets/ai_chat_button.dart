@@ -6,6 +6,7 @@ import 'package:wordstock/features/ai_chat/widgets/ai_chat_bottom_sheet.dart';
 import 'package:wordstock/features/credit/cubit/credit_cubit.dart';
 import 'package:wordstock/features/subscription/cubit/subscription_cubit.dart';
 import 'package:wordstock/model/word.dart';
+import 'package:wordstock/repositories/chat_repository.dart';
 import 'package:wordstock/widgets/button.dart';
 
 /// A sleek, modern button that opens AI chat functionality for vocabulary words
@@ -24,16 +25,18 @@ class AIChatButton extends StatelessWidget {
   /// The [word] parameter is required and determines the conversation context
   const AIChatButton({
     required this.word,
+    this.hasPreviousChat = false,
     super.key,
   });
 
   /// The vocabulary word that will be the focus of the AI conversation
-  ///
-  /// This word's definition, example, and context will be used to:
-  /// - Generate initial conversation prompts
-  /// - Maintain conversation scope and relevance
-  /// - Provide educational context for the AI assistant
   final Word word;
+
+  /// Whether a previous conversation exists for this word.
+  ///
+  /// When `true` a small dot indicator is shown on the button so the
+  /// user knows they can resume a saved chat.
+  final bool hasPreviousChat;
 
   /// Presents the AI chat interface in a modal bottom sheet.
   ///
@@ -51,7 +54,10 @@ class AIChatButton extends StatelessWidget {
       backgroundColor: Colors.transparent,
       useSafeArea: true,
       builder: (_) => BlocProvider(
-        create: (_) => AIChatCubit(creditCubit: creditCubit),
+        create: (_) => AIChatCubit(
+          creditCubit: creditCubit,
+          chatRepository: ChatRepository(),
+        ),
         child: AIChatBottomSheet(word: word),
       ),
     );
@@ -87,17 +93,39 @@ class AIChatButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // Modern, minimal button design following Apple guidelines
     return BlocBuilder<SubscriptionCubit, SubscriptionState>(
-      builder: (context, _) => PushableButton(
-        width: 50,
-        height: 50,
-        text: '',
-        iconSize: 25,
-        buttonColor: const Color(0xff1CB0F6),
-        shadowColor: const Color(0xff1899D6),
-        suffixIcon: Icons.auto_awesome_rounded, // AI/magic wand icon
-        onTap: () => _handleTap(context),
+      builder: (context, _) => Stack(
+        clipBehavior: Clip.none,
+        children: [
+          PushableButton(
+            width: 50,
+            height: 50,
+            text: '',
+            iconSize: 25,
+            buttonColor: const Color(0xff1CB0F6),
+            shadowColor: const Color(0xff1899D6),
+            suffixIcon: Icons.auto_awesome_rounded,
+            onTap: () => _handleTap(context),
+          ),
+          if (hasPreviousChat)
+            Positioned(
+              top: -2,
+              right: -2,
+              child: Container(
+                width: 12,
+                height: 12,
+                decoration: BoxDecoration(
+                  color: Theme.of(context).colorScheme.tertiary,
+                  shape: BoxShape.circle,
+                  border: Border.all(
+                    color:
+                        Theme.of(context).colorScheme.surface,
+                    width: 2,
+                  ),
+                ),
+              ),
+            ),
+        ],
       ),
     );
   }

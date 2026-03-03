@@ -5,6 +5,7 @@ import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:wordstock/features/credit/cubit/credit_cubit.dart';
 import 'package:wordstock/model/word.dart';
+import 'package:wordstock/repositories/chat_repository.dart';
 import 'package:wordstock/repositories/supabase_repository.dart';
 
 part 'ai_chat_state.dart';
@@ -21,11 +22,16 @@ class AIChatCubit extends Cubit<AIChatState> {
   ///
   /// If [creditCubit] is provided, a credit is consumed only after
   /// the first successful AI response — never before.
-  AIChatCubit({CreditCubit? creditCubit})
-      : _creditCubit = creditCubit,
+  /// If [chatRepository] is provided, conversations are persisted.
+  AIChatCubit({
+    CreditCubit? creditCubit,
+    ChatRepository? chatRepository,
+  })  : _creditCubit = creditCubit,
+        _chatRepository = chatRepository,
         super(const AIChatInitial());
 
   final CreditCubit? _creditCubit;
+  final ChatRepository? _chatRepository;
   bool _creditConsumed = false;
 
   /// Initiates a conversation about the specified [word]
@@ -182,6 +188,50 @@ class AIChatCubit extends Cubit<AIChatState> {
         ),
       );
     }
+  }
+
+  /// Attempts to load a previously saved conversation for [word].
+  ///
+  /// Returns `true` if a saved conversation was restored, in which
+  /// case the caller should skip starting a fresh chat.
+  Future<bool> loadPreviousChat(Word word) async {
+    if (_chatRepository == null) return false;
+    try {
+      final messages =
+          await _chatRepository.loadConversation(word.id);
+      if (messages != null && messages.isNotEmpty) {
+        emit(
+          AIChatLoaded(
+            word: word,
+            messages: messages,
+            isLoading: false,
+          ),
+        );
+        return true;
+      }
+    } catch (_) {
+      // Non-critical — fall through to start fresh.
+    }
+    return false;
+  }
+
+  /// Persists the current conversation to Supabase.
+  ///
+  /// Called when the bottom sheet closes. Only saves if at least
+  /// one assistant message exists (i.e. a real conversation).
+  Future<void> saveCurrentChat() async {
+    if (_chatRepository == null) return;
+    if (state is! AIChatLoaded) return;
+
+    final s = state as AIChatLoaded;
+    final hasResponse =
+        s.messages.any((m) => m.role == MessageRole.assistant);
+    if (!hasResponse) return;
+
+    await _chatRepository.saveConversation(
+      wordId: s.word.id,
+      messages: s.messages,
+    );
   }
 
   /// Calls the Supabase `chat-completion` Edge Function.

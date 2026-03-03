@@ -894,4 +894,13 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get onboardingContinue => 'Continuar';
+
+  @override
+  String get aiSuggestionExamples => 'Show me more examples';
+
+  @override
+  String get aiSuggestionSynonyms => 'What are the synonyms?';
+
+  @override
+  String get aiSuggestionPronunciation => 'How do I pronounce it?';
 }

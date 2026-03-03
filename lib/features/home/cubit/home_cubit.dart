@@ -5,6 +5,7 @@ import 'package:equatable/equatable.dart';
 import 'package:flutter/foundation.dart';
 import 'package:home_widget/home_widget.dart';
 import 'package:wordstock/model/word.dart';
+import 'package:wordstock/repositories/chat_repository.dart';
 import 'package:wordstock/repositories/tts_repository.dart';
 import 'package:wordstock/repositories/user_repository.dart';
 import 'package:wordstock/repositories/word_repository.dart';
@@ -16,6 +17,7 @@ class HomeCubit extends Cubit<HomeState> {
     required this.wordRepository,
     required this.ttsRepository,
     required this.userRepository,
+    this.chatRepository,
   }) : super(const HomeInitial()) {
     _initializeTTS();
   }
@@ -23,6 +25,7 @@ class HomeCubit extends Cubit<HomeState> {
   final WordRepository wordRepository;
   final UserRepository userRepository;
   final TTSRepository ttsRepository;
+  final ChatRepository? chatRepository;
 
   Future<void> _initializeTTS() async {
     try {
@@ -51,7 +54,22 @@ class HomeCubit extends Cubit<HomeState> {
     emit(const HomeLoading());
     try {
       final words = await wordRepository.getWords();
-      emit(HomeLoaded(words: words));
+
+      // Batch-check which words have a saved AI chat
+      var wordsWithChats = <String>{};
+      if (chatRepository != null && words.isNotEmpty) {
+        wordsWithChats =
+            await chatRepository!.getWordsWithConversations(
+          words.map((w) => w.id).toList(),
+        );
+      }
+
+      emit(
+        HomeLoaded(
+          words: words,
+          wordsWithChats: wordsWithChats,
+        ),
+      );
 
       // Update the home widget with the first word (word of the day)
       if (words.isNotEmpty) {

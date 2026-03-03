@@ -861,4 +861,13 @@ class AppLocalizationsKo extends AppLocalizations {
 
   @override
   String get onboardingContinue => '계속';
+
+  @override
+  String get aiSuggestionExamples => 'Show me more examples';
+
+  @override
+  String get aiSuggestionSynonyms => 'What are the synonyms?';
+
+  @override
+  String get aiSuggestionPronunciation => 'How do I pronounce it?';
 }

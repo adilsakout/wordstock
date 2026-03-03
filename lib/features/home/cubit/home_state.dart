@@ -36,6 +36,7 @@ class HomeLoaded extends HomeState {
     required this.words,
     this.celebration = false,
     this.hasShownReview = false,
+    this.wordsWithChats = const {},
   });
 
   /// A description for customProperty
@@ -43,19 +44,25 @@ class HomeLoaded extends HomeState {
   final bool celebration;
   final bool hasShownReview;
 
+  /// IDs of words that have a saved AI chat conversation.
+  final Set<String> wordsWithChats;
+
   @override
-  List<Object> get props => [words, celebration, hasShownReview];
+  List<Object> get props =>
+      [words, celebration, hasShownReview, wordsWithChats];
 
   /// Creates a copy of the current HomeLoaded with property changes
   HomeLoaded copyWith({
     List<Word>? words,
     bool? celebration,
     bool? hasShownReview,
+    Set<String>? wordsWithChats,
   }) {
     return HomeLoaded(
       words: words ?? this.words,
       celebration: celebration ?? this.celebration,
       hasShownReview: hasShownReview ?? this.hasShownReview,
+      wordsWithChats: wordsWithChats ?? this.wordsWithChats,
     );
   }
 }

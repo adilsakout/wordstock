@@ -18,10 +18,12 @@ class WordCard extends StatefulWidget {
   const WordCard({
     required this.word,
     required this.onToggleFavorite,
+    this.hasPreviousChat = false,
     super.key,
   });
   final Word word;
   final VoidCallback onToggleFavorite;
+  final bool hasPreviousChat;
 
   @override
   State<WordCard> createState() => _WordCardState();
@@ -229,7 +231,10 @@ class _WordCardState extends State<WordCard>
                     onTap: () =>
                         context.read<HomeCubit>().speakWord(widget.word.word),
                   ),
-                  AIChatButton(word: widget.word),
+                  AIChatButton(
+                    word: widget.word,
+                    hasPreviousChat: widget.hasPreviousChat,
+                  ),
                 ],
               ),
             ),

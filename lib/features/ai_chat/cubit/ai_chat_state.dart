@@ -19,11 +19,28 @@ class ChatMessage extends Equatable {
     required this.content,
   });
 
+  /// Deserialises a message from a JSON map (e.g. from Supabase JSONB).
+  factory ChatMessage.fromJson(Map<String, dynamic> json) {
+    return ChatMessage(
+      role: MessageRole.values.firstWhere(
+        (e) => e.name == json['role'] as String,
+        orElse: () => MessageRole.user,
+      ),
+      content: json['content'] as String,
+    );
+  }
+
   /// The role of the entity that sent this message
   final MessageRole role;
 
   /// The text content of the message
   final String content;
+
+  /// Serialises this message to a JSON map for persistence.
+  Map<String, dynamic> toJson() => {
+        'role': role.name,
+        'content': content,
+      };
 
   @override
   List<Object> get props => [role, content];

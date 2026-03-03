@@ -251,12 +251,16 @@ class _HomeBodyState extends State<HomeBody>
                               onContinue: _continueLearning,
                             );
                           }
+                          final word = homeState.words[index];
                           return WordCard(
-                            word: homeState.words[index],
+                            word: word,
+                            hasPreviousChat: homeState
+                                .wordsWithChats
+                                .contains(word.id),
                             onToggleFavorite: () {
                               context
                                   .read<HomeCubit>()
-                                  .toggleFavorite(homeState.words[index].id);
+                                  .toggleFavorite(word.id);
                             },
                           );
                         },

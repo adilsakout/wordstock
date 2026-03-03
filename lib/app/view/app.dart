@@ -18,6 +18,7 @@ import 'package:wordstock/features/settings/settings.dart';
 import 'package:wordstock/features/subscription/cubit/subscription_cubit.dart';
 import 'package:wordstock/features/user_data/cubit/user_data_cubit.dart';
 import 'package:wordstock/l10n/arb/app_localizations.dart';
+import 'package:wordstock/repositories/chat_repository.dart';
 import 'package:wordstock/repositories/credit_repository.dart';
 import 'package:wordstock/repositories/quiz_repository.dart';
 import 'package:wordstock/repositories/rc_repository.dart';
@@ -147,6 +148,7 @@ class _AppState extends State<App> {
   final quizRepository = QuizRepository();
   final rcRepository = RcRepository();
   final creditRepository = CreditRepository();
+  final chatRepository = ChatRepository();
   final settingsRepository = SettingsRepository();
 
   @override
@@ -161,6 +163,7 @@ class _AppState extends State<App> {
             wordRepository: wordRepository,
             ttsRepository: ttsRepository,
             userRepository: userRepository,
+            chatRepository: chatRepository,
           ),
         ),
         BlocProvider<StreakCubit>(

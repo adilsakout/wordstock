@@ -58,10 +58,8 @@ class _AIChatBottomSheetState extends State<AIChatBottomSheet> {
   // Debounce timer to prevent rapid-fire sends
   Timer? _sendDebounce;
 
-  @override
-  void initState() {
-    super.initState();
-  }
+  // Captured cubit reference for safe access in dispose()
+  late final AIChatCubit _chatCubit;
 
   @override
   void didChangeDependencies() {
@@ -70,34 +68,50 @@ class _AIChatBottomSheetState extends State<AIChatBottomSheet> {
     // Initialize chat conversation once localization context is available
     if (!_hasInitializedChat) {
       _hasInitializedChat = true;
-
-      // Read the user's vocabulary level to tailor AI explanations
-      final profile =
-          context.read<StreakCubit>().state.profile;
-      final levelName = profile?.level.name ?? 'intermediate';
-      final levelHint =
-          " The student is at the '$levelName' level — adjust "
-          'your explanation complexity accordingly.';
-
-      final systemMsg = context.l10n.aiVocabularySystemMessage(
-            widget.word.word,
-          ) +
-          levelHint;
-
-      context.read<AIChatCubit>().startChatWithWord(
-            widget.word,
-            systemMessage: systemMsg,
-            initialPrompt: context.l10n.aiInitialPrompt(
-              widget.word.word,
-              widget.word.definition,
-              widget.word.example ?? '',
-            ),
-          );
+      _chatCubit = context.read<AIChatCubit>();
+      _initializeChat();
     }
+  }
+
+  /// Tries to restore a previous conversation, otherwise starts
+  /// a fresh one with the vocabulary-level-aware system prompt.
+  Future<void> _initializeChat() async {
+    // Try loading a saved conversation first
+    final loaded =
+        await _chatCubit.loadPreviousChat(widget.word);
+    if (loaded || !mounted) return;
+
+    // No saved chat — start fresh
+    final profile =
+        context.read<StreakCubit>().state.profile;
+    final levelName = profile?.level.name ?? 'intermediate';
+    final levelHint =
+        " The student is at the '$levelName' level — adjust "
+        'your explanation complexity accordingly.';
+
+    if (!mounted) return;
+    final systemMsg = context.l10n.aiVocabularySystemMessage(
+          widget.word.word,
+        ) +
+        levelHint;
+
+    unawaited(
+      _chatCubit.startChatWithWord(
+        widget.word,
+        systemMessage: systemMsg,
+        initialPrompt: context.l10n.aiInitialPrompt(
+          widget.word.word,
+          widget.word.definition,
+          widget.word.example ?? '',
+        ),
+      ),
+    );
   }
 
   @override
   void dispose() {
+    // Persist conversation when bottom sheet closes (fire-and-forget)
+    _chatCubit.saveCurrentChat();
     _sendDebounce?.cancel();
     _messageController.dispose();
     _scrollController.dispose();

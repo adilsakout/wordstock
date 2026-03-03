@@ -1655,6 +1655,24 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Continue'**
   String get onboardingContinue;
+
+  /// Suggested follow-up chip: request more usage examples
+  ///
+  /// In en, this message translates to:
+  /// **'Show me more examples'**
+  String get aiSuggestionExamples;
+
+  /// Suggested follow-up chip: request synonyms
+  ///
+  /// In en, this message translates to:
+  /// **'What are the synonyms?'**
+  String get aiSuggestionSynonyms;
+
+  /// Suggested follow-up chip: request pronunciation help
+  ///
+  /// In en, this message translates to:
+  /// **'How do I pronounce it?'**
+  String get aiSuggestionPronunciation;
 }
 
 class _AppLocalizationsDelegate
