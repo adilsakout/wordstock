@@ -157,6 +157,22 @@ class UserRepository {
     return id >= 0 && id <= 2;
   }
 
+  /// Sync the user's timezone to their profile.
+  ///
+  /// Called on every app open so credit resets use the correct
+  /// local midnight even if the user travels.
+  Future<void> syncTimezone() async {
+    try {
+      final timeZone = await FlutterTimezone.getLocalTimezone();
+      await _supabase.from('user_profiles').update({
+        'time_zone': timeZone,
+      }).eq('user_id', _getUserId());
+    } catch (e) {
+      // Non-critical — log and swallow so it doesn't block startup.
+      log('Failed to sync timezone: $e', name: 'UserRepository');
+    }
+  }
+
   /// Update the user's OneSignal ID
   Future<void> updateOneSignalId(String id) async {
     try {

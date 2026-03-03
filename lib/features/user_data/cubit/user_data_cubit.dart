@@ -25,7 +25,10 @@ class StreakCubit extends Cubit<StreakState> {
           profile: profile,
         ),
       );
-      await updateOneSignalId();
+      await Future.wait([
+        updateOneSignalId(),
+        userRepository.syncTimezone(),
+      ]);
     } catch (e) {
       emit(
         state.copyWith(
