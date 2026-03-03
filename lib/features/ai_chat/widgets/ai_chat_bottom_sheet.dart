@@ -55,6 +55,9 @@ class _AIChatBottomSheetState extends State<AIChatBottomSheet> {
   // Track which AI messages have completed their typing animation
   final Set<String> _completedAnimations = {};
 
+  // Debounce timer to prevent rapid-fire sends
+  Timer? _sendDebounce;
+
   @override
   void initState() {
     super.initState();
@@ -95,7 +98,7 @@ class _AIChatBottomSheetState extends State<AIChatBottomSheet> {
 
   @override
   void dispose() {
-    // Clean up controllers to prevent memory leaks
+    _sendDebounce?.cancel();
     _messageController.dispose();
     _scrollController.dispose();
     super.dispose();
@@ -153,6 +156,16 @@ class _AIChatBottomSheetState extends State<AIChatBottomSheet> {
         }
       });
     }
+  }
+
+  /// Debounced wrapper around [_sendMessage] to prevent rapid-fire
+  /// duplicate API calls from fast taps.
+  void _debouncedSend() {
+    _sendDebounce?.cancel();
+    _sendDebounce = Timer(
+      const Duration(milliseconds: 300),
+      _sendMessage,
+    );
   }
 
   @override
@@ -636,7 +649,7 @@ class _AIChatBottomSheetState extends State<AIChatBottomSheet> {
                 ),
               ),
               textInputAction: TextInputAction.send,
-              onSubmitted: (_) => _sendMessage(),
+              onSubmitted: (_) => _debouncedSend(),
               enabled: !state.isLoading, // Disable input while AI is responding
             ),
           ),
@@ -650,7 +663,7 @@ class _AIChatBottomSheetState extends State<AIChatBottomSheet> {
             shadowColor: Theme.of(context).primaryColor.withValues(alpha: 0.7),
             suffixIcon: Icons.send_rounded,
             onTap:
-                state.isLoading ? () {} : _sendMessage, // Disable when loading
+                state.isLoading ? () {} : _debouncedSend,
           ),
         ],
       ),
