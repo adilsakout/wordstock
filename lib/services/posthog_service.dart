@@ -47,12 +47,9 @@ class PosthogService {
         ..host = 'https://us.i.posthog.com';
       await Posthog().setup(config);
 
-      // Enable tracking only if authorized
-      if (isTrackingAuthorized) {
-        await Posthog().enable();
-      } else {
-        await Posthog().disable();
-      }
+      // Always enable PostHog — ATT is only needed for IDFA (ad tracking).
+      // PostHog uses its own anonymous ID when ATT is not granted.
+      await Posthog().enable();
 
       _isInitialized = true;
       _logger.i('PostHog initialized successfully');
