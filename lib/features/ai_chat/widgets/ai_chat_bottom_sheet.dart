@@ -546,7 +546,7 @@ class _AIChatBottomSheetState extends State<AIChatBottomSheet> {
                   vertical: 10,
                 ),
               ),
-              textInputAction: TextInputAction.newline,
+              textInputAction: TextInputAction.send,
               onSubmitted: (_) => _sendMessage(),
               enabled: !state.isLoading, // Disable input while AI is responding
             ),
