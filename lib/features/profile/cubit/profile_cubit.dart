@@ -6,6 +6,7 @@ import 'package:equatable/equatable.dart';
 import 'package:wordstock/core/constants/vocabulary_levels.dart';
 import 'package:wordstock/model/user_profile.dart';
 import 'package:wordstock/repositories/user_repository.dart';
+import 'package:wordstock/services/posthog_service.dart';
 
 part 'profile_state.dart';
 
@@ -98,11 +99,21 @@ class ProfileCubit extends Cubit<ProfileState> {
         throw ArgumentError('Invalid vocabulary level: $newLevel');
       }
 
+      final previousLevel = _currentProfile?.level;
       emit(ProfileUpdatingVocabularyLevel(newLevel: newLevel));
       log('Updating vocabulary level to: $newLevel', name: 'ProfileCubit');
 
       // Update in repository
       await _userRepository.updateVocabularyLevel(newLevel);
+
+      // Track Vocabulary Level Changed
+      PosthogService.instance.track(
+        'Vocabulary Level Changed',
+        properties: {
+          'previous_level': previousLevel?.name ?? 'unknown',
+          'new_level': newLevel.name,
+        },
+      );
 
       // Update local cache
       if (_currentProfile != null) {

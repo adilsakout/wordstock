@@ -37,7 +37,9 @@ class SocialProofPage extends StatelessWidget {
         // Then show the paywall once
         await Future.delayed(const Duration(milliseconds: 500), () {
           if (context.mounted) {
-            context.read<SubscriptionCubit>().showPaywall();
+            context
+                .read<SubscriptionCubit>()
+                .showPaywall(source: 'post_onboarding');
           }
         });
       }

@@ -49,6 +49,14 @@ class PracticeCubit extends Cubit<PracticeState> {
     _streamingQuestions = [];
     _streamingMode = mode;
 
+    // Track Practice Session Started
+    final modeStr =
+        mode == PracticeMode.typing ? 'typing' : 'multiple_choice';
+    PosthogService.instance.track(
+      'Practice Session Started',
+      properties: {'mode': modeStr},
+    );
+
     emit(const PracticeLoading());
 
     try {
@@ -66,6 +74,15 @@ class PracticeCubit extends Cubit<PracticeState> {
                 onError: _onQuizStreamError,
               );
     } catch (e) {
+      // Track Practice Quiz Error
+      PosthogService.instance.track(
+        'Practice Quiz Error',
+        properties: {
+          'error_message': e.toString(),
+          'mode': modeStr,
+          'had_partial_questions': false,
+        },
+      );
       emit(PracticeError(e.toString()));
     }
   }
@@ -107,6 +124,20 @@ class PracticeCubit extends Cubit<PracticeState> {
 
   void _onQuizStreamError(Object error, StackTrace stackTrace) {
     _quizStreamSubscription = null;
+
+    // Track Practice Quiz Error
+    final modeStr = _streamingMode == PracticeMode.typing
+        ? 'typing'
+        : 'multiple_choice';
+    PosthogService.instance.track(
+      'Practice Quiz Error',
+      properties: {
+        'error_message': error.toString(),
+        'mode': modeStr,
+        'had_partial_questions': _streamingQuestions.isNotEmpty,
+      },
+    );
+
     if (_streamingQuestions.isEmpty) {
       emit(PracticeError(error.toString()));
     } else if (state is PracticeQuizLoaded) {
@@ -231,6 +262,12 @@ class PracticeCubit extends Cubit<PracticeState> {
   /// Starts a flashcard session with the given words.
   /// If no words are provided, uses the adaptive word selection.
   Future<void> startFlashcards({List<Word>? words}) async {
+    // Track Practice Session Started
+    PosthogService.instance.track(
+      'Practice Session Started',
+      properties: {'mode': 'flashcard'},
+    );
+
     try {
       emit(const PracticeLoading());
       final wordsToUse = words ?? await wordRepository.getAdaptiveQuizWords();

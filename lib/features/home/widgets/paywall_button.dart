@@ -32,7 +32,9 @@ class _PaywallButtonState extends State<PaywallButton> {
                     suffixIcon: Icons.star_rounded,
                     iconSize: 25,
                     onTap: () {
-                      context.read<SubscriptionCubit>().showPaywall();
+                      context
+                          .read<SubscriptionCubit>()
+                          .showPaywall(source: 'upgrade_button');
                     },
                   )
                 : const SizedBox.shrink();

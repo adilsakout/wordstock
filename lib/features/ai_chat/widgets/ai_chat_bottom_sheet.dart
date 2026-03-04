@@ -7,9 +7,11 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:markdown_widget/markdown_widget.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:wordstock/features/ai_chat/cubit/ai_chat_cubit.dart';
+import 'package:wordstock/features/subscription/cubit/subscription_cubit.dart';
 import 'package:wordstock/features/user_data/cubit/user_data_cubit.dart';
 import 'package:wordstock/l10n/l10n.dart';
 import 'package:wordstock/model/word.dart';
+import 'package:wordstock/services/posthog_service.dart';
 import 'package:wordstock/widgets/button.dart';
 
 /// A modern, full-featured AI chat interface presented as a bottom sheet
@@ -58,6 +60,10 @@ class _AIChatBottomSheetState extends State<AIChatBottomSheet> {
   // Debounce timer to prevent rapid-fire sends
   Timer? _sendDebounce;
 
+  // Message counter for analytics
+  int _userMessageCount = 0;
+  bool _nextMessageIsSuggestionChip = false;
+
   // Throttle scroll-to-bottom calls during streaming
   DateTime? _lastScrollTime;
 
@@ -82,6 +88,22 @@ class _AIChatBottomSheetState extends State<AIChatBottomSheet> {
     // Try loading a saved conversation first
     final loaded =
         await _chatCubit.loadPreviousChat(widget.word);
+
+    // Track AI Chat Opened
+    final isSubscribed =
+        context.read<SubscriptionCubit>().state.maybeWhen(
+              loaded: (s) => s,
+              orElse: () => false,
+            );
+    PosthogService.instance.track(
+      'AI Chat Opened',
+      properties: {
+        'word': widget.word.word,
+        'has_previous_chat': loaded,
+        'is_subscribed': isSubscribed,
+      },
+    );
+
     if (loaded || !mounted) return;
 
     // No saved chat — start fresh
@@ -151,6 +173,17 @@ class _AIChatBottomSheetState extends State<AIChatBottomSheet> {
   void _sendMessage() {
     final message = _messageController.text.trim();
     if (message.isNotEmpty) {
+      _userMessageCount++;
+      final isSuggestionChip = _nextMessageIsSuggestionChip;
+      _nextMessageIsSuggestionChip = false;
+      PosthogService.instance.track(
+        'AI Chat Message Sent',
+        properties: {
+          'word': widget.word.word,
+          'message_count': _userMessageCount,
+          'is_suggestion_chip': isSuggestionChip,
+        },
+      );
       // Send message with localized vocabulary
       // system message for user's language
       context.read<AIChatCubit>().sendMessage(
@@ -587,6 +620,7 @@ class _AIChatBottomSheetState extends State<AIChatBottomSheet> {
                   .withValues(alpha: 0.3),
             ),
             onPressed: () {
+              _nextMessageIsSuggestionChip = true;
               _messageController.text = text;
               _debouncedSend();
             },

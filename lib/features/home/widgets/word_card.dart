@@ -12,6 +12,7 @@ import 'package:wordstock/features/ai_chat/ai_chat.dart';
 import 'package:wordstock/features/home/cubit/home_cubit.dart';
 import 'package:wordstock/features/home/widgets/shareable_word_card.dart';
 import 'package:wordstock/model/word.dart';
+import 'package:wordstock/services/posthog_service.dart';
 import 'package:wordstock/widgets/button.dart';
 
 class WordCard extends StatefulWidget {
@@ -36,6 +37,7 @@ class _WordCardState extends State<WordCard>
   late final Animation<double> _opacityAnimation;
   late final Animation<double> _moveAnimation;
 
+  static int _speakTapCount = 0;
   final ScreenshotController _screenshotController = ScreenshotController();
 
   @override
@@ -94,12 +96,25 @@ class _WordCardState extends State<WordCard>
       final file = File('${tempDir.path}/wordstock_${widget.word.word}.png');
       await file.writeAsBytes(capturedImage);
       await Share.shareXFiles([XFile(file.path)]);
+      PosthogService.instance.track(
+        'Word Shared',
+        properties: {'word': widget.word.word},
+      );
     });
   }
 
-  void _handleFavoriteClick() {
+  void _handleFavoriteClick({String source = 'button'}) {
     final isCurrentlyFavorite = widget.word.isFavorite ?? false;
     widget.onToggleFavorite();
+
+    PosthogService.instance.track(
+      'Word Favorited',
+      properties: {
+        'word': widget.word.word,
+        'action': isCurrentlyFavorite ? 'removed' : 'added',
+        'source': source,
+      },
+    );
 
     if (!isCurrentlyFavorite) {
       Gaimon.soft();
@@ -116,7 +131,7 @@ class _WordCardState extends State<WordCard>
     return GestureDetector(
       onDoubleTap: () {
         if (!isFavorite) {
-          _handleFavoriteClick();
+          _handleFavoriteClick(source: 'double_tap');
         }
       },
       child: Padding(
@@ -228,8 +243,16 @@ class _WordCardState extends State<WordCard>
                     buttonColor: const Color(0xff1CB0F6),
                     shadowColor: const Color(0xff1899D6),
                     suffixIcon: Icons.volume_down_rounded,
-                    onTap: () =>
-                        context.read<HomeCubit>().speakWord(widget.word.word),
+                    onTap: () {
+                      context.read<HomeCubit>().speakWord(widget.word.word);
+                      _speakTapCount++;
+                      if (_speakTapCount % 5 == 0) {
+                        PosthogService.instance.track(
+                          'Word Spoken',
+                          properties: {'word': widget.word.word},
+                        );
+                      }
+                    },
                   ),
                   AIChatButton(
                     word: widget.word,

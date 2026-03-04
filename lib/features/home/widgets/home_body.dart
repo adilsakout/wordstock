@@ -20,6 +20,7 @@ import 'package:wordstock/features/user_data/widget/user_point_widget.dart';
 import 'package:wordstock/features/user_data/widget/user_strek_widget.dart';
 import 'package:wordstock/gen/assets.gen.dart';
 import 'package:wordstock/l10n/l10n.dart';
+import 'package:wordstock/services/posthog_service.dart';
 import 'package:wordstock/widgets/button.dart';
 
 /// {@template home_body}
@@ -40,6 +41,8 @@ class _HomeBodyState extends State<HomeBody>
   final PageController pageController = PageController();
   final InAppReview inAppReview = InAppReview.instance;
   late final AnimationController _controller;
+  int _swipeCount = 0;
+  bool _hasTrackedPracticeReminder = false;
 
   @override
   void initState() {
@@ -56,6 +59,7 @@ class _HomeBodyState extends State<HomeBody>
 
       _showPaywallOnceAfterOnboarding();
       _requestReview();
+      _trackAppSessionStarted();
     });
   }
 
@@ -72,7 +76,32 @@ class _HomeBodyState extends State<HomeBody>
       // Fetch words again when app resumes to ensure widget is updated
       // if the user opened the app from the widget
       context.read<HomeCubit>().fetchWords();
+      _trackAppSessionStarted();
     }
+  }
+
+  Future<void> _trackAppSessionStarted() async {
+    final prefs = await SharedPreferences.getInstance();
+    final lastSessionMs = prefs.getInt('last_session_timestamp') ?? 0;
+    final now = DateTime.now();
+    final daysSinceLastSession = lastSessionMs > 0
+        ? now
+            .difference(DateTime.fromMillisecondsSinceEpoch(lastSessionMs))
+            .inDays
+        : -1;
+    await prefs.setInt('last_session_timestamp', now.millisecondsSinceEpoch);
+
+    if (!mounted) return;
+    final streakState = context.read<StreakCubit>().state;
+    final currentStreak = streakState.profile?.dailyStreak ?? 0;
+
+    PosthogService.instance.track(
+      'App Session Started',
+      properties: {
+        'days_since_last_session': daysSinceLastSession,
+        'current_streak': currentStreak,
+      },
+    );
   }
 
   @override
@@ -167,7 +196,9 @@ class _HomeBodyState extends State<HomeBody>
     if (!isSubscribed) {
       await Future<void>.delayed(const Duration(milliseconds: 500));
       if (!mounted) return;
-      await context.read<SubscriptionCubit>().showPaywall();
+      await context.read<SubscriptionCubit>().showPaywall(
+            source: 'post_onboarding',
+          );
     }
   }
 
@@ -198,6 +229,11 @@ class _HomeBodyState extends State<HomeBody>
 
   void _continueLearning() {
     context.read<LearningProgressCubit>().markPracticeReminderShown();
+    _hasTrackedPracticeReminder = false;
+    PosthogService.instance.track(
+      'Practice Reminder Action',
+      properties: {'action': 'continue_learning'},
+    );
   }
 
   @override
@@ -243,10 +279,32 @@ class _HomeBodyState extends State<HomeBody>
                                 .read<LearningProgressCubit>()
                                 .hideSwipeUpReminder();
                           }
+                          // Track Word Card Swiped every 5th swipe
+                          _swipeCount++;
+                          if (_swipeCount % 5 == 0) {
+                            PosthogService.instance.track(
+                              'Word Card Swiped',
+                              properties: {
+                                'word_index': index,
+                                'words_in_session': _swipeCount,
+                              },
+                            );
+                          }
                         },
                         itemBuilder: (context, index) {
                           if (shouldShowPracticeReminder) {
                             Gaimon.medium();
+                            // Track Practice Reminder Shown once
+                            if (!_hasTrackedPracticeReminder) {
+                              _hasTrackedPracticeReminder = true;
+                              PosthogService.instance.track(
+                                'Practice Reminder Shown',
+                                properties: {
+                                  'words_learned_count':
+                                      learningState.cumulativeWords,
+                                },
+                              );
+                            }
                             return PracticeReminderPage(
                               onContinue: _continueLearning,
                             );

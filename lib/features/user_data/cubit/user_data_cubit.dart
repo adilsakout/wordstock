@@ -6,6 +6,7 @@ import 'package:equatable/equatable.dart';
 import 'package:onesignal_flutter/onesignal_flutter.dart';
 import 'package:wordstock/model/user_profile.dart';
 import 'package:wordstock/repositories/user_repository.dart';
+import 'package:wordstock/services/posthog_service.dart';
 
 part 'user_data_state.dart';
 
@@ -94,6 +95,14 @@ class StreakCubit extends Cubit<StreakState> {
               status: StreakStatus.loaded,
               profile: updatedProfile,
             ),
+          );
+          // Track Streak Updated
+          PosthogService.instance.track(
+            'Streak Updated',
+            properties: {
+              'current_streak': updatedProfile.dailyStreak,
+              'is_new_day': true,
+            },
           );
         }
       }

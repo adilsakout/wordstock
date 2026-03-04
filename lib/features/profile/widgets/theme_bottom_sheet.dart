@@ -3,6 +3,7 @@ import 'package:gaimon/gaimon.dart';
 import 'package:wordstock/features/onboarding/widgets/selector.dart';
 import 'package:wordstock/features/settings/cubit/cubit.dart';
 import 'package:wordstock/l10n/l10n.dart';
+import 'package:wordstock/services/posthog_service.dart';
 
 /// Shows a bottom sheet for theme selection
 ///
@@ -46,6 +47,10 @@ void showThemeBottomSheet(BuildContext context) {
                   onTap: () {
                     Gaimon.soft();
                     context.read<ThemeCubit>().setThemeMode(ThemeMode.system);
+                    PosthogService.instance.track(
+                      'Theme Changed',
+                      properties: {'theme': 'system'},
+                    );
                     Navigator.pop(context);
                   },
                 ),
@@ -56,6 +61,10 @@ void showThemeBottomSheet(BuildContext context) {
                   onTap: () {
                     Gaimon.soft();
                     context.read<ThemeCubit>().setThemeMode(ThemeMode.light);
+                    PosthogService.instance.track(
+                      'Theme Changed',
+                      properties: {'theme': 'light'},
+                    );
                     Navigator.pop(context);
                   },
                 ),
@@ -66,6 +75,10 @@ void showThemeBottomSheet(BuildContext context) {
                   onTap: () {
                     Gaimon.soft();
                     context.read<ThemeCubit>().setThemeMode(ThemeMode.dark);
+                    PosthogService.instance.track(
+                      'Theme Changed',
+                      properties: {'theme': 'dark'},
+                    );
                     Navigator.pop(context);
                   },
                 ),

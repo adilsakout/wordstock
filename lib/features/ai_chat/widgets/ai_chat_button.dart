@@ -7,6 +7,7 @@ import 'package:wordstock/features/credit/cubit/credit_cubit.dart';
 import 'package:wordstock/features/subscription/cubit/subscription_cubit.dart';
 import 'package:wordstock/model/word.dart';
 import 'package:wordstock/repositories/chat_repository.dart';
+import 'package:wordstock/services/posthog_service.dart';
 import 'package:wordstock/widgets/button.dart';
 
 /// A sleek, modern button that opens AI chat functionality for vocabulary words
@@ -81,8 +82,18 @@ class AIChatButton extends StatelessWidget {
 
     // Free users: check if credits are available (don't consume yet)
     if (!creditCubit.state.canUseFeature) {
+      // Track Credit Exhausted
+      PosthogService.instance.track(
+        'Credit Exhausted',
+        properties: {
+          'feature': 'ai_chat',
+          'credits_used_today': 3 - creditCubit.state.creditsRemaining,
+        },
+      );
       if (!context.mounted) return;
-      await context.read<SubscriptionCubit>().showPaywall();
+      await context
+          .read<SubscriptionCubit>()
+          .showPaywall(source: 'credit_exhausted_chat');
       return;
     }
 

@@ -5,6 +5,7 @@ import 'package:purchases_flutter/purchases_flutter.dart';
 import 'package:purchases_ui_flutter/paywall_result.dart';
 import 'package:wordstock/repositories/rc_repository.dart';
 import 'package:wordstock/services/facebook_service.dart';
+import 'package:wordstock/services/posthog_service.dart';
 
 part 'subscription_cubit.freezed.dart';
 part 'subscription_state.dart';
@@ -57,16 +58,43 @@ class SubscriptionCubit extends Cubit<SubscriptionState> {
   }
 
   /// Shows the paywall
-  Future<void> showPaywall() async {
+  Future<void> showPaywall({String source = 'unknown'}) async {
     try {
       // Check status before showing paywall
       final wasSubscribed = await _rcRepository.isUserSubscribed();
 
+      // Track Paywall Viewed
+      PosthogService.instance.track(
+        'Paywall Viewed',
+        properties: {
+          'source': source,
+          'is_subscribed': wasSubscribed,
+        },
+      );
+
       final result = await _rcRepository.presentPaywall();
 
+      // Determine paywall result string
+      final String resultStr;
       if (result == PaywallResult.cancelled) {
+        resultStr = 'cancelled';
         debugPrint('Paywall not presented ');
+      } else if (result == PaywallResult.purchased) {
+        resultStr = 'purchased';
+      } else if (result == PaywallResult.restored) {
+        resultStr = 'restored';
+      } else {
+        resultStr = 'error';
       }
+
+      // Track Paywall Dismissed
+      PosthogService.instance.track(
+        'Paywall Dismissed',
+        properties: {
+          'source': source,
+          'result': resultStr,
+        },
+      );
 
       // Check status after showing paywall
       final isSubscribed = await _rcRepository.isUserSubscribed();
@@ -74,6 +102,13 @@ class SubscriptionCubit extends Cubit<SubscriptionState> {
       // If user wasn't subscribed but is now, log the event
       if (!wasSubscribed && isSubscribed) {
         await FacebookService.instance.logSubscription();
+        // Track Subscription Started
+        PosthogService.instance.track(
+          'Subscription Started',
+          properties: {
+            'source': source,
+          },
+        );
       }
 
       // After showing paywall, recheck subscription status

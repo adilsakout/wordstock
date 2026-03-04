@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:wordstock/repositories/settings_repository.dart';
+import 'package:wordstock/services/posthog_service.dart';
 
 part 'settings_state.dart';
 
@@ -77,6 +78,11 @@ class SettingsCubit extends Cubit<SettingsState> {
           notificationSettings: updatedSettings,
         ),
       );
+
+      PosthogService.instance.track(
+        'Notification Setting Changed',
+        properties: {'setting': 'master', 'enabled': enabled},
+      );
     } catch (e) {
       emit(
         SettingsError(
@@ -114,6 +120,11 @@ class SettingsCubit extends Cubit<SettingsState> {
         SettingsLoaded(
           notificationSettings: updatedSettings,
         ),
+      );
+
+      PosthogService.instance.track(
+        'Notification Setting Changed',
+        properties: {'setting': 'daily_reminder', 'enabled': enabled},
       );
     } catch (e) {
       emit(
@@ -153,6 +164,11 @@ class SettingsCubit extends Cubit<SettingsState> {
           notificationSettings: updatedSettings,
         ),
       );
+
+      PosthogService.instance.track(
+        'Notification Setting Changed',
+        properties: {'setting': 'practice_reminder', 'enabled': enabled},
+      );
     } catch (e) {
       emit(
         SettingsError(
@@ -191,6 +207,11 @@ class SettingsCubit extends Cubit<SettingsState> {
           notificationSettings: updatedSettings,
         ),
       );
+
+      PosthogService.instance.track(
+        'Notification Setting Changed',
+        properties: {'setting': 'new_word', 'enabled': enabled},
+      );
     } catch (e) {
       emit(
         SettingsError(
@@ -228,6 +249,11 @@ class SettingsCubit extends Cubit<SettingsState> {
         SettingsLoaded(
           notificationSettings: updatedSettings,
         ),
+      );
+
+      PosthogService.instance.track(
+        'Notification Setting Changed',
+        properties: {'setting': 'streak_reminder', 'enabled': enabled},
       );
     } catch (e) {
       emit(

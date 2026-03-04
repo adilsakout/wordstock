@@ -6,6 +6,7 @@ import 'package:wordstock/features/home/cubit/learning_progress_cubit.dart';
 import 'package:wordstock/features/practice/practice.dart';
 import 'package:wordstock/features/subscription/cubit/subscription_cubit.dart';
 import 'package:wordstock/l10n/l10n.dart';
+import 'package:wordstock/services/posthog_service.dart';
 import 'package:wordstock/widgets/button.dart';
 
 class PracticeReminderPage extends StatelessWidget {
@@ -17,6 +18,10 @@ class PracticeReminderPage extends StatelessWidget {
   final VoidCallback onContinue;
 
   Future<void> _handlePracticeButtonTap(BuildContext context) async {
+    PosthogService.instance.track(
+      'Practice Reminder Action',
+      properties: {'action': 'start_practice'},
+    );
     final creditCubit = context.read<CreditCubit>();
 
     // Subscribers bypass credit system
@@ -33,7 +38,9 @@ class PracticeReminderPage extends StatelessWidget {
     final allowed = await creditCubit.tryConsumeCredit();
     if (!allowed) {
       if (!context.mounted) return;
-      await context.read<SubscriptionCubit>().showPaywall();
+      await context
+          .read<SubscriptionCubit>()
+          .showPaywall(source: 'credit_exhausted_practice');
       return;
     }
 

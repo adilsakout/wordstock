@@ -4,7 +4,9 @@ import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:gaimon/gaimon.dart';
 import 'package:wordstock/features/practice/cubit/cubit.dart';
+import 'package:wordstock/features/subscription/cubit/subscription_cubit.dart';
 import 'package:wordstock/gen/assets.gen.dart';
+import 'package:wordstock/services/posthog_service.dart';
 import 'package:wordstock/widgets/button.dart';
 
 class QuizInitial extends StatefulWidget {
@@ -161,9 +163,19 @@ class _QuizInitialState extends State<QuizInitial>
           prefixIcon: Icons.auto_awesome,
           spacing: 8,
           onTap: () {
-            // Add haptic feedback
             Gaimon.light();
-            // Get OpenAI-generated quiz
+            final isSubscribed =
+                context.read<SubscriptionCubit>().state.maybeWhen(
+                      loaded: (s) => s,
+                      orElse: () => false,
+                    );
+            PosthogService.instance.track(
+              'Practice Mode Selected',
+              properties: {
+                'mode': 'multiple_choice',
+                'is_subscribed': isSubscribed,
+              },
+            );
             context.read<PracticeCubit>().getQuizFromWords();
             widget.onTap();
           },
@@ -190,8 +202,19 @@ class _QuizInitialState extends State<QuizInitial>
           spacing: 8,
           onTap: () {
             Gaimon.light();
+            final isSubscribed =
+                context.read<SubscriptionCubit>().state.maybeWhen(
+                      loaded: (s) => s,
+                      orElse: () => false,
+                    );
+            PosthogService.instance.track(
+              'Practice Mode Selected',
+              properties: {
+                'mode': 'flashcard',
+                'is_subscribed': isSubscribed,
+              },
+            );
             context.read<PracticeCubit>().startFlashcards();
-            // Navigation is handled by BlocListener in PracticeBody
           },
         )
             .animate(controller: _animationController)
@@ -216,6 +239,18 @@ class _QuizInitialState extends State<QuizInitial>
           spacing: 8,
           onTap: () {
             Gaimon.light();
+            final isSubscribed =
+                context.read<SubscriptionCubit>().state.maybeWhen(
+                      loaded: (s) => s,
+                      orElse: () => false,
+                    );
+            PosthogService.instance.track(
+              'Practice Mode Selected',
+              properties: {
+                'mode': 'typing',
+                'is_subscribed': isSubscribed,
+              },
+            );
             context.read<PracticeCubit>().getQuizFromWords(
                   mode: PracticeMode.typing,
                 );
